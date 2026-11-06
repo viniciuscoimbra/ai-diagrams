@@ -26,8 +26,11 @@ Checks:
    marketing (TEXTO-MARKETING; lista em texto_tecnico.py).
 9. C4: cada elemento .bchip.c4 tem tipo (.bn) e nome (.bt), e a página tem a
    legenda .c4leg (C4-SEM-TIPO, C4-SEM-LEGENDA).
-10. Cor só do tema: hexadecimal ou rgb() literal no fonte reprova
-   (COR-FORA-DO-TEMA; regra em cor_tema.py).
+10. Cor e fonte só do tema: hexadecimal ou rgb() literal no fonte reprova
+   (COR-FORA-DO-TEMA); font-family com família literal também
+   (FONTE-FORA-DO-TEMA; regras em cor_tema.py).
+Tema: --tema <nome ou caminho.json>, <meta name="tema"> do fonte, AI_DIAGRAMS_TEMA ou
+ai-diagrams, nessa ordem (scripts/tema.py). A medição no Chrome usa as fontes do tema.
 6. Documento sem desenho de setas (sem <svg class="edges">, como a matriz de
    dependencia) nao narra fluxo: os checks 3 e 4 nao se aplicam a ele. Os
    demais continuam valendo.
@@ -270,7 +273,9 @@ def check_cores(t):
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import cor_tema
     return [('COR-FORA-DO-TEMA %s na linha %d: %s' % (lit, linha, cor_tema.MENSAGEM), 0, 0, None)
-            for lit, linha in cor_tema.cores_fora(t)]
+            for lit, linha in cor_tema.cores_fora(t)] + \
+           [('FONTE-FORA-DO-TEMA %s na linha %d: %s' % (dec, linha, cor_tema.MENSAGEM_FONTE), 0, 0, None)
+            for dec, linha in cor_tema.fontes_fora(t)]
 
 
 def check_c4(t):
@@ -422,11 +427,14 @@ def find_chrome():
     return None
 
 
-def measure(fn, chrome):
-    """Renderiza no Chrome e devolve as caixas reais (coordenadas do canvas)."""
+def measure(fn, chrome, tm=None):
+    """Renderiza no Chrome, com o tema, e devolve as caixas reais (coordenadas do canvas)."""
     t = open(fn).read()
     if '/*ESTILO*/' in t:
-        t = t.replace('/*ESTILO*/', open(find_css(os.path.dirname(os.path.abspath(fn)))).read())
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import tema
+        d = os.path.dirname(os.path.abspath(fn))
+        t = tema.aplicar(t, open(find_css(d)).read(), tm or tema.tema(None, t, d))
     t = t.replace('</body>', MEASURE_JS + '</body>')
     with tempfile.NamedTemporaryFile('w', suffix='.html', delete=False) as f:
         f.write(t)
@@ -547,14 +555,14 @@ def check_medido(data, t):
 ULTIMA_MEDICAO = {}
 
 
-def lint_completo(fn, fix=False, static=False):
+def lint_completo(fn, fix=False, static=False, tm=None):
     issues = lint(fn, fix)
     if not static:
         chrome = find_chrome()
         if chrome is None:
             issues.append(('SEM-CHROME (sobreposicao nao verificada; use --static para silenciar)', 0, 0, None))
         else:
-            data = measure(fn, chrome)
+            data = measure(fn, chrome, tm)
             if data is None:
                 issues.append(('MEDICAO-FALHOU', 0, 0, None))
             else:
@@ -565,19 +573,23 @@ def lint_completo(fn, fix=False, static=False):
 
 
 if __name__ == '__main__':
-    args = [a for a in sys.argv[1:] if not a.startswith('--')]
-    fix = '--fix' in sys.argv
-    static = '--static' in sys.argv
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import tema
+    flag_tema, resto = tema.tirar_flag(sys.argv[1:])
+    args = [a for a in resto if not a.startswith('--')]
+    fix = '--fix' in resto
+    static = '--static' in resto
     total = 0
     for fn in args:
-        iss = lint_completo(fn, fix, static)
+        tm = tema.tema(flag_tema, open(fn).read(), os.path.dirname(os.path.abspath(fn)))
+        iss = lint_completo(fn, fix, static, tm)
         if iss:
             total += len(iss)
             print(fn)
             for kind, x, y, s in iss:
                 if kind.startswith('TRANSBORDA'):
                     print('  %s. Reduza o conteúdo, fixe larguras ou declare <meta name="largura">' % kind)
-                elif kind.startswith(('C4-', 'COR-FORA-DO-TEMA')):
+                elif kind.startswith(('C4-', 'COR-FORA-DO-TEMA', 'FONTE-FORA-DO-TEMA')):
                     print('  %s' % kind)
                 elif kind.startswith('TEXTO-MARKETING'):
                     print('  %s: reescreva em registro técnico' % kind)

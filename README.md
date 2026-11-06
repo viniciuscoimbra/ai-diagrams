@@ -95,6 +95,18 @@ poster of the real-time anti-fraud check, with numbered steps.
 
 The AI picks the type, asks before drawing when the request is ambiguous, writes the source to `diagramas/_src/`, runs the gate until it passes and saves the PNG in `diagramas/`.
 
+## Themes
+
+Colors and fonts come from a theme file. Two ship with the skill in `skills/ai-diagrams/temas/`: `ai-diagrams` (the default) and `papel` (cream paper, dark brown ink, Public Sans). To make your own, copy `temas/ai-diagrams.json`, change the values in `cores`, `cores_derivadas`, `paleta_der` (ER colors) and `fontes` (Google Fonts family names), and keep every key: a missing key stops the build with `TEMA-INCOMPLETO`. Then pass it to any command, or set it once:
+
+```bash
+python3 skills/ai-diagrams/scripts/build.py diagramas/_src/01-api.html --tema papel
+python3 skills/ai-diagrams/scripts/build.py diagramas/_src/01-api.html --tema ./my-theme.json
+export AI_DIAGRAMS_TEMA=./my-theme.json
+```
+
+A name resolves to `temas/<name>.json`; a path can point anywhere. The theme changes color and font, never the position of boxes and arrows. Details in [docs/how-it-works.md](docs/how-it-works.md#5-theme). When asking the AI, name the theme or attach the JSON.
+
 ## Models
 
 Diagram quality depends on the model. A weaker model gets coordinates wrong, takes more gate rounds and may not reach zero. Use a frontier model. The table of diagram type × model, with only what was measured, is in [docs/models.md](docs/models.md). In short: on Claude Code, Sonnet 4.5 passed the gate on the eight original types; C4 failed three runs on Sonnet 4.5 and passed on Opus 5.5. On Kiro CLI only part of the types was measured, and Codex CLI was not measured on this repository.
@@ -115,4 +127,4 @@ MIT, see [LICENSE](LICENSE). Third-party parts keep their own terms:
 - AWS icons come from the `diagrams` package installed on your machine and follow the [AWS Architecture Icons](https://aws.amazon.com/architecture/icons/) terms.
 - The BPMN viewer in `skills/ai-diagrams/bpmn/vendor/` is [bpmn-js](https://github.com/bpmn-io/bpmn-js), under the bpmn.io license in that folder, which requires the bpmn.io watermark to stay visible.
 - The state machine layout in `skills/ai-diagrams/estados/vendor/` is [elkjs](https://github.com/kieler/elkjs) 0.12.0, unmodified, under EPL-2.0 or GPL-3.0-or-later (license in that folder).
-- Fonts: IBM Plex Sans and IBM Plex Mono, loaded from Google Fonts, under the SIL Open Font License.
+- Fonts: loaded from Google Fonts under the SIL Open Font License. The default theme uses IBM Plex Sans and IBM Plex Mono; the `papel` theme uses Public Sans and Source Code Pro. A theme of your own loads the families it names, under their own terms.

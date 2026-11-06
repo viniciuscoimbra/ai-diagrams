@@ -41,7 +41,7 @@ bash exemplos/gerar.sh
 
 A new type must:
 
-1. **Use only the theme colors.** Write every color as `var(--token)`; the tokens are declared in the `:root` of `skills/ai-diagrams/assets/estilo.css` and `estilo-conceitual.css`, with values in `skills/ai-diagrams/temas/ai-diagrams.json`. A literal color fails with `COR-FORA-DO-TEMA`. A new token goes in the theme file and in the `:root`, and `scripts/conferir_tema.py` must pass.
+1. **Use only the theme colors and fonts.** Write every color as `var(--token)` and every font as `var(--fonte-texto)` or `var(--fonte-mono)`; `skills/ai-diagrams/scripts/tema.py` generates the tokens from the theme JSON in `skills/ai-diagrams/temas/`. A literal color fails with `COR-FORA-DO-TEMA`, a literal font family with `FONTE-FORA-DO-TEMA`. A new token goes in every theme file, in `OBRIGATORIAS` of `tema.py` and in the fallback `:root` of both base stylesheets, and `scripts/conferir_tema.py` must pass. A new command takes `--tema` through `tema.py` (see [docs/how-it-works.md](docs/how-it-works.md#5-theme)).
 2. **Ship a reference model** in `skills/ai-diagrams/modelos/NN-<type>/`, with the source in `_src/` and the generated PNG. Add its build command to `skills/ai-diagrams/modelos/gerar.sh`.
 3. **Pass the gate.** Use an existing gate (`skills/ai-diagrams/scripts/build.py`, `skills/ai-diagrams/scripts/conceitual.py` or `skills/ai-diagrams/bpmn/gerar_bpmn.py`), or add a gate that exits with code 1 on any defect and writes no PNG.
 4. **Add a negative test** in `testes/negativos/` and a line in `testes/rodar.sh` for each new defect code.

@@ -2,6 +2,31 @@
 // O layout (posição de cada caixa e o caminho de cada seta) é decidido à mão no arquivo der-<schema>.layout.mjs;
 // este módulo só calcula o que vai dentro da caixa e a altura dela, e gera o HTML da caixa.
 import fs from 'node:fs';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+
+// Tema: tira --tema X (ou --tema=X) do argv e pede ao scripts/tema.py, o único leitor do json do tema,
+// o link das fontes e a meta que o fonte HTML grava. Tema inexistente ou incompleto encerra aqui.
+export function tirarTema(argv) {
+  const resto = []; let valor = null;
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i] === '--tema') { valor = argv[++i]; continue; }
+    if (argv[i].startsWith('--tema=')) { valor = argv[i].slice(7); continue; }
+    resto.push(argv[i]);
+  }
+  return { valor, resto };
+}
+export function temaDoGerador(valor, saida) {
+  const script = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'scripts', 'tema.py');
+  const args = [script, ...(valor ? ['--tema', valor] : []), '--gerador', saida];
+  try {
+    return JSON.parse(execFileSync('python3', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }));
+  } catch (e) {
+    console.error(((e.stderr || '') + '').trim() || e.message);
+    process.exit(1);
+  }
+}
 
 // Modelo carregado: { tabelas: { 'schema.tabela': { tipo, rotulo, colunas: [[nome, tipo, chave, alvo, obrigatoria]] } } }
 export let MODELO = null;
@@ -105,10 +130,10 @@ export function caixa(k, x, y, descricao, largura = LARG) {
 export const CSS_LOCAL = `
 .bchip.tabela{padding:0;border:1.4px solid var(--apoio);border-left:1.4px solid var(--apoio);background:var(--papel);overflow:hidden}
 .tabela .th{height:${HEAD}px;padding:6px 10px;border-bottom:1px solid var(--apoio)}
-.tabela .tt{font-size:13px;font-weight:700;font-family:'IBM Plex Mono',monospace;color:var(--tinta);display:flex;justify-content:space-between;align-items:baseline}
-.tabela .tp{font-family:'IBM Plex Sans',Arial,sans-serif;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--apoio)}
+.tabela .tt{font-size:13px;font-weight:700;font-family:var(--fonte-mono);color:var(--tinta);display:flex;justify-content:space-between;align-items:baseline}
+.tabela .tp{font-family:var(--fonte-texto);font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--apoio)}
 .tabela .td{font-size:10.5px;color:var(--tinta);line-height:1.25;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tabela .tr{height:${ROW}px;display:flex;align-items:center;padding:0 10px;font-family:'IBM Plex Mono',monospace;font-size:10.5px}
+.tabela .tr{height:${ROW}px;display:flex;align-items:center;padding:0 10px;font-family:var(--fonte-mono);font-size:10.5px}
 .tabela .tr:nth-child(odd){background:var(--der-linha-par)}
 .tabela .tk{width:24px;flex:none;font-size:9px;font-weight:700;color:var(--der-chave)}
 .tabela .tn{flex:1;min-width:0;font-size:10px;color:var(--tinta);white-space:nowrap;overflow:hidden;padding-right:6px}
@@ -122,18 +147,18 @@ export const CSS_LOCAL = `
 .tabela.leve .tt{font-size:11.5px}
 .tabela .lu{font-size:9.5px;color:var(--der-dominio);padding:2px 10px 0;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .front{position:absolute;font-size:10.5px;color:var(--tinta);line-height:1.55}
-.front h4{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--apoio);margin:0 0 4px}
-.front code{font-family:'IBM Plex Mono',monospace;font-size:10px}
+.front h4{font-family:var(--fonte-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--apoio);margin:0 0 4px}
+.front code{font-family:var(--fonte-mono);font-size:10px}
 .front .fora{color:var(--der-fora);font-weight:600}
 .sub{min-height:66px}
 .legfixa{display:flex;gap:28px;margin-top:22px;padding:14px 18px;border:1px solid var(--der-borda);background:var(--der-legenda);font-size:10.5px;color:var(--tinta);line-height:1.35}
-.legfixa h4{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--apoio);margin:0 0 8px}
+.legfixa h4{font-family:var(--fonte-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--apoio);margin:0 0 8px}
 .legfixa .lc{flex:none;width:330px}
 .legfixa .lc:nth-child(3){width:500px}
 .legfixa .lc.dupla{flex:1;width:auto}
 .legfixa .li{display:flex;gap:10px;align-items:center;margin-bottom:6px}
 .legfixa .pe{flex:none;width:74px;font-weight:700}
-.legfixa .rv,.legfixa .ra,.legfixa .rr,.legfixa .rk{flex:none;width:140px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;text-align:right}
+.legfixa .rv,.legfixa .ra,.legfixa .rr,.legfixa .rk{flex:none;width:140px;font-family:var(--fonte-mono);font-size:9.5px;text-align:right}
 .legfixa .rv{color:var(--der-dominio)}.legfixa .ra{color:var(--der-fora);font-weight:600}.legfixa .rr{color:var(--der-copia)}.legfixa .rk{color:var(--der-chave);font-weight:700}
 .legfixa .tps{columns:2;column-gap:22px}
 .legfixa .tipo{break-inside:avoid;display:flex;gap:8px;align-items:flex-start;margin-bottom:5px}

@@ -1,16 +1,18 @@
 // Visão geral dos schemas: matriz de dependência gerada do modelo lógico (modelo.json).
 // Linha: o schema que tem a coluna. Coluna: o schema da tabela apontada. Célula: quantas colunas apontam.
 // Matriz em vez de grafo: com muitos pares de schemas, setas para todos eles se cruzariam.
-// Uso: node der-visao-geral.mjs caminho/modelo.json [saida.html]
+// Uso: node der-visao-geral.mjs caminho/modelo.json [saida.html] [--tema NOME|caminho.json]
 // Sem saída explícita, grava der-visao-geral.html ao lado do modelo; o build.py da skill gera o PNG.
 import fs from 'node:fs';
 import path from 'node:path';
-import { carregar, chaves, tabela, nome } from './der-tabelas.mjs';
+import { tirarTema, temaDoGerador, carregar, chaves, tabela, nome } from './der-tabelas.mjs';
 
-if (!process.argv[2]) { console.error('uso: node der-visao-geral.mjs caminho/modelo.json [saida.html]'); process.exit(1); }
-const modeloPath = path.resolve(process.argv[2]);
+const ARGS = tirarTema(process.argv.slice(2));
+if (!ARGS.resto[0]) { console.error('uso: node der-visao-geral.mjs caminho/modelo.json [saida.html] [--tema NOME|caminho.json]'); process.exit(1); }
+const modeloPath = path.resolve(ARGS.resto[0]);
 const M = carregar(modeloPath);
-const saida = process.argv[3] ? path.resolve(process.argv[3]) : path.join(path.dirname(modeloPath), 'der-visao-geral.html');
+const saida = ARGS.resto[1] ? path.resolve(ARGS.resto[1]) : path.join(path.dirname(modeloPath), 'der-visao-geral.html');
+const TEMA = temaDoGerador(ARGS.valor, saida);
 // Ordem de construção (a do modelo): quem é apontado por mais schemas vem antes.
 const ORDEM = Object.keys(M.schemas);
 const NOME = M.schemas;
@@ -50,16 +52,16 @@ const html = `<!DOCTYPE html>
 <title>Visão geral dos schemas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+${TEMA.link}${TEMA.meta ? '\n' + TEMA.meta : ''}
 <style>
 /*ESTILO*/
-.mx{border-collapse:collapse;margin-top:34px;font-family:'IBM Plex Mono',monospace}
+.mx{border-collapse:collapse;margin-top:34px;font-family:var(--fonte-mono)}
 .mx td,.mx th{border:1px solid var(--der-borda);width:74px;height:46px;text-align:center;font-size:15px;font-weight:600;color:var(--tinta)}
 .mx th.cv{height:120px;vertical-align:bottom;padding-bottom:8px;border-top:none}
 .mx th.cv span{display:inline-block;writing-mode:vertical-rl;transform:rotate(180deg);font-size:12px;font-weight:700}
 .mx th.rh{width:260px;text-align:left;padding:0 12px;font-weight:400}
 .mx th.rh b{font-size:13px;display:block}
-.mx th.rh span{font-family:'IBM Plex Sans',Arial,sans-serif;font-size:11px;color:var(--cinza)}
+.mx th.rh span{font-family:var(--fonte-texto);font-size:11px;color:var(--cinza)}
 .mx td.diag{background:var(--apoio);color:var(--papel);font-size:12px}
 .mx td.tot{background:var(--zona);font-size:13px;color:var(--apoio)}
 .mx th.canto{border:none}
@@ -67,10 +69,10 @@ const html = `<!DOCTYPE html>
 .leitura div{flex:1}
 .det{columns:3;column-gap:32px;margin-top:20px}
 .par{break-inside:avoid;margin-bottom:12px}
-.pt{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:700;border-bottom:1px solid var(--apoio);padding-bottom:2px;margin-bottom:3px}
+.pt{font-family:var(--fonte-mono);font-size:11.5px;font-weight:700;border-bottom:1px solid var(--apoio);padding-bottom:2px;margin-bottom:3px}
 .pt span{float:right;color:var(--cinza)}
-.pc{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--apoio);line-height:1.5}
-.sec{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin-top:34px;border-bottom:1.5px solid var(--tinta);padding-bottom:6px}
+.pc{font-family:var(--fonte-mono);font-size:10px;color:var(--apoio);line-height:1.5}
+.sec{font-family:var(--fonte-mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin-top:34px;border-bottom:1.5px solid var(--tinta);padding-bottom:6px}
 </style>
 </head>
 <body>

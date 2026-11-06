@@ -96,10 +96,22 @@ del antifraude en tiempo real, con pasos numerados.
 
 La IA elige el tipo y pregunta antes de dibujar cuando el pedido es ambiguo. Después escribe la fuente en `diagramas/_src/`, ejecuta el gate hasta que pase y guarda el PNG en `diagramas/`.
 
+## Temas
+
+El color y la fuente vienen de un archivo de tema. La skill trae dos en `skills/ai-diagrams/temas/`: `ai-diagrams` (el predeterminado) y `papel` (papel crema, tinta marrón oscura, Public Sans). Para crear el tuyo, copia `temas/ai-diagrams.json`, cambia los valores de `cores`, `cores_derivadas`, `paleta_der` (colores del DER) y `fontes` (nombre de la familia en Google Fonts) y conserva todas las claves: una clave que falta detiene el build con `TEMA-INCOMPLETO`. Después pasa el tema en cualquier comando, o defínelo una vez:
+
+```bash
+python3 skills/ai-diagrams/scripts/build.py diagramas/_src/01-api.html --tema papel
+python3 skills/ai-diagrams/scripts/build.py diagramas/_src/01-api.html --tema ./mi-tema.json
+export AI_DIAGRAMS_TEMA=./mi-tema.json
+```
+
+Un nombre resuelve a `temas/<nombre>.json`; una ruta puede apuntar a cualquier carpeta. El tema cambia color y fuente, nunca la posición de cajas y flechas. Detalles en [docs/how-it-works.md](docs/how-it-works.md#5-theme), en inglés. Al pedir a la IA, di el nombre del tema o adjunta el json.
+
 ## Modelos
 
 La calidad del diagrama depende del modelo. Un modelo débil se equivoca en las coordenadas, necesita más rondas del gate y puede no llegar a cero. Usa un modelo de primera línea. La tabla tipo de diagrama × modelo, solo con lo medido, está en [docs/models.md](docs/models.md). En resumen: en Claude Code, Sonnet 4.5 pasó el gate en los ocho tipos originales; el C4 falló tres veces en Sonnet 4.5 y pasó en Opus 5.5. En Kiro CLI solo se midió una parte de los tipos, y Codex CLI no se midió en este repositorio.
 
 ## Licencia
 
-MIT, ver [LICENSE](LICENSE). Las partes de terceros, que son los iconos de AWS, bpmn-js, elkjs y las fuentes IBM Plex, siguen sus propios términos, listados en el [README en inglés](README.md#license).
+MIT, ver [LICENSE](LICENSE). Las partes de terceros, que son los iconos de AWS, bpmn-js, elkjs y las fuentes (IBM Plex en el tema predeterminado, Public Sans y Source Code Pro en el tema `papel`), siguen sus propios términos, listados en el [README en inglés](README.md#license).

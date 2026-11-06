@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Gera o fonte HTML de um diagrama de sequência a partir de um JSON.
 
-Uso: python3 gerar_sequencia.py <spec.json> [saida.html]
+Uso: python3 gerar_sequencia.py <spec.json> [saida.html] [--tema NOME|caminho.json]
 
 Coordenadas calculadas, nunca escritas à mão. Participante é coluna, mensagem é
 linha. O rótulo de cada mensagem fica no vão vizinho da origem, do lado para onde
@@ -18,7 +18,7 @@ VAO_MIN = CAB_W + 28         # distância mínima entre linhas de vida
 VAO_MAX = 228                # acima disso, o rótulo quebra em linhas
 ATIV = 6                     # meia largura da barra de ativação
 BADGE = 20
-CHAR = 8.0                   # largura média de caractere do rótulo (15px IBM Plex Sans)
+CHAR = 8.0                   # largura média de caractere do rótulo, 15px; medida fixa: o tema não muda a geometria
 LINHA = 20                   # altura de linha do rótulo
 FCHAR = 8.2                  # largura de caractere da guarda (11px mono, caixa alta, .14em)
 AUTO_W = 46                  # largura do laço da mensagem para si mesmo
@@ -58,11 +58,18 @@ def achatar(itens, nivel=0):
 
 
 def main():
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import tema
+    flag_tema, sys.argv[1:] = tema.tirar_flag(sys.argv[1:])
+    tm = tema.tema(flag_tema)
     if len(sys.argv) < 2:
         sys.exit(__doc__)
     spec_path = os.path.abspath(sys.argv[1])
     S = json.load(open(spec_path))
     saida = os.path.abspath(sys.argv[2]) if len(sys.argv) > 2 else os.path.splitext(spec_path)[0] + '.html'
+    tema_html = tema.para_gerador(tm, saida)
+    tema_link = tema_html['link']
+    tema_meta = tema_html['meta'] + '\n' if tema_html['meta'] else ''
 
     parts = S['participantes']
     idx = {p['id']: i for i, p in enumerate(parts)}
@@ -315,8 +322,8 @@ def main():
 <title>{esc(S['titulo_pagina'])}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-{largura_meta}<style>/*ESTILO*/{largura_css}</style></head><body>
+{tema_link}
+{tema_meta}{largura_meta}<style>/*ESTILO*/{largura_css}</style></head><body>
 <div class="page">
 
   <div class="hdr"><span>{esc(he)}</span><span>{esc(hd)}</span></div>

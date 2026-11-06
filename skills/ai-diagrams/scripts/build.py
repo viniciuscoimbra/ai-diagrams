@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build de poster de arquitetura: inline de CSS e ícones aws://, PNG via Chrome headless.
 
-Uso: python3 build.py <fonte.html> [altura-px] [--out DIR]
+Uso: python3 build.py <fonte.html> [altura-px] [--out DIR] [--tema NOME|caminho.json]
 
 Sem altura, usa a altura real da página medida no Chrome. Altura menor que a
 página reprova (CORTADO), porque cortaria o rodapé.
@@ -15,6 +15,10 @@ Saída default: se o fonte está numa pasta chamada _src, grava na pasta pai
 
 CSS: usa _estilo.css ou estilo.css na pasta do fonte se existir; senão, o
 estilo.css empacotado nesta skill (assets/).
+
+Tema: --tema, <meta name="tema"> do fonte, AI_DIAGRAMS_TEMA ou ai-diagrams, nessa
+ordem (scripts/tema.py). O :root de tokens do CSS vira o do tema e o link do Google
+Fonts vira o das famílias do tema; a geometria do fonte não muda.
 
 Ícones: pacote pip `diagrams` (mingrammer), que instala os PNGs oficiais da
 AWS em <site-packages>/resources/aws. Detectado automaticamente; override
@@ -70,6 +74,9 @@ def find_css(src_dir):
 
 
 def main():
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import tema
+    flag_tema, sys.argv[1:] = tema.tirar_flag(sys.argv[1:])
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     out_dir = None
     if '--out' in sys.argv:
@@ -83,12 +90,13 @@ def main():
     if out_dir is None:
         out_dir = os.path.dirname(src_dir) if os.path.basename(src_dir) == '_src' else src_dir
 
+    src = open(fonte).read()
+    tm = tema.tema(flag_tema, src, src_dir)
     iconbase = find_iconbase()
     chrome = find_chrome()
-    src = open(fonte).read()
     if '/*ESTILO*/' not in src:
         sys.exit('SEM-ESTILO: o fonte não tem o marcador /*ESTILO*/ dentro do <style>; sem ele o PNG sai sem o design system. Copie o <head> do modelo do tipo.')
-    src = src.replace('/*ESTILO*/', open(find_css(src_dir)).read())
+    src = tema.aplicar(src, open(find_css(src_dir)).read(), tm)
 
     _cache = {}
     faltando = []
@@ -114,7 +122,7 @@ def main():
     _spec = _ilu.spec_from_file_location('poster_lint', _lint_path)
     _pl = _ilu.module_from_spec(_spec)
     _spec.loader.exec_module(_pl)
-    _issues = _pl.lint_completo(fonte)
+    _issues = _pl.lint_completo(fonte, tm=tm)
     if _issues:
         print('LINT REPROVOU %s:' % fonte)
         for kind, x, y, _s in _issues:

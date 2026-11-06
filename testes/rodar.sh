@@ -60,6 +60,42 @@ else
   echo "FALHOU temas/ai-diagrams.json diverge do pipeline"; python3 "$SK/scripts/conferir_tema.py" | tail -5; falhas=$((falhas + 1))
 fi
 
+# tema por arquivo: --tema papel troca o :root e as fontes no HTML final; tema incompleto reprova antes do Chrome
+DT="$(mktemp -d)"; mkdir -p "$DT/_src"
+cp "$SK/modelos/05-tabela-comparacao/_src/05-comparacao-mensageria.html" "$DT/_src/"
+if python3 "$SK/scripts/build.py" "$DT/_src/05-comparacao-mensageria.html" --tema papel > "$DT/build.log" 2>&1 \
+   && python3 - "$DT/05-comparacao-mensageria.html" "$SK/temas/papel.json" <<'PY_TEMA'
+import json, re, sys
+html, tema = open(sys.argv[1]).read(), json.load(open(sys.argv[2]))
+roots = [r for r in re.findall(r':root\{(.*?)\}', html, re.S) if '--tinta' in r]
+assert len(roots) == 1, 'esperava um só :root de tokens, achou %d' % len(roots)
+tok = dict(re.findall(r'--([\w-]+):([^;]+);', roots[0]))
+for k, v in list(tema['cores'].items()) + list(tema['cores_derivadas'].items()):
+    assert tok[k.replace('_', '-')].upper() == v.upper(), (k, tok.get(k.replace('_', '-')), v)
+assert tok['fonte-texto'].startswith("'Public Sans'") and tok['fonte-mono'].startswith("'Source Code Pro'"), tok
+assert 'family=Public+Sans' in html and 'IBM+Plex' not in html, 'link do Google Fonts não é o do tema'
+PY_TEMA
+then
+  echo "ok     --tema papel: o :root e o link do HTML final têm os valores de temas/papel.json"
+else
+  echo "FALHOU --tema papel não chegou ao HTML final: $DT"; tail -5 "$DT/build.log"; falhas=$((falhas + 1))
+fi
+cp "$SK/modelos/06-raias/_src/06-abertura-de-conta.json" "$DT/_src/"
+AI_DIAGRAMS_TEMA=papel python3 "$SK/scripts/gerar_raias.py" "$DT/_src/06-abertura-de-conta.json" > /dev/null
+if grep -q '<meta name="tema" content="papel">' "$DT/_src/06-abertura-de-conta.html" \
+   && grep -q 'family=Public+Sans' "$DT/_src/06-abertura-de-conta.html"; then
+  echo "ok     AI_DIAGRAMS_TEMA=papel: o gerador grava a meta e o link do tema no fonte"
+else
+  echo "FALHOU AI_DIAGRAMS_TEMA não chegou ao fonte gerado: $DT/_src/06-abertura-de-conta.html"; falhas=$((falhas + 1))
+fi
+python3 -c 'import json,sys; t=json.load(open(sys.argv[1])); del t["cores"]["acento"]; json.dump(t,open(sys.argv[2],"w"))' \
+  "$SK/temas/papel.json" "$DT/incompleto.json"
+espera "TEMA-INCOMPLETO: falta cores.acento" python3 "$SK/scripts/build.py" "$DT/_src/05-comparacao-mensageria.html" --tema "$DT/incompleto.json"
+espera "TEMA-INCOMPLETO: falta cores.acento" node "$SK/der/der-montar.mjs" "$SK/modelos/03-der-schema/_src/der-conta.layout.mjs" --tema "$DT/incompleto.json"
+espera TEMA-INEXISTENTE python3 "$SK/bpmn/gerar_bpmn.py" "$SK/modelos/08-bpmn/_src/08-contestacao-pagamento.json" --tema nao-existe
+sed "s#/\*ESTILO\*/#/*ESTILO*/ .nota{font-family:'Inter',sans-serif}#" "$SK/modelos/05-tabela-comparacao/_src/05-comparacao-mensageria.html" > "$DC/_src/fonte.html"
+espera FONTE-FORA-DO-TEMA python3 "$SK/scripts/poster_lint.py" --static "$DC/_src/fonte.html"
+
 # --fix: um badge deslocado 18px da seta reprova, o --fix o leva de volta, e o lint zera
 D="$(mktemp -d)"; mkdir -p "$D/_src"
 sed 's#left:355px;top:212px">3#left:355px;top:230px">3#' "$SK/modelos/01-arquitetura-aws/_src/01-api-pagamentos.html" > "$D/_src/badge.html"

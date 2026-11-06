@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Gera BPMN 2.0 com BPMNDI a partir de um modelo JSON, mais o viewer e o PNG.
 
-Uso: python3 gerar_bpmn.py <modelo.json> [--out DIR] [--so-bpmn]
+Uso: python3 gerar_bpmn.py <modelo.json> [--out DIR] [--so-bpmn] [--tema NOME|caminho.json]
 
 Saída (na pasta pai quando o modelo está em _src/, senão ao lado dele):
   <nome>.bpmn  editável no Camunda Modeler ou em demo.bpmn.io
@@ -35,12 +35,12 @@ NS = dict(bpmn='http://www.omg.org/spec/BPMN/20100524/MODEL',
           xsi='http://www.w3.org/2001/XMLSchema-instance')
 for k,v in NS.items(): E.register_namespace(k,v)
 
-# Cores do tema, iguais às de temas/ai-diagrams.json (conferir_tema.py confere). O CSS do viewer usa var(--…) e recebe estes valores
-# num :root; o XML guarda o valor direto, porque o bpmn-js grava bioc:fill e bioc:stroke como
-# atributo SVG, que não aceita var().
-TEMA = {'tinta': '#111827', 'apoio': '#374151', 'cinza': '#6B7280', 'zona': '#F3F4F6', 'papel': '#FFFFFF',
-        'acento': '#14B8A6', 'der-versionada': '#FEF08A', 'der-dominio-fundo': '#D9F99D'}
-TEMA_CSS = ':root{' + ';'.join('--%s:%s' % kv for kv in TEMA.items()) + '}'
+# Cores e fontes vêm do tema (scripts/tema.py: --tema, AI_DIAGRAMS_TEMA ou ai-diagrams). O CSS do viewer
+# usa var(--…) e recebe o :root do tema; o XML guarda o valor direto, porque o bpmn-js grava bioc:fill e
+# bioc:stroke como atributo SVG, que não aceita var(). O tema só muda cor e fonte: a geometria (DI) é a mesma.
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts'))
+import tema as _tema
+TEMA = {}
 def tag(p,n): return '{'+NS[p]+'}'+n
 def sub(parent, n, attrs=None, text=None, p='bpmn'):
     e=E.SubElement(parent,tag(p,n),{k:str(v) for k,v in (attrs or {}).items()})
@@ -295,20 +295,20 @@ VIEWER = '''<!doctype html>
 <title>__TITULO__</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+__FONTES__
 <style>__BPMN_CSS__</style>
 <style>__TEMA__
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'IBM Plex Sans',Arial,sans-serif;background:var(--papel);color:var(--tinta)}
+body{font-family:var(--fonte-texto);background:var(--papel);color:var(--tinta)}
 .page{padding:36px 48px 28px;width:__LARGURA__px}
-.hdr{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--apoio);font-weight:500;text-transform:uppercase}
-.kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;font-weight:500;text-transform:uppercase;color:var(--cinza);margin-top:26px}
+.hdr{display:flex;justify-content:space-between;font-family:var(--fonte-mono);font-size:11px;letter-spacing:.15em;color:var(--apoio);font-weight:500;text-transform:uppercase}
+.kicker{font-family:var(--fonte-mono);font-size:11px;letter-spacing:.28em;font-weight:500;text-transform:uppercase;color:var(--cinza);margin-top:26px}
 .kicker .sq{color:var(--acento)}
 h1{font-size:38px;font-weight:600;letter-spacing:-.025em;line-height:1.05;margin-top:10px}
 .sub{font-size:15px;color:var(--apoio);margin-top:10px;max-width:900px;line-height:1.5}
 #canvas{width:__CW__px;height:__CH__px;margin-top:24px}
-.foot{margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--cinza)}
-.djs-label{font-family:'IBM Plex Sans',Arial,sans-serif!important}
+.foot{margin-top:18px;font-family:var(--fonte-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--cinza)}
+.djs-label{font-family:var(--fonte-texto)!important}
 </style></head><body>
 <div class="page">
 <div class="hdr"><span>__CAB_E__</span><span>__CAB_D__</span></div>
@@ -321,7 +321,7 @@ h1{font-size:38px;font-weight:600;letter-spacing:-.025em;line-height:1.05;margin
 <script>__BPMN_JS__</script>
 <script>
 const xml = __BPMN_DATA__;
-const viewer = new BpmnJS({container:'#canvas',textRenderer:{defaultStyle:{fontFamily:'IBM Plex Sans, Arial, sans-serif',fontSize:13},externalStyle:{fontFamily:'IBM Plex Sans, Arial, sans-serif',fontSize:12}}});
+const viewer = new BpmnJS({container:'#canvas',textRenderer:{defaultStyle:{fontFamily:__FONTE_JS__,fontSize:13},externalStyle:{fontFamily:__FONTE_JS__,fontSize:12}}});
 viewer.importXML(xml).then(function (r) {
   viewer.get('canvas').zoom('fit-viewport');
   document.body.setAttribute('data-importacao', 'ok ' + r.warnings.length + ' ' + r.warnings.map(function (w) { return w.message; }).join(' | '));
@@ -353,6 +353,9 @@ def find_chrome():
 
 
 def main():
+    flag_tema, sys.argv[1:] = _tema.tirar_flag(sys.argv[1:])
+    tm = _tema.tema(flag_tema)
+    TEMA.update({k: v for k, v in _tema.tokens(tm)})
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     out_dir = None
     if '--out' in sys.argv:
@@ -371,7 +374,8 @@ def main():
     xml, cw, ch = emitir(m)
     aqui = os.path.dirname(os.path.abspath(__file__))
     largura = cw + 96
-    pagina = (VIEWER.replace('__TEMA__', TEMA_CSS).replace('__BPMN_CSS__', open(os.path.join(aqui, 'vendor', 'bpmn-js.css')).read())
+    pagina = (VIEWER.replace('__TEMA__', _tema.css_root(tm)).replace('__FONTES__', _tema.link_fontes(tm))
+              .replace('__FONTE_JS__', json.dumps(_tema.pilha_texto(tm).replace("'", ''))).replace('__BPMN_CSS__', open(os.path.join(aqui, 'vendor', 'bpmn-js.css')).read())
               .replace('__BPMN_JS__', open(os.path.join(aqui, 'vendor', 'bpmn-navigated-viewer.js')).read())
               .replace('__BPMN_DATA__', json.dumps(xml, ensure_ascii=False).replace('</', '<\\/'))
               .replace('__TITULO__', esc(m['title'])).replace('__SUB__', esc(m.get('subtitle', '')))

@@ -84,6 +84,16 @@ Nunca deduza o cliente, o autor ou a versão do caminho da pasta, do nome do rep
 
 Quando não há como perguntar (execução não interativa, como `claude -p` ou o Kiro sem interação, ou uso por knowledge base), siga sem cliente, com rodapé e versão padrão, e diga isso na entrega.
 
+### Tema: cor e fonte
+
+O tema é um json com cores e fontes. A skill traz `temas/ai-diagrams.json` (padrão) e `temas/papel.json` (papel creme, tinta marrom, Public Sans). Todo comando aceita `--tema <nome ou caminho.json>`: nome resolve para `temas/<nome>.json` desta skill; caminho aponta para um json em qualquer pasta.
+
+1. **O usuário nomeia um tema ou passa um json:** use-o com `--tema` em todo comando do diagrama, no gerador e no gate.
+2. **O projeto já tem tema** (`diagramas/_src/tema.json`, ou a variável `AI_DIAGRAMS_TEMA` definida): use-o sem perguntar, com `--tema diagramas/_src/tema.json`.
+3. **Nenhum dos dois:** inclua o tema na mesma pergunta de cliente, rodapé e versão, oferecendo o padrão `ai-diagrams` e os nomes que existem em `temas/`. Sem como perguntar, siga no padrão.
+
+Para criar o tema do usuário (cor da marca, outra família), copie `temas/ai-diagrams.json` para `diagramas/_src/tema.json` do projeto e troque só os valores: todas as chaves de `cores`, `cores_derivadas`, `paleta_der` e `fontes` ficam. Cor em `#RRGGBB`; fonte é nome de família do Google Fonts. Nunca mude cor ou fonte editando o CSS. Tema com chave faltando reprova com `TEMA-INCOMPLETO: falta <grupo>.<chave>`: complete o json, não contorne. O gerador grava o tema escolhido no fonte (`<meta name="tema">`), e o gate usa esse tema quando não recebe `--tema`. Trocar o tema não muda a geometria: não mexa em coordenada por causa dele.
+
 ### Registro do texto
 
 O texto que abre o diagrama serve só para situar o leitor no desenho. É estritamente técnico:
@@ -93,11 +103,11 @@ O texto que abre o diagrama serve só para situar o leitor no desenho. É estrit
 - **Faixa de fechamento** (conceitual): um fato do fluxo ou o que ficou fora do desenho, não uma conclusão de venda.
 - Proibido: adjetivo de valor, promessa, benefício, metáfora, frase de efeito e antítese. O gate reprova esses termos com `TEXTO-MARKETING` (lista em `scripts/texto_tecnico.py`); o que a lista não pega, você confere ao ler o PNG. Termo técnico em inglês como o mercado usa (bucket, dead-letter topic, consumer group, deploy); nada de tradução inventada. Texto de caixa curto; a explicação vai nos passos ou nas seções.
 
-**Cor só do tema.** O fonte nunca escreve hexadecimal nem `rgb()`, nem em estilo local: usa `var(--tinta)`, `var(--apoio)`, `var(--cinza)`, `var(--zona)`, `var(--papel)`, `var(--acento)`, `var(--risco)` e `var(--risco-fundo)`, declarados no `:root` do CSS base com os valores de `temas/ai-diagrams.json`. Em SVG a cor vai em `style` (`style="stroke:var(--apoio)"`), porque atributo `stroke` e `fill` não aceita `var()`. O gate reprova cor literal com `COR-FORA-DO-TEMA`.
+**Cor e fonte só do tema.** O fonte nunca escreve hexadecimal nem `rgb()`, nem em estilo local: usa `var(--tinta)`, `var(--apoio)`, `var(--cinza)`, `var(--zona)`, `var(--papel)`, `var(--acento)`, `var(--risco)` e `var(--risco-fundo)`, que o gate declara no `:root` com os valores do tema escolhido. Fonte só por `var(--fonte-texto)` e `var(--fonte-mono)`; família escrita no fonte reprova com `FONTE-FORA-DO-TEMA`. Em SVG a cor vai em `style` (`style="stroke:var(--apoio)"`), porque atributo `stroke` e `fill` não aceita `var()`. O gate reprova cor literal com `COR-FORA-DO-TEMA`.
 
 ## 5. Comandos por tipo
 
-`<skill>` é a pasta desta skill.
+`<skill>` é a pasta desta skill. Com tema escolhido, acrescente `--tema <nome ou caminho.json>` a cada comando abaixo (seção "Tema: cor e fonte").
 
 **Poster, fluxo com passos e tabela**
 ```bash

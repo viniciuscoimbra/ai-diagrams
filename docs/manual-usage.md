@@ -226,6 +226,28 @@ python3 "$SKILL"/scripts/build.py "$PROJECT"/diagramas/_src/05-comparacao-mensag
 
 **Expected:** two lines starting with `OK`, the last one ending in `05-comparacao-mensageria.png`.
 
+## Themes
+
+Every command on this page takes `--tema <name or path.json>`. A name resolves to `$SKILL/temas/<name>.json`; a path points to a theme JSON in any folder. Without the flag, the command uses the `<meta name="tema">` of the source, then the variable `AI_DIAGRAMS_TEMA`, then the default `ai-diagrams`.
+
+1. Build any diagram in the `papel` theme:
+```bash
+python3 "$SKILL/scripts/build.py" "$PROJECT/diagramas/_src/01-my-architecture.html" --tema papel
+```
+
+2. Create your own theme from the default and use it in every command of the session:
+```bash
+cp "$SKILL/temas/ai-diagrams.json" "$PROJECT/diagramas/_src/tema.json"
+```
+
+```bash
+export AI_DIAGRAMS_TEMA="$PROJECT/diagramas/_src/tema.json"
+```
+
+Edit the values in `cores`, `cores_derivadas`, `paleta_der` and `fontes`, and keep every key. A generator run with a theme (`gerar_raias.py`, `gerar_sequencia.py`, `gerar_estados.py`, `der-montar.mjs`, `der-visao-geral.mjs`) writes it into the source as `<meta name="tema">`, so the build that follows uses the same theme.
+
+**Expected:** the same `OK` lines as without the theme. A theme with a missing key stops with `TEMA-INCOMPLETO: falta <group>.<key>` before Chrome opens.
+
 ## When the gate fails
 
 The gate prints the defect and its position, and no PNG is written. Fix the source and run the same command again. The defect codes and what each one checks are listed in [how-it-works.md](how-it-works.md).

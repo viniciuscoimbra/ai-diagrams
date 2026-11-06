@@ -3,13 +3,15 @@
 
 Uso: python3 conceitual.py <fonte.html> [--altura N|auto] [--largura N] [--escala N]
 (largura: 1400px, ou a do <meta name="largura"> do fonte)
-                           [--exibicao N] [--out DIR] [--so-lint]
+                           [--exibicao N] [--out DIR] [--so-lint] [--tema NOME|caminho.json]
 
 Diferença para o poster_lint.py: aqui não existe topologia AWS, nem passos
 numerados obrigatórios, nem badge preso à seta. A régua é outra.
 
 CSS: _estilo-conceitual.css ou _estilo.css na pasta do fonte; senão, o
-assets/estilo-conceitual.css desta skill. --altura auto mede a altura real de
+assets/estilo-conceitual.css desta skill. Tema: --tema, <meta name="tema"> do fonte,
+AI_DIAGRAMS_TEMA ou ai-diagrams, nessa ordem (scripts/tema.py); troca o :root de tokens
+e o link das fontes, e o lint mede com as fontes do tema. --altura auto mede a altura real de
 .page no Chrome e usa essa altura na captura (default).
 
 Checks (todos medidos no Chrome, mesmas condições do screenshot):
@@ -27,6 +29,7 @@ Checks (todos medidos no Chrome, mesmas condições do screenshot):
   COLINEAR       duas setas diferentes correndo na mesma linha (tol 4px, trecho > 8px).
   TEXTO-MARKETING  título, subtítulo, kicker ou faixa com vocabulário de venda (texto_tecnico.py).
   COR-FORA-DO-TEMA hexadecimal ou rgb() literal no fonte; cor só por var(--token) (cor_tema.py).
+  FONTE-FORA-DO-TEMA font-family com família literal; fonte só por var(--fonte-texto|mono).
 
 Exit code 1 em qualquer problema. O build só gera PNG com lint zerado.
 """
@@ -94,7 +97,8 @@ def find_chrome():
     sys.exit('Chrome não encontrado. Aponte POSTER_CHROME.')
 
 
-def inline_css(fonte):
+def inline_css(fonte, tm):
+    import tema
     src = open(fonte).read()
     if '/*ESTILO*/' not in src:
         sys.exit('SEM-ESTILO: o fonte não tem o marcador /*ESTILO*/ dentro do <style>; sem ele o PNG sai sem o design system. Copie o <head> do modelo do tipo.')
@@ -102,10 +106,10 @@ def inline_css(fonte):
     for nome in ('_estilo-conceitual.css', '_estilo.css'):
         p = os.path.join(d, nome)
         if os.path.exists(p):
-            return src.replace('/*ESTILO*/', open(p).read())
+            return tema.aplicar(src, open(p).read(), tm)
     skill = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                          'assets', 'estilo-conceitual.css')
-    return src.replace('/*ESTILO*/', open(skill).read())
+    return tema.aplicar(src, open(skill).read(), tm)
 
 
 def inline_icones(src):
@@ -232,6 +236,8 @@ def lint(data, fonte_txt, exibicao, piso, piso_rot):
     import cor_tema
     for lit, linha in cor_tema.cores_fora(fonte_txt):
         iss.append(('COR-FORA-DO-TEMA %s na linha %d: %s' % (lit, linha, cor_tema.MENSAGEM),))
+    for dec, linha in cor_tema.fontes_fora(fonte_txt):
+        iss.append(('FONTE-FORA-DO-TEMA %s na linha %d: %s' % (dec, linha, cor_tema.MENSAGEM_FONTE),))
     bx = data['boxes']
     bodyw = data['body'] or 1
     escala = exibicao / bodyw
@@ -364,6 +370,9 @@ def resumo_escala(data, escala):
 
 
 def main():
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import tema
+    flag_tema, sys.argv[1:] = tema.tirar_flag(sys.argv[1:])
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     if not args:
         sys.exit(__doc__)
@@ -385,9 +394,9 @@ def main():
     if out_dir is None:
         out_dir = os.path.dirname(src_dir) if os.path.basename(src_dir) == '_src' else src_dir
 
+    tm = tema.tema(flag_tema, open(fonte).read(), src_dir)
     chrome = find_chrome()
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    html = inline_icones(inline_css(fonte))
+    html = inline_icones(inline_css(fonte, tm))
     if altura == 'auto':
         altura = medir_altura(html, chrome, largura)
         if altura is None:

@@ -99,7 +99,7 @@ O build falha com lista clara se um `aws://` não existir; corrigir o nome e rod
 
 ## Paleta
 
-A cor vem do tema, nunca de literal no fonte. Tokens: `--tinta` (texto principal), `--apoio` (texto de apoio e setas), `--cinza`, `--zona` (fundo de zona), `--papel`, `--acento` (cor de acento, nunca cor de texto), `--risco` sobre `--risco-fundo`. Os valores do tema estão em `temas/ai-diagrams.json`; o `:root` de `assets/estilo.css` os declara. Hexadecimal ou `rgb()` no fonte reprova com `COR-FORA-DO-TEMA`, inclusive em estilo local. Fontes: IBM Plex Sans (texto) e IBM Plex Mono (rótulos técnicos, caps com letter-spacing).
+A cor vem do tema, nunca de literal no fonte. Tokens: `--tinta` (texto principal), `--apoio` (texto de apoio e setas), `--cinza`, `--zona` (fundo de zona), `--papel`, `--acento` (cor de acento, nunca cor de texto), `--risco` sobre `--risco-fundo`. Os valores vêm do tema escolhido (`--tema`, padrão `temas/ai-diagrams.json`); o gate gera o `:root` a partir dele (`scripts/tema.py`). Hexadecimal ou `rgb()` no fonte reprova com `COR-FORA-DO-TEMA`, inclusive em estilo local. Fontes: `var(--fonte-texto)` para texto e `var(--fonte-mono)` para rótulos técnicos (caps com letter-spacing); no tema padrão, IBM Plex Sans e IBM Plex Mono. Família escrita no fonte reprova com `FONTE-FORA-DO-TEMA`.
 
 ## Convenções de nome
 

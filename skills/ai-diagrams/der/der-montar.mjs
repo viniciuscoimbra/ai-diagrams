@@ -2,19 +2,21 @@
 // A posição de cada tabela, a raia de cada seta e o ponto de chegada são escritos à mão no arquivo de layout
 // (der-<schema>.layout.mjs); aqui só se traduz isso em caixas e caminhos ortogonais.
 // Notação pé de galinha: na ponta da FK, "zero ou muitos"; na ponta da chave, "um" (FK obrigatória) ou "zero ou um" (FK opcional).
-// Uso: node der-montar.mjs caminho/der-<schema>.layout.mjs
+// Uso: node der-montar.mjs caminho/der-<schema>.layout.mjs [--tema NOME|caminho.json]
 // O layout aponta o modelo lógico (campo modelo, relativo ao layout). A saída der-<schema>.html é gravada ao
 // lado do layout; o build.py da skill gera o PNG a partir dela.
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { carregar, obrigatoria, caixa, yColuna, altura, LARG, CSS_LOCAL, CANDY, TIPO, nome, SEM_SETA, SIGNIFICADO, chaves, tabela, LEVES, caixaLeve, HLEVE, fronteira, textoLeve, DESENHADAS, caixaExterna } from './der-tabelas.mjs';
+import { tirarTema, temaDoGerador, carregar, obrigatoria, caixa, yColuna, altura, LARG, CSS_LOCAL, CANDY, TIPO, nome, SEM_SETA, SIGNIFICADO, chaves, tabela, LEVES, caixaLeve, HLEVE, fronteira, textoLeve, DESENHADAS, caixaExterna } from './der-tabelas.mjs';
 
-if (!process.argv[2]) { console.error('uso: node der-montar.mjs caminho/der-<schema>.layout.mjs'); process.exit(1); }
-const layoutPath = path.resolve(process.argv[2]);
+const ARGS = tirarTema(process.argv.slice(2));
+if (!ARGS.resto[0]) { console.error('uso: node der-montar.mjs caminho/der-<schema>.layout.mjs [--tema NOME|caminho.json]'); process.exit(1); }
+const layoutPath = path.resolve(ARGS.resto[0]);
 const aqui = path.dirname(layoutPath);
 const L = (await import(pathToFileURL(layoutPath).href)).default;
 const M = carregar(path.resolve(aqui, L.modelo || 'modelo.json'));
+const TEMA = temaDoGerador(ARGS.valor, path.join(aqui, `der-${L.schema}.html`));
 
 for (const [c, motivo] of Object.entries(L.semSeta || {})) SEM_SETA.set(c, motivo);
 const pos = L.tabelas;
@@ -127,7 +129,7 @@ const html = `<!DOCTYPE html>
 <title>DER · ${L.schema}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+${TEMA.link}${TEMA.meta ? '\n' + TEMA.meta : ''}
 <style>
 /*ESTILO*/
 ${CSS_LOCAL}

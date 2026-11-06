@@ -96,10 +96,22 @@ do antifraude em tempo real, com passos numerados.
 
 A IA escolhe o tipo e pergunta antes de desenhar quando o pedido é ambíguo. Depois grava o fonte em `diagramas/_src/`, roda o gate até passar e salva o PNG em `diagramas/`.
 
+## Temas
+
+Cor e fonte vêm de um arquivo de tema. A skill traz dois em `skills/ai-diagrams/temas/`: `ai-diagrams` (o padrão) e `papel` (papel creme, tinta marrom-escura, Public Sans). Para criar o seu, copie `temas/ai-diagrams.json`, troque os valores de `cores`, `cores_derivadas`, `paleta_der` (cores do DER) e `fontes` (nome da família no Google Fonts) e mantenha todas as chaves: chave faltando para o build com `TEMA-INCOMPLETO`. Depois passe o tema em qualquer comando, ou defina uma vez:
+
+```bash
+python3 skills/ai-diagrams/scripts/build.py diagramas/_src/01-api.html --tema papel
+python3 skills/ai-diagrams/scripts/build.py diagramas/_src/01-api.html --tema ./meu-tema.json
+export AI_DIAGRAMS_TEMA=./meu-tema.json
+```
+
+Nome resolve para `temas/<nome>.json`; caminho pode apontar para qualquer pasta. O tema muda cor e fonte, nunca a posição de caixa e seta. Detalhes em [docs/how-it-works.md](docs/how-it-works.md#5-theme), em inglês. No pedido à IA, diga o nome do tema ou anexe o json.
+
 ## Modelos
 
 A qualidade do desenho depende do modelo. Modelo fraco erra coordenadas, gasta mais voltas do gate e pode não zerar. Use um modelo de linha principal. A tabela tipo de diagrama × modelo, só com o que foi medido, está em [docs/models.md](docs/models.md). Em resumo: no Claude Code, o Sonnet 4.5 passou no gate nos oito tipos originais; o C4 reprovou três vezes no Sonnet 4.5 e passou no Opus 5.5. No Kiro CLI só parte dos tipos foi medida, e o Codex CLI não foi medido neste repositório.
 
 ## Licença
 
-MIT, ver [LICENSE](LICENSE). As partes de terceiros, que são os ícones AWS, o bpmn-js, o elkjs e as fontes IBM Plex, seguem os próprios termos, listados no [README em inglês](README.md#license).
+MIT, ver [LICENSE](LICENSE). As partes de terceiros, que são os ícones AWS, o bpmn-js, o elkjs e as fontes (IBM Plex no tema padrão, Public Sans e Source Code Pro no tema `papel`), seguem os próprios termos, listados no [README em inglês](README.md#license).

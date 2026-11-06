@@ -69,7 +69,7 @@ The router in `skills/ai-diagrams/SKILL.md` picks the type from the request.
 | Python 3.9+ | runs `build.py`, the lints and the generators |
 | `diagrams` pip package | provides the official AWS icons as PNG; the library itself never runs |
 | Node 18+ | runs the ER and matrix generators and the elkjs layout of the state machine |
-| Network access at render time | the IBM Plex Sans and IBM Plex Mono fonts load from Google Fonts |
+| Network access at render time | the theme fonts load from Google Fonts (IBM Plex Sans and IBM Plex Mono in the default theme) |
 
 `build.py` finds the icons in `<site-packages>/resources/aws` and Chrome in the usual macOS and Linux locations. To use other locations, export `POSTER_ICONBASE` or `POSTER_CHROME`.
 
@@ -80,10 +80,10 @@ Program output and defect codes are in Portuguese. This page quotes them as prin
 ### `skills/ai-diagrams/scripts/build.py`
 
 ```bash
-python3 build.py <source.html> [height-px] [--out DIR]
+python3 build.py <source.html> [height-px] [--out DIR] [--tema NAME|path.json]
 ```
 
-1. Stops with `SEM-ESTILO` if the source has no `/*ESTILO*/` marker. Otherwise injects the CSS at the marker. It uses `_estilo.css` or `estilo.css` from the source folder if present, otherwise `skills/ai-diagrams/assets/estilo.css`.
+1. Stops with `SEM-ESTILO` if the source has no `/*ESTILO*/` marker. Otherwise injects the CSS at the marker. It uses `_estilo.css` or `estilo.css` from the source folder if present, otherwise `skills/ai-diagrams/assets/estilo.css`. The token `:root` of that CSS is replaced by the one of the selected theme, and the Google Fonts link of the source by the one of the theme families (section 5).
 2. Replaces each `aws://category/file.png` with the icon PNG in base64.
 3. Runs the full lint.
 4. Calls Chrome only if the lint passes.
@@ -106,7 +106,7 @@ Reads the source and checks:
 6. Measured in Chrome: nothing goes past the right edge of the page, where the capture cuts (`TRANSBORDA`).
 7. Title, subtitle, kicker and bands use technical wording, without marketing vocabulary (`TEXTO-MARKETING`). The word list is in `skills/ai-diagrams/scripts/texto_tecnico.py`.
 8. In a C4 diagram, every `.bchip.c4` has a type (`.bn`) and a name (`.bt`), and the page has the `.c4leg` legend (`C4-SEM-TIPO`, `C4-SEM-LEGENDA`). The format is in `skills/ai-diagrams/references/c4.md`.
-9. Colors come only from the theme: a hex, `rgb()` or `hsl()` literal in the source fails with `COR-FORA-DO-TEMA` (see section 5).
+9. Colors and fonts come only from the theme: a hex, `rgb()` or `hsl()` literal in the source fails with `COR-FORA-DO-TEMA`, and a `font-family` with a literal family name fails with `FONTE-FORA-DO-TEMA` (see section 5).
 
 A document without `<svg class="edges">`, such as the matrix, skips checks 3 and 4. If Chrome cannot run, the measured checks report `MEDICAO-FALHOU` (measurement failed). Exit code 1 on any issue.
 
@@ -136,6 +136,7 @@ The model and layout format is in `skills/ai-diagrams/references/der.md`.
 | `SETA-SOBRE-TEXTO` | arrow segment crossing a text box |
 | `COLINEAR` | two different arrows on the same line |
 | `TEXTO-MARKETING` | marketing vocabulary in title, subtitle, kicker or bands |
+| `COR-FORA-DO-TEMA`, `FONTE-FORA-DO-TEMA` | literal color or font family in the source |
 
 On success it prints `lint 0` and two `OK` lines. `--so-lint` runs the checks without capturing. The format is in `skills/ai-diagrams/references/raias.md`.
 
@@ -150,7 +151,7 @@ Before drawing, checks the state graph and rejects `SEM-INICIAL` (no initial sta
 ### `skills/ai-diagrams/bpmn/gerar_bpmn.py`
 
 ```bash
-python3 gerar_bpmn.py <modelo.json> [--out DIR] [--so-bpmn]
+python3 gerar_bpmn.py <modelo.json> [--out DIR] [--so-bpmn] [--tema NAME|path.json]
 ```
 
 Reads a JSON model (lanes, nodes with column and row, connections), places the shapes and routes the connections in Manhattan style around shapes and labels. It writes BPMN 2.0 with BPMNDI, a self-contained bpmn-js viewer and a PNG. The gate rejects with `BPMN REPROVOU` and writes nothing:
@@ -167,8 +168,24 @@ The bpmn-js bundle is in `skills/ai-diagrams/bpmn/vendor/`, with its license in 
 
 ## 5. Theme
 
-Every color is a token. The values live in `skills/ai-diagrams/temas/ai-diagrams.json` and are declared in the `:root` block of `skills/ai-diagrams/assets/estilo.css` and `estilo-conceitual.css` (and in the `TEMA` dictionary of `gerar_bpmn.py`). Sources and generators use only `var(--token)`: `--tinta` (main text), `--apoio` (secondary text and arrows), `--cinza`, `--zona`, `--papel`, `--acento`, `--risco` on `--risco-fundo`, plus the C4 and ER tokens. In SVG the color goes in `style` (`style="stroke:var(--apoio)"`), because the `stroke` and `fill` attributes do not accept `var()`. `python3 skills/ai-diagrams/scripts/conferir_tema.py` checks that the CSS and the generators match the theme file (`TOKEN-DIVERGE`) and that no literal color is left outside the theme (`COR-FORA-DO-TEMA`). To change the look, edit the theme file and the matching `:root` values, then run it.
+Every color and both font families are tokens. A theme is one JSON file: `skills/ai-diagrams/temas/ai-diagrams.json` (the default) and `temas/papel.json` (cream paper, dark brown ink, petrol-blue accent, Public Sans and Source Code Pro) ship with the skill. Required keys: `cores` (`tinta`, `apoio`, `cinza`, `zona`, `papel`, `acento`, `risco`, `risco_fundo`), `cores_derivadas`, `paleta_der` and `fontes` (`texto`, `mono`). Colors are `#RRGGBB`; fonts are Google Fonts family names with weights 400 to 700. The stylesheets set tight line heights (1.2 in card titles), so a family with tall vertical metrics can overflow its box and fail the gate with `TRANSBORDA-Y`: Source Sans 3 does, by 2px, in the cards model. Before adopting a theme, build the reference models with it in a copy of `skills/ai-diagrams/modelos/` (`AI_DIAGRAMS_TEMA=<theme>` applies to every command).
 
+**Selection.** Every command takes the same option, in this order of precedence:
+
+1. `--tema <name or path.json>`;
+2. `<meta name="tema" content="...">` in the HTML source (the generators write it when a theme was chosen; a path there is relative to the source folder);
+3. the environment variable `AI_DIAGRAMS_TEMA`;
+4. the default, `ai-diagrams`.
+
+A name resolves to `skills/ai-diagrams/temas/<name>.json`. A value that ends in `.json` or contains a slash is a path to a JSON file in any folder. The commands are `build.py`, `poster_lint.py`, `conceitual.py`, `gerar_raias.py`, `gerar_sequencia.py`, `gerar_estados.py`, `bpmn/gerar_bpmn.py`, `der/der-montar.mjs` and `der/der-visao-geral.mjs`.
+
+**One reader.** `skills/ai-diagrams/scripts/tema.py` is the only code that reads the JSON. It produces the `:root` with every color token, the `-rgb` channel tokens, `--fonte-texto` and `--fonte-mono`, and the Google Fonts link of the two families. The gates (`build.py`, `poster_lint.py`, `conceitual.py`) replace the token `:root` of the base CSS with it and swap the font link of the source, so the lint measures with the same fonts as the PNG. The BPMN generator writes the theme colors into `bioc:fill`/`bioc:stroke` and the viewer CSS. The Node generators call `tema.py` for the link and the meta. The `:root` in `estilo.css` and `estilo-conceitual.css` is only the fallback of the default theme.
+
+**Failures.** A theme that is missing a key stops the command before Chrome opens, with the key in the message: `TEMA-INCOMPLETO: falta cores.acento`. An unknown name or path stops with `TEMA-INEXISTENTE`, a color outside `#RRGGBB` with `TEMA-INVALIDO`. There is no silent fallback.
+
+**Geometry.** A theme changes color and font only. Box positions, arrow paths and BPMN coordinates come from the source or from the generator, which estimates text width with fixed constants, so they are the same in every theme. Elements sized by their text (header, step list, table rows) follow the font metrics of the theme.
+
+Sources and generators use only `var(--token)`: `--tinta` (main text), `--apoio` (secondary text and arrows), `--cinza`, `--zona`, `--papel`, `--acento`, `--risco` on `--risco-fundo`, plus the C4 and ER tokens, and `var(--fonte-texto)` / `var(--fonte-mono)` for type. In SVG the color goes in `style` (`style="stroke:var(--apoio)"`), because the `stroke` and `fill` attributes do not accept `var()`. `python3 skills/ai-diagrams/scripts/conferir_tema.py` checks that the fallback `:root` of both stylesheets is exactly what `tema.py` produces for the default theme (`TOKEN-DIVERGE`), that no literal color or font family is left in the CSS or the generators (`COR-FORA-DO-TEMA`, `FONTE-FORA-DO-TEMA`), and that every JSON in `temas/` is complete. To change the look of one diagram, pass another theme; to change the default, edit `temas/ai-diagrams.json`, paste the output of `python3 skills/ai-diagrams/scripts/tema.py --css` into both fallback blocks, and run `conferir_tema.py`.
 
 `skills/ai-diagrams/assets/estilo.css` is the single stylesheet for posters, flows, tables, ER diagrams and the matrix. The build injects it. Main classes:
 

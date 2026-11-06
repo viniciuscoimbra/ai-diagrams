@@ -1,0 +1,57 @@
+{
+  "versao_schema": 1,
+  "nome": "papel",
+  "empresa": "",
+  "logo": null,
+  "cores": {
+    "tinta": "#3B2A1E",
+    "apoio": "#5C4636",
+    "cinza": "#8A7563",
+    "zona": "#F1E8D6",
+    "papel": "#FBF6EC",
+    "acento": "#1F6F78",
+    "risco": "#A3341F",
+    "risco_fundo": "#F8E4DC"
+  },
+  "cores_derivadas": {
+    "acento_forte": "#154E55",
+    "cinza_claro": "#D8CBB6",
+    "c4_pessoa_tipo": "#B7A694",
+    "c4_pessoa_desc": "#EDE3D3",
+    "c4_externo": "#EAE0CF",
+    "c4_limite": "#F6EFE2"
+  },
+  "paleta_der": {
+    "der_borda": "#D3C4AC",
+    "der_legenda": "#F6EFE2",
+    "der_linha_par": "#F7F1E6",
+    "der_chave": "#8A5A12",
+    "der_dominio": "#3F6B2A",
+    "der_fora": "#1F5F8B",
+    "der_copia": "#6B3F7A",
+    "der_forte": "#E8B4A0",
+    "der_dependente": "#A9D3CC",
+    "der_associativa": "#C4CBE3",
+    "der_controle": "#D6CCE3",
+    "der_fato": "#EFCFA8",
+    "der_versionada": "#EDE09A",
+    "der_projecao": "#C3DDB8",
+    "der_trilha": "#E2D9CB",
+    "der_dominio_fundo": "#D5E3A8",
+    "der_configuracao": "#B9D6E2",
+    "der_referencia": "#EBD69A",
+    "der_visao": "#E8C3CF",
+    "der_calor": "#C8553D"
+  },
+  "fontes": {
+    "texto": "Public Sans",
+    "mono": "Source Code Pro"
+  },
+  "moldura": {
+    "cabecalho": "{assunto} · {cliente}",
+    "rodape": "{tipo} · {data}",
+    "rodape_direita": "",
+    "classificacao": "",
+    "mostrar_cliente": true
+  }
+}
