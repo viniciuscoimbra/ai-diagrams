@@ -1,0 +1,47 @@
+{
+  "idioma": "pt-BR",
+  "titulo_pagina": "Diagrama importado",
+  "cabecalho": [
+    "Diagrama importado",
+    "V1"
+  ],
+  "kicker": "Importação",
+  "h1": "Diagrama importado",
+  "sub": "Conteúdo do arquivo de entrada. O motor recalcula a disposição dos elementos.",
+  "rodape": [
+    "",
+    "Importação"
+  ],
+  "participantes": [
+    {
+      "id": "app",
+      "nome": "App",
+      "tipo": "ator"
+    },
+    {
+      "id": "api",
+      "nome": "API de pedidos",
+      "tipo": "servico"
+    }
+  ],
+  "mensagens": [
+    {
+      "de": "app",
+      "para": "api",
+      "texto": "Criar pedido",
+      "tipo": "sincrona"
+    },
+    {
+      "de": "api",
+      "para": "api",
+      "texto": "Validar",
+      "tipo": "sincrona"
+    },
+    {
+      "de": "api",
+      "para": "app",
+      "texto": "ID do pedido",
+      "tipo": "resposta"
+    }
+  ]
+}

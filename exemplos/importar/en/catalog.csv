@@ -1,0 +1,3 @@
+Service,Owner,Input,Output,Contract
+Orders,Sales,Cart,Order,orders.v1
+Payments,Finance,Order,Receipt,payments.v1

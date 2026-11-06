@@ -31,6 +31,8 @@ Checks:
    (FONTE-FORA-DO-TEMA; regras em cor_tema.py).
 Tema: --tema <nome ou caminho.json>, <meta name="tema"> do fonte, AI_DIAGRAMS_TEMA ou
 ai-diagrams, nessa ordem (scripts/tema.py). A medição no Chrome usa as fontes do tema.
+Idioma: --idioma pt-BR|en|es, meta idioma, AI_DIAGRAMS_IDIOMA ou pt-BR.
+As verificações estruturais usam classes, sem depender do texto dos rótulos.
 6. Documento sem desenho de setas (sem <svg class="edges">, como a matriz de
    dependencia) nao narra fluxo: os checks 3 e 4 nao se aplicam a ele. Os
    demais continuam valendo.
@@ -574,14 +576,16 @@ def lint_completo(fn, fix=False, static=False, tm=None):
 
 if __name__ == '__main__':
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import tema
+    import tema, idioma
     flag_tema, resto = tema.tirar_flag(sys.argv[1:])
+    flag_idioma, resto = idioma.tirar_flag(resto)
     args = [a for a in resto if not a.startswith('--')]
     fix = '--fix' in resto
     static = '--static' in resto
     total = 0
     for fn in args:
         tm = tema.tema(flag_tema, open(fn).read(), os.path.dirname(os.path.abspath(fn)))
+        idioma.idioma(flag_idioma, fonte_html=open(fn).read())
         iss = lint_completo(fn, fix, static, tm)
         if iss:
             total += len(iss)

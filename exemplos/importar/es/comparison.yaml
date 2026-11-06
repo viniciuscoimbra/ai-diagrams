@@ -1,0 +1,10 @@
+titulo: "Almacenamiento de pedidos"
+subtitulo: "El cliente envía un pedido. El servicio lo revisa y registra."
+opcoes:
+  - "Tabla relacional"
+  - "Colección documental"
+criterios:
+  - nome: "Identificador"
+    valores: ["Clave primaria", "ID del documento"]
+  - nome: "Relación"
+    valores: ["Clave foránea", "Campo de referencia"]

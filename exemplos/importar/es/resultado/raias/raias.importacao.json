@@ -1,0 +1,9 @@
+{
+  "input": "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/es/raias.mmd",
+  "type": "raias",
+  "language": "es",
+  "sources": [
+    "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/es/resultado/raias/_src/raias.html"
+  ],
+  "gate": "passed"
+}

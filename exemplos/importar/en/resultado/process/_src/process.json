@@ -1,0 +1,57 @@
+{
+  "id": "orders",
+  "title": "Order processing",
+  "subtitle": "A customer sends an order. The service checks and records it.",
+  "idioma": "en",
+  "cabecalho": [
+    "Imported diagram",
+    "V1"
+  ],
+  "rodape": " · Import",
+  "lanes": [
+    {
+      "id": "customer",
+      "name": "Customer"
+    },
+    {
+      "id": "service",
+      "name": "Orders"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Request",
+      "type": "startEvent",
+      "lane": "customer",
+      "col": 0,
+      "row": 0
+    },
+    {
+      "id": "check",
+      "name": "Check order",
+      "type": "task",
+      "lane": "service",
+      "col": 1,
+      "row": 0
+    },
+    {
+      "id": "end",
+      "name": "Completed",
+      "type": "endEvent",
+      "lane": "service",
+      "col": 2,
+      "row": 0
+    }
+  ],
+  "flows": [
+    {
+      "from": "start",
+      "to": "check"
+    },
+    {
+      "from": "check",
+      "to": "end"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build de poster de arquitetura: inline de CSS e ícones aws://, PNG via Chrome headless.
 
-Uso: python3 build.py <fonte.html> [altura-px] [--out DIR] [--tema NOME|caminho.json]
+Uso: python3 build.py <fonte.html> [altura-px] [--out DIR] [--tema NOME|caminho.json] [--idioma pt-BR|en|es]
 
 Sem altura, usa a altura real da página medida no Chrome. Altura menor que a
 página reprova (CORTADO), porque cortaria o rodapé.
@@ -75,8 +75,9 @@ def find_css(src_dir):
 
 def main():
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import tema
+    import tema, idioma
     flag_tema, sys.argv[1:] = tema.tirar_flag(sys.argv[1:])
+    flag_idioma, sys.argv[1:] = idioma.tirar_flag(sys.argv[1:])
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     out_dir = None
     if '--out' in sys.argv:
@@ -92,11 +93,12 @@ def main():
 
     src = open(fonte).read()
     tm = tema.tema(flag_tema, src, src_dir)
+    tr = idioma.idioma(flag_idioma, fonte_html=src)
     iconbase = find_iconbase()
     chrome = find_chrome()
     if '/*ESTILO*/' not in src:
         sys.exit('SEM-ESTILO: o fonte não tem o marcador /*ESTILO*/ dentro do <style>; sem ele o PNG sai sem o design system. Copie o <head> do modelo do tipo.')
-    src = tema.aplicar(src, open(find_css(src_dir)).read(), tm)
+    src = idioma.aplicar(tema.aplicar(src, open(find_css(src_dir)).read(), tm), tr)
 
     _cache = {}
     faltando = []

@@ -1,0 +1,57 @@
+{
+  "id": "orders",
+  "title": "Registro de pedidos",
+  "subtitle": "O cliente envia um pedido. O serviço confere e registra.",
+  "idioma": "pt-BR",
+  "cabecalho": [
+    "Diagrama importado",
+    "V1"
+  ],
+  "rodape": " · Importação",
+  "lanes": [
+    {
+      "id": "customer",
+      "name": "Cliente"
+    },
+    {
+      "id": "service",
+      "name": "Pedidos"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Solicitação",
+      "type": "startEvent",
+      "lane": "customer",
+      "col": 0,
+      "row": 0
+    },
+    {
+      "id": "check",
+      "name": "Conferir pedido",
+      "type": "task",
+      "lane": "service",
+      "col": 1,
+      "row": 0
+    },
+    {
+      "id": "end",
+      "name": "Concluído",
+      "type": "endEvent",
+      "lane": "service",
+      "col": 2,
+      "row": 0
+    }
+  ],
+  "flows": [
+    {
+      "from": "start",
+      "to": "check"
+    },
+    {
+      "from": "check",
+      "to": "end"
+    }
+  ]
+}

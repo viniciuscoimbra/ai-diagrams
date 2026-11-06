@@ -1,0 +1,9 @@
+{
+  "input": "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/pt-BR/er.mmd",
+  "type": "der",
+  "language": "pt-BR",
+  "sources": [
+    "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/pt-BR/resultado/er/_src/er/der-public.html"
+  ],
+  "gate": "passed"
+}

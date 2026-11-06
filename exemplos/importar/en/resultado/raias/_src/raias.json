@@ -1,0 +1,62 @@
+{
+  "idioma": "en",
+  "titulo_pagina": "Imported diagram",
+  "cabecalho": [
+    "Imported diagram",
+    "V1"
+  ],
+  "kicker": "Import",
+  "h1": "Imported diagram",
+  "sub": "Content from the input file. The engine recalculates the layout of the elements.",
+  "rodape": [
+    "",
+    "Import"
+  ],
+  "raias": [
+    {
+      "nome": "Customer",
+      "sub": ""
+    },
+    {
+      "nome": "Orders",
+      "sub": ""
+    }
+  ],
+  "fases": [
+    "1",
+    "2",
+    "3"
+  ],
+  "elementos": [
+    {
+      "raia": 0,
+      "fase": 0,
+      "texto": "Send order"
+    },
+    {
+      "raia": 1,
+      "fase": 1,
+      "texto": "Receive order"
+    },
+    {
+      "raia": 1,
+      "fase": 2,
+      "texto": "Check order"
+    }
+  ],
+  "sequencia": [
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      2
+    ]
+  ],
+  "secoes": []
+}

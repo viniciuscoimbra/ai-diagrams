@@ -1,0 +1,9 @@
+{
+  "input": "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/es/catalog.csv",
+  "type": "catalogo",
+  "language": "es",
+  "sources": [
+    "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/es/resultado/catalog/_src/catalog.html"
+  ],
+  "gate": "passed"
+}

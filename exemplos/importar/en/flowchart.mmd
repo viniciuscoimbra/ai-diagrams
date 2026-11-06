@@ -1,0 +1,7 @@
+flowchart LR
+A((Request)) --> B[Check order]
+B --> C{Available?}
+C -->|Yes| D[Reserve]
+C -->|No| E[Reject]
+D --> F((Completed))
+E --> F

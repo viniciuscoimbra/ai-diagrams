@@ -106,4 +106,9 @@ if python3 "$SK/scripts/poster_lint.py" "$D/_src/badge.html" > /dev/null; then
 else
   echo "FALHOU --fix não corrigiu o badge: $D/_src/badge.html"; falhas=$((falhas + 1))
 fi
+if python3 -m unittest discover -s "$T" -p 'test_importar*.py'; then
+  echo "ok     importadores: formatos, modelos nativos e erros"
+else
+  falhas=$((falhas + 1))
+fi
 [ $falhas -eq 0 ] && echo "total: 0" || { echo "total: $falhas"; exit 1; }

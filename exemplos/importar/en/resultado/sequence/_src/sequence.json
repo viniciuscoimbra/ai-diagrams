@@ -1,0 +1,47 @@
+{
+  "idioma": "en",
+  "titulo_pagina": "Imported diagram",
+  "cabecalho": [
+    "Imported diagram",
+    "V1"
+  ],
+  "kicker": "Import",
+  "h1": "Imported diagram",
+  "sub": "Content from the input file. The engine recalculates the layout of the elements.",
+  "rodape": [
+    "",
+    "Import"
+  ],
+  "participantes": [
+    {
+      "id": "app",
+      "nome": "App",
+      "tipo": "ator"
+    },
+    {
+      "id": "api",
+      "nome": "Orders API",
+      "tipo": "servico"
+    }
+  ],
+  "mensagens": [
+    {
+      "de": "app",
+      "para": "api",
+      "texto": "Create order",
+      "tipo": "sincrona"
+    },
+    {
+      "de": "api",
+      "para": "api",
+      "texto": "Validate",
+      "tipo": "sincrona"
+    },
+    {
+      "de": "api",
+      "para": "app",
+      "texto": "Order ID",
+      "tipo": "resposta"
+    }
+  ]
+}

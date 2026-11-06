@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_orders" targetNamespace="http://bpmn.io/schema/bpmn" exporter="ai-diagrams" exporterVersion="1">
+  <bpmn:collaboration id="orders_collaboration">
+    <bpmn:participant id="orders_pool" name="Registro de pedidos" processRef="orders" />
+  </bpmn:collaboration>
+  <bpmn:process id="orders" name="Registro de pedidos" isExecutable="false">
+    <bpmn:documentation>O cliente envia um pedido. O serviço confere e registra.</bpmn:documentation>
+    <bpmn:laneSet id="orders_lanes">
+      <bpmn:lane id="orders_customer" name="Cliente">
+        <bpmn:flowNodeRef>orders_start</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="orders_service" name="Pedidos">
+        <bpmn:flowNodeRef>orders_check</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>orders_end</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="orders_start" name="Solicitação">
+      <bpmn:outgoing>orders_f1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="orders_check" name="Conferir pedido">
+      <bpmn:incoming>orders_f1</bpmn:incoming>
+      <bpmn:outgoing>orders_f2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="orders_end" name="Concluído">
+      <bpmn:incoming>orders_f2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="orders_f1" sourceRef="orders_start" targetRef="orders_check" />
+    <bpmn:sequenceFlow id="orders_f2" sourceRef="orders_check" targetRef="orders_end" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_orders" name="Registro de pedidos">
+    <bpmndi:BPMNPlane id="orders_plane" bpmnElement="orders_collaboration">
+      <bpmndi:BPMNShape id="orders_pool_di" bpmnElement="orders_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="60" width="860" height="320" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="orders_customer_di" bpmnElement="orders_customer" isHorizontal="true" bioc:fill="#FFFFFF" bioc:stroke="#6B7280">
+        <dc:Bounds x="70" y="60" width="830" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="orders_service_di" bpmnElement="orders_service" isHorizontal="true" bioc:fill="#F3F4F6" bioc:stroke="#6B7280">
+        <dc:Bounds x="70" y="220" width="830" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="orders_start_di" bpmnElement="orders_start" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="200" y="110" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="137" y="158" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="orders_check_di" bpmnElement="orders_check" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="370" y="250" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="orders_end_di" bpmnElement="orders_end" bioc:fill="#D9F99D" bioc:stroke="#111827">
+        <dc:Bounds x="680" y="270" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="617" y="318" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="orders_f1_di" bpmnElement="orders_f1" bioc:stroke="#374151">
+        <di:waypoint x="240" y="130.0" />
+        <di:waypoint x="350" y="130" />
+        <di:waypoint x="350" y="290" />
+        <di:waypoint x="370" y="290.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="orders_f2_di" bpmnElement="orders_f2" bioc:stroke="#374151">
+        <di:waypoint x="550" y="290.0" />
+        <di:waypoint x="680" y="290.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -20,6 +20,15 @@ Sources go in `diagramas/_src/` inside your project. The build writes the self-c
 
 Program output is in Portuguese. This page quotes it as printed.
 
+## Import an existing file
+
+```bash
+python3 "$SKILL"/scripts/importar.py process.mmd --saida "$PROJECT"/diagramas --idioma en
+python3 "$SKILL"/scripts/importar.py schema.sql --tipo matriz --saida "$PROJECT"/diagramas --idioma en
+```
+
+With the npm CLI installed, use `ai-diagrams importar` with the same arguments. Supported inputs are Mermaid flowcharts, sequences, states and ER, BPMN 2.0 XML, SQL DDL, CSV catalogs and YAML comparisons. The importer writes native sources and calls the generator and gate below. For the exact subset and ready-to-run examples, see [importing.md](importing.md). Use `--somente-fonte` only to prepare sources without Chrome; the full gate and PNG remain pending.
+
 ## AWS architecture poster and numbered-step flow
 
 1. Create the folder and copy the template:

@@ -1,0 +1,9 @@
+{
+  "input": "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/pt-BR/sequence.mmd",
+  "type": "sequencia",
+  "language": "pt-BR",
+  "sources": [
+    "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/pt-BR/resultado/sequence/_src/sequence.html"
+  ],
+  "gate": "passed"
+}

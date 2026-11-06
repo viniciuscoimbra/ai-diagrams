@@ -1,0 +1,9 @@
+{
+  "input": "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/en/process.bpmn",
+  "type": "bpmn",
+  "language": "en",
+  "sources": [
+    "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/en/resultado/process/process.html"
+  ],
+  "gate": "passed"
+}

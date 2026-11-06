@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Gera o fonte HTML de uma máquina de estados a partir de um JSON.
 
-Uso: python3 gerar_estados.py <spec.json> [saida.html] [--tema NOME|caminho.json]
+Uso: python3 gerar_estados.py <spec.json> [saida.html] [--tema NOME|caminho.json] [--idioma pt-BR|en|es]
+
+Cada estado aceita largura em pixels (padrão 204) para acomodar nomes traduzidos.
 
 Antes do desenho, confere o grafo e para com mensagem se faltar estado inicial,
 se uma transição citar estado não declarado ou não tiver evento, se um estado
@@ -107,9 +109,12 @@ def layout(S, direcao):
     filhos = [{'id': '__ini', 'width': INI, 'height': INI}]
     for e in S['estados']:
         e['_h'] = EST_H_SUB if e.get('sub') else EST_H
-        if larg(e['nome'], CHAR_NOME) > EST_W - 34:
+        e['_w'] = e.get('largura', EST_W)
+        if type(e['_w']) is not int or e['_w'] <= 34:
+            erro('LARGURA-INVALIDA', 'largura do estado "%s" precisa ser um inteiro maior que 34' % e['id'])
+        if larg(e['nome'], CHAR_NOME) > e['_w'] - 34:
             sys.exit('nome de estado longo demais para uma linha: "%s"' % e['nome'])
-        filhos.append({'id': e['id'], 'width': EST_W, 'height': e['_h']})
+        filhos.append({'id': e['id'], 'width': e['_w'], 'height': e['_h']})
     arestas = [{'id': 't_ini', 'sources': ['__ini'], 'targets': [S['inicial']]}]
     for k, t in enumerate(S['transicoes']):
         partes, w, h = rotulo(t)
@@ -140,17 +145,20 @@ def layout(S, direcao):
 
 def main():
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import tema
+    import tema, idioma
     flag_tema, sys.argv[1:] = tema.tirar_flag(sys.argv[1:])
+    flag_idioma, sys.argv[1:] = idioma.tirar_flag(sys.argv[1:])
     tm = tema.tema(flag_tema)
     if len(sys.argv) < 2:
         sys.exit(__doc__)
     spec_path = os.path.abspath(sys.argv[1])
     S = json.load(open(spec_path))
+    tr = idioma.idioma(flag_idioma, fonte_json=S)
     saida = os.path.abspath(sys.argv[2]) if len(sys.argv) > 2 else os.path.splitext(spec_path)[0] + '.html'
     tema_html = tema.para_gerador(tm, saida)
     tema_link = tema_html['link']
     tema_meta = tema_html['meta'] + '\n' if tema_html['meta'] else ''
+    idioma_meta = idioma.para_gerador(tr)
     conferir(S)
 
     g = layout(S, S.get('direcao', 'RIGHT'))
@@ -169,21 +177,21 @@ def main():
     for e in S['estados']:
         c = pos[e['id']]
         cls = 'painel estado' + (' final' if e.get('final') else '') + (' ' + e['estilo'] if e.get('estilo') else '')
-        tag = 'final' if e.get('final') else 'estado'
+        tag = tr['estados.tag.final'] if e.get('final') else tr['estados.tag.estado']
         sub = f'<div class="ps">{code_html(e["sub"])}</div>' if e.get('sub') else ''
-        out.append(f'      <div class="{cls}" style="left:{R(c["x"])}px;top:{R(c["y"])}px;width:{EST_W}px;height:{e["_h"]}px">'
+        out.append(f'      <div class="{cls}" style="left:{R(c["x"])}px;top:{R(c["y"])}px;width:{e["_w"]}px;height:{e["_h"]}px">'
                    f'<div class="ptag">{tag}</div><div class="pt">{esc(e["nome"])}</div>{sub}</div>')
 
     svg = []
-    tr = {'t%d' % k: t for k, t in enumerate(S['transicoes'])}
+    transicoes = {'t%d' % k: t for k, t in enumerate(S['transicoes'])}
     for a in g['edges']:
-        t = tr.get(a['id'])
+        t = transicoes.get(a['id'])
         if t and t['de'] == t['para']:
             # laço: o do ELK sai 10 px da caixa; redesenhado do mesmo lado, mais aberto
             c = pos[t['de']]
             s = a['sections'][0]
-            esq = s['startPoint']['x'] < c['x'] + EST_W / 2
-            borda = R(c['x']) if esq else R(c['x']) + EST_W
+            esq = s['startPoint']['x'] < c['x'] + ests[t['de']]['_w'] / 2
+            borda = R(c['x']) if esq else R(c['x']) + ests[t['de']]['_w']
             fora = borda - LACO if esq else borda + LACO
             y1, y2 = R(c['y']) + 18, R(c['y']) + ests[t['de']]['_h'] - 18
             svg.append(f'        <path d="M{borda},{y1} L{fora},{y1} L{fora},{y2} L{borda},{y2}" '
@@ -211,16 +219,16 @@ def main():
     secoes = []
     com_desc = [e for e in S['estados'] if e.get('desc')]
     if com_desc:
-        secoes.append('  <div class="sec">Estados</div>\n  <div class="passos-seq estados-leg">')
+        secoes.append(f'  <div class="sec">{esc(tr["estados.estados"])}</div>\n  <div class="passos-seq estados-leg">')
         for e in com_desc:
             secoes.append(f'    <div class="ps-item"><div class="pd"><b>{esc(e["nome"])}</b> {code_html(e["desc"])}</div></div>')
         secoes.append('  </div>')
-    secoes.append('  <div class="sec">Notação</div>\n  <div class="notacao wrap">'
-                  '<div class="nt"><div class="ini-mini"></div>estado inicial</div>'
-                  '<div class="nt"><div class="est-mini"></div>estado</div>'
-                  '<div class="nt"><div class="est-mini final"></div>estado final: não tem saída</div>'
-                  '<div class="nt"><span class="nt-rot"><span class="ev">evento</span> <span class="gd">[guarda]</span> '
-                  '<span class="ac">/ ação</span></span>a transição acontece no evento, se a guarda vale, e executa a ação</div></div>')
+    secoes.append(f'  <div class="sec">{esc(tr["comum.notacao"])}</div>\n  <div class="notacao wrap">'
+                  f'<div class="nt"><div class="ini-mini"></div>{esc(tr["estados.inicial"])}</div>'
+                  f'<div class="nt"><div class="est-mini"></div>{esc(tr["estados.tag.estado"])}</div>'
+                  f'<div class="nt"><div class="est-mini final"></div>{esc(tr["estados.final"])}</div>'
+                  f'<div class="nt"><span class="nt-rot"><span class="ev">{esc(tr["estados.evento"])}</span> <span class="gd">[{esc(tr["estados.guarda"])}]</span> '
+                  f'<span class="ac">/ {esc(tr["estados.acao"])}</span></span>{esc(tr["estados.transicao"])}</div></div>')
 
     faixa = ''
     if S.get('faixa'):
@@ -232,17 +240,17 @@ def main():
     largura_css = f'\nbody{{width:{pagina}px}}' if pagina > 1400 else ''
     he, hd = S['cabecalho']
     fe, fd = S['rodape']
-    doc = f'''<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+    doc = f'''<!doctype html><html lang="{tr['_codigo']}"><head><meta charset="utf-8">
 <title>{esc(S['titulo_pagina'])}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {tema_link}
-{tema_meta}{largura_meta}<style>/*ESTILO*/{largura_css}</style></head><body>
+{tema_meta}{idioma_meta}{largura_meta}<style>/*ESTILO*/{largura_css}</style></head><body>
 <div class="page">
 
   <div class="hdr"><span>{esc(he)}</span><span>{esc(hd)}</span></div>
 
-  <div class="kicker"><span class="sq">■</span> {esc(S.get('kicker', 'Máquina de estados'))}</div>
+  <div class="kicker"><span class="sq">■</span> {esc(S.get('kicker', tr['estados.kicker']))}</div>
   <h1>{esc(S['h1'])}</h1>
   <div class="sub">{code_html(S['sub'])}</div>
 

@@ -1,8 +1,54 @@
 # INSTALL: installing ai-diagrams with an AI agent
 
-This file is for an AI agent (Claude Code, Codex CLI or Kiro CLI) that installs the ai-diagrams skill for a user. Follow the steps in order. Run each command on its own, without pipes and without extra `&&`. After each command, compare the output with the expected output. If the output differs, stop, show the user the command and its output, and do not continue.
+This file is for an AI agent (Claude Code, Codex CLI or Kiro CLI) that installs the ai-diagrams skill for a user. Choose the npm route or the git clone route below. Run each command on its own, without pipes and without extra `&&`. After each command, compare the output with the expected output. If the output differs, stop, show the user the command and its output, and do not continue.
 
 For a manual install, see [docs/install.md](docs/install.md).
+
+## npm route
+
+The npm package is prepared locally and has not been published. These registry commands become available after publication. Until then, use the git clone route or test the tarball with `bash testes/npm-smoke.sh` from a checkout.
+
+Use the tool and project already named by the user; ask only for missing choices. With Node 18+ and npm installed, run the command for that tool:
+
+```bash
+npx ai-diagrams install --claude
+```
+
+```bash
+npx ai-diagrams install --codex
+```
+
+```bash
+npx ai-diagrams install --kiro --projeto <PROJECT>
+```
+
+Claude Code and Codex receive the same global links as the git route, in `~/.claude/skills/ai-diagrams` and `~/.codex/skills/ai-diagrams`. For a project-local link, add `--projeto <PROJECT>`. Kiro always receives real copies of the skill, steering and agent in the project; without `--projeto`, it uses the current directory. Choose exactly one CLI flag.
+
+Expected: `skill:` with the link path, or the four Kiro lines described in step 3. Existing files are preserved unless the user confirms replacement in an interactive terminal. Approved replacement keeps a backup next to each replaced path and prints `Backup preservado:` with its location. If installation fails, the originals are restored. Non-interactive conflicts fail without changing the installation; an identical Claude/Codex link reports `Já instalado` (already installed).
+
+For a persistent global package and the `ai-diagrams` command:
+
+```bash
+npm install -g ai-diagrams
+```
+
+```bash
+ai-diagrams install --claude
+```
+
+The global npm install adds the command; the second command registers the skill with the chosen tool. `npx` links point into npm's cache. If that cache is cleared, repeat the `npx` installation or use the global package.
+
+Check the requirements:
+
+```bash
+npx ai-diagrams doctor
+```
+
+Expected: `OK` lines for Node 18+, Python 3.9+, Chrome and AWS icons. A missing requirement reports `FALHA` and exits with status 1. The doctor detects Chrome using the same `POSTER_CHROME` override and search paths as the engine; it does not launch Chrome or claim that a rendering gate passed. Install missing requirements with step 1 below, then follow the tool-specific first-use instructions in [docs/install.md](docs/install.md). Import existing sources with `ai-diagrams importar <file> --saida diagramas`; see [the import guide](docs/importing.md).
+
+## git clone route
+
+The following steps remain available without npm publication.
 
 ## Rules
 

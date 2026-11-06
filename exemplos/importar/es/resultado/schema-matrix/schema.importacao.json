@@ -1,0 +1,9 @@
+{
+  "input": "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/es/schema.sql",
+  "type": "matriz",
+  "language": "es",
+  "sources": [
+    "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/es/resultado/schema-matrix/_src/schema/schema.html"
+  ],
+  "gate": "passed"
+}

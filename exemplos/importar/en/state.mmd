@@ -1,0 +1,8 @@
+stateDiagram-v2
+state "Pending" as pending
+state "Paid" as paid
+state "Closed" as closed
+[*] --> pending
+pending --> paid: Payment received
+paid --> closed: Order shipped
+closed --> [*]

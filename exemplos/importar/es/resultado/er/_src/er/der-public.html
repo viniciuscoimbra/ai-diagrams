@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="largura" content="1796">
+<title>DER · public</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="idioma" content="es">
+<style>
+/*ESTILO*/
+
+.bchip.tabela{padding:0;border:1.4px solid var(--apoio);border-left:1.4px solid var(--apoio);background:var(--papel);overflow:hidden}
+.tabela .th{height:52px;padding:6px 10px;border-bottom:1px solid var(--apoio)}
+.tabela .tt{font-size:13px;font-weight:700;font-family:var(--fonte-mono);color:var(--tinta);display:flex;justify-content:space-between;align-items:baseline}
+.tabela .tp{font-family:var(--fonte-texto);font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--apoio)}
+.tabela .td{font-size:10.5px;color:var(--tinta);line-height:1.25;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabela .tr{height:17px;display:flex;align-items:center;padding:0 10px;font-family:var(--fonte-mono);font-size:10.5px}
+.tabela .tr:nth-child(odd){background:var(--der-linha-par)}
+.tabela .tk{width:24px;flex:none;font-size:9px;font-weight:700;color:var(--der-chave)}
+.tabela .tn{flex:1;min-width:0;font-size:10px;color:var(--tinta);white-space:nowrap;overflow:hidden;padding-right:6px}
+.tabela .ti{flex:none;max-width:165px;text-align:right;font-size:9px;color:var(--cinza);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabela .ti.dom{color:var(--der-dominio)}
+.tabela .ti.fora{color:var(--der-fora);font-weight:600}
+.tabela .ti.cop{color:var(--der-copia)}
+.tabela.externa{border-style:dashed}
+.tabela.externa .th{border-bottom:none}
+.tabela.leve .th{padding:4px 10px}
+.tabela.leve .tt{font-size:11.5px}
+.tabela .lu{font-size:9.5px;color:var(--der-dominio);padding:2px 10px 0;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.front{position:absolute;font-size:10.5px;color:var(--tinta);line-height:1.55}
+.front h4{font-family:var(--fonte-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--apoio);margin:0 0 4px}
+.front code{font-family:var(--fonte-mono);font-size:10px}
+.front .fora{color:var(--der-fora);font-weight:600}
+.sub{min-height:66px}
+.legfixa{display:flex;gap:28px;margin-top:22px;padding:14px 18px;border:1px solid var(--der-borda);background:var(--der-legenda);font-size:10.5px;color:var(--tinta);line-height:1.35}
+.legfixa h4{font-family:var(--fonte-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--apoio);margin:0 0 8px}
+.legfixa .lc{flex:none;width:330px}
+.legfixa .lc:nth-child(3){width:500px}
+.legfixa .lc.dupla{flex:1;width:auto}
+.legfixa .li{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.legfixa .pe{flex:none;width:74px;font-weight:700}
+.legfixa .rv,.legfixa .ra,.legfixa .rr,.legfixa .rk{flex:none;width:140px;font-family:var(--fonte-mono);font-size:9.5px;text-align:right}
+.legfixa .rv{color:var(--der-dominio)}.legfixa .ra{color:var(--der-fora);font-weight:600}.legfixa .rr{color:var(--der-copia)}.legfixa .rk{color:var(--der-chave);font-weight:700}
+.legfixa .tps{columns:2;column-gap:22px}
+.legfixa .tipo{break-inside:avoid;display:flex;gap:8px;align-items:flex-start;margin-bottom:5px}
+.legfixa .sw{flex:none;width:14px;height:14px;border:1px solid var(--apoio)}
+
+/* a página acompanha o canvas do layout: legenda, faixas e desenho com a mesma largura */
+body{width:1796px}
+.wrap.stack .canvas{width:1700px}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>Diagrama importado</span><span>DER · public · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Modelo lógico · schema public</div>
+<h1>Diagrama importado</h1>
+<div class="sub">Contenido del archivo de entrada. El motor recalcula la disposición de los elementos.</div>
+<div class="legfixa">
+  <svg width="0" height="0" style="position:absolute"><defs><marker id="lum" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M5,0 V12 M9,0 V12" stroke-width="1.6" style="stroke:var(--apoio)"/></marker><marker id="lzeroum" markerWidth="18" markerHeight="12" refX="17" refY="6" orient="auto" markerUnits="userSpaceOnUse"><circle cx="5" cy="6" r="3.6" stroke-width="1.4" style="fill:var(--papel);stroke:var(--apoio)"/><path d="M14,0 V12" stroke-width="1.6" style="stroke:var(--apoio)"/></marker><marker id="lmuitos" markerWidth="22" markerHeight="14" refX="21" refY="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><circle cx="5" cy="7" r="3.6" stroke-width="1.4" style="fill:var(--papel);stroke:var(--apoio)"/><path d="M11,7 L21,0 M11,7 L21,7 M11,7 L21,14" stroke-width="1.5" fill="none" style="stroke:var(--apoio)"/></marker><marker id="lle" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" style="fill:var(--apoio)"/></marker></defs></svg>
+  <div class="lc"><h4>Líneas</h4>
+    <div class="li"><svg width="74" height="16" viewBox="0 0 74 16" style="flex:none"><path marker-start="url(#lmuitos)" marker-end="url(#lum)" d="M3,8 H70" fill="none" stroke-width="1.6" style="stroke:var(--apoio)"/></svg><span><b>FK obligatoria</b>: apunta a exactamente una fila</span></div>
+    <div class="li"><svg width="74" height="16" viewBox="0 0 74 16" style="flex:none"><path marker-start="url(#lmuitos)" marker-end="url(#lzeroum)" d="M3,8 H70" fill="none" stroke-width="1.6" style="stroke:var(--apoio)"/></svg><span><b>FK opcional</b>: apunta a cero o una fila</span></div>
+    <div class="li"><span class="pe">pata de gallo</span><span>el lado N: cero o muchas filas por clave</span></div>
+    <div class="li"><svg width="74" height="16" viewBox="0 0 74 16" style="flex:none"><path marker-end="url(#lle)" d="M3,8 H70" fill="none" stroke-width="1.6" stroke-dasharray="6 4" style="stroke:var(--apoio)"/></svg><span><b>solo en view</b>: el id apunta a la tabla, sin FK</span></div></div>
+  <div class="lc"><h4>Etiqueta a la derecha de la columna</h4>
+    <div class="li"><span class="rv">situacoes_conta</span><span>id de tabla de dominio o referencia, sin flecha</span></div>
+    <div class="li"><span class="rv">↓ en franja</span><span>el nombre no cabía: la tabla está en la franja de dominio</span></div>
+    <div class="li"><span class="ra">cadastro.clientes</span><span>FK a tabla de otro schema, sin flecha</span></div>
+    <div class="li"><span class="rr">motivo</span><span>FK sin flecha: copia deliberada, motivo en la etiqueta</span></div>
+    <div class="li"><span class="rk">PK FK UQ</span><span>clave primaria, foránea, única; <b>id</b>: id en una view de lectura</span></div>
+    <div class="li"><span class="rk">- - -</span><span>borde discontinuo: tabla de otro schema</span></div></div>
+  <div class="lc dupla"><h4>Color del encabezado: tipo de tabla</h4><div class="tps"><div class="tipo"><span class="sw" style="background:var(--der-forte)"></span><span><b>entidad fuerte</b>: existe por sí sola; las demás tablas la referencian</span></div><div class="tipo"><span class="sw" style="background:var(--der-dependente)"></span><span><b>dependiente</b>: solo existe ligada a una entidad fuerte</span></div><div class="tipo"><span class="sw" style="background:var(--der-associativa)"></span><span><b>asociativa</b>: vincula dos entidades, muchos a muchos</span></div><div class="tipo"><span class="sw" style="background:var(--der-controle)"></span><span><b>control de proceso</b>: controla un proceso: ejecución, lote, agenda</span></div><div class="tipo"><span class="sw" style="background:var(--der-fato)"></span><span><b>hecho · inmutable</b>: algo que ocurrió; se registra una vez, nunca cambia</span></div><div class="tipo"><span class="sw" style="background:var(--der-versionada)"></span><span><b>versiones · inmutable</b>: cada cambio es una versión nueva; la anterior permanece</span></div><div class="tipo"><span class="sw" style="background:var(--der-projecao)"></span><span><b>proyección</b>: estado calculado a partir de los hechos</span></div><div class="tipo"><span class="sw" style="background:var(--der-trilha)"></span><span><b>técnica</b>: outbox (evento por publicar) o deduplicación de consumo</span></div><div class="tipo"><span class="sw" style="background:var(--der-dominio-fundo)"></span><span><b>dominio</b>: lista cerrada de valores (estado, tipo, causa)</span></div><div class="tipo"><span class="sw" style="background:var(--der-configuracao)"></span><span><b>configuración</b>: regla que consulta la base: transiciones permitidas</span></div><div class="tipo"><span class="sw" style="background:var(--der-referencia)"></span><span><b>referencia</b>: lista oficial de una fuente externa (monedas, países)</span></div><div class="tipo"><span class="sw" style="background:var(--der-visao)"></span><span><b>view de lectura</b>: view materializada, creada a partir de otros schemas</span></div></div></div>
+</div>
+
+<div class="wrap stack">
+<div class="canvas" style="height:487.5px">
+  <div class="bchip tabela" style="left:700px;top:60px;width:500px;height:94px"><div class="th" style="background:var(--der-forte)"><div class="tt">CUSTOMER<span class="tp">entidad fuerte</span></div><div class="td">CUSTOMER</div></div><div class="tr"><span class="tk">PK</span><span class="tn">customer_id</span><span class="ti "></span></div><div class="tr"><span class="tk"></span><span class="tn">name</span><span class="ti ">string</span></div></div>
+  <div class="bchip tabela" style="left:700px;top:238px;width:500px;height:111px"><div class="th" style="background:var(--der-dependente)"><div class="tt">ORDER<span class="tp">dependiente</span></div><div class="td">ORDER</div></div><div class="tr"><span class="tk">PK</span><span class="tn">order_id</span><span class="ti "></span></div><div class="tr"><span class="tk">FK</span><span class="tn">customer_id</span><span class="ti "></span></div><div class="tr"><span class="tk"></span><span class="tn">status</span><span class="ti ">string</span></div></div>
+  
+  <div class="frame zone" style="left:10px;top:409px;width:1680px;height:68.5px"><div class="flabel">Frontera con otros schemas · FK sin lectura: la base garantiza que la fila existe; el servicio no lee la otra tabla</div></div>
+  <div class="front" style="left:30px;top:439px;width:560px"><h4>este schema apunta a</h4><div>ninguna</div></div>
+  <div class="front" style="left:610px;top:439px;width:560px"><h4>otros schemas apuntan aquí</h4><div>ninguna</div></div>
+  <div class="front" style="left:1190px;top:439px;width:490px"><h4>usa de común (dominio general y referencia)</h4><div>nada</div></div>
+  <svg class="edges" viewBox="0 0 1700 487.5">
+    <defs>
+      <marker id="le" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" style="fill:var(--apoio)"/></marker>
+      <marker id="um" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M5,0 V12 M9,0 V12" stroke-width="1.6" style="stroke:var(--apoio)"/></marker>
+      <marker id="zeroum" markerWidth="18" markerHeight="12" refX="17" refY="6" orient="auto" markerUnits="userSpaceOnUse"><circle cx="5" cy="6" r="3.6" stroke-width="1.4" style="fill:var(--papel);stroke:var(--apoio)"/><path d="M14,0 V12" stroke-width="1.6" style="stroke:var(--apoio)"/></marker>
+      <marker id="muitos" markerWidth="22" markerHeight="14" refX="21" refY="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><circle cx="5" cy="7" r="3.6" stroke-width="1.4" style="fill:var(--papel);stroke:var(--apoio)"/><path d="M11,7 L21,0 M11,7 L21,7 M11,7 L21,14" stroke-width="1.5" fill="none" style="stroke:var(--apoio)"/></marker>
+    </defs>
+    <path d="M700,319.5 H650 V74 H700" fill="none" stroke-width="1.6" marker-start="url(#muitos)" marker-end="url(#um)" style="stroke:var(--apoio)"/>
+  </svg>
+  <div class="badge" style="left:640px;top:187px">1</div>
+</div>
+
+<div class="passos">
+  <div class="ptitle">Relaciones</div>
+  <div class="pitem"><div class="pb">1</div><div>El cliente tiene pedidos</div></div>
+</div>
+</div>
+
+<div class="foot"> · Importación</div>
+</div>
+</body>
+</html>

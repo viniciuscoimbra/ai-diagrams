@@ -1,0 +1,272 @@
+[
+  {
+    "id": "flowchart",
+    "language": "en",
+    "input": "en/flowchart.mmd",
+    "output": "en/resultado/flowchart/flowchart.html",
+    "type": "bpmn",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "raias",
+    "language": "en",
+    "input": "en/raias.mmd",
+    "output": "en/resultado/raias/_src/raias.html",
+    "type": "raias",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "sequence",
+    "language": "en",
+    "input": "en/sequence.mmd",
+    "output": "en/resultado/sequence/_src/sequence.html",
+    "type": "sequencia",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "state",
+    "language": "en",
+    "input": "en/state.mmd",
+    "output": "en/resultado/state/_src/state.html",
+    "type": "estados",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "er",
+    "language": "en",
+    "input": "en/er.mmd",
+    "output": "en/resultado/er/_src/er/der-public.html",
+    "type": "der",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "process",
+    "language": "en",
+    "input": "en/process.bpmn",
+    "output": "en/resultado/process/process.html",
+    "type": "bpmn",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "schema",
+    "language": "en",
+    "input": "en/schema.sql",
+    "output": "en/resultado/schema/_src/schema/der-public.html",
+    "type": "der",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "catalog",
+    "language": "en",
+    "input": "en/catalog.csv",
+    "output": "en/resultado/catalog/_src/catalog.html",
+    "type": "catalogo",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "comparison",
+    "language": "en",
+    "input": "en/comparison.yaml",
+    "output": "en/resultado/comparison/_src/comparison.html",
+    "type": "comparacao",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "schema-matrix",
+    "language": "en",
+    "input": "en/schema.sql",
+    "output": "en/resultado/schema-matrix/_src/schema/schema.html",
+    "type": "matriz",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "flowchart",
+    "language": "es",
+    "input": "es/flowchart.mmd",
+    "output": "es/resultado/flowchart/flowchart.html",
+    "type": "bpmn",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "raias",
+    "language": "es",
+    "input": "es/raias.mmd",
+    "output": "es/resultado/raias/_src/raias.html",
+    "type": "raias",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "sequence",
+    "language": "es",
+    "input": "es/sequence.mmd",
+    "output": "es/resultado/sequence/_src/sequence.html",
+    "type": "sequencia",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "state",
+    "language": "es",
+    "input": "es/state.mmd",
+    "output": "es/resultado/state/_src/state.html",
+    "type": "estados",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "er",
+    "language": "es",
+    "input": "es/er.mmd",
+    "output": "es/resultado/er/_src/er/der-public.html",
+    "type": "der",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "process",
+    "language": "es",
+    "input": "es/process.bpmn",
+    "output": "es/resultado/process/process.html",
+    "type": "bpmn",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "schema",
+    "language": "es",
+    "input": "es/schema.sql",
+    "output": "es/resultado/schema/_src/schema/der-public.html",
+    "type": "der",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "catalog",
+    "language": "es",
+    "input": "es/catalog.csv",
+    "output": "es/resultado/catalog/_src/catalog.html",
+    "type": "catalogo",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "comparison",
+    "language": "es",
+    "input": "es/comparison.yaml",
+    "output": "es/resultado/comparison/_src/comparison.html",
+    "type": "comparacao",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "schema-matrix",
+    "language": "es",
+    "input": "es/schema.sql",
+    "output": "es/resultado/schema-matrix/_src/schema/schema.html",
+    "type": "matriz",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "flowchart",
+    "language": "pt-BR",
+    "input": "pt-BR/flowchart.mmd",
+    "output": "pt-BR/resultado/flowchart/flowchart.html",
+    "type": "bpmn",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "raias",
+    "language": "pt-BR",
+    "input": "pt-BR/raias.mmd",
+    "output": "pt-BR/resultado/raias/_src/raias.html",
+    "type": "raias",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "sequence",
+    "language": "pt-BR",
+    "input": "pt-BR/sequence.mmd",
+    "output": "pt-BR/resultado/sequence/_src/sequence.html",
+    "type": "sequencia",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "state",
+    "language": "pt-BR",
+    "input": "pt-BR/state.mmd",
+    "output": "pt-BR/resultado/state/_src/state.html",
+    "type": "estados",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "er",
+    "language": "pt-BR",
+    "input": "pt-BR/er.mmd",
+    "output": "pt-BR/resultado/er/_src/er/der-public.html",
+    "type": "der",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "process",
+    "language": "pt-BR",
+    "input": "pt-BR/process.bpmn",
+    "output": "pt-BR/resultado/process/process.html",
+    "type": "bpmn",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "schema",
+    "language": "pt-BR",
+    "input": "pt-BR/schema.sql",
+    "output": "pt-BR/resultado/schema/_src/schema/der-public.html",
+    "type": "der",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "catalog",
+    "language": "pt-BR",
+    "input": "pt-BR/catalog.csv",
+    "output": "pt-BR/resultado/catalog/_src/catalog.html",
+    "type": "catalogo",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "comparison",
+    "language": "pt-BR",
+    "input": "pt-BR/comparison.yaml",
+    "output": "pt-BR/resultado/comparison/_src/comparison.html",
+    "type": "comparacao",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "schema-matrix",
+    "language": "pt-BR",
+    "input": "pt-BR/schema.sql",
+    "output": "pt-BR/resultado/schema-matrix/_src/schema/schema.html",
+    "type": "matriz",
+    "tested": true,
+    "gate": "passed"
+  }
+]

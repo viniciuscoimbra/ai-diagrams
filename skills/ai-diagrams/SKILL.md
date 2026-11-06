@@ -39,6 +39,21 @@ Se o pedido não cai claramente numa linha, ou cai em duas, pergunte ao usuário
 
 ## 2. Setup (uma vez por máquina)
 
+### Quando importar um arquivo existente
+
+Se o usuário trouxer Mermaid, `.bpmn`, DDL SQL, CSV de catálogo ou YAML de comparação, use `scripts/importar.py` antes de escrever um fonte à mão. O importador converte o arquivo para o contrato nativo e chama os mesmos geradores e gates desta skill:
+
+```bash
+python3 <skill>/scripts/importar.py processo.mmd --saida diagramas --idioma pt-BR
+python3 <skill>/scripts/importar.py schema.sql --tipo matriz --saida diagramas --idioma pt-BR
+```
+
+Com a CLI instalada, `ai-diagrams importar` aceita os mesmos argumentos. A extensão e o cabeçalho escolhem o formato; `--tipo` seleciona a saída quando necessário, como `der` ou `matriz` para SQL. Mermaid `flowchart`/`graph` sem `subgraph` vira BPMN; `subgraph` representa raia, não um agrupamento genérico. `sequenceDiagram`, `stateDiagram-v2` e `erDiagram` viram sequência, estados e DER. O layout é recalculado pelo motor.
+
+Leia `references/importar.md` para o subconjunto aceito. `MERMAID-NAO-SUPORTADO` ou `BPMN-NAO-SUPORTADO` informa o que precisa ser adaptado; nunca descarte a instrução rejeitada para simular sucesso. O importador não traduz conteúdo autoral. Em ambiente sem Chrome, `--somente-fonte` prepara o fonte e declara o gate completo e o PNG pendentes; isso não substitui a validação nem a auditoria visual. O padrão continua sendo gerar e executar o gate completo.
+
+### Dependências
+
 1. `pip3 install diagrams`: só o acervo de ícones oficiais AWS em PNG; a biblioteca nunca roda.
 2. Google Chrome: build, lint e captura usam modo headless.
 3. Node 18 ou mais novo, para os geradores de DER, matriz e máquina de estados.
@@ -83,6 +98,10 @@ Na mesma pergunta, confirme o rodapé (padrão `<Projeto> · <tipo de diagrama> 
 Nunca deduza o cliente, o autor ou a versão do caminho da pasta, do nome do repositório ou de outro arquivo do projeto: só vale o que o usuário ou a fonte do diagrama disserem.
 
 Quando não há como perguntar (execução não interativa, como `claude -p` ou o Kiro sem interação, ou uso por knowledge base), siga sem cliente, com rodapé e versão padrão, e diga isso na entrega.
+
+### Idioma dos rótulos
+
+Use `--idioma <pt-BR|en|es>` no gerador e no gate para os rótulos fixos. A seleção segue esta prioridade: flag, `<meta name="idioma" content="…">` no HTML ou campo `idioma` no JSON/layout DER, variável `AI_DIAGRAMS_IDIOMA`, padrão `pt-BR`. No DER, o campo do layout prevalece sobre o do modelo. Os catálogos `i18n/pt-BR.json`, `en.json` e `es.json` têm as mesmas chaves; idioma desconhecido reprova com `IDIOMA-INEXISTENTE` e chave faltando com `IDIOMA-INCOMPLETO`. Título, subtítulo, caixas, notas e demais conteúdo autoral vêm do fonte e devem ser escritos no idioma pedido. Sem seleção de idioma, a saída em português conserva texto e geometria byte a byte. Os gates identificam seções por classe, sem depender do texto traduzido.
 
 ### Tema: cor e fonte
 

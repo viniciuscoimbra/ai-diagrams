@@ -1,0 +1,55 @@
+{
+  "idioma": "pt-BR",
+  "cabecalho": "Diagrama importado",
+  "rodape": " · Importação",
+  "schemas": {
+    "public": "Diagrama importado"
+  },
+  "tabelas": {
+    "public.CUSTOMER": {
+      "tipo": "forte",
+      "rotulo": "CUSTOMER",
+      "colunas": [
+        [
+          "customer_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "name",
+          "string",
+          ""
+        ]
+      ]
+    },
+    "public.ORDER": {
+      "tipo": "dependente",
+      "rotulo": "ORDER",
+      "colunas": [
+        [
+          "order_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "customer_id",
+          "uuid",
+          "FK",
+          "public.CUSTOMER",
+          true
+        ],
+        [
+          "status",
+          "string",
+          ""
+        ]
+      ],
+      "relacoes": {
+        "customer_id": "Cliente possui pedidos"
+      }
+    }
+  },
+  "schemaComum": null,
+  "schemaLeitura": null,
+  "colunasControle": []
+}

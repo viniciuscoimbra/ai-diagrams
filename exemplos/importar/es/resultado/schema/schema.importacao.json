@@ -1,0 +1,10 @@
+{
+  "input": "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/es/schema.sql",
+  "type": "der",
+  "language": "es",
+  "sources": [
+    "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/es/resultado/schema/_src/schema/der-public.html",
+    "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/es/resultado/schema/_src/schema/der-billing.html"
+  ],
+  "gate": "passed"
+}

@@ -1,0 +1,11 @@
+erDiagram
+CUSTOMER {
+ uuid customer_id PK
+ string name
+}
+ORDER {
+ uuid order_id PK
+ uuid customer_id FK
+ string status
+}
+CUSTOMER ||..o{ ORDER : Cliente possui pedidos

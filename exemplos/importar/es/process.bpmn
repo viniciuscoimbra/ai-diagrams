@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" id="definitions" targetNamespace="https://ai-diagrams.dev/examples">
+ <bpmn:process id="orders" name="Registro de pedidos" isExecutable="false">
+  <bpmn:documentation>El cliente envía un pedido. El servicio lo revisa y registra.</bpmn:documentation>
+  <bpmn:laneSet id="lanes">
+   <bpmn:lane id="customer" name="Cliente"><bpmn:flowNodeRef>start</bpmn:flowNodeRef></bpmn:lane>
+   <bpmn:lane id="service" name="Pedidos"><bpmn:flowNodeRef>check</bpmn:flowNodeRef><bpmn:flowNodeRef>end</bpmn:flowNodeRef></bpmn:lane>
+  </bpmn:laneSet>
+  <bpmn:startEvent id="start" name="Solicitud"/>
+  <bpmn:task id="check" name="Revisar pedido"/>
+  <bpmn:endEvent id="end" name="Completado"/>
+  <bpmn:sequenceFlow id="flow1" sourceRef="start" targetRef="check"/>
+  <bpmn:sequenceFlow id="flow2" sourceRef="check" targetRef="end"/>
+ </bpmn:process>
+</bpmn:definitions>

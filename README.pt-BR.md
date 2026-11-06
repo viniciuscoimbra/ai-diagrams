@@ -53,6 +53,16 @@ Instale os ícones com `pip3 install diagrams`. Se o Chrome estiver em outro lug
 
 ## Instalação
 
+O pacote npm está preparado localmente e ainda não foi publicado. Após a publicação:
+
+```bash
+npx ai-diagrams install --claude
+npm install -g ai-diagrams
+ai-diagrams doctor
+```
+
+Use `--codex` para Codex ou `--kiro --projeto /caminho/do/projeto` para Kiro. A substituição de uma instalação existente exige confirmação. Para instalar agora, use o tarball local descrito em [docs/install.md](docs/install.md) ou clone o repositório:
+
 ```bash
 git clone https://github.com/viniciuscoimbra/ai-diagrams.git
 ```
@@ -96,6 +106,17 @@ do antifraude em tempo real, com passos numerados.
 
 A IA escolhe o tipo e pergunta antes de desenhar quando o pedido é ambíguo. Depois grava o fonte em `diagramas/_src/`, roda o gate até passar e salva o PNG em `diagramas/`.
 
+## Importar diagramas e dados existentes
+
+O importador converte Mermaid (`flowchart`/`graph`, `sequenceDiagram`, `stateDiagram-v2`, `erDiagram`), BPMN 2.0 XML, DDL SQL, catálogos CSV e comparações YAML para fontes nativos e executa o gerador e o gate existentes:
+
+```bash
+python3 skills/ai-diagrams/scripts/importar.py exemplos/importar/pt-BR/sequence.mmd --saida diagramas --idioma pt-BR
+ai-diagrams importar schema.sql --tipo matriz --saida diagramas --idioma pt-BR
+```
+
+Flowcharts com raias em `subgraph` viram raias; os demais flowcharts suportados viram BPMN. Sintaxe não suportada reprova com a linha, sem descarte silencioso. `--somente-fonte` prepara os fontes sem Chrome e deixa o gate completo e o PNG pendentes. O importador não traduz o texto autoral. Veja [sintaxe suportada, limites e exemplos](docs/importing.md).
+
 ## Temas
 
 Cor e fonte vêm de um arquivo de tema. A skill traz dois em `skills/ai-diagrams/temas/`: `ai-diagrams` (o padrão) e `papel` (papel creme, tinta marrom-escura, Public Sans). Para criar o seu, copie `temas/ai-diagrams.json`, troque os valores de `cores`, `cores_derivadas`, `paleta_der` (cores do DER) e `fontes` (nome da família no Google Fonts) e mantenha todas as chaves: chave faltando para o build com `TEMA-INCOMPLETO`. Depois passe o tema em qualquer comando, ou defina uma vez:
@@ -107,6 +128,10 @@ export AI_DIAGRAMS_TEMA=./meu-tema.json
 ```
 
 Nome resolve para `temas/<nome>.json`; caminho pode apontar para qualquer pasta. O tema muda cor e fonte, nunca a posição de caixa e seta. Detalhes em [docs/how-it-works.md](docs/how-it-works.md#5-theme), em inglês. No pedido à IA, diga o nome do tema ou anexe o json.
+
+## Idioma do diagrama
+
+Os rótulos fixos existem em `pt-BR`, `en` e `es`, em `skills/ai-diagrams/i18n/`. Use `--idioma en` no gerador e no gate. A prioridade é a flag, depois `<meta name="idioma" content="en">` no HTML ou `"idioma": "en"` no JSON (também `idioma: 'en'` no layout DER), depois `AI_DIAGRAMS_IDIOMA`, depois `pt-BR`. Idioma desconhecido reprova com `IDIOMA-INEXISTENTE`; chave faltando no catálogo reprova com `IDIOMA-INCOMPLETO`. Títulos e conteúdo autoral devem ser traduzidos no fonte. Sem seleção de idioma, a saída em português permanece igual.
 
 ## Modelos
 

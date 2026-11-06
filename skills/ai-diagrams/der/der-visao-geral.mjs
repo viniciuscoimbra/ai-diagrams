@@ -1,16 +1,18 @@
 // Visão geral dos schemas: matriz de dependência gerada do modelo lógico (modelo.json).
 // Linha: o schema que tem a coluna. Coluna: o schema da tabela apontada. Célula: quantas colunas apontam.
 // Matriz em vez de grafo: com muitos pares de schemas, setas para todos eles se cruzariam.
-// Uso: node der-visao-geral.mjs caminho/modelo.json [saida.html] [--tema NOME|caminho.json]
+// Uso: node der-visao-geral.mjs caminho/modelo.json [saida.html] [--tema NOME|caminho.json] [--idioma pt-BR|en|es]
 // Sem saída explícita, grava der-visao-geral.html ao lado do modelo; o build.py da skill gera o PNG.
 import fs from 'node:fs';
 import path from 'node:path';
-import { tirarTema, temaDoGerador, carregar, chaves, tabela, nome } from './der-tabelas.mjs';
+import { tirarIdioma } from './idioma.mjs';
+import { texto, IDIOMA, tirarTema, temaDoGerador, carregar, chaves, tabela, nome } from './der-tabelas.mjs';
 
-const ARGS = tirarTema(process.argv.slice(2));
-if (!ARGS.resto[0]) { console.error('uso: node der-visao-geral.mjs caminho/modelo.json [saida.html] [--tema NOME|caminho.json]'); process.exit(1); }
+const IDIOMA_ARGS = tirarIdioma(process.argv.slice(2));
+const ARGS = tirarTema(IDIOMA_ARGS.resto);
+if (!ARGS.resto[0]) { console.error('uso: node der-visao-geral.mjs caminho/modelo.json [saida.html] [--tema NOME|caminho.json] [--idioma pt-BR|en|es]'); process.exit(1); }
 const modeloPath = path.resolve(ARGS.resto[0]);
-const M = carregar(modeloPath);
+const M = carregar(modeloPath, IDIOMA_ARGS.valor);
 const saida = ARGS.resto[1] ? path.resolve(ARGS.resto[1]) : path.join(path.dirname(modeloPath), 'der-visao-geral.html');
 const TEMA = temaDoGerador(ARGS.valor, saida);
 // Ordem de construção (a do modelo): quem é apontado por mais schemas vem antes.
@@ -46,13 +48,13 @@ const detalhe = ORDEM.flatMap((o) => ORDEM.filter((d) => d !== o && n(o, d)).map
   `<div class="par"><div class="pt">${o} → ${d} <span>${n(o, d)}</span></div>${par[`${o}>${d}`].map((x) => `<div class="pc">${x}</div>`).join('')}</div>`)).join('\n');
 
 const html = `<!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="${IDIOMA.codigo}">
 <head>
 <meta charset="utf-8">
-<title>Visão geral dos schemas</title>
+<title>${texto('matriz.titulo')}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-${TEMA.link}${TEMA.meta ? '\n' + TEMA.meta : ''}
+${TEMA.link}${IDIOMA.meta ? '\n' + IDIOMA.meta : ''}${TEMA.meta ? '\n' + TEMA.meta : ''}
 <style>
 /*ESTILO*/
 .mx{border-collapse:collapse;margin-top:34px;font-family:var(--fonte-mono)}
@@ -77,24 +79,24 @@ ${TEMA.link}${TEMA.meta ? '\n' + TEMA.meta : ''}
 </head>
 <body>
 <div class="page">
-<div class="hdr"><span>${M.cabecalho || ''}</span><span>DER · visão geral · V1</span></div>
-<div class="kicker"><span class="sq">■</span>&nbsp; Modelo lógico · ${ORDEM.length} schemas</div>
-<h1>Dependências entre os schemas</h1>
-<div class="sub">Cada célula conta quantas colunas do schema da linha apontam para uma tabela do schema da coluna. É FK sem leitura: o banco garante que a linha existe, e o serviço não lê a tabela do outro.</div>
+<div class="hdr"><span>${M.cabecalho || ''}</span><span>${texto('matriz.cabecalho')}</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; ${texto('matriz.kicker', { n: ORDEM.length })}</div>
+<h1>${texto('matriz.h1')}</h1>
+<div class="sub">${texto('matriz.sub')}</div>
 
 <table class="mx">
-<tr><th class="canto"></th>${cab}<th class="cv"><span>aponta para N schemas</span></th></tr>
+<tr><th class="canto"></th>${cab}<th class="cv"><span>${texto('matriz.aponta')}</span></th></tr>
 ${linhas}
-<tr><th class="rh"><b>usado por</b><span>quantos schemas apontam para ele</span></th>${usadoPor}<td class="tot"></td></tr>
+<tr><th class="rh"><b>${texto('matriz.usado_por')}</b><span>${texto('matriz.quantos')}</span></th>${usadoPor}<td class="tot"></td></tr>
 </table>
 
 <div class="leitura">
-<div><b>Diagonal escura</b>: quantas tabelas o schema tem. A soma dá ${ORDEM.reduce((n, o) => n + chaves(o).length, 0)}.</div>
-<div><b>Cor da célula</b>: mais forte, mais colunas apontando. O par mais denso tem ${max} colunas.</div>
-<div><b>${maisUsado}</b> é o mais apontado: ${usados(maisUsado)} schemas dependem dele. <b>${maisDepende}</b> é o que mais depende: aponta para ${aponta(maisDepende)}.</div>
+<div>${texto('matriz.diagonal', { n: ORDEM.reduce((n, o) => n + chaves(o).length, 0) })}</div>
+<div>${texto('matriz.cor', { n: max })}</div>
+<div>${texto('matriz.dependencias', { usado: maisUsado, nUsado: usados(maisUsado), depende: maisDepende, nDepende: aponta(maisDepende) })}</div>
 </div>
 
-<div class="sec">Cada coluna, por par de schemas</div>
+<div class="sec">${texto('matriz.colunas')}</div>
 <div class="det">
 ${detalhe}
 </div>

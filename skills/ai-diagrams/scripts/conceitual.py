@@ -3,7 +3,7 @@
 
 Uso: python3 conceitual.py <fonte.html> [--altura N|auto] [--largura N] [--escala N]
 (largura: 1400px, ou a do <meta name="largura"> do fonte)
-                           [--exibicao N] [--out DIR] [--so-lint] [--tema NOME|caminho.json]
+                           [--exibicao N] [--out DIR] [--so-lint] [--tema NOME|caminho.json] [--idioma pt-BR|en|es]
 
 Diferença para o poster_lint.py: aqui não existe topologia AWS, nem passos
 numerados obrigatórios, nem badge preso à seta. A régua é outra.
@@ -371,8 +371,9 @@ def resumo_escala(data, escala):
 
 def main():
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import tema
+    import tema, idioma
     flag_tema, sys.argv[1:] = tema.tirar_flag(sys.argv[1:])
+    flag_idioma, sys.argv[1:] = idioma.tirar_flag(sys.argv[1:])
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     if not args:
         sys.exit(__doc__)
@@ -395,8 +396,9 @@ def main():
         out_dir = os.path.dirname(src_dir) if os.path.basename(src_dir) == '_src' else src_dir
 
     tm = tema.tema(flag_tema, open(fonte).read(), src_dir)
+    tr = idioma.idioma(flag_idioma, fonte_html=open(fonte).read())
     chrome = find_chrome()
-    html = inline_icones(inline_css(fonte, tm))
+    html = idioma.aplicar(inline_icones(inline_css(fonte, tm)), tr)
     if altura == 'auto':
         altura = medir_altura(html, chrome, largura)
         if altura is None:

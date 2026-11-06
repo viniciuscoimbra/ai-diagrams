@@ -1,0 +1,9 @@
+{
+  "input": "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/pt-BR/comparison.yaml",
+  "type": "comparacao",
+  "language": "pt-BR",
+  "sources": [
+    "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/pt-BR/resultado/comparison/_src/comparison.html"
+  ],
+  "gate": "passed"
+}

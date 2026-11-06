@@ -1,0 +1,10 @@
+titulo: "Storage for orders"
+subtitulo: "A customer sends an order. The service checks and records it."
+opcoes:
+  - "Relational table"
+  - "Document collection"
+criterios:
+  - nome: "Identifier"
+    valores: ["Primary key", "Document ID"]
+  - nome: "Relation"
+    valores: ["Foreign key", "Reference field"]

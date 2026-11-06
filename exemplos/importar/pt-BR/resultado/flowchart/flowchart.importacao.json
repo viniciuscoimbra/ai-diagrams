@@ -1,0 +1,9 @@
+{
+  "input": "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/pt-BR/flowchart.mmd",
+  "type": "bpmn",
+  "language": "pt-BR",
+  "sources": [
+    "/Users/viniciuscoimbra/Sites/ai-diagrams/exemplos/importar/pt-BR/resultado/flowchart/flowchart.html"
+  ],
+  "gate": "passed"
+}

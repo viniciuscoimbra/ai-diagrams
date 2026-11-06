@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_imported" targetNamespace="http://bpmn.io/schema/bpmn" exporter="ai-diagrams" exporterVersion="1">
+  <bpmn:collaboration id="imported_collaboration">
+    <bpmn:participant id="imported_pool" name="Diagrama importado" processRef="imported" />
+  </bpmn:collaboration>
+  <bpmn:process id="imported" name="Diagrama importado" isExecutable="false">
+    <bpmn:documentation>Contenido del archivo de entrada. El motor recalcula la disposición de los elementos.</bpmn:documentation>
+    <bpmn:laneSet id="imported_lanes">
+      <bpmn:lane id="imported_process" name="Diagrama importado">
+        <bpmn:flowNodeRef>imported_A</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>imported_B</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>imported_C</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>imported_D</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>imported_E</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>imported_F</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="imported_A" name="Solicitud">
+      <bpmn:outgoing>imported_f1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="imported_B" name="Revisar pedido">
+      <bpmn:incoming>imported_f1</bpmn:incoming>
+      <bpmn:outgoing>imported_f2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="imported_C" name="¿Disponible?" gatewayDirection="Diverging">
+      <bpmn:incoming>imported_f2</bpmn:incoming>
+      <bpmn:outgoing>imported_f3</bpmn:outgoing>
+      <bpmn:outgoing>imported_f4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="imported_D" name="Reservar">
+      <bpmn:incoming>imported_f3</bpmn:incoming>
+      <bpmn:outgoing>imported_f5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="imported_E" name="Rechazar">
+      <bpmn:incoming>imported_f4</bpmn:incoming>
+      <bpmn:outgoing>imported_f6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="imported_F" name="Completado">
+      <bpmn:incoming>imported_f5</bpmn:incoming>
+      <bpmn:incoming>imported_f6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="imported_f1" sourceRef="imported_A" targetRef="imported_B" />
+    <bpmn:sequenceFlow id="imported_f2" sourceRef="imported_B" targetRef="imported_C" />
+    <bpmn:sequenceFlow id="imported_f3" sourceRef="imported_C" targetRef="imported_D" name="Sí" />
+    <bpmn:sequenceFlow id="imported_f4" sourceRef="imported_C" targetRef="imported_E" name="No" />
+    <bpmn:sequenceFlow id="imported_f5" sourceRef="imported_D" targetRef="imported_F" />
+    <bpmn:sequenceFlow id="imported_f6" sourceRef="imported_E" targetRef="imported_F" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_imported" name="Diagrama importado">
+    <bpmndi:BPMNPlane id="imported_plane" bpmnElement="imported_collaboration">
+      <bpmndi:BPMNShape id="imported_pool_di" bpmnElement="imported_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="60" width="1340" height="300" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="imported_process_di" bpmnElement="imported_process" isHorizontal="true" bioc:fill="#FFFFFF" bioc:stroke="#6B7280">
+        <dc:Bounds x="70" y="60" width="1310" height="300" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="imported_A_di" bpmnElement="imported_A" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="200" y="110" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="137" y="158" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="imported_B_di" bpmnElement="imported_B" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="370" y="90" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="imported_C_di" bpmnElement="imported_C" bioc:fill="#FEF08A" bioc:stroke="#111827" isMarkerVisible="true">
+        <dc:Bounds x="670" y="100" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="617" y="168" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="imported_D_di" bpmnElement="imported_D" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="850" y="90" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="imported_E_di" bpmnElement="imported_E" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="850" y="230" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="imported_F_di" bpmnElement="imported_F" bioc:fill="#D9F99D" bioc:stroke="#111827">
+        <dc:Bounds x="1160" y="110" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1097" y="158" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="imported_f1_di" bpmnElement="imported_f1" bioc:stroke="#374151">
+        <di:waypoint x="240" y="130.0" />
+        <di:waypoint x="370" y="130.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="imported_f2_di" bpmnElement="imported_f2" bioc:stroke="#374151">
+        <di:waypoint x="550" y="130.0" />
+        <di:waypoint x="670" y="130.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="imported_f3_di" bpmnElement="imported_f3" bioc:stroke="#374151">
+        <di:waypoint x="730" y="130.0" />
+        <di:waypoint x="850" y="130.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="762.0" y="101.0" width="56" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="imported_f4_di" bpmnElement="imported_f4" bioc:stroke="#374151">
+        <di:waypoint x="730" y="130.0" />
+        <di:waypoint x="750" y="130" />
+        <di:waypoint x="750" y="140" />
+        <di:waypoint x="830" y="140" />
+        <di:waypoint x="830" y="270" />
+        <di:waypoint x="850" y="270.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="838" y="194.0" width="56" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="imported_f5_di" bpmnElement="imported_f5" bioc:stroke="#374151">
+        <di:waypoint x="1030" y="130.0" />
+        <di:waypoint x="1160" y="130.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="imported_f6_di" bpmnElement="imported_f6" bioc:stroke="#374151">
+        <di:waypoint x="1030" y="270.0" />
+        <di:waypoint x="1070" y="270" />
+        <di:waypoint x="1070" y="120" />
+        <di:waypoint x="1140" y="120" />
+        <di:waypoint x="1140" y="130" />
+        <di:waypoint x="1160" y="130.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

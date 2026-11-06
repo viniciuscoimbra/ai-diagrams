@@ -1,0 +1,41 @@
+{
+  "name": "ai-diagrams",
+  "version": "0.1.0",
+  "description": "Diagram sources, generators and quality gates for AI coding agents",
+  "license": "MIT",
+  "author": "Vinícius Coimbra <viniciuscoimbra@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viniciuscoimbra/ai-diagrams.git"
+  },
+  "homepage": "https://github.com/viniciuscoimbra/ai-diagrams#readme",
+  "bin": {
+    "ai-diagrams": "bin/ai-diagrams.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin/ai-diagrams.mjs",
+    "INSTALL.md",
+    "docs/*.md",
+    "ferramentas/instalar-kiro.sh",
+    "kiro/",
+    "skills/ai-diagrams/SKILL.md",
+    "skills/ai-diagrams/assets/",
+    "skills/ai-diagrams/bpmn/*.py",
+    "skills/ai-diagrams/bpmn/vendor/",
+    "skills/ai-diagrams/der/*.mjs",
+    "!skills/ai-diagrams/der/*.test.mjs",
+    "skills/ai-diagrams/estados/",
+    "skills/ai-diagrams/i18n/*.json",
+    "skills/ai-diagrams/modelos/*/_src/**",
+    "skills/ai-diagrams/modelos/gerar.sh",
+    "skills/ai-diagrams/references/",
+    "skills/ai-diagrams/scripts/*.py",
+    "skills/ai-diagrams/temas/"
+  ],
+  "scripts": {
+    "test": "bash testes/npm-smoke.sh"
+  }
+}

@@ -1,0 +1,6 @@
+sequenceDiagram
+actor app as App
+participant api as API de pedidos
+app->>api: Criar pedido
+api->>api: Validar
+api-->>app: ID do pedido

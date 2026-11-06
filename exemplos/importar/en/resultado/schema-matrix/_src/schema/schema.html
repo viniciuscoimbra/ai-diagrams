@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Schema overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="idioma" content="en">
+<style>
+/*ESTILO*/
+.mx{border-collapse:collapse;margin-top:34px;font-family:var(--fonte-mono)}
+.mx td,.mx th{border:1px solid var(--der-borda);width:74px;height:46px;text-align:center;font-size:15px;font-weight:600;color:var(--tinta)}
+.mx th.cv{height:120px;vertical-align:bottom;padding-bottom:8px;border-top:none}
+.mx th.cv span{display:inline-block;writing-mode:vertical-rl;transform:rotate(180deg);font-size:12px;font-weight:700}
+.mx th.rh{width:260px;text-align:left;padding:0 12px;font-weight:400}
+.mx th.rh b{font-size:13px;display:block}
+.mx th.rh span{font-family:var(--fonte-texto);font-size:11px;color:var(--cinza)}
+.mx td.diag{background:var(--apoio);color:var(--papel);font-size:12px}
+.mx td.tot{background:var(--zona);font-size:13px;color:var(--apoio)}
+.mx th.canto{border:none}
+.leitura{display:flex;gap:40px;margin-top:26px;font-size:12.5px;line-height:1.55;color:var(--tinta)}
+.leitura div{flex:1}
+.det{columns:3;column-gap:32px;margin-top:20px}
+.par{break-inside:avoid;margin-bottom:12px}
+.pt{font-family:var(--fonte-mono);font-size:11.5px;font-weight:700;border-bottom:1px solid var(--apoio);padding-bottom:2px;margin-bottom:3px}
+.pt span{float:right;color:var(--cinza)}
+.pc{font-family:var(--fonte-mono);font-size:10px;color:var(--apoio);line-height:1.5}
+.sec{font-family:var(--fonte-mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin-top:34px;border-bottom:1.5px solid var(--tinta);padding-bottom:6px}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>Imported diagram</span><span>ERD · overview · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Logical model · 2 schemas</div>
+<h1>Dependencies between schemas</h1>
+<div class="sub">Each cell counts columns in the row schema that point to a table in the column schema. These are FKs without reads: the database guarantees the row exists, and the service does not read the other table.</div>
+
+<table class="mx">
+<tr><th class="canto"></th><th class="cv"><span>public</span></th><th class="cv"><span>billing</span></th><th class="cv"><span>points to N schemas</span></th></tr>
+<tr><th class="rh"><b>public</b><span>public</span></th><td class="diag">2</td><td style="background:transparent"></td><td class="tot">0</td></tr>
+<tr><th class="rh"><b>billing</b><span>billing</span></th><td style="background:rgba(var(--der-calor-rgb), 0.8)">1</td><td class="diag">1</td><td class="tot">1</td></tr>
+<tr><th class="rh"><b>used by</b><span>how many schemas point to it</span></th><td class="tot">1</td><td class="tot">0</td><td class="tot"></td></tr>
+</table>
+
+<div class="leitura">
+<div><b>Dark diagonal</b>: how many tables the schema has. The total is 3.</div>
+<div><b>Cell color</b>: stronger means more referencing columns. The densest pair has 1 columns.</div>
+<div><b>public</b> is referenced most: 1 schemas depend on it. <b>billing</b> has the most dependencies: it points to 1.</div>
+</div>
+
+<div class="sec">Each column, by schema pair</div>
+<div class="det">
+<div class="par"><div class="pt">billing → public <span>1</span></div><div class="pc">receipts.order_id → orders</div></div>
+</div>
+
+<div class="foot"> · Import</div>
+</div>
+</body>
+</html>

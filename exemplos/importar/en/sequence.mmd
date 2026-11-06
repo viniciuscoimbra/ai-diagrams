@@ -1,0 +1,6 @@
+sequenceDiagram
+actor app as App
+participant api as Orders API
+app->>api: Create order
+api->>api: Validate
+api-->>app: Order ID

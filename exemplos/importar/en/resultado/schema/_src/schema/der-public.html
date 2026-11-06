@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="largura" content="1796">
+<title>ERD · public</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="idioma" content="en">
+<style>
+/*ESTILO*/
+
+.bchip.tabela{padding:0;border:1.4px solid var(--apoio);border-left:1.4px solid var(--apoio);background:var(--papel);overflow:hidden}
+.tabela .th{height:52px;padding:6px 10px;border-bottom:1px solid var(--apoio)}
+.tabela .tt{font-size:13px;font-weight:700;font-family:var(--fonte-mono);color:var(--tinta);display:flex;justify-content:space-between;align-items:baseline}
+.tabela .tp{font-family:var(--fonte-texto);font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--apoio)}
+.tabela .td{font-size:10.5px;color:var(--tinta);line-height:1.25;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabela .tr{height:17px;display:flex;align-items:center;padding:0 10px;font-family:var(--fonte-mono);font-size:10.5px}
+.tabela .tr:nth-child(odd){background:var(--der-linha-par)}
+.tabela .tk{width:24px;flex:none;font-size:9px;font-weight:700;color:var(--der-chave)}
+.tabela .tn{flex:1;min-width:0;font-size:10px;color:var(--tinta);white-space:nowrap;overflow:hidden;padding-right:6px}
+.tabela .ti{flex:none;max-width:165px;text-align:right;font-size:9px;color:var(--cinza);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabela .ti.dom{color:var(--der-dominio)}
+.tabela .ti.fora{color:var(--der-fora);font-weight:600}
+.tabela .ti.cop{color:var(--der-copia)}
+.tabela.externa{border-style:dashed}
+.tabela.externa .th{border-bottom:none}
+.tabela.leve .th{padding:4px 10px}
+.tabela.leve .tt{font-size:11.5px}
+.tabela .lu{font-size:9.5px;color:var(--der-dominio);padding:2px 10px 0;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.front{position:absolute;font-size:10.5px;color:var(--tinta);line-height:1.55}
+.front h4{font-family:var(--fonte-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--apoio);margin:0 0 4px}
+.front code{font-family:var(--fonte-mono);font-size:10px}
+.front .fora{color:var(--der-fora);font-weight:600}
+.sub{min-height:66px}
+.legfixa{display:flex;gap:28px;margin-top:22px;padding:14px 18px;border:1px solid var(--der-borda);background:var(--der-legenda);font-size:10.5px;color:var(--tinta);line-height:1.35}
+.legfixa h4{font-family:var(--fonte-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--apoio);margin:0 0 8px}
+.legfixa .lc{flex:none;width:330px}
+.legfixa .lc:nth-child(3){width:500px}
+.legfixa .lc.dupla{flex:1;width:auto}
+.legfixa .li{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.legfixa .pe{flex:none;width:74px;font-weight:700}
+.legfixa .rv,.legfixa .ra,.legfixa .rr,.legfixa .rk{flex:none;width:140px;font-family:var(--fonte-mono);font-size:9.5px;text-align:right}
+.legfixa .rv{color:var(--der-dominio)}.legfixa .ra{color:var(--der-fora);font-weight:600}.legfixa .rr{color:var(--der-copia)}.legfixa .rk{color:var(--der-chave);font-weight:700}
+.legfixa .tps{columns:2;column-gap:22px}
+.legfixa .tipo{break-inside:avoid;display:flex;gap:8px;align-items:flex-start;margin-bottom:5px}
+.legfixa .sw{flex:none;width:14px;height:14px;border:1px solid var(--apoio)}
+
+/* a página acompanha o canvas do layout: legenda, faixas e desenho com a mesma largura */
+body{width:1796px}
+.wrap.stack .canvas{width:1700px}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>Imported diagram</span><span>ERD · public · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Logical model · schema public</div>
+<h1>public</h1>
+<div class="sub">Content from the input file. The engine recalculates the layout of the elements.</div>
+<div class="legfixa">
+  <svg width="0" height="0" style="position:absolute"><defs><marker id="lum" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M5,0 V12 M9,0 V12" stroke-width="1.6" style="stroke:var(--apoio)"/></marker><marker id="lzeroum" markerWidth="18" markerHeight="12" refX="17" refY="6" orient="auto" markerUnits="userSpaceOnUse"><circle cx="5" cy="6" r="3.6" stroke-width="1.4" style="fill:var(--papel);stroke:var(--apoio)"/><path d="M14,0 V12" stroke-width="1.6" style="stroke:var(--apoio)"/></marker><marker id="lmuitos" markerWidth="22" markerHeight="14" refX="21" refY="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><circle cx="5" cy="7" r="3.6" stroke-width="1.4" style="fill:var(--papel);stroke:var(--apoio)"/><path d="M11,7 L21,0 M11,7 L21,7 M11,7 L21,14" stroke-width="1.5" fill="none" style="stroke:var(--apoio)"/></marker><marker id="lle" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" style="fill:var(--apoio)"/></marker></defs></svg>
+  <div class="lc"><h4>Lines</h4>
+    <div class="li"><svg width="74" height="16" viewBox="0 0 74 16" style="flex:none"><path marker-start="url(#lmuitos)" marker-end="url(#lum)" d="M3,8 H70" fill="none" stroke-width="1.6" style="stroke:var(--apoio)"/></svg><span><b>Required FK</b>: points to exactly one row</span></div>
+    <div class="li"><svg width="74" height="16" viewBox="0 0 74 16" style="flex:none"><path marker-start="url(#lmuitos)" marker-end="url(#lzeroum)" d="M3,8 H70" fill="none" stroke-width="1.6" style="stroke:var(--apoio)"/></svg><span><b>Optional FK</b>: points to zero or one row</span></div>
+    <div class="li"><span class="pe">crow’s foot</span><span>the N side: zero or many rows per key</span></div>
+    <div class="li"><svg width="74" height="16" viewBox="0 0 74 16" style="flex:none"><path marker-end="url(#lle)" d="M3,8 H70" fill="none" stroke-width="1.6" stroke-dasharray="6 4" style="stroke:var(--apoio)"/></svg><span><b>view only</b>: the id points to the table, without an FK</span></div></div>
+  <div class="lc"><h4>Label to the right of the column</h4>
+    <div class="li"><span class="rv">situacoes_conta</span><span>id from a domain or reference table, without an arrow</span></div>
+    <div class="li"><span class="rv">↓ in band</span><span>the name did not fit: the table is in the domain band</span></div>
+    <div class="li"><span class="ra">cadastro.clientes</span><span>FK to a table in another schema, without an arrow</span></div>
+    <div class="li"><span class="rr">reason</span><span>FK shown without an arrow: deliberate copy, reason in label</span></div>
+    <div class="li"><span class="rk">PK FK UQ</span><span>primary, foreign, unique key; <b>id</b>: id in a read view</span></div>
+    <div class="li"><span class="rk">- - -</span><span>dashed outline: table from another schema</span></div></div>
+  <div class="lc dupla"><h4>Header color: table type</h4><div class="tps"><div class="tipo"><span class="sw" style="background:var(--der-forte)"></span><span><b>strong entity</b>: exists on its own; other tables reference it</span></div><div class="tipo"><span class="sw" style="background:var(--der-dependente)"></span><span><b>dependent</b>: only exists linked to a strong entity</span></div><div class="tipo"><span class="sw" style="background:var(--der-associativa)"></span><span><b>associative</b>: links two entities, many to many</span></div><div class="tipo"><span class="sw" style="background:var(--der-controle)"></span><span><b>process control</b>: controls a process: run, batch, schedule</span></div><div class="tipo"><span class="sw" style="background:var(--der-fato)"></span><span><b>fact · immutable</b>: something that happened; recorded once, never changes</span></div><div class="tipo"><span class="sw" style="background:var(--der-versionada)"></span><span><b>versions · immutable</b>: each change is a new version; the previous one remains</span></div><div class="tipo"><span class="sw" style="background:var(--der-projecao)"></span><span><b>projection</b>: state calculated from facts</span></div><div class="tipo"><span class="sw" style="background:var(--der-trilha)"></span><span><b>technical</b>: outbox (event to publish) or consumer deduplication</span></div><div class="tipo"><span class="sw" style="background:var(--der-dominio-fundo)"></span><span><b>domain</b>: closed list of values (status, type, cause)</span></div><div class="tipo"><span class="sw" style="background:var(--der-configuracao)"></span><span><b>configuration</b>: rule checked by the database: allowed transitions</span></div><div class="tipo"><span class="sw" style="background:var(--der-referencia)"></span><span><b>reference</b>: official list loaded from an external source (currencies, countries)</span></div><div class="tipo"><span class="sw" style="background:var(--der-visao)"></span><span><b>read view</b>: materialized view built from other schemas</span></div></div></div>
+</div>
+
+<div class="wrap stack">
+<div class="canvas" style="height:487.5px">
+  <div class="bchip tabela" style="left:700px;top:60px;width:500px;height:94px"><div class="th" style="background:var(--der-forte)"><div class="tt">customers<span class="tp">strong entity</span></div><div class="td">customers</div></div><div class="tr"><span class="tk">PK</span><span class="tn">customer_id</span><span class="ti "></span></div><div class="tr"><span class="tk"></span><span class="tn">name</span><span class="ti ">varchar(80)</span></div></div>
+  <div class="bchip tabela" style="left:700px;top:238px;width:500px;height:111px"><div class="th" style="background:var(--der-dependente)"><div class="tt">orders<span class="tp">dependent</span></div><div class="td">orders</div></div><div class="tr"><span class="tk">PK</span><span class="tn">order_id</span><span class="ti "></span></div><div class="tr"><span class="tk">FK</span><span class="tn">customer_id</span><span class="ti "></span></div><div class="tr"><span class="tk"></span><span class="tn">status</span><span class="ti ">varchar(20)</span></div></div>
+  
+  <div class="frame zone" style="left:10px;top:409px;width:1680px;height:68.5px"><div class="flabel">Boundary with other schemas · FK without reads: the database guarantees the row exists; the service does not read the other table</div></div>
+  <div class="front" style="left:30px;top:439px;width:560px"><h4>this schema points to</h4><div>none</div></div>
+  <div class="front" style="left:610px;top:439px;width:560px"><h4>other schemas point here</h4><div><code>billing.receipts.order_id → orders</code></div></div>
+  <div class="front" style="left:1190px;top:439px;width:490px"><h4>uses from common (shared domain and reference)</h4><div>none</div></div>
+  <svg class="edges" viewBox="0 0 1700 487.5">
+    <defs>
+      <marker id="le" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" style="fill:var(--apoio)"/></marker>
+      <marker id="um" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M5,0 V12 M9,0 V12" stroke-width="1.6" style="stroke:var(--apoio)"/></marker>
+      <marker id="zeroum" markerWidth="18" markerHeight="12" refX="17" refY="6" orient="auto" markerUnits="userSpaceOnUse"><circle cx="5" cy="6" r="3.6" stroke-width="1.4" style="fill:var(--papel);stroke:var(--apoio)"/><path d="M14,0 V12" stroke-width="1.6" style="stroke:var(--apoio)"/></marker>
+      <marker id="muitos" markerWidth="22" markerHeight="14" refX="21" refY="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><circle cx="5" cy="7" r="3.6" stroke-width="1.4" style="fill:var(--papel);stroke:var(--apoio)"/><path d="M11,7 L21,0 M11,7 L21,7 M11,7 L21,14" stroke-width="1.5" fill="none" style="stroke:var(--apoio)"/></marker>
+    </defs>
+    <path d="M700,319.5 H650 V74 H700" fill="none" stroke-width="1.6" marker-start="url(#muitos)" marker-end="url(#um)" style="stroke:var(--apoio)"/>
+  </svg>
+  <div class="badge" style="left:640px;top:187px">1</div>
+</div>
+
+<div class="passos">
+  <div class="ptitle">Relationships</div>
+  <div class="pitem"><div class="pb">1</div><div>public.orders.customer_id → public.customers</div></div>
+</div>
+</div>
+
+<div class="foot"> · Import</div>
+</div>
+</body>
+</html>

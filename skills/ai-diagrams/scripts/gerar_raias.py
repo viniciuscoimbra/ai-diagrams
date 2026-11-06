@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Gera o fonte HTML de um fluxo em raias (swimlane conceitual) a partir de um JSON.
 
-Uso: python3 gerar_raias.py <spec.json> [saida.html] [--tema NOME|caminho.json]
+Uso: python3 gerar_raias.py <spec.json> [saida.html] [--tema NOME|caminho.json] [--idioma pt-BR|en|es]
 
 Coordenadas calculadas, nunca escritas à mão: raia é linha (o ator), fase é
 coluna (o momento). Cada elemento ocupa uma célula raia × fase; a sequência liga
@@ -26,17 +26,20 @@ def esc(t):
 
 def main():
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import tema
+    import tema, idioma
     flag_tema, sys.argv[1:] = tema.tirar_flag(sys.argv[1:])
+    flag_idioma, sys.argv[1:] = idioma.tirar_flag(sys.argv[1:])
     tm = tema.tema(flag_tema)
     if len(sys.argv) < 2:
         sys.exit(__doc__)
     spec_path = os.path.abspath(sys.argv[1])
     S = json.load(open(spec_path))
+    tr = idioma.idioma(flag_idioma, fonte_json=S)
     saida = os.path.abspath(sys.argv[2]) if len(sys.argv) > 2 else os.path.splitext(spec_path)[0] + '.html'
     tema_html = tema.para_gerador(tm, saida)
     tema_link = tema_html['link']
     tema_meta = tema_html['meta'] + '\n' if tema_html['meta'] else ''
+    idioma_meta = idioma.para_gerador(tr)
 
     raias, fases, els = S['raias'], S['fases'], S['elementos']
     for e in els:
@@ -260,12 +263,12 @@ def main():
 
     he, hd = S['cabecalho']
     fe, fd = S['rodape']
-    doc = f'''<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+    doc = f'''<!doctype html><html lang="{tr['_codigo']}"><head><meta charset="utf-8">
 <title>{esc(S['titulo_pagina'])}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {tema_link}
-{tema_meta}{largura_meta}<style>/*ESTILO*/{largura_css}</style></head><body>
+{tema_meta}{idioma_meta}{largura_meta}<style>/*ESTILO*/{largura_css}</style></head><body>
 <div class="page">
 
   <div class="hdr"><span>{esc(he)}</span><span>{esc(hd)}</span></div>

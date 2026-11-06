@@ -1,0 +1,10 @@
+flowchart LR
+subgraph customer [Cliente]
+ A[Enviar pedido]
+end
+subgraph orders [Pedidos]
+ B[Recibir pedido]
+ C[Revisar pedido]
+end
+A --> B
+B --> C

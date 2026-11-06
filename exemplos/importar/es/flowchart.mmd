@@ -1,0 +1,7 @@
+flowchart LR
+A((Solicitud)) --> B[Revisar pedido]
+B --> C{¿Disponible?}
+C -->|Sí| D[Reservar]
+C -->|No| E[Rechazar]
+D --> F((Completado))
+E --> F

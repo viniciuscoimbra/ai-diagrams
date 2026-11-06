@@ -2,11 +2,15 @@
 """Gera BPMN 2.0 com BPMNDI a partir de um modelo JSON, mais o viewer e o PNG.
 
 Uso: python3 gerar_bpmn.py <modelo.json> [--out DIR] [--so-bpmn] [--tema NOME|caminho.json]
+                         [--idioma pt-BR|en|es] [--sem-chrome]
 
 Saída (na pasta pai quando o modelo está em _src/, senão ao lado dele):
   <nome>.bpmn  editável no Camunda Modeler ou em demo.bpmn.io
   <nome>.html  viewer self-contained com bpmn-js (navegável, funciona offline)
   <nome>.png   captura do viewer via Chrome headless
+
+--sem-chrome gera apenas BPMN e HTML com os checks estáticos. Importação no viewer
+e captura continuam pendentes; rode sem essa flag para completar o gate.
 
 O layout é calculado: raia é linha, col e row posicionam cada nó, e as conexões
 são roteadas em Manhattan desviando de formas e rótulos. A renderização é do
@@ -40,6 +44,7 @@ for k,v in NS.items(): E.register_namespace(k,v)
 # bioc:stroke como atributo SVG, que não aceita var(). O tema só muda cor e fonte: a geometria (DI) é a mesma.
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts'))
 import tema as _tema
+import idioma as _idioma
 TEMA = {}
 def tag(p,n): return '{'+NS[p]+'}'+n
 def sub(parent, n, attrs=None, text=None, p='bpmn'):
@@ -291,12 +296,12 @@ def emitir(m):
 
 
 VIEWER = '''<!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8">
+<html lang="__IDIOMA__"><head><meta charset="utf-8">
 <title>__TITULO__</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 __FONTES__
-<style>__BPMN_CSS__</style>
+__IDIOMA_META__<style>__BPMN_CSS__</style>
 <style>__TEMA__
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--fonte-texto);background:var(--papel);color:var(--tinta)}
@@ -312,7 +317,7 @@ h1{font-size:38px;font-weight:600;letter-spacing:-.025em;line-height:1.05;margin
 </style></head><body>
 <div class="page">
 <div class="hdr"><span>__CAB_E__</span><span>__CAB_D__</span></div>
-<div class="kicker"><span class="sq">■</span>&nbsp; BPMN 2.0 · editável no Camunda Modeler ou em demo.bpmn.io</div>
+<div class="kicker"><span class="sq">■</span>&nbsp; __KICKER__</div>
 <h1>__TITULO__</h1>
 <div class="sub">__SUB__</div>
 <div id="canvas"></div>
@@ -354,6 +359,7 @@ def find_chrome():
 
 def main():
     flag_tema, sys.argv[1:] = _tema.tirar_flag(sys.argv[1:])
+    flag_idioma, sys.argv[1:] = _idioma.tirar_flag(sys.argv[1:])
     tm = _tema.tema(flag_tema)
     TEMA.update({k: v for k, v in _tema.tokens(tm)})
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
@@ -365,6 +371,7 @@ def main():
         sys.exit(__doc__)
     fonte = os.path.abspath(args[0])
     m = json.load(open(fonte))
+    tr = _idioma.idioma(flag_idioma, fonte_json=m)
     src_dir = os.path.dirname(fonte)
     if out_dir is None:
         out_dir = os.path.dirname(src_dir) if os.path.basename(src_dir) == '_src' else src_dir
@@ -374,7 +381,9 @@ def main():
     xml, cw, ch = emitir(m)
     aqui = os.path.dirname(os.path.abspath(__file__))
     largura = cw + 96
-    pagina = (VIEWER.replace('__TEMA__', _tema.css_root(tm)).replace('__FONTES__', _tema.link_fontes(tm))
+    pagina = (VIEWER.replace('__IDIOMA__', tr['_codigo']).replace('__IDIOMA_META__', _idioma.para_gerador(tr))
+              .replace('__KICKER__', esc(tr['bpmn.kicker']))
+              .replace('__TEMA__', _tema.css_root(tm)).replace('__FONTES__', _tema.link_fontes(tm))
               .replace('__FONTE_JS__', json.dumps(_tema.pilha_texto(tm).replace("'", ''))).replace('__BPMN_CSS__', open(os.path.join(aqui, 'vendor', 'bpmn-js.css')).read())
               .replace('__BPMN_JS__', open(os.path.join(aqui, 'vendor', 'bpmn-navigated-viewer.js')).read())
               .replace('__BPMN_DATA__', json.dumps(xml, ensure_ascii=False).replace('</', '<\\/'))
@@ -382,6 +391,14 @@ def main():
               .replace('__CAB_E__', esc(m.get('cabecalho', ['', ''])[0])).replace('__CAB_D__', esc(m.get('cabecalho', ['', ''])[1]))
               .replace('__RODAPE__', m.get('rodape', ''))
               .replace('__LARGURA__', str(largura)).replace('__CW__', str(cw)).replace('__CH__', str(ch)))
+
+    if '--sem-chrome' in sys.argv:
+        os.makedirs(out_dir, exist_ok=True)
+        open(os.path.join(out_dir, nome + '.bpmn'), 'w').write(xml)
+        if '--so-bpmn' not in sys.argv:
+            open(os.path.join(out_dir, nome + '.html'), 'w').write(pagina)
+        print('estrutura, alcance e sobreposição: 0 problemas; importação e PNG pendentes (--sem-chrome)')
+        return
 
     chrome = find_chrome()
     with tempfile.NamedTemporaryFile('w', suffix='.html', delete=False) as f:

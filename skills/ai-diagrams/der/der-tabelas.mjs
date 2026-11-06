@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { carregarIdioma } from './idioma.mjs';
 
 // Tema: tira --tema X (ou --tema=X) do argv e pede ao scripts/tema.py, o único leitor do json do tema,
 // o link das fontes e a meta que o fonte HTML grava. Tema inexistente ou incompleto encerra aqui.
@@ -31,8 +32,15 @@ export function temaDoGerador(valor, saida) {
 // Modelo carregado: { tabelas: { 'schema.tabela': { tipo, rotulo, colunas: [[nome, tipo, chave, alvo, obrigatoria]] } } }
 export let MODELO = null;
 let completas = {};
-export function carregar(caminho) {
+export let IDIOMA;
+export const texto = (chave, valores) => IDIOMA.t(`der.${chave}`, valores);
+export function carregar(caminho, idioma, fonte = {}) {
   MODELO = JSON.parse(fs.readFileSync(caminho, 'utf8'));
+  IDIOMA = carregarIdioma(idioma, { ...MODELO, ...fonte });
+  for (const tipo of Object.keys(CANDY)) {
+    TIPO[tipo] = texto(`tipo.${tipo}`);
+    SIGNIFICADO[tipo] = texto(`significado.${tipo}`);
+  }
   completas = MODELO.tabelas;
   for (const c of MODELO.colunasControle || []) CONTROLE.add(c);
   return MODELO;
@@ -48,24 +56,7 @@ export const CANDY = {
   forte: 'var(--der-forte)', dependente: 'var(--der-dependente)', associativa: 'var(--der-associativa)', controle: 'var(--der-controle)', fato: 'var(--der-fato)',
   versionada: 'var(--der-versionada)', projecao: 'var(--der-projecao)', trilha: 'var(--der-trilha)', dominio: 'var(--der-dominio-fundo)', configuracao: 'var(--der-configuracao)', referencia: 'var(--der-referencia)', visao: 'var(--der-visao)'
 };
-export const TIPO = { forte: 'entidade forte', dependente: 'dependente', associativa: 'associativa', controle: 'controle de processo',
-  fato: 'fato · imutável', versionada: 'versões · imutável', projecao: 'projeção', trilha: 'técnica',
-  dominio: 'domínio', configuracao: 'configuração', referencia: 'referência', visao: 'view de leitura' };
-// O que cada cor quer dizer, na legenda de todo DER.
-export const SIGNIFICADO = {
-  forte: 'existe por si; as outras tabelas apontam para ela',
-  dependente: 'só existe ligada a uma entidade forte',
-  associativa: 'liga duas entidades, muitos para muitos',
-  controle: 'controla um processo: execução, lote, agenda',
-  fato: 'algo que aconteceu; gravado uma vez, nunca muda',
-  versionada: 'cada mudança é uma versão nova; a anterior fica',
-  projecao: 'estado calculado a partir dos fatos',
-  trilha: 'outbox (evento a publicar) ou deduplicação de consumo',
-  dominio: 'lista fechada de valores (situação, tipo, causa)',
-  configuracao: 'regra que o banco consulta: transições permitidas',
-  referencia: 'lista oficial carregada de fonte externa (moedas, países)',
-  visao: 'view materializada, montada a partir de outros schemas'
-};
+export const TIPO = {}, SIGNIFICADO = {};
 
 const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 export const nome = (k) => k.split('.')[1];
@@ -98,14 +89,14 @@ export function linhas(k, largura = LARG) {
       if (leve) {
         // Nome da coluna e da tabela de domínio não cabem juntos: a coluna fica inteira e o rótulo manda para a faixa.
         const info = `${alvo.split('.')[0] === s ? '' : alvo.split('.')[0] + '.'}${nome(alvo)}`;
-        const alt = alvo.split('.')[0] === s ? '↓ na faixa' : alvo.split('.')[0];
+        const alt = alvo.split('.')[0] === s ? texto('faixa_curta') : alvo.split('.')[0];
         return { n, marca: '', info: cabe(n, info, largura) ? info : cabe(n, alt, largura) ? alt : '', cls: 'dom' };
       }
       if (alvo.split('.')[0] !== s && !DESENHADAS.has(alvo)) return { n, marca: 'FK', info: `${alvo.split('.')[0]}.${nome(alvo)}`, cls: 'fora' };
       if (SEM_SETA.has(`${k}.${n}`)) return { n, marca: 'FK', info: SEM_SETA.get(`${k}.${n}`), cls: 'cop' };
       return { n, marca: t.tipo === 'visao' ? 'id' : 'FK', info: '', alvo };
     }
-    return { n, marca: chave === 'UQ' ? 'UQ' : '', info: tipo.replace('timestamptz', 'data-hora').replace('numeric(18,2)', 'valor') };
+    return { n, marca: chave === 'UQ' ? 'UQ' : '', info: tipo.replace('timestamptz', texto('data_hora')).replace('numeric(18,2)', texto('valor')) };
   });
 }
 
@@ -180,10 +171,10 @@ export function textoLeve(k) {
   const t = tabela(k), s = k.split('.')[0];
   const fks = t.colunas.filter(([, , c]) => c === 'FK').map(([, , , alvo]) => alvo);
   if (t.tipo === 'configuracao' && fks.length)
-    return [`pares de ${curto(fks[0], s)} permitidos`, 'o banco recusa troca de situação fora daqui'];
+    return [texto('pares_permitidos', { tabela: curto(fks[0], s) }), texto('recusa_troca')];
   const u = usos(k);
-  const linhas = u.length ? u.map((x, i) => (i ? `· ${x}` : `usada por ${x}`)) : ['nenhuma coluna usa (só regras de configuração)'];
-  if (fks.length) linhas.push(`cada linha leva a ${curto(fks[0], s)}`);
+  const linhas = u.length ? u.map((x, i) => (i ? `· ${x}` : texto('usada_por', { coluna: x }))) : [texto('sem_uso')];
+  if (fks.length) linhas.push(texto('linha_leva', { tabela: curto(fks[0], s) }));
   return linhas;
 }
 export const HLEVE = 84;

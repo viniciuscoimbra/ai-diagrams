@@ -8,6 +8,68 @@ Program output is in Portuguese. This page quotes it as printed, with a translat
 
 To have an AI agent install ai-diagrams for you, give it [INSTALL.md](../INSTALL.md).
 
+## Install with npm
+
+The package is prepared locally and is not published yet. After publication, use:
+
+```bash
+npx ai-diagrams install --claude
+```
+
+Replace `--claude` with `--codex` for Codex. These commands create the same global skill links as the git clone route below. Add `--projeto /path/to/project` for a project-local link in `.claude/skills/` or `.codex/skills/`. Use exactly one CLI flag.
+
+Kiro gets copies of the skill, steering file and agent:
+
+```bash
+npx ai-diagrams install --kiro --projeto /path/to/project
+```
+
+Without `--projeto`, Kiro uses the current directory. The installer asks before replacing an existing installation. In a non-interactive terminal it refuses conflicts and preserves the files. Approved replacement prints the backup locations; the originals remain in those sibling `.ai-diagrams-backup-*` folders. A failed installation restores them automatically. Repeating an identical Claude/Codex link is safe.
+
+To keep the command installed globally:
+
+```bash
+npm install -g ai-diagrams
+```
+
+```bash
+ai-diagrams install --claude
+```
+
+Installing the npm package adds the command; `install --claude`, `--codex` or `--kiro` registers the skill. The `npx` route links to npm's cache, so repeat it after clearing that cache. The global route keeps the package under npm's global prefix.
+
+```bash
+ai-diagrams doctor
+```
+
+Use `npx ai-diagrams doctor` if the command is not installed globally. Expected: `OK` for Node 18+, Python 3.9+, Chrome and AWS icons. Missing requirements report `FALHA` and exit 1. The doctor reuses the engine's Chrome/icon detection, including `POSTER_CHROME` and `POSTER_ICONBASE`, without starting Chrome. Follow the requirement instructions below for anything missing. npm does not install Python, Chrome or the Python `diagrams` package.
+
+Existing files use the same entry point:
+
+```bash
+ai-diagrams importar process.mmd --saida diagramas --idioma en
+```
+
+See [supported import formats](importing.md). Installation does not run the PNG gates; the import command does unless `--somente-fonte` is explicitly selected.
+
+### Test the unpublished package
+
+From the repository root:
+
+```bash
+npm pack --pack-destination /tmp
+```
+
+```bash
+bash testes/npm-smoke.sh /tmp/ai-diagrams-0.1.0.tgz
+```
+
+The smoke test installs the local archive offline in a temporary npm prefix with a temporary HOME, checks Claude/Codex links, project scope, Kiro copies, conflict preservation and importer dispatch, then removes the temporary files. Running `bash testes/npm-smoke.sh` without an archive builds one first. Neither command publishes anything or logs in to npm.
+
+## Install with git clone
+
+The existing route below remains available before npm publication.
+
 ## 1. Requirements (all tools that build PNGs)
 
 | Item | Used for | Check |
@@ -322,6 +384,10 @@ python3 "$AI_DIAGRAMS"/skills/ai-diagrams/scripts/build.py "$PROJECT"/diagramas/
 | `LINT REPROVOU`, `BPMN REPROVOU` or `TRANSBORDA` | the gate found a defect in the drawing; the AI fixes the source and runs it again. If it stops, paste the output into the chat |
 
 ## Update
+
+For the global npm package, run `npm install -g ai-diagrams@latest`, then repeat the `ai-diagrams install` command for your tool. For `npx`, repeat `npx ai-diagrams@latest install` with the same tool and project options. Confirm replacement in an interactive terminal if prompted; Kiro needs its copied files refreshed.
+
+For a git clone:
 
 ```bash
 git -C "$AI_DIAGRAMS" pull

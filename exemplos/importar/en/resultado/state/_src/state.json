@@ -1,0 +1,46 @@
+{
+  "idioma": "en",
+  "titulo_pagina": "Imported diagram",
+  "cabecalho": [
+    "Imported diagram",
+    "V1"
+  ],
+  "kicker": "Import",
+  "h1": "Imported diagram",
+  "sub": "Content from the input file. The engine recalculates the layout of the elements.",
+  "rodape": [
+    "",
+    "Import"
+  ],
+  "inicial": "pending",
+  "estados": [
+    {
+      "id": "pending",
+      "nome": "Pending",
+      "desc": "Pending"
+    },
+    {
+      "id": "paid",
+      "nome": "Paid",
+      "desc": "Paid"
+    },
+    {
+      "id": "closed",
+      "nome": "Closed",
+      "desc": "Closed",
+      "final": true
+    }
+  ],
+  "transicoes": [
+    {
+      "de": "pending",
+      "para": "paid",
+      "evento": "Payment received"
+    },
+    {
+      "de": "paid",
+      "para": "closed",
+      "evento": "Order shipped"
+    }
+  ]
+}

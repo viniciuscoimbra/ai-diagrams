@@ -1,0 +1,112 @@
+{
+  "idioma": "es",
+  "cabecalho": "Diagrama importado",
+  "rodape": " · Importación",
+  "schemas": {
+    "public": "public",
+    "billing": "billing"
+  },
+  "tabelas": {
+    "public.customers": {
+      "tipo": "forte",
+      "rotulo": "customers",
+      "colunas": [
+        [
+          "customer_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "name",
+          "varchar(80)",
+          ""
+        ]
+      ],
+      "sql": {
+        "customer_id": {
+          "not_null": true,
+          "default": null,
+          "target_column": null
+        },
+        "name": {
+          "not_null": true,
+          "default": null,
+          "target_column": null
+        }
+      }
+    },
+    "public.orders": {
+      "tipo": "dependente",
+      "rotulo": "orders",
+      "colunas": [
+        [
+          "order_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "customer_id",
+          "uuid",
+          "FK",
+          "public.customers",
+          true
+        ],
+        [
+          "status",
+          "varchar(20)",
+          ""
+        ]
+      ],
+      "sql": {
+        "order_id": {
+          "not_null": true,
+          "default": null,
+          "target_column": null
+        },
+        "customer_id": {
+          "not_null": true,
+          "default": null,
+          "target_column": "customer_id"
+        },
+        "status": {
+          "not_null": true,
+          "default": null,
+          "target_column": null
+        }
+      }
+    },
+    "billing.receipts": {
+      "tipo": "dependente",
+      "rotulo": "receipts",
+      "colunas": [
+        [
+          "receipt_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "order_id",
+          "uuid",
+          "FK",
+          "public.orders",
+          true
+        ]
+      ],
+      "sql": {
+        "receipt_id": {
+          "not_null": true,
+          "default": null,
+          "target_column": null
+        },
+        "order_id": {
+          "not_null": true,
+          "default": null,
+          "target_column": "order_id"
+        }
+      }
+    }
+  },
+  "schemaComum": null,
+  "schemaLeitura": null,
+  "colunasControle": []
+}

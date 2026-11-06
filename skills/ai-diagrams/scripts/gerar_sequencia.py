@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Gera o fonte HTML de um diagrama de sequência a partir de um JSON.
 
-Uso: python3 gerar_sequencia.py <spec.json> [saida.html] [--tema NOME|caminho.json]
+Uso: python3 gerar_sequencia.py <spec.json> [saida.html] [--tema NOME|caminho.json] [--idioma pt-BR|en|es]
 
 Coordenadas calculadas, nunca escritas à mão. Participante é coluna, mensagem é
 linha. O rótulo de cada mensagem fica no vão vizinho da origem, do lado para onde
@@ -23,8 +23,7 @@ LINHA = 20                   # altura de linha do rótulo
 FCHAR = 8.2                  # largura de caractere da guarda (11px mono, caixa alta, .14em)
 AUTO_W = 46                  # largura do laço da mensagem para si mesmo
 AUTO_H = 26
-TIPOS = {'ator': 'ator', 'servico': 'serviço', 'banco': 'banco', 'fila': 'fila',
-         'externo': 'externo', 'sistema': 'sistema'}
+TIPOS = {'ator', 'servico', 'banco', 'fila', 'externo', 'sistema'}
 
 
 def esc(t):
@@ -59,17 +58,20 @@ def achatar(itens, nivel=0):
 
 def main():
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import tema
+    import tema, idioma
     flag_tema, sys.argv[1:] = tema.tirar_flag(sys.argv[1:])
+    flag_idioma, sys.argv[1:] = idioma.tirar_flag(sys.argv[1:])
     tm = tema.tema(flag_tema)
     if len(sys.argv) < 2:
         sys.exit(__doc__)
     spec_path = os.path.abspath(sys.argv[1])
     S = json.load(open(spec_path))
+    tr = idioma.idioma(flag_idioma, fonte_json=S)
     saida = os.path.abspath(sys.argv[2]) if len(sys.argv) > 2 else os.path.splitext(spec_path)[0] + '.html'
     tema_html = tema.para_gerador(tm, saida)
     tema_link = tema_html['link']
     tema_meta = tema_html['meta'] + '\n' if tema_html['meta'] else ''
+    idioma_meta = idioma.para_gerador(tr)
 
     parts = S['participantes']
     idx = {p['id']: i for i, p in enumerate(parts)}
@@ -219,7 +221,7 @@ def main():
         ico = '<img src="%s" alt="">' % esc(p['icone']) if p.get('icone') else ''
         sub = '<div class="nsub">%s</div>' % esc(p['sub']) if p.get('sub') else ''
         out.append(f'      <div class="{cls}" style="left:{x0}px;top:0;width:{CAB_W}px;height:{CAB_H}px">\n'
-                   f'        <div class="ptag">{esc(TIPOS.get(tipo, tipo))}</div>\n'
+                   f'        <div class="ptag">{esc(tr["sequencia.tipo." + tipo] if tipo in TIPOS else tipo)}</div>\n'
                    f'        <div class="cabrow">{ico}<div><div class="pt">{esc(p["nome"])}</div>{sub}</div></div>\n'
                    f'      </div>')
         out.append(f'      <div class="vida" style="left:{xs[i] - ATIV}px;top:{CAB_H}px;height:{canvas_h - CAB_H - 8}px"></div>')
@@ -297,16 +299,16 @@ def main():
     passos = [e for e in ev if e.get('n')]
     secoes = []
     if passos:
-        secoes.append('  <div class="sec">Passos</div>\n  <div class="passos-seq">')
+        secoes.append(f'  <div class="sec">{esc(tr["sequencia.passos"])}</div>\n  <div class="passos-seq">')
         for e in passos:
             secoes.append(f'    <div class="ps-item"><div class="badge">{e["n"]}</div><div class="pd">{rotulo_html(e["passo"])}</div></div>')
         secoes.append('  </div>')
     usados = {e.get('tipo', 'sincrona') for e in ev if 'de' in e}
-    nt = [('sincrona', '', 'chamada síncrona'), ('assincrona', ' aberta', 'mensagem assíncrona'),
-          ('resposta', ' trac aberta', 'resposta')]
+    nt = [('sincrona', '', tr['sequencia.sincrona']), ('assincrona', ' aberta', tr['sequencia.assincrona']),
+          ('resposta', ' trac aberta', tr['sequencia.resposta'])]
     itens = ''.join(f'<div class="nt"><div class="lin{c}"></div>{t}</div>' for k, c, t in nt if k in usados)
-    secoes.append(f'  <div class="sec">Notação</div>\n  <div class="notacao">{itens}'
-                  '<div class="nt"><div class="ativ-mini"></div>barra de ativação: o participante está processando</div></div>')
+    secoes.append(f'  <div class="sec">{esc(tr["comum.notacao"])}</div>\n  <div class="notacao">{itens}'
+                  f'<div class="nt"><div class="ativ-mini"></div>{esc(tr["sequencia.ativacao"])}</div></div>')
 
     faixa = ''
     if S.get('faixa'):
@@ -318,17 +320,17 @@ def main():
     largura_css = f'\nbody{{width:{pagina}px}}' if pagina > 1400 else ''
     he, hd = S['cabecalho']
     fe, fd = S['rodape']
-    doc = f'''<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+    doc = f'''<!doctype html><html lang="{tr['_codigo']}"><head><meta charset="utf-8">
 <title>{esc(S['titulo_pagina'])}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {tema_link}
-{tema_meta}{largura_meta}<style>/*ESTILO*/{largura_css}</style></head><body>
+{tema_meta}{idioma_meta}{largura_meta}<style>/*ESTILO*/{largura_css}</style></head><body>
 <div class="page">
 
   <div class="hdr"><span>{esc(he)}</span><span>{esc(hd)}</span></div>
 
-  <div class="kicker"><span class="sq">■</span> {esc(S.get('kicker', 'Diagrama de sequência'))}</div>
+  <div class="kicker"><span class="sq">■</span> {esc(S.get('kicker', tr['sequencia.kicker']))}</div>
   <h1>{esc(S['h1'])}</h1>
   <div class="sub">{esc(S['sub'])}</div>
 

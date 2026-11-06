@@ -1,0 +1,95 @@
+{
+  "id": "imported",
+  "title": "Diagrama importado",
+  "subtitle": "Conteúdo do arquivo de entrada. O motor recalcula a disposição dos elementos.",
+  "idioma": "pt-BR",
+  "cabecalho": [
+    "Diagrama importado",
+    "V1"
+  ],
+  "rodape": " · Importação",
+  "lanes": [
+    {
+      "id": "process",
+      "name": "Diagrama importado"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "A",
+      "name": "Solicitação",
+      "type": "startEvent",
+      "lane": "process",
+      "col": 0,
+      "row": 0
+    },
+    {
+      "id": "B",
+      "name": "Conferir pedido",
+      "type": "task",
+      "lane": "process",
+      "col": 1,
+      "row": 0
+    },
+    {
+      "id": "C",
+      "name": "Disponível?",
+      "type": "exclusiveGateway",
+      "lane": "process",
+      "col": 2,
+      "row": 0
+    },
+    {
+      "id": "D",
+      "name": "Reservar",
+      "type": "task",
+      "lane": "process",
+      "col": 3,
+      "row": 0
+    },
+    {
+      "id": "E",
+      "name": "Recusar",
+      "type": "task",
+      "lane": "process",
+      "col": 3,
+      "row": 1
+    },
+    {
+      "id": "F",
+      "name": "Concluído",
+      "type": "endEvent",
+      "lane": "process",
+      "col": 4,
+      "row": 0
+    }
+  ],
+  "flows": [
+    {
+      "from": "A",
+      "to": "B"
+    },
+    {
+      "from": "B",
+      "to": "C"
+    },
+    {
+      "from": "C",
+      "to": "D",
+      "name": "Sim"
+    },
+    {
+      "from": "C",
+      "to": "E",
+      "name": "Não"
+    },
+    {
+      "from": "D",
+      "to": "F"
+    },
+    {
+      "from": "E",
+      "to": "F"
+    }
+  ]
+}

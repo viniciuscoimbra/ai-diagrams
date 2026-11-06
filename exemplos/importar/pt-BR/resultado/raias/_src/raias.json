@@ -1,0 +1,62 @@
+{
+  "idioma": "pt-BR",
+  "titulo_pagina": "Diagrama importado",
+  "cabecalho": [
+    "Diagrama importado",
+    "V1"
+  ],
+  "kicker": "Importação",
+  "h1": "Diagrama importado",
+  "sub": "Conteúdo do arquivo de entrada. O motor recalcula a disposição dos elementos.",
+  "rodape": [
+    "",
+    "Importação"
+  ],
+  "raias": [
+    {
+      "nome": "Cliente",
+      "sub": ""
+    },
+    {
+      "nome": "Pedidos",
+      "sub": ""
+    }
+  ],
+  "fases": [
+    "1",
+    "2",
+    "3"
+  ],
+  "elementos": [
+    {
+      "raia": 0,
+      "fase": 0,
+      "texto": "Enviar pedido"
+    },
+    {
+      "raia": 1,
+      "fase": 1,
+      "texto": "Receber pedido"
+    },
+    {
+      "raia": 1,
+      "fase": 2,
+      "texto": "Conferir pedido"
+    }
+  ],
+  "sequencia": [
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      2
+    ]
+  ],
+  "secoes": []
+}

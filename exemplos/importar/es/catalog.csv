@@ -1,0 +1,3 @@
+Servicio,Responsable,Entrada,Salida,Contrato
+Pedidos,Ventas,Carrito,Pedido,orders.v1
+Pagos,Finanzas,Pedido,Recibo,payments.v1

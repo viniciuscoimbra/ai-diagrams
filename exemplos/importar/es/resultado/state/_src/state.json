@@ -1,0 +1,46 @@
+{
+  "idioma": "es",
+  "titulo_pagina": "Diagrama importado",
+  "cabecalho": [
+    "Diagrama importado",
+    "V1"
+  ],
+  "kicker": "Importación",
+  "h1": "Diagrama importado",
+  "sub": "Contenido del archivo de entrada. El motor recalcula la disposición de los elementos.",
+  "rodape": [
+    "",
+    "Importación"
+  ],
+  "inicial": "pending",
+  "estados": [
+    {
+      "id": "pending",
+      "nome": "Pendiente",
+      "desc": "Pendiente"
+    },
+    {
+      "id": "paid",
+      "nome": "Pagado",
+      "desc": "Pagado"
+    },
+    {
+      "id": "closed",
+      "nome": "Cerrado",
+      "desc": "Cerrado",
+      "final": true
+    }
+  ],
+  "transicoes": [
+    {
+      "de": "pending",
+      "para": "paid",
+      "evento": "Pago recibido"
+    },
+    {
+      "de": "paid",
+      "para": "closed",
+      "evento": "Pedido enviado"
+    }
+  ]
+}

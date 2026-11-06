@@ -1,0 +1,95 @@
+{
+  "id": "imported",
+  "title": "Imported diagram",
+  "subtitle": "Content from the input file. The engine recalculates the layout of the elements.",
+  "idioma": "en",
+  "cabecalho": [
+    "Imported diagram",
+    "V1"
+  ],
+  "rodape": " · Import",
+  "lanes": [
+    {
+      "id": "process",
+      "name": "Imported diagram"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "A",
+      "name": "Request",
+      "type": "startEvent",
+      "lane": "process",
+      "col": 0,
+      "row": 0
+    },
+    {
+      "id": "B",
+      "name": "Check order",
+      "type": "task",
+      "lane": "process",
+      "col": 1,
+      "row": 0
+    },
+    {
+      "id": "C",
+      "name": "Available?",
+      "type": "exclusiveGateway",
+      "lane": "process",
+      "col": 2,
+      "row": 0
+    },
+    {
+      "id": "D",
+      "name": "Reserve",
+      "type": "task",
+      "lane": "process",
+      "col": 3,
+      "row": 0
+    },
+    {
+      "id": "E",
+      "name": "Reject",
+      "type": "task",
+      "lane": "process",
+      "col": 3,
+      "row": 1
+    },
+    {
+      "id": "F",
+      "name": "Completed",
+      "type": "endEvent",
+      "lane": "process",
+      "col": 4,
+      "row": 0
+    }
+  ],
+  "flows": [
+    {
+      "from": "A",
+      "to": "B"
+    },
+    {
+      "from": "B",
+      "to": "C"
+    },
+    {
+      "from": "C",
+      "to": "D",
+      "name": "Yes"
+    },
+    {
+      "from": "C",
+      "to": "E",
+      "name": "No"
+    },
+    {
+      "from": "D",
+      "to": "F"
+    },
+    {
+      "from": "E",
+      "to": "F"
+    }
+  ]
+}
