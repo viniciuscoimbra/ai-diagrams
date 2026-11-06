@@ -1,0 +1,84 @@
+{
+  "colors": [
+    {
+      "name": "Ciano",
+      "hex": "#24C8F5",
+      "foreground": "#171717",
+      "contrast": 9.1
+    },
+    {
+      "name": "Coral",
+      "hex": "#FF5B59",
+      "foreground": "#171717",
+      "contrast": 5.88
+    },
+    {
+      "name": "Amarelo",
+      "hex": "#FFD23F",
+      "foreground": "#171717",
+      "contrast": 12.41
+    },
+    {
+      "name": "Violeta",
+      "hex": "#9868F5",
+      "foreground": "#171717",
+      "contrast": 4.81
+    }
+  ],
+  "pairs": [
+    {
+      "names": [
+        "Ciano",
+        "Coral"
+      ],
+      "hex": "#244756",
+      "foreground": "#FFFFFF",
+      "contrast": 9.95
+    },
+    {
+      "names": [
+        "Ciano",
+        "Amarelo"
+      ],
+      "hex": "#24A53D",
+      "foreground": "#171717",
+      "contrast": 5.57
+    },
+    {
+      "names": [
+        "Ciano",
+        "Violeta"
+      ],
+      "hex": "#1552EB",
+      "foreground": "#FFFFFF",
+      "contrast": 6.11
+    },
+    {
+      "names": [
+        "Coral",
+        "Amarelo"
+      ],
+      "hex": "#FF4B16",
+      "foreground": "#171717",
+      "contrast": 5.35
+    },
+    {
+      "names": [
+        "Coral",
+        "Violeta"
+      ],
+      "hex": "#982556",
+      "foreground": "#FFFFFF",
+      "contrast": 7.68
+    },
+    {
+      "names": [
+        "Amarelo",
+        "Violeta"
+      ],
+      "hex": "#98563D",
+      "foreground": "#FFFFFF",
+      "contrast": 5.62
+    }
+  ]
+}

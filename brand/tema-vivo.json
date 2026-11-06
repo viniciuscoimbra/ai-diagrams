@@ -1,0 +1,57 @@
+{
+  "versao_schema": 1,
+  "nome": "ai-diagrams vivo",
+  "empresa": "",
+  "logo": null,
+  "cores": {
+    "tinta": "#171717",
+    "apoio": "#525252",
+    "cinza": "#737373",
+    "zona": "#F5F5F5",
+    "papel": "#FFFFFF",
+    "acento": "#24C8F5",
+    "risco": "#B42318",
+    "risco_fundo": "#FEF3F2"
+  },
+  "cores_derivadas": {
+    "acento_forte": "#086A84",
+    "cinza_claro": "#D1D5DB",
+    "c4_pessoa_tipo": "#9CA3AF",
+    "c4_pessoa_desc": "#E5E7EB",
+    "c4_externo": "#E9EBEF",
+    "c4_limite": "#F9FAFB"
+  },
+  "paleta_der": {
+    "der_borda": "#CBD5E1",
+    "der_legenda": "#F9FAFB",
+    "der_linha_par": "#F8FAFC",
+    "der_chave": "#A16207",
+    "der_dominio": "#15803D",
+    "der_fora": "#1D4ED8",
+    "der_copia": "#7E22CE",
+    "der_forte": "#FF5B59",
+    "der_dependente": "#24C8F5",
+    "der_associativa": "#9868F5",
+    "der_controle": "#FFD23F",
+    "der_fato": "#FED7AA",
+    "der_versionada": "#FEF08A",
+    "der_projecao": "#BBF7D0",
+    "der_trilha": "#E5E7EB",
+    "der_dominio_fundo": "#D9F99D",
+    "der_configuracao": "#BAE6FD",
+    "der_referencia": "#FDE68A",
+    "der_visao": "#FBCFE8",
+    "der_calor": "#FF8CB4"
+  },
+  "fontes": {
+    "texto": "Inter",
+    "mono": "JetBrains Mono"
+  },
+  "moldura": {
+    "cabecalho": "{assunto}",
+    "rodape": "{tipo} · {data}",
+    "rodape_direita": "",
+    "classificacao": "",
+    "mostrar_cliente": false
+  }
+}

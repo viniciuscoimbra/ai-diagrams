@@ -1,0 +1,4 @@
+@refy/ui 0.4.0
+Origin: plyngo/node_modules/@refy/ui.
+The package declares license: UNLICENSED and supplies no LICENSE file.
+This guide does not assign an open-source license to that private package.

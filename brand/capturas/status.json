@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "date": "2026-11-06T19:21:37.927Z",
+  "status": "captured_pending_visual_review",
+  "html_sha256": "b0e4548a29c8f21cb881154fbd17539a8046348d1f740ab00d5c507e20ec5ffb",
+  "captured": [
+    "brandkit-v2-desktop-light.jpg",
+    "brandkit-v2-desktop-dark.jpg",
+    "brandkit-v2-mobile-light.jpg",
+    "brandkit-v2-mobile-dark.jpg"
+  ],
+  "html_visual_review": "pending",
+  "checks": "checks-v2.json",
+  "previous_version": "The four v1 PNGs and checks.json are preserved; they do not validate v2."
+}
