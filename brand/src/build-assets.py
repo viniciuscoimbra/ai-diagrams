@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'brand/assets'
 FONTS = ROOT.parent / 'local-ui/src/assets/fonts'
 INK, SUPPORT, PAPER, ZONE = '#171717', '#525252', '#FFFFFF', '#F5F5F5'
-COLORS = [('Ciano', '#24C8F5'), ('Coral', '#FF5B59'), ('Amarelo', '#FFD23F'), ('Violeta', '#9868F5')]
+COLORS = [('Ciano', '#24C8F5'), ('Coral', '#FF5B59'), ('Amarelo', '#FFE600'), ('Violeta', '#9868F5')]
 CYAN, CORAL, YELLOW, VIOLET = [color for _, color in COLORS]
 # Node already supplies Brotli when the local fontTools environment does not.
 if not woff2.haveBrotli:
@@ -80,40 +80,23 @@ def rect(x, y, width, height, fill, stroke=None, sw=1):
     return f'<rect x="{x}" y="{y}" width="{width}" height="{height}" fill="{fill}"' + (f' stroke="{stroke}" stroke-width="{sw}"' if stroke else '') + '/>'
 
 
-# The 56 × 56 bounding square is shared by all proposals, with a 4-unit clear margin.
-SHAPES = {
-    'encontro': [
-        ('M4 4H32V60H4Z', CYAN),
-        ('M60 32A28 28 0 1 1 4 32A28 28 0 1 1 60 32Z', CORAL),
-        ('M20 16L48 32L20 48Z', YELLOW),
-    ],
-    'mosaico': [
-        ('M4 4H38V38H4Z', CORAL),
-        ('M60 20A16 16 0 1 1 28 20A16 16 0 1 1 60 20Z', YELLOW),
-        ('M4 60L26 24L48 60Z', CYAN),
-        ('M32 32H60V60H32Z', VIOLET),
-    ],
-    'orbita': [
-        ('M4 4H44V44H4Z', YELLOW),
-        ('M60 32A28 28 0 1 1 4 32A28 28 0 1 1 60 32Z', CYAN),
-        ('M32 4A28 28 0 0 1 32 60A20 28 0 0 0 32 4Z', CORAL),
-    ],
-}
+# The equilateral A is inscribed in the bowl, with its apex on x=32.
+SHAPES = [
+    ('M4 4H32V60H4Z', CYAN),
+    ('M60 32A28 28 0 1 1 4 32A28 28 0 1 1 60 32Z', CORAL),
+    (f'M32 4L{number(32 + 14 * math.sqrt(3))} 46L{number(32 - 14 * math.sqrt(3))} 46Z', YELLOW),
+]
 
 
-def symbol(variant='encontro', mono=None, prefix='mark'):
-    shapes = SHAPES[variant]
+def symbol(mono=None, prefix='mark'):
+    shapes = SHAPES
     if mono:
         return ''.join(f'<path d="{path}" fill="none" stroke="{mono}" stroke-width="3" stroke-linejoin="round"/>' for path, _ in shapes)
-    defs = ''.join(f'<clipPath id="{prefix}-{i}"><path d="{path}"/></clipPath>' for i, (path, _) in enumerate(shapes))
-    body = ''.join(f'<path d="{path}" fill="{color}"/>' for path, color in shapes)
-    # Explicit opaque intersection shapes work in SVG renderers without CSS blending.
-    for count in range(2, len(shapes)+1):
-        for indices in combinations(range(len(shapes)), count):
-            intersect = f'<path d="{shapes[indices[0]][0]}" fill="{multiply(*(shapes[i][1] for i in indices))}"/>'
-            for i in indices[1:]:
-                intersect = f'<g clip-path="url(#{prefix}-{i})">{intersect}</g>'
-            body += intersect
+    defs = f'<clipPath id="{prefix}-1"><path d="{shapes[1][0]}"/></clipPath>'
+    body = ''.join(f'<path d="{path}" fill="{color}"/>' for path, color in shapes[:2])
+    # Only stem and bowl multiply; the opaque yellow A paints over both.
+    body += f'<g clip-path="url(#{prefix}-1)"><path d="{shapes[0][0]}" fill="{multiply(CYAN, CORAL)}"/></g>'
+    body += f'<path d="{shapes[2][0]}" fill="{YELLOW}"/>'
     return '<defs>' + defs + '</defs>' + body
 
 
@@ -153,7 +136,7 @@ OUT.mkdir(parents=True, exist_ok=True)
 assert multiply('#FFFFFF', CYAN) == CYAN
 assert multiply('#000000', CORAL) == '#000000'
 assert multiply(CYAN, CORAL) == '#244756'
-assert multiply(CYAN, YELLOW) == multiply(YELLOW, CYAN) == '#24A53D'
+assert multiply(CYAN, YELLOW) == multiply(YELLOW, CYAN) == '#24B400'
 assert abs(contrast('#000000', PAPER) - 21) < .0001
 palette = {
     'colors': [{'name': name, **swatch(color)} for name, color in COLORS],
@@ -169,15 +152,11 @@ proposal['paleta_der'].update(der_forte=CORAL, der_dependente=CYAN, der_associat
 proposal['moldura'].update(cabecalho='{assunto}', mostrar_cliente=False)
 (ROOT / 'brand/tema-vivo.json').write_text(json.dumps(proposal, ensure_ascii=False, indent=2) + '\n')
 
-for variant in SHAPES:
-    description = 'Formas geométricas em um campo quadrado. Interseções em multiply sRGB, convertidas em preenchimentos opacos.'
-    if variant == 'encontro':
-        description = 'D de diagrams: haste ciano de altura total, círculo coral da mesma altura e triângulo amarelo interno. Interseções multiply opacas.'
-    write(f'proposta-{variant}.svg', 64, 64, f'ai-diagrams · {variant.title()}', symbol(variant), description)
+write('proposta-encontro.svg', 64, 64, 'ai-diagrams · Encontro', symbol(), 'D com A: haste ciano, bojo circular coral e triângulo equilátero inscrito no círculo, apontando para o topo no diâmetro vertical. Amarelo vivo puro na camada superior; multiply somente entre haste e círculo.')
 variants = [('solid', INK, False), ('solid-reverse', PAPER, False), ('mono-dark', INK, True), ('mono-light', PAPER, True)]
 for name, ink, mono in variants:
-    write(f'logo-{name}.svg', 304, 64, f'ai-diagrams · {name}', lockup(ink, mono), 'Símbolo Encontro em D, com haste vertical, círculo e triângulo interno. Nome em Inter Semibold convertido em curvas.')
-    write(f'symbol-{name}.svg', 64, 64, f'ai-diagrams · símbolo {name}', symbol(mono=ink if mono else None), 'Encontro em D: haste vertical de altura total, círculo da mesma altura e triângulo interno. Contornos em uma tinta nas versões monocromáticas; interseções multiply opacas nas coloridas.')
+    write(f'logo-{name}.svg', 304, 64, f'ai-diagrams · {name}', lockup(ink, mono), 'Símbolo Encontro: D com A, haste vertical, círculo e triângulo equilátero inscrito, com ponta no topo e eixo no diâmetro vertical. Nome em Inter Semibold convertido em curvas.')
+    write(f'symbol-{name}.svg', 64, 64, f'ai-diagrams · símbolo {name}', symbol(mono=ink if mono else None), 'Encontro: D com A, haste vertical, bojo circular e triângulo equilátero inscrito, com ponta no topo e eixo no diâmetro vertical. Contornos em uma tinta nas versões monocromáticas; amarelo puro por cima e multiply só entre haste e círculo nas coloridas.')
 write('favicon.svg', 64, 64, 'ai-diagrams · Encontro', symbol())
 for size in (16, 32, 64):
     write(f'favicon-{size}.svg', size, size, f'ai-diagrams · favicon {size}', symbol(), viewbox='0 0 64 64')
@@ -193,7 +172,7 @@ social += rect(738, 58, 478, 524, ZONE)
 social += text('UM DOCUMENTO, MUITAS FORMAS.', 766, 96, 12, SUPPORT, mono=True, spacing=.35, max_width=426)
 social += '<g transform="translate(778 122) scale(6.25)">' + symbol(prefix='social-poster') + '</g>'
 social += text('ai-diagrams', 766, 552, 14, SUPPORT, mono=True, max_width=250)
-social += text('01 / ENCONTRO', 1043, 552, 12, SUPPORT, mono=True, max_width=145)
+social += text('ENCONTRO', 1043, 552, 12, SUPPORT, mono=True, max_width=145)
 write('social-preview.svg', 1280, 640, 'ai-diagrams · Documentos ganham vida.', social, 'Documentos ganham vida. Diagramas bonitos para ideias que merecem ser vistas. Pôster Encontro em ciano, coral e amarelo, sobre interface branca.')
 
 poster = rect(0, 0, 1280, 856, PAPER)
@@ -224,8 +203,8 @@ poster += text('ai-diagrams · Fluxo de geração · 2026-11', 56, 817, 13, SUPP
 poster += text('Proposta visual / sem execução do gate', 902, 817, 13, SUPPORT, max_width=322)
 write('exemplo-diagrama.svg', 1280, 856, 'Uma ideia fica clara quando ganha forma.', poster, 'Estudo de diagrama com descrição, fonte, gate e diagrama. Quatro cores com legenda explícita, texto com contraste AA e conectores numerados. Proposta visual, sem execução do gate.')
 
-expected = {f'{kind}-{name}.svg' for kind in ['logo', 'symbol'] for name, *_ in variants} | {f'proposta-{name}.svg' for name in SHAPES} | {f'favicon-{size}.svg' for size in (16, 32, 64)} | {'favicon.svg', 'social-preview.svg', 'exemplo-diagrama.svg'}
-assert expected <= {p.name for p in OUT.glob('*.svg')}
+expected = {f'{kind}-{name}.svg' for kind in ['logo', 'symbol'] for name, *_ in variants} | {f'favicon-{size}.svg' for size in (16, 32, 64)} | {'proposta-encontro.svg', 'favicon.svg', 'social-preview.svg', 'exemplo-diagrama.svg'}
+assert expected == {p.name for p in OUT.glob('*.svg')}
 for name, width, height in [('social-preview', 1280, 640)] + [(f'favicon-{size}', size, size) for size in (16, 32, 64)]:
     subprocess.run(['rsvg-convert', '-w', str(width), '-h', str(height), '-o', str(OUT / f'{name}.png'), str(OUT / f'{name}.svg')], check=True)
     header = (OUT / f'{name}.png').read_bytes()[:24]

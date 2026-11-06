@@ -15,7 +15,6 @@ from PIL import Image
 BRAND = Path(__file__).resolve().parents[1]
 PLYNGO = BRAND.parent.parent / 'plyngo'
 REFY = PLYNGO / 'node_modules/@refy/ui'
-PROPOSALS = ['encontro', 'mosaico', 'orbita']
 SIZES = (16, 32, 64)
 
 
@@ -62,18 +61,35 @@ def png_size(data):
     return struct.unpack('>II', data[16:24])
 
 
-def check_d_silhouette(data, size):
-    alpha = Image.open(BytesIO(data)).convert('RGBA').getchannel('A')
-    margin, center, radius = size / 16, size / 2, 7 * size / 16
-    assert alpha.getbbox() == (margin, margin, size - margin, size - margin), (size, 'D bounds changed')
+def check_encontro_pixels(data, size):
+    image = Image.open(BytesIO(data)).convert('RGBA')
+    margin = size // 16
+    assert image.getchannel('A').getbbox() == (margin, margin, size - margin, size - margin), (size, 'Symbol bounds changed')
+    seen, yellow_halves = set(), set()
     for y in range(size):
         for x in range(size):
-            distance = min(x + .5 - margin, radius - math.hypot(max(0, x + .5 - center), y + .5 - center))
-            # Ignore only the antialiased edge; the stem and rounded bowl must stay solid.
-            if distance >= .75:
-                assert alpha.getpixel((x, y)) >= 254, (size, x, y, 'Missing D silhouette')
-            elif distance <= -.75:
-                assert alpha.getpixel((x, y)) <= 1, (size, x, y, 'Shape protrudes outside D')
+            px, py = (x + .5) * 64 / size, (y + .5) * 64 / size
+            distances = [min(px - 4, 32 - px, py - 4, 60 - py),
+                         28 - math.hypot(px - 32, py - 32),
+                         min(46 - py, (py - 4 - math.sqrt(3) * abs(px - 32)) / 2)]
+            pixel = image.getpixel((x, y))
+            if pixel[3] == 255:
+                seen.add('#' + ''.join(f'{channel:02X}' for channel in pixel[:3]))
+            edge = .75 * 64 / size
+            # Ignore antialiasing only; the D and the inscribed A must stay solid.
+            if max(distances) >= edge:
+                assert pixel[3] >= 254, (size, x, y, 'Missing D/A silhouette')
+            elif max(distances) <= -edge:
+                assert pixel[3] <= 1, (size, x, y, 'Shape outside D/A silhouette')
+            if distances[2] >= edge:
+                assert pixel == (*rgb(colors['Amarelo']), 255), (size, x, y, 'Triangle must stay pure opaque yellow', pixel)
+                yellow_halves.add(px < 32)
+            elif min(map(abs, distances)) >= edge and max(distances) > 0:
+                active = [colors[name] for name, distance in zip(('Ciano', 'Coral'), distances) if distance > 0]
+                expected = multiply(active)
+                assert pixel[:3] == rgb(expected), (size, x, y, 'Incorrect solid intersection', pixel, expected)
+    assert yellow_halves == {False, True}, (size, 'Pure yellow must cover both circle and stem')
+    assert {colors['Ciano'], colors['Coral'], colors['Amarelo'], multiply([colors['Ciano'], colors['Coral']])} <= seen, (size, 'Symbol color region disappeared')
 
 
 assert contrast('#000000', '#FFFFFF') == 21
@@ -84,6 +100,7 @@ assert hashlib.sha256((BRAND.parent / 'skills/ai-diagrams/temas/ai-diagrams.json
 palette = json.loads((BRAND / 'paleta.json').read_text())
 colors = {entry['name']: entry['hex'] for entry in palette['colors']}
 assert len(colors) == len(palette['colors']) == 4
+assert colors['Amarelo'] == '#FFE600', 'Expected vivid yellow'
 expected_pairs = {frozenset(names) for names in combinations(colors, 2)}
 assert len(palette['pairs']) == 6
 assert {frozenset(entry['names']) for entry in palette['pairs']} == expected_pairs
@@ -101,15 +118,48 @@ json.loads((BRAND / 'tema-vivo.json').read_text())
 
 variants = ('solid', 'solid-reverse', 'mono-dark', 'mono-light')
 expected_svg = {f'{kind}-{variant}.svg' for kind in ('logo', 'symbol') for variant in variants}
-expected_svg |= {f'proposta-{proposal}.svg' for proposal in PROPOSALS} | {f'favicon-{size}.svg' for size in SIZES}
+expected_svg |= {'proposta-encontro.svg'} | {f'favicon-{size}.svg' for size in SIZES}
 expected_svg |= {'favicon.svg', 'social-preview.svg', 'exemplo-diagrama.svg'}
 expected_png = {f'favicon-{size}.png' for size in SIZES} | {'social-preview.png'}
 files = {path.name: path for path in (BRAND / 'assets').iterdir() if path.suffix in ('.svg', '.png')}
 assert set(files) == expected_svg | expected_png, ('Unexpected or missing assets', set(files) ^ (expected_svg | expected_png))
 assets = {name: path.read_bytes() for name, path in files.items()}
+mark = ET.fromstring(assets['symbol-solid.svg'])
+paths = [element.attrib['d'] for element in mark if element.tag == '{http://www.w3.org/2000/svg}path']
+assert len(paths) == 3, 'Encontro needs three shapes'
+assert paths[:2] == ['M4 4H32V60H4Z', 'M60 32A28 28 0 1 1 4 32A28 28 0 1 1 60 32Z'], 'Stem or bowl changed'
+triangle = re.fullmatch(r'M([\d.]+) ([\d.]+)L([\d.]+) ([\d.]+)L([\d.]+) ([\d.]+)Z', paths[2])
+assert triangle, 'Triangle must have three straight sides'
+ax, ay, bx, by, cx, cy = map(float, triangle.groups())
+assert ax == (bx + cx) / 2 == 32 and ay == 4 and by == cy == 46 and bx > cx, 'Triangle must point up at the top of the circle on its vertical diameter'
+vertices = ((ax, ay), (bx, by), (cx, cy))
+assert all(abs(math.dist(vertex, (32, 32)) - 28) < .0001 for vertex in vertices), 'All triangle vertices must lie on the circle'
+assert all(abs(math.dist(a, b) - 28 * math.sqrt(3)) < .0001 for a, b in combinations(vertices, 2)), 'Triangle must be equilateral and inscribed'
 for name in sorted(expected_svg):
     raw = assets[name].decode()
     svg = ET.fromstring(raw)
+    for path in paths:
+        assert any(element.attrib.get('d') == path for element in svg.iter()), (name, 'Missing or stale Encontro geometry')
+    instances = 2 if name == 'social-preview.svg' else 1
+    triangles = [element for element in svg.iter() if element.attrib.get('d') == paths[2]]
+    assert len(triangles) == instances, (name, 'Missing or duplicated symbol')
+    clips = list(svg.iter('{http://www.w3.org/2000/svg}clipPath'))
+    if '-mono-' in name:
+        assert not clips, (name, 'Monochrome symbol must use outlines')
+        for path in paths:
+            elements = [element for element in svg.iter() if element.attrib.get('d') == path]
+            assert len(elements) == instances
+            assert all(element.attrib.get('fill') == 'none' and element.attrib.get('stroke-width') == '3' and element.attrib.get('stroke-linejoin') == 'round' for element in elements), (name, 'Incorrect monochrome outlines')
+    else:
+        assert len(clips) == instances and all(len(clip) == 1 and clip[0].attrib.get('d') == paths[1] for clip in clips), (name, 'Only the circle may clip the stem intersection')
+        for triangle in triangles:
+            assert triangle.attrib == {'d': paths[2], 'fill': colors['Amarelo']}, (name, 'Triangle must be pure opaque yellow')
+            parent = next(element for element in svg.iter() if triangle in list(element))
+            siblings = list(parent)
+            triangle_index = siblings.index(triangle)
+            layers = siblings[triangle_index - 3:triangle_index]
+            assert len(layers) == 3 and layers[0].attrib == {'d': paths[0], 'fill': colors['Ciano']} and layers[1].attrib == {'d': paths[1], 'fill': colors['Coral']}, (name, 'Incorrect stem/circle layers')
+            assert layers[2].attrib.get('clip-path') in {f'url(#{clip.attrib["id"]})' for clip in clips} and len(layers[2]) == 1 and layers[2][0].attrib == {'d': paths[0], 'fill': multiply([colors['Ciano'], colors['Coral']])}, (name, 'Only stem and circle may multiply below the triangle')
     tags = {element.tag.rsplit('}', 1)[-1] for element in svg.iter()}
     assert not tags.intersection({'text', 'image', 'script', 'style', 'filter', 'foreignObject', 'font', 'font-face'}), (name, 'Non-portable SVG element')
     assert not re.search(r'mix-blend-mode|feBlend|font-family|@font-face|opacity\s*=', raw), (name, 'SVG depends on blending or fonts')
@@ -143,7 +193,13 @@ for name in expected_png:
     expected_size = (1280, 640) if name == 'social-preview.png' else (int(name.split('-')[1].split('.')[0]),) * 2
     assert png_size(assets[name]) == expected_size, (name, 'Incorrect PNG dimensions')
     if name.startswith('favicon-'):
-        check_d_silhouette(assets[name], expected_size[0])
+        check_encontro_pixels(assets[name], expected_size[0])
+    else:
+        image = Image.open(BytesIO(assets[name])).convert('RGBA')
+        for offset_x, offset_y, scale in ((64, 52, .875), (778, 122, 6.25)):
+            for x, y, color in ((24, 32, colors['Amarelo']), (40, 32, colors['Amarelo']), (16, 50, multiply([colors['Ciano'], colors['Coral']])), (48, 50, colors['Coral'])):
+                pixel = image.getpixel((round(offset_x + x * scale), round(offset_y + y * scale)))
+                assert pixel == (*rgb(color), 255), ('social-preview.png', offset_x, x, y, 'Stale symbol color', pixel, color)
 
 html = (BRAND / 'brandkit.html').read_text()
 doc = Document()
@@ -155,9 +211,9 @@ assert sum(tag == 'h1' for tag, _ in doc.elements) == 1
 assert sum(attrs.get('role') == 'radio' for _, attrs in doc.elements) == 2
 scope = next(attrs for _, attrs in doc.elements if attrs.get('id') == 'app-scope')
 assert scope.get('class') == 'brandkit' and scope.get('data-theme') == 'light'
-proposals = [attrs for _, attrs in doc.elements if 'proposal' in attrs.get('class', '').split()]
-assert [attrs.get('data-proposal') for attrs in proposals] == PROPOSALS
-assert [attrs.get('data-proposal') for attrs in proposals if attrs.get('data-recommended') == 'true'] == ['encontro']
+symbols = [attrs for _, attrs in doc.elements if 'signature-symbol' in attrs.get('class', '').split()]
+assert [attrs.get('data-symbol') for attrs in symbols] == ['encontro'], 'Expected only the chosen Encontro symbol'
+assert not any('data-proposal' in attrs or 'data-recommended' in attrs for _, attrs in doc.elements)
 assert sum('color-chip' in attrs.get('class', '').split() for _, attrs in doc.elements) == 4
 assert sum('multiply-chip' in attrs.get('class', '').split() for _, attrs in doc.elements) == 6
 for tag, attrs in doc.elements:
@@ -188,7 +244,7 @@ assert "import { Button, Card, SectionHeader, Segmented } from '@refy/ui';" in a
 assert 'ThemeProvider' not in app
 for name in re.findall(r"(?:download\(|data\.assets\[)'([^']+)'", app):
     assert name in assets, ('Missing download or image', name)
-assert all(f'proposta-{proposal}.svg' in assets for proposal in PROPOSALS)
+assert 'proposta-encontro.svg' in assets
 assert all(f'favicon-{size}.png' in assets for size in SIZES)
 assert json.loads((REFY / 'package.json').read_text())['version'] == '0.4.0'
 
@@ -212,5 +268,5 @@ assert not re.search(r'@import\s', style), 'External CSS import'
 for source in re.findall(r'url\(([^)]+)\)', style):
     assert source.strip('"\'').startswith(('data:', '#')), ('External CSS resource', source)
 
-print(f'PASS (static): 4 sections, 3 proposals / Encontro recommended, D silhouette at 16/32/64 px, 4 colors / 6 correct multiply pairs, AA contrast, {len(expected_svg)} SVGs + {len(expected_png)} PNGs, embedded assets, Refy 0.4.0 + exact Plyngo CSS, valid tokens, accessible image names, unchanged installed diagram theme.')
+print(f'PASS (static): 4 sections, Encontro only, upright equilateral A inscribed in the circle, pure yellow above stem/circle multiply, solid geometry and colors at 16/32/64 px and social PNG, 4 colors / 6 correct multiply pairs, AA contrast, {len(expected_svg)} SVGs + {len(expected_png)} PNGs, embedded assets, shared UI CSS, valid tokens, accessible image names, unchanged installed diagram theme.')
 print('PENDING: browser interaction, computed UI colors, layout at 1440/390, v2 captures and visual review. Run capture.mjs outside the sandbox.')

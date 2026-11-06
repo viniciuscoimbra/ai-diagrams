@@ -93,7 +93,7 @@ try {
             if (Math.min(box.right, other.right) - Math.max(box.left, other.left) > 1 && Math.min(box.bottom, other.bottom) - Math.max(box.top, other.top) > 1) failures.push(`Overlapping sections: ${previous.id}, ${section.id}`);
           }
         });
-        for (const figure of document.querySelectorAll('.specimen, .application-figure')) {
+        for (const figure of document.querySelectorAll('.signature-symbol, .specimen, .application-figure')) {
           const children = [...figure.children].filter(child => visible(child) && !['absolute', 'fixed'].includes(getComputedStyle(child).position));
           children.forEach((child, index) => {
             const box = rect(child), frame = rect(figure);
@@ -104,14 +104,10 @@ try {
             }
           });
         }
-        const proposals = [...document.querySelectorAll('#assinatura .proposal')];
-        if (JSON.stringify(proposals.map(element => element.dataset.proposal)) !== JSON.stringify(['encontro', 'mosaico', 'orbita'])) failures.push('Expected three symbol proposals');
-        if (document.querySelectorAll('#assinatura .proposal[data-recommended="true"]').length !== 1) failures.push('Expected one recommended symbol');
-        proposals.forEach((proposal, index) => {
-          if (!index) return;
-          const box = rect(proposal), previous = rect(proposals[index - 1]);
-          if (innerWidth >= 760 ? Math.abs(box.top - previous.top) > 1 || box.left < previous.right : Math.abs(box.left - previous.left) > 1 || box.top < previous.bottom) failures.push('Incorrect proposal arrangement');
-        });
+        const symbols = [...document.querySelectorAll('#assinatura .signature-symbol')];
+        if (JSON.stringify(symbols.map(element => element.dataset.symbol)) !== JSON.stringify(['encontro'])) failures.push('Expected only the Encontro symbol');
+        const symbolSizes = [...document.querySelectorAll('#assinatura .symbol-sizes img')].map(element => ({ width: rect(element).width, height: rect(element).height }));
+        if (JSON.stringify(symbolSizes) !== JSON.stringify([16, 32, 64].map(size => ({ width: size, height: size })))) failures.push('Incorrect symbol display sizes');
         const colors = document.querySelectorAll('.swatches > figure').length;
         const pairs = document.querySelectorAll('.multiply-grid > *').length;
         if (colors < 4 || colors > 6) failures.push(`Expected 4–6 palette colors, got ${colors}`);

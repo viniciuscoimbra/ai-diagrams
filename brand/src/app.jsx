@@ -3,11 +3,6 @@ import { Button, Card, SectionHeader, Segmented } from '@refy/ui';
 import data from 'brand-data';
 
 const repo = 'https://github.com/viniciuscoimbra/ai-diagrams';
-const proposals = [
-  { id: 'encontro', name: 'Encontro', description: 'D de diagrams. Haste vertical, círculo da mesma altura e triângulo interno. Uma silhueta clara em tamanhos pequenos.' },
-  { id: 'mosaico', name: 'Mosaico', description: 'Quatro formas ocupam a mesma grade. Um pequeno catálogo da diversidade de pôsteres.' },
-  { id: 'orbita', name: 'Órbita', description: 'Círculo, meia-lua e quadrado. Um pôster com mais movimento e curvas.' },
-];
 
 export function App() {
   const [mode, setMode] = useState('light');
@@ -55,19 +50,16 @@ export function App() {
 
       <Card padding="none" className="brand-board">
         <section id="assinatura" className="brand-section signature-section" aria-label="01 Assinatura">
-          <SectionHeader title="01 Assinatura" sub="Um pôster. Muitas formas de ver." />
-          <div className="proposals">
-            {proposals.map(({ id, name, description }, index) => <figure className="proposal" key={id} data-proposal={id} data-recommended={index === 0 ? 'true' : undefined}>
-              <div className="proposal-art brand-paper"><img src={data.assets[`proposta-${id}.svg`]} width="160" height="160" alt={`Proposta ${name}: formas geométricas sobrepostas em um pôster quadrado`} /></div>
-              <figcaption>
-                <div className="proposal-heading"><h3>{String(index + 1).padStart(2, '0')} / {name}</h3>{index === 0 && <span className="recommendation">Recomendada</span>}</div>
-                <p>{description}</p>
-                <div className="proposal-sizes">{[16, 32, 64].map(size => <span key={size}><img src={data.assets[`proposta-${id}.svg`]} width={size} height={size} alt={`${name} a ${size} pixels`} /><small>{size} px</small></span>)}</div>
-                <Button variant="ghost" size="sm" onClick={() => download(`proposta-${id}.svg`)}>Baixar {name}</Button>
-              </figcaption>
-            </figure>)}
-          </div>
-          <p className="section-copy">Encontro forma o D de diagrams: haste vertical à esquerda, bojo circular à direita e triângulo dentro da silhueta. As interseções revelam novas cores.</p>
+          <SectionHeader title="01 Assinatura" sub="Um D com um A dentro." />
+          <figure className="signature-symbol" data-symbol="encontro">
+            <div className="symbol-art brand-paper"><img src={data.assets['proposta-encontro.svg']} width="160" height="160" alt="Encontro: um D com triângulo equilátero amarelo inscrito no círculo, apontando para cima, como um A" /></div>
+            <figcaption>
+              <h3>Encontro</h3>
+              <p>Haste à esquerda e bojo à direita formam o D. O triângulo equilátero aponta para cima, como um A, inteiramente dentro do círculo: os três vértices tocam a circunferência e a ponta fica no topo, sobre o diâmetro vertical. O amarelo vivo fica por cima, puro e opaco. Multiply somente entre haste e círculo.</p>
+              <div className="symbol-sizes">{[16, 32, 64].map(size => <span key={size}><img src={data.assets['proposta-encontro.svg']} width={size} height={size} alt={`Encontro a ${size} pixels`} /><small>{size} px</small></span>)}</div>
+              <Button variant="ghost" size="sm" onClick={() => download('proposta-encontro.svg')}>Baixar Encontro</Button>
+            </figcaption>
+          </figure>
           <div className="signature-lockups">
             <figure className="signature-main specimen brand-paper"><img src={data.assets['logo-solid.svg']} alt="Assinatura ai-diagrams com símbolo Encontro colorido e nome preto em minúsculas" /><figcaption>Assinatura principal</figcaption></figure>
             <figure className="signature-main specimen brand-ink"><img src={data.assets['logo-solid-reverse.svg']} alt="Assinatura ai-diagrams com símbolo colorido e nome branco sobre fundo preto" /><figcaption>Assinatura para fundo escuro</figcaption></figure>
@@ -85,17 +77,17 @@ export function App() {
           <div className="color-type-grid">
             <div>
               <div className="swatches">{data.palette.colors.map(color => <figure key={color.name}><div className="color-chip" style={{ background: color.hex, color: color.foreground }}><span>Aa</span></div><figcaption>{color.name}<code>{color.hex}</code><small>{color.contrast.toFixed(2)}:1 · texto {color.foreground === '#FFFFFF' ? 'branco' : 'preto'}</small></figcaption></figure>)}</div>
-              <p className="color-note">Quatro cores para símbolos, pôsteres e diagramas. A interface usa os neutros do plyngo: preto, branco e cinza, inclusive nos botões e no foco.</p>
+              <p className="color-note">Quatro cores para símbolos, pôsteres e diagramas. A interface usa preto, branco e cinza, inclusive nos botões e no foco.</p>
               <h3 className="subheading">Quando as cores se encontram</h3>
               <p className="small-note">Multiply em sRGB: cada canal é A × B ÷ 255, arredondado. Os seis pares aparecem abaixo com a tinta de texto que mantém contraste mínimo de 4,5:1.</p>
               <div className="multiply-grid">{data.palette.pairs.map(pair => <figure key={pair.names.join('-')}><div className="multiply-chip" style={{ background: pair.hex, color: pair.foreground }}><span>Aa</span><code>{pair.hex}</code></div><figcaption>{pair.names.join(' + ')}<small>{pair.contrast.toFixed(2)}:1 · texto {pair.foreground === '#FFFFFF' ? 'branco' : 'preto'}</small></figcaption></figure>)}</div>
-              <p className="small-note">Os SVGs já contêm as interseções com cor sólida. A aparência não depende do modo de mesclagem do aplicativo. Use o texto indicado sobre cada cor; sobre interseções do símbolo, nenhum texto.</p>
+              <p className="small-note">Os seis pares são amostras da paleta. No Encontro, só haste e círculo usam multiply, exportado como cor sólida; o triângulo fica por cima em amarelo puro. A aparência não depende do modo de mesclagem do aplicativo. Use o texto indicado sobre cada cor; sobre interseções do símbolo, nenhum texto.</p>
             </div>
             <div className="typography">
               <div className="type-sample">
                 <div className="type-heading"><strong>Inter</strong><span>400 · 500 · 600 · 700</span></div>
                 <p className="type-display">De repente,<br />tudo se conecta.</p>
-                <p>Títulos, texto e assinatura. A mesma família da interface do plyngo, com espaço para o desenho brilhar.</p>
+                <p>Títulos, texto e assinatura. A mesma família da interface, com espaço para o desenho brilhar.</p>
               </div>
               <div className="type-sample mono-sample">
                 <div className="type-heading"><strong>JetBrains Mono</strong><span>400 · 600</span></div>
@@ -146,7 +138,7 @@ export function App() {
           <div className="asset-actions"><Button size="sm" onClick={() => download('exemplo-diagrama.svg')}>Baixar diagrama SVG</Button><p className="small-note">Peça de identidade com a proposta viva. Não representa uma execução do gate.</p></div>
         </section>
       </Card>
-      <footer className="page-footer"><p>ai-diagrams · Brandkit v2 · 2026</p><p>Componentes refy. Tema de interface do plyngo.</p></footer>
+      <footer className="page-footer"><p>ai-diagrams · Brandkit v2 · 2026</p><p>Interface neutra. Identidade viva.</p></footer>
     </main>
   </div>;
 }

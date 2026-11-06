@@ -14,9 +14,9 @@
     },
     {
       "name": "Amarelo",
-      "hex": "#FFD23F",
+      "hex": "#FFE600",
       "foreground": "#171717",
-      "contrast": 12.41
+      "contrast": 14.15
     },
     {
       "name": "Violeta",
@@ -40,9 +40,9 @@
         "Ciano",
         "Amarelo"
       ],
-      "hex": "#24A53D",
+      "hex": "#24B400",
       "foreground": "#171717",
-      "contrast": 5.57
+      "contrast": 6.49
     },
     {
       "names": [
@@ -58,9 +58,9 @@
         "Coral",
         "Amarelo"
       ],
-      "hex": "#FF4B16",
+      "hex": "#FF5200",
       "foreground": "#171717",
-      "contrast": 5.35
+      "contrast": 5.51
     },
     {
       "names": [
@@ -76,9 +76,9 @@
         "Amarelo",
         "Violeta"
       ],
-      "hex": "#98563D",
+      "hex": "#985E00",
       "foreground": "#FFFFFF",
-      "contrast": 5.62
+      "contrast": 5.34
     }
   ]
 }

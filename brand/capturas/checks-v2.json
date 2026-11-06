@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "date": "2026-11-06T19:21:37.927Z",
-  "html_sha256": "b0e4548a29c8f21cb881154fbd17539a8046348d1f740ab00d5c507e20ec5ffb",
+  "date": "2026-11-06T19:43:34.232Z",
+  "html_sha256": "4a81bdffa0d7ee982bcb5a1ac9323bd3772c57a174d1e3bc2c4d7972d14d5899",
   "captured": [
     "brandkit-v2-desktop-light.jpg",
     "brandkit-v2-desktop-dark.jpg",
@@ -19,14 +19,14 @@
           "state": "hover",
           "color": "rgb(23, 23, 23)",
           "backgroundColor": "rgb(245, 245, 245)",
-          "borderColor": "rgb(191, 191, 191)",
+          "borderColor": "rgb(192, 192, 192)",
           "outlineColor": "rgb(23, 23, 23)"
         },
         {
           "state": "focus",
           "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(254, 254, 254)",
-          "borderColor": "rgb(224, 224, 224)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderColor": "rgb(228, 228, 228)",
           "outlineColor": "rgb(23, 23, 23)"
         }
       ],
@@ -119,18 +119,6 @@
           "color": "rgb(23, 23, 23)",
           "backgroundColor": "rgba(0, 0, 0, 0)",
           "borderColor": "rgb(23, 23, 23)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
         },
         {
           "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
@@ -242,498 +230,16 @@
         }
       ],
       "width": 1440,
-      "height": 4835,
+      "height": 4545,
       "capture": {
         "file": "brandkit-v2-desktop-light.jpg",
         "width": 1280,
-        "height": 4298,
-        "bytes": 232907
+        "height": 4040,
+        "bytes": 220728
       }
     },
     {
       "device": "desktop",
-      "theme": "dark",
-      "errors": [],
-      "network": [],
-      "buttonStates": [
-        {
-          "state": "hover",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(38, 38, 38)",
-          "borderColor": "rgb(98, 98, 98)",
-          "outlineColor": "rgb(237, 237, 237)"
-        },
-        {
-          "state": "focus",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(38, 38, 38)",
-          "borderColor": "rgb(98, 98, 98)",
-          "outlineColor": "rgb(163, 163, 163)"
-        }
-      ],
-      "failures": [],
-      "sections": [
-        "assinatura",
-        "cor-tipografia",
-        "tom-de-voz",
-        "aplicacoes"
-      ],
-      "colors": 4,
-      "pairs": 6,
-      "favicons": [
-        {
-          "width": 16,
-          "height": 16
-        },
-        {
-          "width": 32,
-          "height": 32
-        },
-        {
-          "width": 64,
-          "height": 64
-        }
-      ],
-      "ui": [
-        {
-          "element": "app-scope",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(23, 23, 23)",
-          "borderColor": "rgb(237, 237, 237)"
-        },
-        {
-          "element": "masthead",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(17, 17, 17)",
-          "borderColor": "rgb(237, 237, 237) rgb(237, 237, 237) rgb(51, 51, 51)"
-        },
-        {
-          "element": "_segment_aq64q_1",
-          "color": "rgb(163, 163, 163)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(163, 163, 163)"
-        },
-        {
-          "element": "_segment_aq64q_1 _active_aq64q_34",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(17, 17, 17)",
-          "borderColor": "rgb(237, 237, 237)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _md_ynaoz_34",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(17, 17, 17)",
-          "borderColor": "rgb(51, 51, 51)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_card_vz33k_1 _e0_vz33k_19 _p-none_vz33k_10 brand-board",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(17, 17, 17)",
-          "borderColor": "rgb(51, 51, 51)"
-        },
-        {
-          "element": "assinatura",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(237, 237, 237)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(17, 17, 17)",
-          "borderColor": "rgb(51, 51, 51)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(17, 17, 17)",
-          "borderColor": "rgb(51, 51, 51)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "cor-tipografia",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(51, 51, 51) rgb(237, 237, 237) rgb(237, 237, 237)"
-        },
-        {
-          "element": "tom-de-voz",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(51, 51, 51) rgb(237, 237, 237) rgb(237, 237, 237)"
-        },
-        {
-          "element": "aplicacoes",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(51, 51, 51) rgb(237, 237, 237) rgb(237, 237, 237)"
-        },
-        {
-          "element": "sample-site-header",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(237, 237, 237)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(17, 17, 17)",
-          "borderColor": "rgb(51, 51, 51)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(17, 17, 17)",
-          "borderColor": "rgb(51, 51, 51)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(17, 17, 17)",
-          "borderColor": "rgb(51, 51, 51)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
-          "color": "rgb(237, 237, 237)",
-          "backgroundColor": "rgb(17, 17, 17)",
-          "borderColor": "rgb(51, 51, 51)"
-        },
-        {
-          "element": "page-footer",
-          "color": "rgb(163, 163, 163)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(163, 163, 163)"
-        }
-      ],
-      "width": 1440,
-      "height": 4835,
-      "capture": {
-        "file": "brandkit-v2-desktop-dark.jpg",
-        "width": 1280,
-        "height": 4298,
-        "bytes": 238110
-      }
-    },
-    {
-      "device": "mobile",
-      "theme": "light",
-      "errors": [],
-      "network": [],
-      "buttonStates": [
-        {
-          "state": "hover",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(245, 245, 245)",
-          "borderColor": "rgb(191, 191, 191)",
-          "outlineColor": "rgb(23, 23, 23)"
-        },
-        {
-          "state": "focus",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(245, 245, 245)",
-          "borderColor": "rgb(191, 191, 191)",
-          "outlineColor": "rgb(23, 23, 23)"
-        }
-      ],
-      "failures": [],
-      "sections": [
-        "assinatura",
-        "cor-tipografia",
-        "tom-de-voz",
-        "aplicacoes"
-      ],
-      "colors": 4,
-      "pairs": 6,
-      "favicons": [
-        {
-          "width": 16,
-          "height": 16
-        },
-        {
-          "width": 32,
-          "height": 32
-        },
-        {
-          "width": 64,
-          "height": 64
-        }
-      ],
-      "ui": [
-        {
-          "element": "app-scope",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(250, 250, 250)",
-          "borderColor": "rgb(23, 23, 23)"
-        },
-        {
-          "element": "masthead",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(255, 255, 255)",
-          "borderColor": "rgb(23, 23, 23) rgb(23, 23, 23) rgb(229, 229, 229)"
-        },
-        {
-          "element": "_segment_aq64q_1 _active_aq64q_34",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(255, 255, 255)",
-          "borderColor": "rgb(23, 23, 23)"
-        },
-        {
-          "element": "_segment_aq64q_1",
-          "color": "rgb(115, 115, 115)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(115, 115, 115)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _md_ynaoz_34",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(255, 255, 255)",
-          "borderColor": "rgb(229, 229, 229)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_card_vz33k_1 _e0_vz33k_19 _p-none_vz33k_10 brand-board",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(255, 255, 255)",
-          "borderColor": "rgb(229, 229, 229)"
-        },
-        {
-          "element": "assinatura",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(23, 23, 23)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(255, 255, 255)",
-          "borderColor": "rgb(229, 229, 229)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(255, 255, 255)",
-          "borderColor": "rgb(229, 229, 229)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "cor-tipografia",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(229, 229, 229) rgb(23, 23, 23) rgb(23, 23, 23)"
-        },
-        {
-          "element": "tom-de-voz",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(229, 229, 229) rgb(23, 23, 23) rgb(23, 23, 23)"
-        },
-        {
-          "element": "aplicacoes",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(229, 229, 229) rgb(23, 23, 23) rgb(23, 23, 23)"
-        },
-        {
-          "element": "sample-site-header",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(23, 23, 23)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(255, 255, 255)",
-          "borderColor": "rgb(229, 229, 229)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(255, 255, 255)",
-          "borderColor": "rgb(229, 229, 229)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(255, 255, 255)",
-          "borderColor": "rgb(229, 229, 229)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgba(0, 0, 0, 0)"
-        },
-        {
-          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
-          "color": "rgb(23, 23, 23)",
-          "backgroundColor": "rgb(255, 255, 255)",
-          "borderColor": "rgb(229, 229, 229)"
-        },
-        {
-          "element": "page-footer",
-          "color": "rgb(115, 115, 115)",
-          "backgroundColor": "rgba(0, 0, 0, 0)",
-          "borderColor": "rgb(115, 115, 115)"
-        }
-      ],
-      "width": 390,
-      "height": 7461,
-      "capture": {
-        "file": "brandkit-v2-mobile-light.jpg",
-        "width": 390,
-        "height": 7461,
-        "bytes": 217399
-      }
-    },
-    {
-      "device": "mobile",
       "theme": "dark",
       "errors": [],
       "network": [],
@@ -850,10 +356,456 @@
           "borderColor": "rgba(0, 0, 0, 0)"
         },
         {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(17, 17, 17)",
+          "borderColor": "rgb(51, 51, 51)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(17, 17, 17)",
+          "borderColor": "rgb(51, 51, 51)"
+        },
+        {
           "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
           "color": "rgb(237, 237, 237)",
           "backgroundColor": "rgba(0, 0, 0, 0)",
           "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "cor-tipografia",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(51, 51, 51) rgb(237, 237, 237) rgb(237, 237, 237)"
+        },
+        {
+          "element": "tom-de-voz",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(51, 51, 51) rgb(237, 237, 237) rgb(237, 237, 237)"
+        },
+        {
+          "element": "aplicacoes",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(51, 51, 51) rgb(237, 237, 237) rgb(237, 237, 237)"
+        },
+        {
+          "element": "sample-site-header",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(237, 237, 237)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(17, 17, 17)",
+          "borderColor": "rgb(51, 51, 51)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(17, 17, 17)",
+          "borderColor": "rgb(51, 51, 51)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(17, 17, 17)",
+          "borderColor": "rgb(51, 51, 51)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(17, 17, 17)",
+          "borderColor": "rgb(51, 51, 51)"
+        },
+        {
+          "element": "page-footer",
+          "color": "rgb(163, 163, 163)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(163, 163, 163)"
+        }
+      ],
+      "width": 1440,
+      "height": 4545,
+      "capture": {
+        "file": "brandkit-v2-desktop-dark.jpg",
+        "width": 1280,
+        "height": 4040,
+        "bytes": 223648
+      }
+    },
+    {
+      "device": "mobile",
+      "theme": "light",
+      "errors": [],
+      "network": [],
+      "buttonStates": [
+        {
+          "state": "hover",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(245, 245, 245)",
+          "borderColor": "rgb(191, 191, 191)",
+          "outlineColor": "rgb(23, 23, 23)"
+        },
+        {
+          "state": "focus",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderColor": "rgb(229, 229, 229)",
+          "outlineColor": "rgb(23, 23, 23)"
+        }
+      ],
+      "failures": [],
+      "sections": [
+        "assinatura",
+        "cor-tipografia",
+        "tom-de-voz",
+        "aplicacoes"
+      ],
+      "colors": 4,
+      "pairs": 6,
+      "favicons": [
+        {
+          "width": 16,
+          "height": 16
+        },
+        {
+          "width": 32,
+          "height": 32
+        },
+        {
+          "width": 64,
+          "height": 64
+        }
+      ],
+      "ui": [
+        {
+          "element": "app-scope",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(250, 250, 250)",
+          "borderColor": "rgb(23, 23, 23)"
+        },
+        {
+          "element": "masthead",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderColor": "rgb(23, 23, 23) rgb(23, 23, 23) rgb(229, 229, 229)"
+        },
+        {
+          "element": "_segment_aq64q_1 _active_aq64q_34",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderColor": "rgb(23, 23, 23)"
+        },
+        {
+          "element": "_segment_aq64q_1",
+          "color": "rgb(115, 115, 115)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(115, 115, 115)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _md_ynaoz_34",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderColor": "rgb(229, 229, 229)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_card_vz33k_1 _e0_vz33k_19 _p-none_vz33k_10 brand-board",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderColor": "rgb(229, 229, 229)"
+        },
+        {
+          "element": "assinatura",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(23, 23, 23)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderColor": "rgb(229, 229, 229)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderColor": "rgb(229, 229, 229)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "cor-tipografia",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(229, 229, 229) rgb(23, 23, 23) rgb(23, 23, 23)"
+        },
+        {
+          "element": "tom-de-voz",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(229, 229, 229) rgb(23, 23, 23) rgb(23, 23, 23)"
+        },
+        {
+          "element": "aplicacoes",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(229, 229, 229) rgb(23, 23, 23) rgb(23, 23, 23)"
+        },
+        {
+          "element": "sample-site-header",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(23, 23, 23)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderColor": "rgb(229, 229, 229)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderColor": "rgb(229, 229, 229)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderColor": "rgb(229, 229, 229)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _sm_ynaoz_39",
+          "color": "rgb(23, 23, 23)",
+          "backgroundColor": "rgb(255, 255, 255)",
+          "borderColor": "rgb(229, 229, 229)"
+        },
+        {
+          "element": "page-footer",
+          "color": "rgb(115, 115, 115)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(115, 115, 115)"
+        }
+      ],
+      "width": 390,
+      "height": 6483,
+      "capture": {
+        "file": "brandkit-v2-mobile-light.jpg",
+        "width": 390,
+        "height": 6483,
+        "bytes": 202885
+      }
+    },
+    {
+      "device": "mobile",
+      "theme": "dark",
+      "errors": [],
+      "network": [],
+      "buttonStates": [
+        {
+          "state": "hover",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(38, 38, 38)",
+          "borderColor": "rgb(98, 98, 98)",
+          "outlineColor": "rgb(237, 237, 237)"
+        },
+        {
+          "state": "focus",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(29, 29, 29)",
+          "borderColor": "rgb(77, 77, 77)",
+          "outlineColor": "rgb(163, 163, 163)"
+        }
+      ],
+      "failures": [],
+      "sections": [
+        "assinatura",
+        "cor-tipografia",
+        "tom-de-voz",
+        "aplicacoes"
+      ],
+      "colors": 4,
+      "pairs": 6,
+      "favicons": [
+        {
+          "width": 16,
+          "height": 16
+        },
+        {
+          "width": 32,
+          "height": 32
+        },
+        {
+          "width": 64,
+          "height": 64
+        }
+      ],
+      "ui": [
+        {
+          "element": "app-scope",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(23, 23, 23)",
+          "borderColor": "rgb(237, 237, 237)"
+        },
+        {
+          "element": "masthead",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(17, 17, 17)",
+          "borderColor": "rgb(237, 237, 237) rgb(237, 237, 237) rgb(51, 51, 51)"
+        },
+        {
+          "element": "_segment_aq64q_1",
+          "color": "rgb(163, 163, 163)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(163, 163, 163)"
+        },
+        {
+          "element": "_segment_aq64q_1 _active_aq64q_34",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(17, 17, 17)",
+          "borderColor": "rgb(237, 237, 237)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _secondary_ynaoz_64 _md_ynaoz_34",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(17, 17, 17)",
+          "borderColor": "rgb(51, 51, 51)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "element": "_card_vz33k_1 _e0_vz33k_19 _p-none_vz33k_10 brand-board",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgb(17, 17, 17)",
+          "borderColor": "rgb(51, 51, 51)"
+        },
+        {
+          "element": "assinatura",
+          "color": "rgb(237, 237, 237)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "borderColor": "rgb(237, 237, 237)"
         },
         {
           "element": "_btn_ynaoz_1 _ghost_ynaoz_77 _sm_ynaoz_39",
@@ -965,12 +917,12 @@
         }
       ],
       "width": 390,
-      "height": 7461,
+      "height": 6483,
       "capture": {
         "file": "brandkit-v2-mobile-dark.jpg",
         "width": 390,
-        "height": 7461,
-        "bytes": 216708
+        "height": 6483,
+        "bytes": 200200
       }
     }
   ],

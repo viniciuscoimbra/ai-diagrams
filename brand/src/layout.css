@@ -1,4 +1,4 @@
-/* Composition only. Components and neutral theme come from the Plyngo Refy stack. */
+/* Composition only. Components supply the neutral interface theme. */
 .brandkit { min-height: 100vh; background: var(--bg); color: var(--ink-1); font-family: var(--font-body); }
 .brandkit :where(p, figure) { margin: 0; }
 .brandkit img { max-width: 100%; }
@@ -22,19 +22,15 @@
 .brand-section { min-width: 0; padding: 36px; }
 .brand-section + .brand-section { border-top: 1px solid var(--line); }
 .brand-section > header { margin-bottom: 28px; }
-.brand-section .section-copy { margin: 26px 0; color: var(--ink-2); max-width: 75ch; }
-.proposals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
-.proposal { min-width: 0; }
-.proposal-art { display: grid; place-items: center; aspect-ratio: 1.4; border: 1px solid var(--line); border-radius: var(--radius-default); }
-.proposal-art img { width: 55%; max-width: 160px; height: auto; }
-.proposal-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin: 20px 0 10px; }
-.proposal-heading h3 { font-size: 17px; font-weight: 600; }
-.recommendation { font-size: 11px; padding: 3px 7px; color: var(--on-primary); background: var(--primary); border-radius: var(--radius-default); }
-.proposal figcaption > p { font-size: 14px; line-height: 1.5; min-height: 4.5em; color: var(--ink-2); }
-.proposal-sizes { display: flex; align-items: end; gap: 24px; margin: 22px 0 12px; }
-.proposal-sizes span { display: grid; justify-items: center; gap: 8px; }
-.proposal-sizes img { display: block; }
-.proposal-sizes small { color: var(--ink-3); font: 11px var(--font-mono); }
+.signature-symbol { display: grid; grid-template-columns: 260px minmax(0, 1fr); align-items: center; gap: 32px; margin-bottom: 28px; }
+.symbol-art { display: grid; place-items: center; aspect-ratio: 1; border: 1px solid var(--line); border-radius: var(--radius-default); }
+.symbol-art img { width: 160px; max-width: 70%; height: auto; }
+.signature-symbol h3 { margin-bottom: 12px; font-size: 22px; font-weight: 600; }
+.signature-symbol figcaption > p { font-size: 14px; line-height: 1.5; color: var(--ink-2); max-width: 65ch; }
+.symbol-sizes { display: flex; align-items: end; gap: 24px; margin: 22px 0 12px; }
+.symbol-sizes span { display: grid; justify-items: center; gap: 8px; }
+.symbol-sizes img { display: block; }
+.symbol-sizes small { color: var(--ink-3); font: 11px var(--font-mono); }
 .brand-paper { background: var(--brand-papel); color: var(--brand-tinta); }
 .brand-ink { background: var(--brand-tinta); color: var(--brand-papel); }
 .signature-lockups, .signature-variants { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -96,8 +92,6 @@
 .page-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 28px 0 48px; color: var(--ink-3); font-size: 13px; }
 @media (max-width: 1000px) {
   .intro { grid-template-columns: minmax(0, 1fr); gap: 24px; }
-  .proposals { gap: 18px; }
-  .proposal-sizes { gap: 16px; }
   .color-type-grid { gap: 32px; }
   .swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -110,11 +104,9 @@
   .brandkit h1 { font-size: clamp(36px, 10.5vw, 52px); }
   .intro-copy { font-size: 17px; }
   .section-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
-  .proposals, .signature-lockups, .signature-variants, .color-type-grid, .voice-section, .application-grid { grid-template-columns: minmax(0, 1fr); }
-  .proposals { gap: 32px; }
-  .proposal-art { aspect-ratio: 1.6; }
-  .proposal figcaption > p { min-height: 0; }
-  .proposal-sizes { gap: 28px; }
+  .signature-symbol, .signature-lockups, .signature-variants, .color-type-grid, .voice-section, .application-grid { grid-template-columns: minmax(0, 1fr); }
+  .signature-symbol { gap: 24px; }
+  .symbol-art { aspect-ratio: 1.6; }
   .brand-section { padding: 28px 20px; }
   .brand-section > header { margin-bottom: 24px; }
   .signature-main { padding: 28px 20px 20px; }
