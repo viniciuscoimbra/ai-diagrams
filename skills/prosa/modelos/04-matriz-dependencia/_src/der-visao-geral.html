@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Visão geral dos schemas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*ESTILO*/
+.mx{border-collapse:collapse;margin-top:34px;font-family:'IBM Plex Mono',monospace}
+.mx td,.mx th{border:1px solid #CBD5E1;width:74px;height:46px;text-align:center;font-size:15px;font-weight:600;color:#111827}
+.mx th.cv{height:120px;vertical-align:bottom;padding-bottom:8px;border-top:none}
+.mx th.cv span{display:inline-block;writing-mode:vertical-rl;transform:rotate(180deg);font-size:12px;font-weight:700}
+.mx th.rh{width:260px;text-align:left;padding:0 12px;font-weight:400}
+.mx th.rh b{font-size:13px;display:block}
+.mx th.rh span{font-family:'IBM Plex Sans',Arial,sans-serif;font-size:11px;color:#6B7280}
+.mx td.diag{background:#374151;color:#FFFFFF;font-size:12px}
+.mx td.tot{background:#F3F4F6;font-size:13px;color:#374151}
+.mx th.canto{border:none}
+.leitura{display:flex;gap:40px;margin-top:26px;font-size:12.5px;line-height:1.55;color:#111827}
+.leitura div{flex:1}
+.det{columns:3;column-gap:32px;margin-top:20px}
+.par{break-inside:avoid;margin-bottom:12px}
+.pt{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:700;border-bottom:1px solid #374151;padding-bottom:2px;margin-bottom:3px}
+.pt span{float:right;color:#6B7280}
+.pc{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#374151;line-height:1.5}
+.sec{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin-top:34px;border-bottom:1.5px solid #111827;padding-bottom:6px}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>Prosa · Modelos de diagrama · Fintech de exemplo</span><span>DER · visão geral · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Modelo lógico · 5 schemas</div>
+<h1>Dependências entre os schemas</h1>
+<div class="sub">Cada célula conta quantas colunas do schema da linha apontam para uma tabela do schema da coluna. É FK sem leitura: o banco garante que a linha existe, e o serviço não lê a tabela do outro.</div>
+
+<table class="mx">
+<tr><th class="canto"></th><th class="cv"><span>comum</span></th><th class="cv"><span>cadastro</span></th><th class="cv"><span>conta</span></th><th class="cv"><span>pagamento</span></th><th class="cv"><span>extrato</span></th><th class="cv"><span>aponta para N schemas</span></th></tr>
+<tr><th class="rh"><b>comum</b><span>domínios gerais e referências</span></th><td class="diag">2</td><td style="background:transparent"></td><td style="background:transparent"></td><td style="background:transparent"></td><td style="background:transparent"></td><td class="tot">0</td></tr>
+<tr><th class="rh"><b>cadastro</b><span>Cadastro de clientes</span></th><td style="background:rgba(255, 140, 180, 0.49)">1</td><td class="diag">3</td><td style="background:transparent"></td><td style="background:transparent"></td><td style="background:transparent"></td><td class="tot">1</td></tr>
+<tr><th class="rh"><b>conta</b><span>Contas e movimentos</span></th><td style="background:rgba(255, 140, 180, 0.49)">1</td><td style="background:rgba(255, 140, 180, 0.8)">2</td><td class="diag">10</td><td style="background:rgba(255, 140, 180, 0.49)">1</td><td style="background:transparent"></td><td class="tot">3</td></tr>
+<tr><th class="rh"><b>pagamento</b><span>Pagamentos</span></th><td style="background:rgba(255, 140, 180, 0.49)">1</td><td style="background:transparent"></td><td style="background:rgba(255, 140, 180, 0.49)">1</td><td class="diag">2</td><td style="background:transparent"></td><td class="tot">2</td></tr>
+<tr><th class="rh"><b>extrato</b><span>Extrato do cliente</span></th><td style="background:transparent"></td><td style="background:transparent"></td><td style="background:rgba(255, 140, 180, 0.8)">2</td><td style="background:transparent"></td><td class="diag">2</td><td class="tot">1</td></tr>
+<tr><th class="rh"><b>usado por</b><span>quantos schemas apontam para ele</span></th><td class="tot">3</td><td class="tot">1</td><td class="tot">2</td><td class="tot">1</td><td class="tot">0</td><td class="tot"></td></tr>
+</table>
+
+<div class="leitura">
+<div><b>Diagonal escura</b>: quantas tabelas o schema tem. A soma dá 19.</div>
+<div><b>Cor da célula</b>: mais forte, mais colunas apontando. O par mais denso tem 2 colunas.</div>
+<div><b>comum</b> é o mais apontado: 3 schemas dependem dele. <b>conta</b> é o que mais depende: aponta para 3.</div>
+</div>
+
+<div class="sec">Cada coluna, por par de schemas</div>
+<div class="det">
+<div class="par"><div class="pt">cadastro → comum <span>1</span></div><div class="pc">enderecos.pais_id → paises</div></div>
+<div class="par"><div class="pt">conta → comum <span>1</span></div><div class="pc">contas.moeda_id → moedas</div></div>
+<div class="par"><div class="pt">conta → cadastro <span>2</span></div><div class="pc">contas.cliente_id → clientes</div><div class="pc">titulares.cliente_id → clientes</div></div>
+<div class="par"><div class="pt">conta → pagamento <span>1</span></div><div class="pc">movimentos.pagamento_id → pagamentos</div></div>
+<div class="par"><div class="pt">pagamento → comum <span>1</span></div><div class="pc">pagamentos.moeda_id → moedas</div></div>
+<div class="par"><div class="pt">pagamento → conta <span>1</span></div><div class="pc">pagamentos.conta_id → contas</div></div>
+<div class="par"><div class="pt">extrato → conta <span>2</span></div><div class="pc">lancamentos.conta_id → contas</div><div class="pc">lancamentos.movimento_id → movimentos</div></div>
+</div>
+
+<div class="foot">Diagramas &nbsp;·&nbsp; modelo lógico de exemplo &nbsp;·&nbsp; 2026-11</div>
+</div>
+</body>
+</html>

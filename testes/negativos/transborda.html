@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Teste · transborda</title>
+<style>
+/*ESTILO*/
+/* defeito plantado: layout automático e célula sem quebra fazem a tabela passar da página */
+table.comp{table-layout:auto}
+table.comp td{white-space:nowrap}
+</style></head><body><div class="page">
+<div class="hdr"><span>Prosa · Teste negativo</span><span>Transborda</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Tabela de comparação</div>
+<h1>Tabela que passa da largura da página</h1>
+<div class="sub">Caso de teste: o gate precisa reprovar com TRANSBORDA.</div>
+<table class="comp">
+<tr><th>Critério</th><th>Opção A</th><th>Opção B</th><th>Opção C</th></tr>
+<tr><td>Modelo de dados</td><td>tabela de lançamentos com índice por conta e data e partição mensal por data de lançamento, vacuum agendado e réplica de leitura em outra zona</td><td>partition key conta, sort key data e id do lançamento, com GSI por tipo de lançamento e streams para o extrato consolidado</td><td>documento por lançamento com índice composto por conta e data e TTL por cinco anos</td></tr>
+</table>
+<div class="foot">Prosa · teste negativo</div>
+</div></body></html>

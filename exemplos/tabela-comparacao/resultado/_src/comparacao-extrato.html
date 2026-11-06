@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Comparação de banco para o extrato</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*ESTILO*/
+.page{width:1760px}
+table.comp td:first-child{width:220px}
+table.comp td:nth-child(2),table.comp td:nth-child(3),table.comp td:nth-child(4){width:480px;color:#111827}
+table.comp{table-layout:fixed}
+table.comp th:first-child{width:220px}
+table.comp tr.escolha td{background:#F3F4F6;font-weight:600}
+table.comp tr.escolha td:first-child{border-left:4px solid #14B8A6}
+.nota{font-size:12.5px;color:#374151;margin-top:14px;max-width:1100px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>Prosa · Exemplos de diagrama · Fintech de exemplo</span><span>Banco do extrato · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Tabela de comparação</div>
+<h1>Banco do extrato do cliente: Aurora PostgreSQL, DynamoDB e DocumentDB</h1>
+<div class="sub">Três opções para guardar os lançamentos da tela de extrato: 2,5 milhões novos por dia, 1,1 bilhão retidos e pico de 3.000 leituras por segundo. 95% das leituras pedem os últimos 90 dias de uma conta, paginados por data.</div>
+
+<div class="sec">Critérios</div>
+<table class="comp">
+<tr><th>Critério</th><th>Aurora PostgreSQL</th><th>DynamoDB</th><th>DocumentDB</th></tr>
+<tr><td>Modelo de dados</td><td>tabela de lançamentos com índice por conta e data</td><td>partition key conta, sort key data e id do lançamento</td><td>documento por lançamento, índice composto por conta e data</td></tr>
+<tr><td>Padrão de acesso</td><td>index range scan; filtro por tipo usa índice parcial</td><td>Query na partição, paginada; filtro por tipo pede GSI</td><td>find com índice composto; filtro por tipo no mesmo índice</td></tr>
+<tr><td>Volume e crescimento</td><td>particionamento por mês e expurgo por partição</td><td>sem limite prático de tabela; TTL para os 5 anos</td><td>storage cresce sozinho; expurgo por job ou TTL index</td></tr>
+<tr><td>Consistência</td><td>leitura no writer é imediata; réplica com lag abaixo de 100 ms</td><td>strongly consistent read sob demanda, no dobro do custo de leitura</td><td>leitura no primário é imediata; réplica com lag curto</td></tr>
+<tr><td>Custo de base</td><td>instância-hora, mesmo sem tráfego; Serverless v2 tem piso de ACU</td><td>zero sem tráfego no on-demand; paga por leitura e escrita</td><td>instância-hora, mesmo sem tráfego</td></tr>
+<tr><td>Operação</td><td>vacuum, partições, versão do motor; o time já domina</td><td>quase nenhuma; modelagem por padrão de acesso é nova para o time</td><td>instâncias e índices; nenhum engenheiro com experiência em MongoDB</td></tr>
+<tr class="escolha"><td>Escolha</td><td colspan="3">DynamoDB, porque a consulta principal é uma Query por conta e data e o lançamento nunca muda depois de gravado. Rever se o filtro por tipo passar de 20% das leituras ou se surgir consulta entre contas.</td></tr>
+</table>
+<div class="nota">Custo aparece como forma de cobrança, não como valor: o número sai da calculadora com o volume medido de 2,5 milhões de lançamentos por dia.</div>
+
+<div class="foot">Diagramas &nbsp;·&nbsp; exemplo de tabela de comparação &nbsp;·&nbsp; 2026-11</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Conciliação diária de pagamentos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*ESTILO*/
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>Prosa · Exemplos de diagrama · Fintech de exemplo</span><span>Conciliação de pagamentos · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Fluxo com passos numerados</div>
+<h1>Conciliação diária de pagamentos com o arquivo do parceiro</h1>
+<div class="sub">O arquivo D-1 do parceiro, com cerca de 400 mil linhas, chega ao S3 até as 6h e dispara a conciliação. O Step Functions processa o arquivo em lotes de 5.000 linhas contra o Aurora; cada divergência vira mensagem na fila do analista. Duração média medida: 11 minutos.</div>
+
+<div class="wrap stack">
+<div class="canvas" style="height:360px">
+
+  <div class="frame ext" style="left:10px;top:140px;width:150px;height:170px">
+    <div class="flabel">Externo</div>
+  </div>
+  <div class="frame awscloud" style="left:190px;top:10px;width:1270px;height:340px">
+    <div class="flabel"><img src="aws://aws.png">AWS Cloud</div>
+  </div>
+  <div class="frame zone" style="left:220px;top:50px;width:400px;height:280px">
+    <div class="flabel">Ingestão</div>
+  </div>
+  <div class="frame zone" style="left:640px;top:50px;width:790px;height:280px">
+    <div class="flabel">Conciliação</div>
+  </div>
+
+  <div class="node" style="left:30px;top:200px">
+    <img src="aws://general/client.png">
+    <div class="nl">Parceiro de liquidação</div>
+    <div class="ns">arquivo D-1 em CSV</div>
+  </div>
+
+  <div class="node" style="left:260px;top:200px">
+    <img src="aws://storage/simple-storage-service-s3.png">
+    <div class="nl">S3 entrada</div>
+    <div class="ns">prefixo parceiro/</div>
+  </div>
+  <div class="node" style="left:470px;top:200px">
+    <img src="aws://integration/eventbridge.png">
+    <div class="nl">EventBridge</div>
+    <div class="ns">regra Object Created</div>
+  </div>
+  <div class="node" style="left:700px;top:200px">
+    <img src="aws://integration/step-functions.png">
+    <div class="nl">Step Functions</div>
+    <div class="ns">Map distribuído por lote</div>
+  </div>
+  <div class="node" style="left:940px;top:200px">
+    <img src="aws://compute/lambda.png">
+    <div class="nl">Lambda conciliação</div>
+    <div class="ns">compara lote a lote</div>
+  </div>
+  <div class="svc" style="left:1130px;top:110px;width:190px;height:44px">
+    <img src="aws://database/aurora.png">
+    <div class="ot">Aurora PostgreSQL</div>
+    <div class="os">tabela pagamentos do ledger</div>
+  </div>
+  <div class="node" style="left:1220px;top:200px">
+    <img src="aws://integration/simple-queue-service-sqs.png">
+    <div class="nl">SQS divergências</div>
+    <div class="ns">DLQ após 3 falhas</div>
+  </div>
+
+  <div class="node" style="left:1560px;top:200px">
+    <img src="aws://general/user.png">
+    <div class="nl">Analista de conciliação</div>
+    <div class="ns">console interno</div>
+  </div>
+
+  <svg class="edges" viewBox="0 0 1700 360">
+    <defs>
+      <marker id="a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#374151"/></marker>
+    </defs>
+    <path d="M107,222 H293" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M337,222 H503" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M547,222 H733" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M777,222 H973" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M980,200 V100 H315 V200" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M1010,200 V132 H1130" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M1017,222 H1253" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M1297,222 H1593" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+  </svg>
+  <div class="badge" style="left:245px;top:212px">1</div>
+  <div class="badge" style="left:410px;top:212px">2</div>
+  <div class="badge" style="left:670px;top:212px">3</div>
+  <div class="badge" style="left:865px;top:212px">4</div>
+  <div class="badge" style="left:440px;top:90px">5</div>
+  <div class="badge" style="left:1060px;top:122px">6</div>
+  <div class="badge" style="left:1125px;top:212px">7</div>
+  <div class="badge" style="left:1500px;top:212px">8</div>
+
+</div>
+
+<div class="passos">
+  <div class="ptitle">Passos</div>
+  <div class="pitem"><div class="pb">1</div><div>O <b>parceiro de liquidação</b> grava <code>liquidacao_AAAAMMDD.csv</code> no bucket de entrada, prefixo <code>parceiro/</code>, até as 6h.</div></div>
+  <div class="pitem"><div class="pb">2</div><div>O <b>S3</b> emite o evento <code>Object Created</code> para o <b>EventBridge</b>.</div></div>
+  <div class="pitem"><div class="pb">3</div><div>A regra filtra o prefixo e inicia a execução do <b>Step Functions</b>; o nome do arquivo é a chave de idempotência.</div></div>
+  <div class="pitem"><div class="pb">4</div><div>O estado Map distribuído divide o arquivo em lotes de 5.000 linhas e chama a <b>Lambda conciliação</b> para cada lote.</div></div>
+  <div class="pitem"><div class="pb">5</div><div>A Lambda lê o próprio lote direto do <b>S3</b>.</div></div>
+  <div class="pitem"><div class="pb">6</div><div>Cada linha é comparada com a tabela <code>pagamentos</code> do <b>Aurora</b> pelo id da transação: valor, data de liquidação e situação.</div></div>
+  <div class="pitem"><div class="pb">7</div><div>Cada divergência vira mensagem na <b>fila SQS</b>; acima de R$ 10 mil, com prioridade.</div></div>
+  <div class="pitem"><div class="pb">8</div><div>O <b>analista de conciliação</b> trata a fila no console interno até as 9h.</div></div>
+</div>
+</div>
+
+<div class="foot">Diagramas &nbsp;·&nbsp; exemplo de fluxo com passos &nbsp;·&nbsp; 2026-11</div>
+</div>
+</body>
+</html>

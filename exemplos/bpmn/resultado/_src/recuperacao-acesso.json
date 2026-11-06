@@ -1,0 +1,158 @@
+{
+  "id": "recuperacao_acesso",
+  "title": "Recuperação de acesso à conta",
+  "subtitle": "Do pedido do cliente ao acesso recuperado ou à conta bloqueada. A segurança verifica a identidade por biometria; quando não confirma, a central valida por chamada, e a recusa nessa etapa bloqueia a conta.",
+  "cabecalho": [
+    "Prosa · Exemplos de diagrama · Fintech de exemplo",
+    "BPMN · V1"
+  ],
+  "rodape": "Diagramas &nbsp;·&nbsp; exemplo de BPMN &nbsp;·&nbsp; 2026-11",
+  "lanes": [
+    {
+      "id": "cliente",
+      "name": "Cliente"
+    },
+    {
+      "id": "app",
+      "name": "App"
+    },
+    {
+      "id": "seguranca",
+      "name": "Segurança"
+    },
+    {
+      "id": "central",
+      "name": "Central de atendimento"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "inicio",
+      "type": "startEvent",
+      "name": "Cliente pede\nrecuperação",
+      "lane": "cliente",
+      "col": 0
+    },
+    {
+      "id": "coletar",
+      "type": "task",
+      "name": "Coletar documento\ne selfie",
+      "lane": "app",
+      "col": 1
+    },
+    {
+      "id": "verificar",
+      "type": "task",
+      "name": "Verificar identidade\npor biometria",
+      "lane": "seguranca",
+      "col": 1
+    },
+    {
+      "id": "confirmada",
+      "type": "exclusiveGateway",
+      "name": "Identidade\nconfirmada?",
+      "lane": "seguranca",
+      "col": 2
+    },
+    {
+      "id": "validar",
+      "type": "task",
+      "name": "Validar por chamada\ncom o cliente",
+      "lane": "central",
+      "col": 3
+    },
+    {
+      "id": "aceita",
+      "type": "exclusiveGateway",
+      "name": "Validação\naceita?",
+      "lane": "central",
+      "col": 4
+    },
+    {
+      "id": "cadastrar",
+      "type": "task",
+      "name": "Cadastrar nova senha\ne dispositivo",
+      "lane": "app",
+      "col": 4
+    },
+    {
+      "id": "bloquear",
+      "type": "task",
+      "name": "Bloquear conta e\nregistrar suspeita",
+      "lane": "seguranca",
+      "col": 5
+    },
+    {
+      "id": "entrar",
+      "type": "task",
+      "name": "Entrar com a\nnova senha",
+      "lane": "cliente",
+      "col": 5
+    },
+    {
+      "id": "fim_ok",
+      "type": "endEvent",
+      "name": "Acesso recuperado",
+      "lane": "cliente",
+      "col": 6
+    },
+    {
+      "id": "fim_bloqueio",
+      "type": "endEvent",
+      "name": "Conta bloqueada",
+      "lane": "seguranca",
+      "col": 6
+    }
+  ],
+  "flows": [
+    {
+      "from": "inicio",
+      "to": "coletar"
+    },
+    {
+      "from": "coletar",
+      "to": "verificar"
+    },
+    {
+      "from": "verificar",
+      "to": "confirmada"
+    },
+    {
+      "from": "confirmada",
+      "to": "cadastrar",
+      "name": "Sim",
+      "via": "top"
+    },
+    {
+      "from": "confirmada",
+      "to": "validar",
+      "name": "Não"
+    },
+    {
+      "from": "validar",
+      "to": "aceita"
+    },
+    {
+      "from": "aceita",
+      "to": "cadastrar",
+      "name": "Sim"
+    },
+    {
+      "from": "aceita",
+      "to": "bloquear",
+      "name": "Não"
+    },
+    {
+      "from": "cadastrar",
+      "to": "entrar"
+    },
+    {
+      "from": "entrar",
+      "to": "fim_ok"
+    },
+    {
+      "from": "bloquear",
+      "to": "fim_bloqueio"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# Self-contained HTML built next to each model (icons inlined); the source lives in _src/
+skills/prosa/modelos/*/*.html
+exemplos/*/resultado/*.html
+
+# Credentials never go into the repository
+.env
+.env.*
+*.pem
+*.key
+*.p12
+id_rsa*
+id_ed25519*
+credentials*

@@ -1,0 +1,159 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>Catálogo de eventos de domínio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/*ESTILO*/
+.card .txt code{font-family:'IBM Plex Mono',monospace;font-size:13px;overflow-wrap:anywhere}
+.card .linha:nth-last-child(2){margin-bottom:16px}
+</style></head><body>
+<div class="page">
+
+  <div class="hdr"><span>Prosa · Exemplos de diagrama · Fintech de exemplo</span><span>Catálogo de eventos</span></div>
+
+  <div class="kicker"><span class="sq">■</span> Catálogo conceitual em cards</div>
+  <h1>Catálogo de eventos de domínio da plataforma</h1>
+  <div class="sub">Dez eventos publicados por quatro produtores: cadastro, contas, cobrança e segurança. O card diz quando o evento sai, o que vai no payload e quem consome.</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="sid">E01</div>
+      <div class="snome">Cliente cadastrado</div>
+      <div class="linha"><div class="rot">Produtor</div>
+        <div class="txt">Cadastro.</div></div>
+      <div class="linha"><div class="rot">Quando</div>
+        <div class="txt">O onboarding aprova o cadastro do cliente.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>cliente_id, documento, situacao</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Contas, notificações.</div></div>
+      <div class="slug">cliente.cadastrado.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E02</div>
+      <div class="snome">Cliente atualizado</div>
+      <div class="linha"><div class="rot">Produtor</div>
+        <div class="txt">Cadastro.</div></div>
+      <div class="linha"><div class="rot">Quando</div>
+        <div class="txt">Dados pessoais ou endereço do cliente mudam.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>cliente_id, campos_alterados</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Contas, cobrança.</div></div>
+      <div class="slug">cliente.atualizado.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E03</div>
+      <div class="snome">Conta aberta</div>
+      <div class="linha"><div class="rot">Produtor</div>
+        <div class="txt">Contas.</div></div>
+      <div class="linha"><div class="rot">Quando</div>
+        <div class="txt">A conta passa para a situação aberta.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>conta_id, cliente_id, numero</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Cobrança, extrato, notificações.</div></div>
+      <div class="slug">conta.aberta.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E04</div>
+      <div class="snome">Conta bloqueada</div>
+      <div class="linha"><div class="rot">Produtor</div>
+        <div class="txt">Contas.</div></div>
+      <div class="linha"><div class="rot">Quando</div>
+        <div class="txt">Segurança ou atendimento aplica bloqueio na conta.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>conta_id, motivo, origem</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Cobrança, notificações.</div></div>
+      <div class="slug">conta.bloqueada.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E05</div>
+      <div class="snome">Movimento registrado</div>
+      <div class="linha"><div class="rot">Produtor</div>
+        <div class="txt">Contas.</div></div>
+      <div class="linha"><div class="rot">Quando</div>
+        <div class="txt">Cada crédito ou débito gravado na conta.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>movimento_id, conta_id, valor</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Extrato, antifraude.</div></div>
+      <div class="slug">movimento.registrado.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E06</div>
+      <div class="snome">Fatura emitida</div>
+      <div class="linha"><div class="rot">Produtor</div>
+        <div class="txt">Cobrança.</div></div>
+      <div class="linha"><div class="rot">Quando</div>
+        <div class="txt">A fatura é fechada e recebe número.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>fatura_id, valor_total, vencimento</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Notificações, extrato.</div></div>
+      <div class="slug">fatura.emitida.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E07</div>
+      <div class="snome">Fatura vencida</div>
+      <div class="linha"><div class="rot">Produtor</div>
+        <div class="txt">Cobrança.</div></div>
+      <div class="linha"><div class="rot">Quando</div>
+        <div class="txt">A fatura vence sem pagamento identificado.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>fatura_id, dias_atraso</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Notificações, atendimento.</div></div>
+      <div class="slug">fatura.vencida.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E08</div>
+      <div class="snome">Tentativa recusada</div>
+      <div class="linha"><div class="rot">Produtor</div>
+        <div class="txt">Cobrança.</div></div>
+      <div class="linha"><div class="rot">Quando</div>
+        <div class="txt">A tentativa automática de cobrança é recusada.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>tentativa_id, fatura_id, resultado</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Notificações, atendimento.</div></div>
+      <div class="slug">tentativa_cobranca.recusada.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E09</div>
+      <div class="snome">Pagamento recebido</div>
+      <div class="linha"><div class="rot">Produtor</div>
+        <div class="txt">Cobrança.</div></div>
+      <div class="linha"><div class="rot">Quando</div>
+        <div class="txt">O valor é creditado e conciliado com a fatura.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>pagamento_recebido_id, fatura_id, valor</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Contas, extrato.</div></div>
+      <div class="slug">pagamento.recebido.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E10</div>
+      <div class="snome">Acesso recuperado</div>
+      <div class="linha"><div class="rot">Produtor</div>
+        <div class="txt">Segurança.</div></div>
+      <div class="linha"><div class="rot">Quando</div>
+        <div class="txt">O cliente conclui a recuperação de acesso à conta.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>cliente_id, canal, dispositivo_id</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Notificações, antifraude.</div></div>
+      <div class="slug">acesso.recuperado.v1</div>
+    </div>
+  </div>
+
+  <div class="faixa">
+    <div class="f1">Cada evento sai pela outbox do produtor; o consumidor nunca lê a tabela de outro schema.</div>
+    <div class="f2">O schema completo do payload mora no schema registry; o sufixo v1 é a versão do contrato.</div>
+  </div>
+
+  <div class="foot"><span>Prosa · exemplo de catálogo em cards · 2026-11</span></div>
+
+</div>
+</body></html>

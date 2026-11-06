@@ -1,0 +1,11 @@
+evento,produtor,quando é publicado,payload principal,consumidores
+cliente.cadastrado.v1,cadastro,o onboarding aprova o cadastro do cliente,"cliente_id, documento, situacao","contas, notificações"
+cliente.atualizado.v1,cadastro,dados pessoais ou endereço do cliente mudam,"cliente_id, campos_alterados","contas, cobrança"
+conta.aberta.v1,contas,a conta passa para a situação aberta,"conta_id, cliente_id, numero","cobrança, extrato, notificações"
+conta.bloqueada.v1,contas,segurança ou atendimento aplica bloqueio na conta,"conta_id, motivo, origem","cobrança, notificações"
+movimento.registrado.v1,contas,cada crédito ou débito gravado na conta,"movimento_id, conta_id, valor","extrato, antifraude"
+fatura.emitida.v1,cobrança,a fatura é fechada e recebe número,"fatura_id, valor_total, vencimento","notificações, extrato"
+fatura.vencida.v1,cobrança,a fatura vence sem pagamento identificado,"fatura_id, dias_atraso","notificações, atendimento"
+tentativa_cobranca.recusada.v1,cobrança,a tentativa automática de cobrança é recusada,"tentativa_id, fatura_id, resultado","notificações, atendimento"
+pagamento.recebido.v1,cobrança,o valor é creditado e conciliado com a fatura,"pagamento_recebido_id, fatura_id, valor","contas, extrato"
+acesso.recuperado.v1,segurança,o cliente conclui a recuperação de acesso à conta,"cliente_id, canal, dispositivo_id","notificações, antifraude"

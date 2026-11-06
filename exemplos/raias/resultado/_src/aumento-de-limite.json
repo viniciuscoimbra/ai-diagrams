@@ -1,0 +1,191 @@
+{
+  "titulo_pagina": "Aumento de limite entre os times",
+  "cabecalho": [
+    "Prosa · Exemplos de diagrama · Fintech de exemplo",
+    "Aumento de limite · Raias"
+  ],
+  "kicker": "Fluxo em raias",
+  "h1": "Aumento de limite: do pedido ao limite novo na conta",
+  "sub": "Cinco atores e seis fases. O motor de crédito decide 71% dos pedidos sozinho; o analista só entra com valor acima do limite máximo ou score na faixa cinza.",
+  "raias": [
+    {
+      "nome": "Cliente",
+      "sub": "pelo app"
+    },
+    {
+      "nome": "App",
+      "sub": "canal digital"
+    },
+    {
+      "nome": "Motor de crédito",
+      "sub": "política automática"
+    },
+    {
+      "nome": "Analista de crédito",
+      "sub": "prazo de 1 dia útil"
+    },
+    {
+      "nome": "Operações",
+      "sub": ""
+    }
+  ],
+  "fases": [
+    "Pedir",
+    "Receber",
+    "Avaliar",
+    "Analisar",
+    "Aplicar",
+    "Avisar"
+  ],
+  "elementos": [
+    {
+      "raia": 0,
+      "fase": 0,
+      "texto": "Informar valor desejado e renda atual e confirmar o pedido"
+    },
+    {
+      "raia": 1,
+      "fase": 1,
+      "texto": "Validar a sessão, conferir pedido aberto e enviar ao motor",
+      "chip": "recebido"
+    },
+    {
+      "raia": 2,
+      "fase": 2,
+      "texto": "Calcular score (12 meses) e limite máximo da política",
+      "chip": "em avaliação"
+    },
+    {
+      "raia": 1,
+      "fase": 3,
+      "texto": "Avisar a recusa e a data para pedir de novo (90 dias)",
+      "chip": "recusado",
+      "estilo": "fora"
+    },
+    {
+      "raia": 3,
+      "fase": 3,
+      "texto": "Revisar, pedir comprovante se preciso e decidir o valor",
+      "chip": "em análise",
+      "estilo": "foco"
+    },
+    {
+      "raia": 4,
+      "fase": 4,
+      "texto": "Aplicar o limite novo na conta e registrar a auditoria"
+    },
+    {
+      "raia": 1,
+      "fase": 5,
+      "texto": "Avisar o cliente com o limite aprovado",
+      "chip": "concluído"
+    },
+    {
+      "raia": 0,
+      "fase": 5,
+      "texto": "Ver o limite novo na tela da conta"
+    }
+  ],
+  "sequencia": [
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      2,
+      2
+    ],
+    [
+      2,
+      2,
+      3,
+      3
+    ],
+    [
+      2,
+      2,
+      4,
+      4
+    ],
+    [
+      2,
+      2,
+      1,
+      3
+    ],
+    [
+      3,
+      3,
+      1,
+      3
+    ],
+    [
+      3,
+      3,
+      4,
+      4
+    ],
+    [
+      4,
+      4,
+      1,
+      5
+    ],
+    [
+      1,
+      5,
+      0,
+      5
+    ]
+  ],
+  "secoes": [
+    {
+      "titulo": "Decisão do motor de crédito",
+      "tipo": "passos",
+      "itens": [
+        [
+          "Aprovado direto",
+          "Valor até o limite máximo e score acima do corte. Segue para operações; aviso em cerca de 3 minutos."
+        ],
+        [
+          "Para o analista",
+          "Valor acima do limite máximo ou score na faixa cinza. Aprova, aprova com valor menor ou recusa; aviso em cerca de 9 horas."
+        ],
+        [
+          "Recusado",
+          "Score abaixo do corte. O cliente recebe o motivo e pode pedir de novo em 90 dias."
+        ]
+      ]
+    },
+    {
+      "titulo": "Quem recebe o resultado",
+      "tipo": "destinos",
+      "itens": [
+        [
+          "Cliente",
+          "O limite novo, ou o motivo da recusa e a data para pedir de novo."
+        ],
+        [
+          "Analista de crédito",
+          "O resultado de cada caso volta para a calibragem da política."
+        ],
+        [
+          "Atendimento",
+          "O histórico do pedido para responder dúvidas."
+        ]
+      ]
+    }
+  ],
+  "faixa": {
+    "f1": "42 mil pedidos por mês; o motor decide 71% sem analista, com aviso em 3 minutos contra 9 horas quando o analista entra.",
+    "f2": "O pedido de comprovante de renda pelo app fica dentro da análise e não aparece como etapa própria."
+  },
+  "rodape": [
+    "Prosa",
+    "exemplo de raias · 2026-11"
+  ]
+}

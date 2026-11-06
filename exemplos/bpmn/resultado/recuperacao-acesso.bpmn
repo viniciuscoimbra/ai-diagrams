@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_recuperacao_acesso" targetNamespace="http://bpmn.io/schema/bpmn" exporter="prosa" exporterVersion="1">
+  <bpmn:collaboration id="recuperacao_acesso_collaboration">
+    <bpmn:participant id="recuperacao_acesso_pool" name="Recuperação de acesso à conta" processRef="recuperacao_acesso" />
+  </bpmn:collaboration>
+  <bpmn:process id="recuperacao_acesso" name="Recuperação de acesso à conta" isExecutable="false">
+    <bpmn:documentation>Do pedido do cliente ao acesso recuperado ou à conta bloqueada. A segurança verifica a identidade por biometria; quando não confirma, a central valida por chamada, e a recusa nessa etapa bloqueia a conta.</bpmn:documentation>
+    <bpmn:laneSet id="recuperacao_acesso_lanes">
+      <bpmn:lane id="recuperacao_acesso_cliente" name="Cliente">
+        <bpmn:flowNodeRef>recuperacao_acesso_inicio</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>recuperacao_acesso_entrar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>recuperacao_acesso_fim_ok</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="recuperacao_acesso_app" name="App">
+        <bpmn:flowNodeRef>recuperacao_acesso_coletar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>recuperacao_acesso_cadastrar</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="recuperacao_acesso_seguranca" name="Segurança">
+        <bpmn:flowNodeRef>recuperacao_acesso_verificar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>recuperacao_acesso_confirmada</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>recuperacao_acesso_bloquear</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>recuperacao_acesso_fim_bloqueio</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="recuperacao_acesso_central" name="Central de atendimento">
+        <bpmn:flowNodeRef>recuperacao_acesso_validar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>recuperacao_acesso_aceita</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="recuperacao_acesso_inicio" name="Cliente pede&#10;recuperação">
+      <bpmn:outgoing>recuperacao_acesso_f1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="recuperacao_acesso_coletar" name="Coletar documento&#10;e selfie">
+      <bpmn:incoming>recuperacao_acesso_f1</bpmn:incoming>
+      <bpmn:outgoing>recuperacao_acesso_f2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="recuperacao_acesso_verificar" name="Verificar identidade&#10;por biometria">
+      <bpmn:incoming>recuperacao_acesso_f2</bpmn:incoming>
+      <bpmn:outgoing>recuperacao_acesso_f3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="recuperacao_acesso_confirmada" name="Identidade&#10;confirmada?" gatewayDirection="Diverging">
+      <bpmn:incoming>recuperacao_acesso_f3</bpmn:incoming>
+      <bpmn:outgoing>recuperacao_acesso_f4</bpmn:outgoing>
+      <bpmn:outgoing>recuperacao_acesso_f5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="recuperacao_acesso_validar" name="Validar por chamada&#10;com o cliente">
+      <bpmn:incoming>recuperacao_acesso_f5</bpmn:incoming>
+      <bpmn:outgoing>recuperacao_acesso_f6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="recuperacao_acesso_aceita" name="Validação&#10;aceita?" gatewayDirection="Diverging">
+      <bpmn:incoming>recuperacao_acesso_f6</bpmn:incoming>
+      <bpmn:outgoing>recuperacao_acesso_f7</bpmn:outgoing>
+      <bpmn:outgoing>recuperacao_acesso_f8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="recuperacao_acesso_cadastrar" name="Cadastrar nova senha&#10;e dispositivo">
+      <bpmn:incoming>recuperacao_acesso_f4</bpmn:incoming>
+      <bpmn:incoming>recuperacao_acesso_f7</bpmn:incoming>
+      <bpmn:outgoing>recuperacao_acesso_f9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="recuperacao_acesso_bloquear" name="Bloquear conta e&#10;registrar suspeita">
+      <bpmn:incoming>recuperacao_acesso_f8</bpmn:incoming>
+      <bpmn:outgoing>recuperacao_acesso_f11</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="recuperacao_acesso_entrar" name="Entrar com a&#10;nova senha">
+      <bpmn:incoming>recuperacao_acesso_f9</bpmn:incoming>
+      <bpmn:outgoing>recuperacao_acesso_f10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="recuperacao_acesso_fim_ok" name="Acesso recuperado">
+      <bpmn:incoming>recuperacao_acesso_f10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="recuperacao_acesso_fim_bloqueio" name="Conta bloqueada">
+      <bpmn:incoming>recuperacao_acesso_f11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="recuperacao_acesso_f1" sourceRef="recuperacao_acesso_inicio" targetRef="recuperacao_acesso_coletar" />
+    <bpmn:sequenceFlow id="recuperacao_acesso_f2" sourceRef="recuperacao_acesso_coletar" targetRef="recuperacao_acesso_verificar" />
+    <bpmn:sequenceFlow id="recuperacao_acesso_f3" sourceRef="recuperacao_acesso_verificar" targetRef="recuperacao_acesso_confirmada" />
+    <bpmn:sequenceFlow id="recuperacao_acesso_f4" sourceRef="recuperacao_acesso_confirmada" targetRef="recuperacao_acesso_cadastrar" name="Sim" />
+    <bpmn:sequenceFlow id="recuperacao_acesso_f5" sourceRef="recuperacao_acesso_confirmada" targetRef="recuperacao_acesso_validar" name="Não" />
+    <bpmn:sequenceFlow id="recuperacao_acesso_f6" sourceRef="recuperacao_acesso_validar" targetRef="recuperacao_acesso_aceita" />
+    <bpmn:sequenceFlow id="recuperacao_acesso_f7" sourceRef="recuperacao_acesso_aceita" targetRef="recuperacao_acesso_cadastrar" name="Sim" />
+    <bpmn:sequenceFlow id="recuperacao_acesso_f8" sourceRef="recuperacao_acesso_aceita" targetRef="recuperacao_acesso_bloquear" name="Não" />
+    <bpmn:sequenceFlow id="recuperacao_acesso_f9" sourceRef="recuperacao_acesso_cadastrar" targetRef="recuperacao_acesso_entrar" />
+    <bpmn:sequenceFlow id="recuperacao_acesso_f10" sourceRef="recuperacao_acesso_entrar" targetRef="recuperacao_acesso_fim_ok" />
+    <bpmn:sequenceFlow id="recuperacao_acesso_f11" sourceRef="recuperacao_acesso_bloquear" targetRef="recuperacao_acesso_fim_bloqueio" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_recuperacao_acesso" name="Recuperação de acesso à conta">
+    <bpmndi:BPMNPlane id="recuperacao_acesso_plane" bpmnElement="recuperacao_acesso_collaboration">
+      <bpmndi:BPMNShape id="recuperacao_acesso_pool_di" bpmnElement="recuperacao_acesso_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="60" width="1820" height="640" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_cliente_di" bpmnElement="recuperacao_acesso_cliente" isHorizontal="true" bioc:fill="#FFFFFF" bioc:stroke="#6B7280">
+        <dc:Bounds x="70" y="60" width="1790" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_app_di" bpmnElement="recuperacao_acesso_app" isHorizontal="true" bioc:fill="#F3F4F6" bioc:stroke="#6B7280">
+        <dc:Bounds x="70" y="220" width="1790" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_seguranca_di" bpmnElement="recuperacao_acesso_seguranca" isHorizontal="true" bioc:fill="#FFFFFF" bioc:stroke="#6B7280">
+        <dc:Bounds x="70" y="380" width="1790" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_central_di" bpmnElement="recuperacao_acesso_central" isHorizontal="true" bioc:fill="#F3F4F6" bioc:stroke="#6B7280">
+        <dc:Bounds x="70" y="540" width="1790" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_inicio_di" bpmnElement="recuperacao_acesso_inicio" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="200" y="110" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="137" y="158" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_coletar_di" bpmnElement="recuperacao_acesso_coletar" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="370" y="250" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_verificar_di" bpmnElement="recuperacao_acesso_verificar" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="370" y="410" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_confirmada_di" bpmnElement="recuperacao_acesso_confirmada" bioc:fill="#FEF08A" bioc:stroke="#111827" isMarkerVisible="true">
+        <dc:Bounds x="670" y="420" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="617" y="488" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_validar_di" bpmnElement="recuperacao_acesso_validar" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="850" y="570" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_aceita_di" bpmnElement="recuperacao_acesso_aceita" bioc:fill="#FEF08A" bioc:stroke="#111827" isMarkerVisible="true">
+        <dc:Bounds x="1150" y="580" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1097" y="648" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_cadastrar_di" bpmnElement="recuperacao_acesso_cadastrar" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="1090" y="250" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_bloquear_di" bpmnElement="recuperacao_acesso_bloquear" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="1330" y="410" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_entrar_di" bpmnElement="recuperacao_acesso_entrar" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="1330" y="90" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_fim_ok_di" bpmnElement="recuperacao_acesso_fim_ok" bioc:fill="#CCFBF1" bioc:stroke="#111827">
+        <dc:Bounds x="1640" y="110" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1577" y="158" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recuperacao_acesso_fim_bloqueio_di" bpmnElement="recuperacao_acesso_fim_bloqueio" bioc:fill="#CCFBF1" bioc:stroke="#111827">
+        <dc:Bounds x="1640" y="430" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1577" y="478" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="recuperacao_acesso_f1_di" bpmnElement="recuperacao_acesso_f1" bioc:stroke="#374151">
+        <di:waypoint x="240" y="130.0" />
+        <di:waypoint x="350" y="130" />
+        <di:waypoint x="350" y="290" />
+        <di:waypoint x="370" y="290.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="recuperacao_acesso_f2_di" bpmnElement="recuperacao_acesso_f2" bioc:stroke="#374151">
+        <di:waypoint x="460.0" y="330" />
+        <di:waypoint x="460.0" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="recuperacao_acesso_f3_di" bpmnElement="recuperacao_acesso_f3" bioc:stroke="#374151">
+        <di:waypoint x="550" y="450.0" />
+        <di:waypoint x="670" y="450.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="recuperacao_acesso_f4_di" bpmnElement="recuperacao_acesso_f4" bioc:stroke="#374151">
+        <di:waypoint x="700.0" y="420" />
+        <di:waypoint x="700" y="290" />
+        <di:waypoint x="1090" y="290.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="708.0" y="344.0" width="56" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="recuperacao_acesso_f5_di" bpmnElement="recuperacao_acesso_f5" bioc:stroke="#374151">
+        <di:waypoint x="730" y="450.0" />
+        <di:waypoint x="830" y="450" />
+        <di:waypoint x="830" y="610" />
+        <di:waypoint x="850" y="610.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="752.0" y="421.0" width="56" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="recuperacao_acesso_f6_di" bpmnElement="recuperacao_acesso_f6" bioc:stroke="#374151">
+        <di:waypoint x="1030" y="610.0" />
+        <di:waypoint x="1150" y="610.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="recuperacao_acesso_f7_di" bpmnElement="recuperacao_acesso_f7" bioc:stroke="#374151">
+        <di:waypoint x="1180.0" y="580" />
+        <di:waypoint x="1180.0" y="330" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1188.0" y="444.0" width="56" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="recuperacao_acesso_f8_di" bpmnElement="recuperacao_acesso_f8" bioc:stroke="#374151">
+        <di:waypoint x="1210" y="610.0" />
+        <di:waypoint x="1310" y="610" />
+        <di:waypoint x="1310" y="450" />
+        <di:waypoint x="1330" y="450.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1232.0" y="581.0" width="56" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="recuperacao_acesso_f9_di" bpmnElement="recuperacao_acesso_f9" bioc:stroke="#374151">
+        <di:waypoint x="1270" y="290.0" />
+        <di:waypoint x="1310" y="290" />
+        <di:waypoint x="1310" y="130" />
+        <di:waypoint x="1330" y="130.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="recuperacao_acesso_f10_di" bpmnElement="recuperacao_acesso_f10" bioc:stroke="#374151">
+        <di:waypoint x="1510" y="130.0" />
+        <di:waypoint x="1640" y="130.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="recuperacao_acesso_f11_di" bpmnElement="recuperacao_acesso_f11" bioc:stroke="#374151">
+        <di:waypoint x="1510" y="450.0" />
+        <di:waypoint x="1640" y="450.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

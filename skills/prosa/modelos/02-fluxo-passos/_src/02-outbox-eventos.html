@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>02 · Outbox e consumo idempotente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*ESTILO*/
+.bchip.tb{border:1.4px solid #374151;border-left:1.4px solid #374151;padding:0;overflow:hidden}
+.tb .bh{padding:5px 10px;border-bottom:1px solid #374151;display:flex;justify-content:space-between;align-items:baseline}
+.tb .bt{font-family:'IBM Plex Mono',monospace;font-size:11.5px;margin-top:0}
+.tb .bn{font-size:8px}
+.tb .bs{padding:5px 10px;font-size:9.5px;color:#374151;margin-top:0;line-height:1.35}
+.tb .bs code{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#111827}
+.chip.fn{font-family:'IBM Plex Mono',monospace;font-size:10px;border:1.4px dashed #374151;background:#FEF08A}
+.chip.env{font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:500;height:auto;padding:6px 10px;line-height:1.45;flex-direction:column;align-items:flex-start;justify-content:center}
+.chip.env b{font-family:'IBM Plex Sans',Arial,sans-serif;font-size:10px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>Prosa · Modelos de diagrama · Fintech de exemplo</span><span>02 · Outbox · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Fluxo com passos numerados</div>
+<h1>Outbox e consumo idempotente entre serviços</h1>
+<div class="sub">Como um evento sai do serviço que o grava e chega ao serviço que o consome, sem escrita dupla em banco e fila. O produtor grava o fato e a outbox na mesma transação; o Debezium publica no Kafka; o consumidor deduplica pelo id do evento.</div>
+
+<div class="wrap stack">
+<div class="canvas" style="height:620px">
+
+  <div class="frame awscloud" style="left:10px;top:10px;width:1680px;height:600px">
+    <div class="flabel"><img src="aws://aws.png">AWS Cloud</div>
+  </div>
+
+  <div class="frame zone" style="left:220px;top:60px;width:500px;height:400px">
+    <div class="flabel">Aurora · schema conta (produtor)</div>
+  </div>
+  <div class="frame zone" style="left:1330px;top:60px;width:340px;height:400px">
+    <div class="flabel">Aurora · schema extrato (consumidor)</div>
+  </div>
+
+  <!-- produtor -->
+  <div class="node" style="left:50px;top:115px">
+    <img src="aws://general/sdk.png">
+    <div class="nl">Serviço conta</div>
+    <div class="ns">grava só no próprio schema</div>
+  </div>
+
+  <!-- tabelas do produtor -->
+  <div class="bchip tb" style="left:260px;top:105px;width:260px;height:64px">
+    <div class="bh" style="background:#FED7AA"><span class="bt">movimentos</span><span class="bn">linha do tempo</span></div>
+    <div class="bs">um evento por linha, nunca muda; ganha <code>sequencia_evento</code> e <code>aplicado_projecao</code></div>
+  </div>
+  <div class="bchip tb" style="left:260px;top:230px;width:260px;height:64px">
+    <div class="bh" style="background:#99F6E4"><span class="bt">saldos</span><span class="bn">estado corrente</span></div>
+    <div class="bs">saldo e último movimento; só os movimentos mudam</div>
+  </div>
+  <div class="bchip tb" style="left:260px;top:350px;width:260px;height:64px">
+    <div class="bh" style="background:#E5E7EB"><span class="bt">outbox</span><span class="bn">transporte</span></div>
+    <div class="bs">o evento a publicar, com <code>numero_transacao_banco</code> dado pelo banco</div>
+  </div>
+  <div class="chip fn" style="left:560px;top:236px;width:140px">fn_exigir_outbox</div>
+  <div class="elabel" style="left:560px;top:274px;width:120px">confere no COMMIT; se não bate, a transação volta</div>
+  <div class="elabel" style="left:406px;top:193px;width:110px">só se aplicado_projecao</div>
+
+  <!-- transporte -->
+  <div class="node" style="left:800px;top:368px">
+    <img src="aws://analytics/managed-streaming-for-kafka.png">
+    <div class="nl">MSK Connect · Debezium</div>
+    <div class="ns">Outbox Event Router</div>
+  </div>
+  <div class="node" style="left:1000px;top:368px">
+    <img src="aws://analytics/managed-streaming-for-kafka.png">
+    <div class="nl">Amazon MSK</div>
+    <div class="ns">chave de partição agregado_id</div>
+  </div>
+  <div class="elabel" style="left:560px;top:372px;width:150px">log de replicação (WAL)</div>
+  <div class="chip env" style="left:800px;top:478px;width:310px"><b>envelope do evento</b>eventId · businessId (agregado_id) · sequence<br>aplicado_projecao · tipo_evento · versao_schema</div>
+  <div class="bchip" style="left:980px;top:150px;width:210px">
+    <div class="bn">Padrão de integração</div>
+    <div class="bt">MSK, Debezium e contratos</div>
+    <div class="bs">contrato do evento versionado</div>
+  </div>
+
+  <!-- consumidor -->
+  <div class="node" style="left:1180px;top:368px">
+    <img src="aws://general/sdk.png">
+    <div class="nl">Serviço extrato</div>
+    <div class="ns">consome o tópico de movimentos</div>
+  </div>
+  <div class="bchip tb" style="left:1370px;top:175px;width:270px;height:64px">
+    <div class="bh" style="background:#FCA5A5"><span class="bt">lancamentos</span><span class="bn">efeito</span></div>
+    <div class="bs">o que o evento muda no extrato, na mesma transação</div>
+  </div>
+  <div class="bchip tb" style="left:1370px;top:358px;width:270px;height:64px">
+    <div class="bh" style="background:#E5E7EB"><span class="bt">eventos_processados</span><span class="bn">deduplicação</span></div>
+    <div class="bs"><code>evento_id</code> único; repetida é recusada e descartada</div>
+  </div>
+
+  <!-- expurgo -->
+  <div class="chip" style="left:700px;top:560px;width:300px">expurgo agendado</div>
+  <div class="elabel" style="left:400px;top:540px;width:120px">outbox: 1 dia</div>
+  <div class="elabel" style="left:1520px;top:540px;width:150px">eventos_processados: 15 dias</div>
+
+  <svg class="edges" viewBox="0 0 1700 620">
+    <defs>
+      <marker id="a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#374151"/></marker>
+      <marker id="g" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#6B7280"/></marker>
+    </defs>
+    <!-- 1 serviço -> movimentos -->
+    <path d="M127,137 H260" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- 2 serviço -> outbox -->
+    <path d="M83,150 H44 V382 H260" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- 3 movimentos -> saldos -->
+    <path d="M390,169 V230" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- 4 fn_exigir_outbox confere movimentos e outbox -->
+    <path d="M690,236 V137 H520" fill="none" stroke="#6B7280" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#g)"/>
+    <path d="M690,268 V366 H520" fill="none" stroke="#6B7280" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#g)"/>
+    <!-- 5 outbox -> Debezium -->
+    <path d="M520,398 H833" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- 6 Debezium -> MSK -->
+    <path d="M877,390 H1033" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- 7 MSK -> serviço extrato -->
+    <path d="M1077,390 H1213" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- 8 serviço extrato -> eventos_processados -->
+    <path d="M1257,390 H1370" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- 9 serviço extrato -> lancamentos -->
+    <path d="M1235,368 V207 H1370" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- 10 expurgo -> outbox -->
+    <path d="M700,576 H390 V414" fill="none" stroke="#6B7280" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#g)"/>
+    <!-- 11 expurgo -> eventos_processados -->
+    <path d="M1000,576 H1505 V422" fill="none" stroke="#6B7280" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#g)"/>
+  </svg>
+  <div class="badge" style="left:183px;top:127px">1</div>
+  <div class="badge" style="left:34px;top:290px">2</div>
+  <div class="badge" style="left:380px;top:180px">3</div>
+  <div class="badge" style="left:680px;top:170px">4</div>
+  <div class="badge" style="left:690px;top:388px">5</div>
+  <div class="badge" style="left:945px;top:380px">6</div>
+  <div class="badge" style="left:1135px;top:380px">7</div>
+  <div class="badge" style="left:1303px;top:380px">8</div>
+  <div class="badge" style="left:1225px;top:270px">9</div>
+  <div class="badge" style="left:560px;top:566px">10</div>
+  <div class="badge" style="left:1250px;top:566px">11</div>
+
+</div>
+
+<div class="passos">
+  <div class="ptitle">Passos</div>
+  <div class="pitem"><div class="pb">1</div><div>O <b>serviço conta</b> grava o fato em <code>movimentos</code>, com a próxima <code>sequencia_evento</code> da conta e a marca <code>aplicado_projecao</code>.</div></div>
+  <div class="pitem"><div class="pb">2</div><div>Na <b>mesma transação</b>, grava a linha na <code>outbox</code>: mesmo <code>evento_id</code>, mesma conta, mesma sequência, o tipo do evento e o payload.</div></div>
+  <div class="pitem"><div class="pb">3</div><div>O movimento atualiza <code>saldos</code> só quando <code>aplicado_projecao</code> é verdadeiro. Movimento atrasado entra no histórico e é publicado, mas não muda o saldo.</div></div>
+  <div class="pitem"><div class="pb">4</div><div>No COMMIT, o gatilho adiado <code>fn_exigir_outbox</code> confere que cada movimento tem a linha da outbox com os mesmos valores. Se falta ou diverge, a transação inteira volta.</div></div>
+  <div class="pitem"><div class="pb">5</div><div>O <b>Debezium</b>, no MSK Connect, lê a outbox pelo log de replicação. O evento sai se e somente se a transação foi gravada.</div></div>
+  <div class="pitem"><div class="pb">6</div><div>O <b>Outbox Event Router</b> publica no MSK com <code>agregado_id</code> como chave de partição; os eventos de uma conta ficam em ordem.</div></div>
+  <div class="pitem"><div class="pb">7</div><div>O <b>serviço extrato</b> lê o tópico. A mesma mensagem pode chegar de novo: retentativa, republicação, reenvio da fila de falha.</div></div>
+  <div class="pitem"><div class="pb">8</div><div>Antes do efeito, o consumidor grava o <code>evento_id</code> em <code>eventos_processados</code>. A unicidade recusa a mensagem repetida, e ela é descartada.</div></div>
+  <div class="pitem"><div class="pb">9</div><div>O lançamento é gravado em <code>lancamentos</code> na <b>mesma transação</b> do passo 8.</div></div>
+  <div class="pitem"><div class="pb">10</div><div>O <b>expurgo</b> apaga da outbox as linhas com mais de 1 dia; o evento já vive no tópico.</div></div>
+  <div class="pitem"><div class="pb">11</div><div>O expurgo apaga de <code>eventos_processados</code> as linhas com mais de 15 dias, um a mais que a retenção do tópico de falha.</div></div>
+</div>
+</div>
+
+<div class="foot">Diagramas &nbsp;·&nbsp; modelo de fluxo com passos numerados &nbsp;·&nbsp; 2026-11</div>
+</div>
+</body>
+</html>

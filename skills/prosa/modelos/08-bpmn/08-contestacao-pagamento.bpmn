@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_contestacao" targetNamespace="http://bpmn.io/schema/bpmn" exporter="prosa" exporterVersion="1">
+  <bpmn:collaboration id="contestacao_collaboration">
+    <bpmn:participant id="contestacao_pool" name="Contestação de pagamento" processRef="contestacao" />
+  </bpmn:collaboration>
+  <bpmn:process id="contestacao" name="Contestação de pagamento" isExecutable="false">
+    <bpmn:documentation>Do pedido do cliente ao estorno ou à recusa. Cada raia é quem executa a atividade; a decisão tem os dois caminhos rotulados e cada caminho termina num fim explícito.</bpmn:documentation>
+    <bpmn:laneSet id="contestacao_lanes">
+      <bpmn:lane id="contestacao_cliente" name="Cliente">
+        <bpmn:flowNodeRef>contestacao_inicio</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="contestacao_atend" name="Atendimento">
+        <bpmn:flowNodeRef>contestacao_registrar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>contestacao_negar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>contestacao_avisar_ok</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>contestacao_avisar_nao</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>contestacao_fim_ok</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>contestacao_fim_nao</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="contestacao_ops" name="Operações">
+        <bpmn:flowNodeRef>contestacao_analisar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>contestacao_procede</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>contestacao_estornar</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="contestacao_inicio" name="Cliente contesta&#10;o pagamento">
+      <bpmn:outgoing>contestacao_f1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="contestacao_registrar" name="Registrar contestação&#10;e comprovante">
+      <bpmn:incoming>contestacao_f1</bpmn:incoming>
+      <bpmn:outgoing>contestacao_f2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="contestacao_analisar" name="Analisar transação&#10;e histórico">
+      <bpmn:incoming>contestacao_f2</bpmn:incoming>
+      <bpmn:outgoing>contestacao_f3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="contestacao_procede" name="Procede?" gatewayDirection="Diverging">
+      <bpmn:incoming>contestacao_f3</bpmn:incoming>
+      <bpmn:outgoing>contestacao_f4</bpmn:outgoing>
+      <bpmn:outgoing>contestacao_f5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="contestacao_estornar" name="Estornar o valor&#10;na conta">
+      <bpmn:incoming>contestacao_f4</bpmn:incoming>
+      <bpmn:outgoing>contestacao_f6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="contestacao_negar" name="Registrar motivo&#10;da recusa">
+      <bpmn:incoming>contestacao_f5</bpmn:incoming>
+      <bpmn:outgoing>contestacao_f8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="contestacao_avisar_ok" name="Avisar o cliente&#10;do estorno">
+      <bpmn:incoming>contestacao_f6</bpmn:incoming>
+      <bpmn:outgoing>contestacao_f7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="contestacao_avisar_nao" name="Avisar o cliente&#10;da recusa">
+      <bpmn:incoming>contestacao_f8</bpmn:incoming>
+      <bpmn:outgoing>contestacao_f9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="contestacao_fim_ok" name="Estorno concluído">
+      <bpmn:incoming>contestacao_f7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="contestacao_fim_nao" name="Contestação recusada">
+      <bpmn:incoming>contestacao_f9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="contestacao_f1" sourceRef="contestacao_inicio" targetRef="contestacao_registrar" />
+    <bpmn:sequenceFlow id="contestacao_f2" sourceRef="contestacao_registrar" targetRef="contestacao_analisar" />
+    <bpmn:sequenceFlow id="contestacao_f3" sourceRef="contestacao_analisar" targetRef="contestacao_procede" />
+    <bpmn:sequenceFlow id="contestacao_f4" sourceRef="contestacao_procede" targetRef="contestacao_estornar" name="Sim" />
+    <bpmn:sequenceFlow id="contestacao_f5" sourceRef="contestacao_procede" targetRef="contestacao_negar" name="Não" />
+    <bpmn:sequenceFlow id="contestacao_f6" sourceRef="contestacao_estornar" targetRef="contestacao_avisar_ok" />
+    <bpmn:sequenceFlow id="contestacao_f7" sourceRef="contestacao_avisar_ok" targetRef="contestacao_fim_ok" />
+    <bpmn:sequenceFlow id="contestacao_f8" sourceRef="contestacao_negar" targetRef="contestacao_avisar_nao" />
+    <bpmn:sequenceFlow id="contestacao_f9" sourceRef="contestacao_avisar_nao" targetRef="contestacao_fim_nao" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_contestacao" name="Contestação de pagamento">
+    <bpmndi:BPMNPlane id="contestacao_plane" bpmnElement="contestacao_collaboration">
+      <bpmndi:BPMNShape id="contestacao_pool_di" bpmnElement="contestacao_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="60" width="1820" height="620" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_cliente_di" bpmnElement="contestacao_cliente" isHorizontal="true" bioc:fill="#FFFFFF" bioc:stroke="#6B7280">
+        <dc:Bounds x="70" y="60" width="1790" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_atend_di" bpmnElement="contestacao_atend" isHorizontal="true" bioc:fill="#F3F4F6" bioc:stroke="#6B7280">
+        <dc:Bounds x="70" y="220" width="1790" height="300" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_ops_di" bpmnElement="contestacao_ops" isHorizontal="true" bioc:fill="#FFFFFF" bioc:stroke="#6B7280">
+        <dc:Bounds x="70" y="520" width="1790" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_inicio_di" bpmnElement="contestacao_inicio" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="200" y="110" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="137" y="158" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_registrar_di" bpmnElement="contestacao_registrar" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="370" y="250" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_analisar_di" bpmnElement="contestacao_analisar" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="610" y="550" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_procede_di" bpmnElement="contestacao_procede" bioc:fill="#FEF08A" bioc:stroke="#111827" isMarkerVisible="true">
+        <dc:Bounds x="910" y="560" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="857" y="628" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_estornar_di" bpmnElement="contestacao_estornar" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="1090" y="550" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_negar_di" bpmnElement="contestacao_negar" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="1090" y="250" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_avisar_ok_di" bpmnElement="contestacao_avisar_ok" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="1330" y="390" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_avisar_nao_di" bpmnElement="contestacao_avisar_nao" bioc:fill="#FFFFFF" bioc:stroke="#111827">
+        <dc:Bounds x="1330" y="250" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_fim_ok_di" bpmnElement="contestacao_fim_ok" bioc:fill="#CCFBF1" bioc:stroke="#111827">
+        <dc:Bounds x="1640" y="410" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1577" y="458" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="contestacao_fim_nao_di" bpmnElement="contestacao_fim_nao" bioc:fill="#CCFBF1" bioc:stroke="#111827">
+        <dc:Bounds x="1640" y="270" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1577" y="318" width="166" height="46" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="contestacao_f1_di" bpmnElement="contestacao_f1" bioc:stroke="#374151">
+        <di:waypoint x="240" y="130.0" />
+        <di:waypoint x="350" y="130" />
+        <di:waypoint x="350" y="290" />
+        <di:waypoint x="370" y="290.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="contestacao_f2_di" bpmnElement="contestacao_f2" bioc:stroke="#374151">
+        <di:waypoint x="550" y="290.0" />
+        <di:waypoint x="590" y="290" />
+        <di:waypoint x="590" y="590" />
+        <di:waypoint x="610" y="590.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="contestacao_f3_di" bpmnElement="contestacao_f3" bioc:stroke="#374151">
+        <di:waypoint x="790" y="590.0" />
+        <di:waypoint x="910" y="590.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="contestacao_f4_di" bpmnElement="contestacao_f4" bioc:stroke="#374151">
+        <di:waypoint x="970" y="590.0" />
+        <di:waypoint x="1090" y="590.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1002.0" y="561.0" width="56" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="contestacao_f5_di" bpmnElement="contestacao_f5" bioc:stroke="#374151">
+        <di:waypoint x="940.0" y="560" />
+        <di:waypoint x="940" y="290" />
+        <di:waypoint x="1090" y="290.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="948.0" y="414.0" width="56" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="contestacao_f6_di" bpmnElement="contestacao_f6" bioc:stroke="#374151">
+        <di:waypoint x="1270" y="590.0" />
+        <di:waypoint x="1310" y="590" />
+        <di:waypoint x="1310" y="430" />
+        <di:waypoint x="1330" y="430.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="contestacao_f7_di" bpmnElement="contestacao_f7" bioc:stroke="#374151">
+        <di:waypoint x="1510" y="430.0" />
+        <di:waypoint x="1640" y="430.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="contestacao_f8_di" bpmnElement="contestacao_f8" bioc:stroke="#374151">
+        <di:waypoint x="1270" y="290.0" />
+        <di:waypoint x="1330" y="290.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="contestacao_f9_di" bpmnElement="contestacao_f9" bioc:stroke="#374151">
+        <di:waypoint x="1510" y="290.0" />
+        <di:waypoint x="1640" y="290.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

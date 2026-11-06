@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>01 · Antifraude em tempo real</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*ESTILO*/
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>Prosa · Antifraude em tempo real de transferências</span><span>01 · Antifraude · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Poster de arquitetura AWS</div>
+<h1>Antifraude em tempo real de transferências</h1>
+<div class="sub">Toda transferência iniciada no app passa por decisão de risco antes de sair da conta. A Lambda decisão lê features do DynamoDB, chama o modelo no SageMaker e devolve a decisão em até 300 ms p99. Volume medido: 1,8 milhão de transferências por dia, pico de 120 por segundo.</div>
+
+<div class="wrap stack">
+<div class="canvas" style="height:700px">
+
+  <div class="frame awscloud" style="left:30px;top:10px;width:1640px;height:680px">
+    <div class="flabel"><img src="aws://aws.png">AWS Cloud</div>
+  </div>
+  <div class="frame account" style="left:55px;top:36px;width:1590px;height:640px">
+    <div class="flabel">Conta de produção</div>
+  </div>
+  <div class="frame zone" style="left:80px;top:62px;width:680px;height:340px">
+    <div class="flabel">Decisão síncrona</div>
+  </div>
+  <div class="frame zone" style="left:790px;top:62px;width:830px;height:600px">
+    <div class="flabel">Processamento assíncrono</div>
+  </div>
+
+  <!-- origem -->
+  <div class="node" style="left:20px;top:200px">
+    <img src="aws://general/mobile-client.png">
+    <div class="nl">App</div>
+    <div class="ns">solicita transferência</div>
+  </div>
+
+  <!-- camada de decisão -->
+  <div class="node" style="left:160px;top:200px">
+    <img src="aws://network/api-gateway.png">
+    <div class="nl">API Gateway</div>
+    <div class="ns">POST /transferencias</div>
+  </div>
+  <div class="node" style="left:340px;top:200px">
+    <img src="aws://compute/lambda.png">
+    <div class="nl">Lambda decisão</div>
+    <div class="ns">orquestra a decisão</div>
+  </div>
+  <div class="svc" style="left:160px;top:320px;width:180px;height:44px">
+    <img src="aws://database/dynamodb.png">
+    <div class="ot">DynamoDB features</div>
+    <div class="os">agregados da conta</div>
+  </div>
+  <div class="svc" style="left:530px;top:190px;width:200px;height:64px">
+    <img src="aws://ml/sagemaker-model.png">
+    <div class="ot">SageMaker endpoint</div>
+    <div class="os">modelo de ML retorna score 0-1</div>
+  </div>
+
+  <!-- barramento -->
+  <div class="node" style="left:520px;top:400px">
+    <img src="aws://analytics/kinesis-data-streams.png">
+    <div class="nl">Kinesis Data Streams</div>
+    <div class="ns">evento decisao registrada v1</div>
+  </div>
+
+  <!-- processamento features -->
+  <div class="node" style="left:820px;top:180px">
+    <img src="aws://compute/lambda.png">
+    <div class="nl">Lambda features</div>
+    <div class="ns">recalcula agregados</div>
+  </div>
+  <div class="svc" style="left:1020px;top:170px;width:180px;height:64px">
+    <img src="aws://database/dynamodb.png">
+    <div class="ot">DynamoDB features</div>
+    <div class="os">atualiza agregados</div>
+  </div>
+
+  <!-- processamento alerta -->
+  <div class="node" style="left:820px;top:400px">
+    <img src="aws://compute/lambda.png">
+    <div class="nl">Lambda alerta</div>
+    <div class="ns">filtra revisar e bloquear</div>
+  </div>
+  <div class="node" style="left:1020px;top:400px">
+    <img src="aws://integration/simple-notification-service-sns.png">
+    <div class="nl">SNS</div>
+    <div class="ns">tópico de casos</div>
+  </div>
+
+  <!-- analista -->
+  <div class="node" style="left:1250px;top:400px">
+    <img src="aws://general/user.png">
+    <div class="nl">Analista</div>
+    <div class="ns">decide no console</div>
+  </div>
+
+  <svg class="edges" viewBox="0 0 1700 700">
+    <defs>
+      <marker id="a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#374151"/></marker>
+    </defs>
+    <!-- app para API Gateway -->
+    <path d="M97,222 H193" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- API Gateway para Lambda decisão -->
+    <path d="M237,222 H373" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- Lambda decisão para DynamoDB features (leitura) -->
+    <path d="M373,210 H320 V340 H340" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- Lambda decisão para SageMaker -->
+    <path d="M417,222 H530" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- Lambda decisão para Kinesis -->
+    <path d="M417,234 H460 V422 H553" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- Kinesis para Lambda features -->
+    <path d="M597,400 V360 H780 V180 H853" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- Lambda features para DynamoDB features (escrita) -->
+    <path d="M897,202 H1020" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- Kinesis para Lambda alerta -->
+    <path d="M597,422 H853" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- Lambda alerta para SNS -->
+    <path d="M897,422 H1053" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <!-- SNS para Analista -->
+    <path d="M1097,422 H1283" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+  </svg>
+  <div class="badge" style="left:135px;top:212px">1</div>
+  <div class="badge" style="left:295px;top:212px">2</div>
+  <div class="badge" style="left:310px;top:265px">3</div>
+  <div class="badge" style="left:463px;top:212px">4</div>
+  <div class="badge" style="left:450px;top:318px">5</div>
+  <div class="badge" style="left:770px;top:260px">6</div>
+  <div class="badge" style="left:948px;top:192px">7</div>
+  <div class="badge" style="left:715px;top:412px">8</div>
+  <div class="badge" style="left:965px;top:412px">9</div>
+  <div class="badge" style="left:1180px;top:412px">10</div>
+
+</div>
+
+<div class="passos">
+  <div class="ptitle">Passos</div>
+  <div class="pitem"><div class="pb">1</div><div>O <b>app</b> chama <code>POST /transferencias</code> no <b>API Gateway</b> com o token da sessão.</div></div>
+  <div class="pitem"><div class="pb">2</div><div>O <b>API Gateway</b> invoca a <b>Lambda decisão</b> de forma síncrona.</div></div>
+  <div class="pitem"><div class="pb">3</div><div>A <b>Lambda</b> lê as features da conta e do destinatário no <b>DynamoDB features</b> (valor médio dos últimos 30 dias, quantidade de destinatários novos em 24 horas, idade da chave de destino).</div></div>
+  <div class="pitem"><div class="pb">4</div><div>A <b>Lambda</b> chama o <b>SageMaker endpoint</b> com o vetor de features e recebe um score de 0 a 1.</div></div>
+  <div class="pitem"><div class="pb">5</div><div>Pela faixa do score, a <b>Lambda</b> devolve ao app <code>aprovar</code>, <code>revisar</code> ou <code>bloquear</code> e publica o evento <code>decisao registrada v1</code> no <b>Kinesis Data Streams</b>, com o id da conta como partition key.</div></div>
+  <div class="pitem"><div class="pb">6</div><div>A <b>Lambda features</b> consome o stream e recalcula os agregados da conta.</div></div>
+  <div class="pitem"><div class="pb">7</div><div>Os agregados atualizados voltam para o <b>DynamoDB features</b> e valem para a próxima transferência.</div></div>
+  <div class="pitem"><div class="pb">8</div><div>A <b>Lambda alerta</b> consome o mesmo stream e filtra as decisões <code>revisar</code> e <code>bloquear</code>.</div></div>
+  <div class="pitem"><div class="pb">9</div><div>A <b>Lambda alerta</b> publica no tópico <b>SNS</b> de casos para análise.</div></div>
+  <div class="pitem"><div class="pb">10</div><div>O <b>analista de prevenção</b> recebe o caso pela assinatura do tópico e decide no console interno.</div></div>
+</div>
+</div>
+
+<div class="foot">Diagramas &nbsp;·&nbsp; Poster de arquitetura AWS &nbsp;·&nbsp; 2026-11</div>
+</div>
+</body>
+</html>

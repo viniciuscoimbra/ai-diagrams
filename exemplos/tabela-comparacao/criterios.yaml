@@ -1,0 +1,32 @@
+# Banco para o extrato do cliente
+decisao: onde guardar os lançamentos que alimentam a tela de extrato do app
+contexto:
+  volume: 2,5 milhões de lançamentos novos por dia; 1,1 bilhão retidos (5 anos)
+  padrao_de_acesso: 95% das leituras são "últimos 90 dias de uma conta", paginado por data; filtro por tipo de lançamento em 4% das leituras
+  pico: 3.000 leituras por segundo às segundas-feiras de manhã
+  escrita: o lançamento chega por evento, já com id único; nunca é alterado depois de gravado
+  consistencia: o cliente precisa ver o lançamento em até 2 segundos depois do evento
+  time: dois engenheiros de dados com experiência em PostgreSQL; nenhum em MongoDB
+
+opcoes:
+  - Aurora PostgreSQL
+  - DynamoDB
+  - DocumentDB
+
+criterios:
+  - nome: Modelo de dados
+    pergunta: como o lançamento e a consulta por conta e data se encaixam
+  - nome: Padrão de acesso
+    pergunta: a consulta principal sai de um índice sem custo extra?
+  - nome: Volume e crescimento
+    pergunta: o que acontece com 1,1 bilhão de linhas e crescimento de 2,5 milhões por dia
+  - nome: Consistência
+    pergunta: leitura logo após a escrita, dentro de 2 segundos
+  - nome: Custo de base
+    pergunta: o que cobra mesmo sem tráfego (forma, não valor)
+  - nome: Operação
+    pergunta: o que o time precisa operar no dia a dia
+
+restricoes:
+  - custo entra como forma; o valor vem da calculadora com o volume medido
+  - a escolha precisa dizer a condição para rever

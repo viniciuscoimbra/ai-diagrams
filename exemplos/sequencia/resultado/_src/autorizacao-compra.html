@@ -1,0 +1,128 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>Autorização de compra no cartão de débito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/*ESTILO*/</style></head><body>
+<div class="page">
+
+  <div class="hdr"><span>Prosa · Autorização de compra</span><span>V1 · Sequência</span></div>
+
+  <div class="kicker"><span class="sq">■</span> Diagrama de sequência</div>
+  <h1>Autorização de compra no cartão de débito</h1>
+  <div class="sub">Caminho desde o terminal da loja até a resposta de aprovação ou recusa. A bandeira roteia a mensagem ISO 8583; o autorizador valida, consulta o antifraude e, conforme o score, bloqueia saldo no ledger ou recusa por suspeita. Só compra aprovada gera notificação.</div>
+
+  <div class="canvas" style="width:1179px;height:1064px">
+      <div class="painel cab" style="left:0px;top:0;width:168px;height:104px">
+        <div class="ptag">ator</div>
+        <div class="cabrow"><div><div class="pt">Terminal</div><div class="nsub">POS ou e-commerce</div></div></div>
+      </div>
+      <div class="vida" style="left:78px;top:104px;height:952px"></div>
+      <div class="painel cab externo" style="left:196px;top:0;width:168px;height:104px">
+        <div class="ptag">externo</div>
+        <div class="cabrow"><div><div class="pt">Bandeira</div><div class="nsub">Rede de pagamento</div></div></div>
+      </div>
+      <div class="vida" style="left:274px;top:104px;height:952px"></div>
+      <div class="painel cab" style="left:393px;top:0;width:168px;height:104px">
+        <div class="ptag">serviço</div>
+        <div class="cabrow"><div><div class="pt">Autorizador</div><div class="nsub">ECS Fargate</div></div></div>
+      </div>
+      <div class="vida" style="left:471px;top:104px;height:952px"></div>
+      <div class="painel cab" style="left:615px;top:0;width:168px;height:104px">
+        <div class="ptag">serviço</div>
+        <div class="cabrow"><div><div class="pt">Antifraude</div><div class="nsub">SageMaker</div></div></div>
+      </div>
+      <div class="vida" style="left:693px;top:104px;height:952px"></div>
+      <div class="painel cab" style="left:815px;top:0;width:168px;height:104px">
+        <div class="ptag">banco</div>
+        <div class="cabrow"><div><div class="pt">Ledger</div><div class="nsub">Aurora PostgreSQL</div></div></div>
+      </div>
+      <div class="vida" style="left:893px;top:104px;height:952px"></div>
+      <div class="painel cab" style="left:1011px;top:0;width:168px;height:104px">
+        <div class="ptag">fila</div>
+        <div class="cabrow"><div><div class="pt">Notificações</div><div class="nsub">Fila SQS</div></div></div>
+      </div>
+      <div class="vida" style="left:1089px;top:104px;height:952px"></div>
+      <div class="frame" style="left:250px;top:502px;width:679px;height:262px">
+        <div class="flabel seq" style="left:46px">alt · com saldo</div>
+        <div class="ramo" style="top:132px"><span class="rlabel" style="left:46px">sem saldo</span></div>
+      </div>
+      <div class="frame" style="left:236px;top:408px;width:707px;height:460px">
+        <div class="flabel seq" style="left:60px">alt · score &lt; 0,85</div>
+        <div class="ramo" style="top:376px"><span class="rlabel" style="left:60px">score ≥ 0,85</span></div>
+      </div>
+      <div class="frame" style="left:433px;top:942px;width:706px;height:84px">
+        <div class="flabel seq" style="left:60px">opt · compra aprovada</div>
+      </div>
+      <div class="ativ" style="left:693px;top:328px;height:54px"></div>
+      <div class="ativ" style="left:893px;top:468px;height:102px"></div>
+      <div class="ativ" style="left:471px;top:210px;height:406px"></div>
+      <div class="ativ" style="left:893px;top:628px;height:74px"></div>
+      <div class="ativ" style="left:471px;top:628px;height:120px"></div>
+      <div class="ativ" style="left:471px;top:778px;height:74px"></div>
+      <div class="ativ" style="left:274px;top:164px;height:752px"></div>
+      <div class="badge" style="left:94px;top:158px">1</div>
+      <div class="mlabel" style="left:122px;top:134px;width:54px">compra</div>
+      <div class="mlabel" style="left:296px;top:186px;width:38px"><code>0100</code></div>
+      <div class="badge" style="left:537px;top:263px">2</div>
+      <div class="mlabel" style="left:567px;top:263px;width:110px">valida cartão</div>
+      <div class="badge" style="left:493px;top:322px">3</div>
+      <div class="mlabel" style="left:521px;top:298px;width:118px">consulta score</div>
+      <div class="mlabel dir" style="left:573px;top:350px;width:110px">score (0 a 1)</div>
+      <div class="badge" style="left:493px;top:462px">4</div>
+      <div class="mlabel" style="left:521px;top:438px;width:142px">bloqueio do valor</div>
+      <div class="mlabel dir" style="left:725px;top:538px;width:158px">bloqueio confirmado</div>
+      <div class="badge" style="left:441px;top:602px">5</div>
+      <div class="mlabel dir" style="left:315px;top:578px;width:118px"><code>0110</code> código <code>00</code></div>
+      <div class="mlabel dir" style="left:733px;top:670px;width:150px">saldo insuficiente</div>
+      <div class="badge" style="left:441px;top:734px">6</div>
+      <div class="mlabel dir" style="left:315px;top:710px;width:118px"><code>0110</code> código <code>51</code></div>
+      <div class="badge" style="left:441px;top:838px">7</div>
+      <div class="mlabel dir" style="left:315px;top:814px;width:118px"><code>0110</code> código <code>59</code></div>
+      <div class="badge" style="left:244px;top:902px">8</div>
+      <div class="mlabel dir" style="left:166px;top:878px;width:70px">resposta</div>
+      <div class="badge" style="left:487px;top:996px">9</div>
+      <div class="mlabel" style="left:515px;top:972px;width:126px"><code>compra.aprovada</code></div>
+      <svg class="edges" viewBox="0 0 1179 1064">
+        <defs><marker id="s" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" fill="#374151"/></marker>
+        <marker id="a" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto">
+          <path d="M1,1 L8.5,5 L1,9" fill="none" stroke="#374151" stroke-width="1.5"/></marker></defs>
+        <path d="M84,168 H274" stroke="#374151" stroke-width="1.6" fill="none" marker-end="url(#s)"/>
+        <path d="M286,214 H471" stroke="#374151" stroke-width="1.6" fill="none" marker-end="url(#s)"/>
+        <path d="M483,260 H523 V286 H483" stroke="#374151" stroke-width="1.6" fill="none" marker-end="url(#s)"/>
+        <path d="M483,332 H693" stroke="#374151" stroke-width="1.6" fill="none" marker-end="url(#s)"/>
+        <path d="M693,378 H483" stroke="#374151" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#a)"/>
+        <path d="M483,472 H893" stroke="#374151" stroke-width="1.6" fill="none" marker-end="url(#s)"/>
+        <path d="M893,566 H483" stroke="#374151" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#a)"/>
+        <path d="M471,612 H286" stroke="#374151" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#a)"/>
+        <path d="M893,698 H483" stroke="#374151" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#a)"/>
+        <path d="M471,744 H286" stroke="#374151" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#a)"/>
+        <path d="M471,848 H286" stroke="#374151" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#a)"/>
+        <path d="M274,912 H84" stroke="#374151" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#a)"/>
+        <path d="M477,1006 H1095" stroke="#374151" stroke-width="1.6" fill="none" marker-end="url(#a)"/>
+      </svg>
+  </div>
+
+  <div class="sec">Passos</div>
+  <div class="passos-seq">
+    <div class="ps-item"><div class="badge">1</div><div class="pd">Terminal envia a compra; bandeira roteia a mensagem ISO 8583 <code>0100</code> para o autorizador</div></div>
+    <div class="ps-item"><div class="badge">2</div><div class="pd">Autorizador valida situação do cartão, validade e criptograma sem chamar ninguém</div></div>
+    <div class="ps-item"><div class="badge">3</div><div class="pd">Autorizador chama o antifraude e espera o score; tempo máximo 120 ms, sem resposta segue como score 0,5</div></div>
+    <div class="ps-item"><div class="badge">4</div><div class="pd">Autorizador pede bloqueio do valor; ledger confere saldo e grava bloqueio e linha da outbox na mesma transação</div></div>
+    <div class="ps-item"><div class="badge">5</div><div class="pd">Com saldo, resposta <code>0110</code> com código <code>00</code> (aprovada)</div></div>
+    <div class="ps-item"><div class="badge">6</div><div class="pd">Sem saldo, resposta <code>0110</code> com código <code>51</code> (saldo insuficiente), nada é bloqueado</div></div>
+    <div class="ps-item"><div class="badge">7</div><div class="pd">Score a partir de 0,85: resposta <code>0110</code> com código <code>59</code> (suspeita de fraude), sem consultar ledger</div></div>
+    <div class="ps-item"><div class="badge">8</div><div class="pd">Bandeira responde ao terminal em todos os casos</div></div>
+    <div class="ps-item"><div class="badge">9</div><div class="pd">Só na compra aprovada, autorizador publica evento na fila de notificações, sem esperar resposta; cliente recebe push</div></div>
+  </div>
+  <div class="sec">Notação</div>
+  <div class="notacao"><div class="nt"><div class="lin"></div>chamada síncrona</div><div class="nt"><div class="lin aberta"></div>mensagem assíncrona</div><div class="nt"><div class="lin trac aberta"></div>resposta</div><div class="nt"><div class="ativ-mini"></div>barra de ativação: o participante está processando</div></div>
+  <div class="faixa">
+    <div class="f1">Captura e liquidação (arquivo do adquirente no dia seguinte), estorno e compra parcelada ficam fora do escopo</div>
+  </div>
+
+  <div class="foot"><span>Prosa</span><span>Diagrama de sequência · 2026-11</span></div>
+
+</div>
+</body></html>

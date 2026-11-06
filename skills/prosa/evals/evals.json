@@ -1,0 +1,113 @@
+{
+ "skill_name": "prosa",
+ "evals": [
+  {
+   "id": 0,
+   "prompt": "Poster do fluxo de recebimento de pagamento instantâneo a partir de descrição em prosa (API Gateway, Lambda, Step Functions, Aurora, CDC, MSK).",
+   "expected_output": "Poster no padrão: fonte HTML, HTML final self-contained e PNG; lint zero; setas ortogonais; moldura editorial.",
+   "files": [],
+   "assertions": [
+    "PNG do diagrama gerado (>50KB)",
+    "HTML final self-contained: ícones em base64, sem aws:// pendente",
+    "Pelo menos 3 ícones oficiais AWS embutidos",
+    "Moldura editorial do padrão (hdr, kicker, passos, foot)",
+    "Setas ortogonais (sem diagonal nem curva)",
+    "Lint geométrico com zero pendências",
+    "Caixas sólidas sem sobreposição"
+   ]
+  },
+  {
+   "id": 1,
+   "prompt": "Transformar um documento de decisão de onboarding digital em poster (fluxo, passos numerados e PNG).",
+   "expected_output": "Poster no padrão: fonte HTML, HTML final self-contained e PNG; lint zero; setas ortogonais; moldura editorial.",
+   "files": [],
+   "assertions": [
+    "PNG do diagrama gerado (>50KB)",
+    "HTML final self-contained: ícones em base64, sem aws:// pendente",
+    "Pelo menos 3 ícones oficiais AWS embutidos",
+    "Moldura editorial do padrão (hdr, kicker, passos, foot)",
+    "Setas ortogonais (sem diagonal nem curva)",
+    "Lint geométrico com zero pendências",
+    "Caixas sólidas sem sobreposição"
+   ]
+  },
+  {
+   "id": 2,
+   "prompt": "Auditar e corrigir um poster com defeitos plantados: setas soltas, seta diagonal, chips sobrepostos, badge fora da linha.",
+   "expected_output": "Poster corrigido: lint zero e PNG auditado.",
+   "files": [],
+   "assertions": [
+    "PNG do diagrama gerado (>50KB)",
+    "HTML final self-contained: ícones em base64, sem aws:// pendente",
+    "Pelo menos 3 ícones oficiais AWS embutidos",
+    "Moldura editorial do padrão (hdr, kicker, passos, foot)",
+    "Setas ortogonais (sem diagonal nem curva)",
+    "Lint geométrico com zero pendências",
+    "Caixas sólidas sem sobreposição"
+   ]
+  },
+  {
+   "id": 3,
+   "prompt": "DER do schema de pagamentos a partir de uma lista de tabelas e colunas em prosa.",
+   "expected_output": "modelo.json, layout do schema, fonte gerado e PNG; lint zero.",
+   "files": [],
+   "assertions": [
+    "PNG do DER gerado (>50KB)",
+    "Toda tabela do schema aparece no desenho ou na faixa de domínio",
+    "Notação pé de galinha: FK obrigatória com ponta 'um', opcional com 'zero ou um'",
+    "Cabeçalho de cada tabela na cor candy do tipo, com nome e descrição",
+    "Legenda fixa entre o subtítulo e o desenho",
+    "Lint geométrico com zero pendências"
+   ]
+  },
+  {
+   "id": 4,
+   "prompt": "Fluxo em raias da abertura de conta entre cliente, onboarding, risco e operações.",
+   "expected_output": "JSON de raias, HTML gerado e PNG; conceitual.py com lint 0.",
+   "files": [],
+   "assertions": [
+    "Tipo escolhido: raias, não poster nem BPMN",
+    "PNG gerado",
+    "Uma raia por ator e uma coluna por fase",
+    "Setas ortogonais pelo corredor entre fases",
+    "conceitual.py com lint 0"
+   ]
+  },
+  {
+   "id": 5,
+   "prompt": "Faz um BPMN do processo de contestação de pagamento.",
+   "expected_output": "Modelo JSON, .bpmn, viewer e PNG; gate do gerar_bpmn.py em 0.",
+   "files": [],
+   "assertions": [
+    "Tipo escolhido: BPMN",
+    "Arquivo .bpmn importa no bpmn-js sem aviso",
+    "Toda decisão com ramos rotulados",
+    "Todo caminho termina num endEvent",
+    "PNG gerado"
+   ]
+  },
+  {
+   "id": 6,
+   "prompt": "Tabela comparando SQS, Kinesis e MSK para eventos entre domínios.",
+   "expected_output": "Página com table.comp e PNG; lint 0.",
+   "files": [],
+   "assertions": [
+    "Tipo escolhido: tabela de comparação",
+    "Critério na linha, opção na coluna",
+    "Linha de escolha com condição para rever",
+    "PNG gerado",
+    "Lint 0"
+   ]
+  },
+  {
+   "id": 7,
+   "prompt": "Desenha o fluxo de onboarding.",
+   "expected_output": "A skill pergunta se é fluxo técnico com passos, raias entre times ou BPMN antes de desenhar.",
+   "files": [],
+   "assertions": [
+    "Pergunta antes de desenhar",
+    "Oferece as opções com uma frase sobre cada"
+   ]
+  }
+ ]
+}
