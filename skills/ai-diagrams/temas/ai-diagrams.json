@@ -1,0 +1,57 @@
+{
+  "versao_schema": 1,
+  "nome": "ai-diagrams",
+  "empresa": "",
+  "logo": null,
+  "cores": {
+    "tinta": "#111827",
+    "apoio": "#374151",
+    "cinza": "#6B7280",
+    "zona": "#F3F4F6",
+    "papel": "#FFFFFF",
+    "acento": "#14B8A6",
+    "risco": "#B42318",
+    "risco_fundo": "#FEF3F2"
+  },
+  "cores_derivadas": {
+    "acento_forte": "#0F766E",
+    "cinza_claro": "#D1D5DB",
+    "c4_pessoa_tipo": "#9CA3AF",
+    "c4_pessoa_desc": "#E5E7EB",
+    "c4_externo": "#E9EBEF",
+    "c4_limite": "#F9FAFB"
+  },
+  "paleta_der": {
+    "der_borda": "#CBD5E1",
+    "der_legenda": "#F9FAFB",
+    "der_linha_par": "#F8FAFC",
+    "der_chave": "#A16207",
+    "der_dominio": "#15803D",
+    "der_fora": "#1D4ED8",
+    "der_copia": "#7E22CE",
+    "der_forte": "#FCA5A5",
+    "der_dependente": "#99F6E4",
+    "der_associativa": "#C7D2FE",
+    "der_controle": "#DDD6FE",
+    "der_fato": "#FED7AA",
+    "der_versionada": "#FEF08A",
+    "der_projecao": "#BBF7D0",
+    "der_trilha": "#E5E7EB",
+    "der_dominio_fundo": "#D9F99D",
+    "der_configuracao": "#BAE6FD",
+    "der_referencia": "#FDE68A",
+    "der_visao": "#FBCFE8",
+    "der_calor": "#FF8CB4"
+  },
+  "fontes": {
+    "texto": "IBM Plex Sans",
+    "mono": "IBM Plex Mono"
+  },
+  "moldura": {
+    "cabecalho": "{assunto} · {cliente}",
+    "rodape": "{tipo} · {data}",
+    "rodape_direita": "",
+    "classificacao": "",
+    "mostrar_cliente": true
+  }
+}

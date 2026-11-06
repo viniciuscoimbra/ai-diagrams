@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NN · nome do bloco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*ESTILO*/
+/* estilos locais deste poster entram aqui (variações de chip, cores de estado), sempre com var(--token): cor literal reprova com COR-FORA-DO-TEMA */
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>Projeto · Tema do diagrama</span><span>NN · Nome · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Categoria do diagrama</div>
+<h1>Nome técnico do fluxo ou do sistema</h1>
+<div class="sub">Subtítulo factual em duas ou três frases: o que o diagrama mostra e o estado medido, com números quando houver.</div>
+
+<div class="wrap">
+<div class="canvas" style="height:520px">
+
+  <!-- moldura AWS -->
+  <div class="frame awscloud" style="left:250px;top:10px;width:870px;height:430px">
+    <div class="flabel"><img src="aws://aws.png">AWS Cloud</div>
+  </div>
+  <div class="frame account" style="left:280px;top:50px;width:810px;height:360px">
+    <div class="flabel">Conta do domínio</div>
+  </div>
+
+  <!-- zona de agrupamento -->
+  <div class="frame zone" style="left:310px;top:100px;width:340px;height:270px">
+    <div class="flabel">Processamento</div>
+  </div>
+
+  <!-- origem externa -->
+  <div class="node" style="left:60px;top:170px">
+    <img src="aws://general/office-building.png">
+    <div class="nl">Sistema de origem</div>
+    <div class="ns">fora da AWS</div>
+  </div>
+
+  <!-- serviços: node (ícone grande) e svc (compacto) -->
+  <div class="node" style="left:360px;top:170px">
+    <img src="aws://network/api-gateway.png">
+    <div class="nl">API Gateway</div>
+    <div class="ns">borda do domínio</div>
+  </div>
+  <div class="node" style="left:520px;top:170px">
+    <img src="aws://compute/lambda.png">
+    <div class="nl">Lambda</div>
+    <div class="ns">valida e grava</div>
+  </div>
+  <div class="svc" style="left:350px;top:300px;width:260px;height:44px">
+    <img src="aws://database/aurora.png">
+    <div class="ot">Aurora PostgreSQL</div>
+    <div class="os">estado autoritativo do domínio</div>
+  </div>
+
+  <!-- conceito sem ícone -->
+  <div class="chip" style="left:730px;top:160px;width:200px">tópico público · contrato .v1</div>
+
+  <!-- bloco vizinho -->
+  <div class="bchip" style="left:730px;top:290px;width:200px">
+    <div class="bn">Bloco 01</div>
+    <div class="bt">Barramento de eventos</div>
+    <div class="bs">consome o tópico público</div>
+  </div>
+
+  <!-- setas: ortogonais (H/V), ponta encosta na caixa de destino -->
+  <svg class="edges" viewBox="0 0 1140 520">
+    <defs>
+      <marker id="a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" style="fill:var(--apoio)"/></marker>
+    </defs>
+    <path d="M137,192 H393" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+    <path d="M437,192 H553" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+    <path d="M597,192 H630 V312 H610" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+    <path d="M610,334 H660 V180 H730" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+  </svg>
+  <!-- badge: o centro fica sobre a linha da própria seta -->
+  <div class="badge" style="left:255px;top:182px">1</div>
+  <div class="badge" style="left:485px;top:182px">2</div>
+  <div class="badge" style="left:650px;top:250px">3</div>
+
+</div>
+
+<div class="passos">
+  <div class="ptitle">Passos</div>
+  <div class="pitem"><div class="pb">1</div><div>O <b>sistema de origem</b> chega pela borda do domínio; a frase explica o que acontece e por quê.</div></div>
+  <div class="pitem"><div class="pb">2</div><div>A <b>Lambda</b> valida o payload e grava no Aurora, o estado autoritativo do domínio.</div></div>
+  <div class="pitem"><div class="pb">3</div><div>A gravação publica no <b>tópico público</b> como contrato versionado; quem consome é o barramento de eventos.</div></div>
+</div>
+</div>
+
+<div class="foot">Autor · Empresa &nbsp;·&nbsp; layout manual, anatomia decidida à mão &nbsp;·&nbsp; AAAA-MM</div>
+</div>
+</body>
+</html>

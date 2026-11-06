@@ -1,0 +1,114 @@
+/* Tokens do tema. Valores iguais aos de temas/ai-diagrams.json (scripts/conferir_tema.py confere); fora deste bloco, cor só por var(--…). */
+:root{
+  --tinta:#111827; --apoio:#374151; --cinza:#6B7280; --zona:#F3F4F6; --papel:#FFFFFF;
+  --acento:#14B8A6; --acento-forte:#0F766E; --risco:#B42318; --risco-fundo:#FEF3F2;
+  --cinza-claro:#D1D5DB;
+  /* a mesma cor em canais, para transparência: color-mix arredonda diferente de rgba() e muda pixel */
+  --apoio-rgb:55,65,81;
+  /* C4 */
+  --c4-pessoa-tipo:#9CA3AF; --c4-pessoa-desc:#E5E7EB; --c4-externo:#E9EBEF; --c4-limite:#F9FAFB;
+  /* DER: moldura, papéis das colunas e cor por tipo de tabela (paleta fixa, fora do tema da marca) */
+  --der-borda:#CBD5E1; --der-legenda:#F9FAFB; --der-linha-par:#F8FAFC;
+  --der-chave:#A16207; --der-dominio:#15803D; --der-fora:#1D4ED8; --der-copia:#7E22CE;
+  --der-forte:#FCA5A5; --der-dependente:#99F6E4; --der-associativa:#C7D2FE; --der-controle:#DDD6FE;
+  --der-fato:#FED7AA; --der-versionada:#FEF08A; --der-projecao:#BBF7D0; --der-trilha:#E5E7EB;
+  --der-dominio-fundo:#D9F99D; --der-configuracao:#BAE6FD; --der-referencia:#FDE68A; --der-visao:#FBCFE8;
+  --der-calor-rgb:255,140,180;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IBM Plex Sans',Arial,sans-serif;background:var(--papel);color:var(--tinta);width:1760px}
+.page{padding:36px 48px 28px}
+.hdr{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--apoio);font-weight:500;text-transform:uppercase}
+.kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;font-weight:500;text-transform:uppercase;color:var(--cinza);margin-top:26px}
+.kicker .sq{color:var(--acento)}
+h1{font-size:38px;font-weight:600;letter-spacing:-.025em;line-height:1.05;margin-top:10px}
+.sub{font-size:15px;color:var(--apoio);margin-top:10px;max-width:900px;line-height:1.5}
+.wrap{display:flex;gap:40px;margin-top:34px;align-items:flex-start}
+.canvas{position:relative;width:1140px;height:700px;flex:none}
+.frame{position:absolute}
+.flabel{position:absolute;top:7px;left:12px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;font-weight:600;text-transform:uppercase;color:var(--apoio);white-space:nowrap}
+.awscloud{border:1.6px solid var(--tinta);background:var(--papel)}
+.awscloud>.flabel{display:flex;align-items:center;gap:7px;color:var(--tinta)}
+.awscloud>.flabel img{width:17px;height:17px}
+.region{border:1.4px dashed var(--apoio)}
+.account{border:1px dashed var(--cinza);background:var(--papel)}
+.zone{border:1px solid rgba(var(--apoio-rgb),.22);background:var(--zona)}
+.zone>.flabel{color:var(--cinza)}
+.ext{border:1.5px solid var(--risco);background:var(--risco-fundo)}
+.ext>.flabel{color:var(--risco)}
+.node{position:absolute;width:110px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.node img{width:44px;height:44px}
+.node .nl{margin-top:6px;font-size:11px;font-weight:600;line-height:1.25;color:var(--tinta)}
+.node .ns{font-size:9.5px;color:var(--cinza);line-height:1.3;margin-top:2px}
+.bchip{position:absolute;background:var(--papel);border:1px solid var(--apoio);border-left:4px solid var(--tinta);padding:7px 12px}
+.bchip .bn{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--cinza)}
+.bchip .bt{font-size:11.5px;font-weight:600;line-height:1.2;margin-top:2px}
+.bchip .bs{font-size:9px;color:var(--cinza);margin-top:2px;line-height:1.25}
+svg.edges{position:absolute;inset:0;pointer-events:none}
+.badge{position:absolute;width:20px;height:20px;background:var(--tinta);color:var(--papel);font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.elabel{position:absolute;font-size:10px;color:var(--cinza);line-height:1.25}
+.passos{flex:1;min-width:0}
+.ptitle{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;font-weight:600;text-transform:uppercase;border-bottom:2px solid var(--tinta);padding-bottom:8px}
+.pitem{display:flex;gap:12px;margin-top:14px;font-size:13px;line-height:1.5;color:var(--tinta)}
+.pitem .pb{flex:none;width:22px;height:22px;background:var(--tinta);color:var(--papel);font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.pitem b{font-weight:600}
+.sec{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;font-weight:600;text-transform:uppercase;margin:40px 0 4px;border-top:1px solid rgba(var(--apoio-rgb),.15);padding-top:22px}
+table.comp{width:100%;table-layout:fixed;border-collapse:collapse;font-size:12.5px;margin-top:10px}
+table.comp th{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--cinza);font-weight:500;padding:6px 10px;border-bottom:2px solid var(--tinta);overflow-wrap:anywhere}
+table.comp td{padding:8px 10px;border-bottom:1px solid rgba(var(--apoio-rgb),.15);vertical-align:top;line-height:1.45;overflow-wrap:anywhere}
+/* layout fixo: a tabela nunca passa da largura da página; a primeira coluna tem largura própria e as outras dividem o resto */
+table.comp th:first-child,table.comp td:first-child{width:220px}
+table.comp td:first-child{font-weight:600}
+.foot{margin-top:34px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--cinza)}
+/* chips de tópico */
+.chip{position:absolute;height:32px;border:1px solid var(--cinza);background:var(--papel);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600}
+.chip.red{border-color:var(--risco);background:var(--risco-fundo);color:var(--risco)}
+
+/* motor plugável open source: capacidade genérica + implementação, com selo */
+.oss{position:absolute;border:1.5px solid var(--tinta);background:var(--papel);text-align:left;padding:7px 10px 7px 44px;line-height:1.25;display:flex;flex-direction:column;justify-content:center}
+.oss img{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:28px;height:28px}
+.oss .ot{font-size:11px;font-weight:700}
+.oss .os{font-size:8.5px;color:var(--cinza);font-weight:400}
+.oss .tag{position:absolute;top:-9px;right:6px;background:var(--acento);color:var(--tinta);font-family:'IBM Plex Mono',monospace;font-size:7.5px;font-weight:600;padding:1px 5px;letter-spacing:.08em}
+/* serviço AWS em formato compacto, com ícone */
+.svc{position:absolute;border:1px solid var(--cinza);background:var(--papel);text-align:left;padding:6px 8px 6px 40px;line-height:1.25;display:flex;flex-direction:column;justify-content:center}
+.svc img{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:24px;height:24px}
+.svc .ot{font-size:10.5px;font-weight:700}
+.svc .os{font-size:8.5px;color:var(--cinza);font-weight:400}
+
+/* passos abaixo do desenho: canvas usa a largura inteira */
+.wrap.stack{display:block}
+.wrap.stack .canvas{width:1700px}
+.wrap.stack .passos{width:auto;max-width:1700px;columns:3;column-gap:36px;margin-top:26px}
+.wrap.stack .passos .pitem{break-inside:avoid;margin-top:0;padding-top:14px}
+.wrap.stack .passos .ptitle{column-span:all}
+
+/* C4: elementos */
+.bchip.c4{border:1.4px solid var(--tinta);border-left:1.4px solid var(--tinta);border-radius:6px;padding:12px 14px;background:var(--papel)}
+.bchip.c4 .bn{font-size:9px}
+.bchip.c4 .bt{font-size:13px;margin-top:4px}
+.bchip.c4 .bs{font-size:10px;color:var(--apoio);margin-top:5px;line-height:1.35}
+.bchip.c4 img{position:absolute;top:10px;right:10px;width:22px;height:22px}
+.bchip.c4.pessoa{background:var(--tinta);border-color:var(--tinta);border-radius:30px;padding:12px 22px}
+.bchip.c4.pessoa .bn{color:var(--c4-pessoa-tipo)}
+.bchip.c4.pessoa .bt{color:var(--papel)}
+.bchip.c4.pessoa .bs{color:var(--c4-pessoa-desc)}
+.bchip.c4.banco{border-radius:120px/18px;padding-top:18px}
+.bchip.c4.externo{background:var(--c4-externo);border:1.4px dashed var(--cinza)}
+.bchip.c4.externo .bt{color:var(--apoio)}
+.frame.limite{border:1.6px dashed var(--tinta);border-radius:8px;background:var(--c4-limite)}
+.frame.limite>.flabel{top:auto;bottom:9px;color:var(--tinta)}
+.elabel.tec{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--apoio);background:var(--papel);padding:0 2px}
+/* C4: legenda */
+.c4leg{display:flex;flex-wrap:wrap;gap:14px 30px;margin-top:14px;font-size:12.5px;color:var(--apoio);align-items:center}
+.c4leg .it{display:flex;align-items:center;gap:9px}
+.c4leg .sw{width:44px;height:24px;border:1.4px solid var(--tinta);border-radius:4px;background:var(--papel);flex:none}
+.c4leg .sw.pessoa{background:var(--tinta);border-radius:12px}
+.c4leg .sw.banco{border-radius:22px/6px}
+.c4leg .sw.externo{background:var(--c4-externo);border-style:dashed;border-color:var(--cinza)}
+.c4leg .sw.limite{border-style:dashed;background:var(--c4-limite)}
+.c4leg .seta{display:flex;align-items:center;gap:6px}
+.c4leg .seta i{display:block;width:40px;height:1.6px;background:var(--apoio);position:relative}
+.c4leg .seta i:after{content:"";position:absolute;right:-1px;top:-4px;border-left:8px solid var(--apoio);border-top:4.8px solid transparent;border-bottom:4.8px solid transparent}
+.c4leg .seta b{width:18px;height:18px;background:var(--tinta);color:var(--papel);font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.c4leg code{font-family:'IBM Plex Mono',monospace;font-size:11px}

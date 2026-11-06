@@ -1,0 +1,87 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>10 · Situação do Pix de saída</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/*ESTILO*/</style></head><body>
+<div class="page">
+
+  <div class="hdr"><span>ai-diagrams · Modelos de diagrama · Fintech de exemplo</span><span>10 · Máquina de estados</span></div>
+
+  <div class="kicker"><span class="sq">■</span> Máquina de estados</div>
+  <h1>Pix de saída: situação da transferência</h1>
+  <div class="sub">Cada caixa é uma situação gravada no ledger; cada seta é o evento que muda a situação. Liquidada ainda aceita devolução até o prazo acabar; os estados com borda dupla não mudam mais.</div>
+
+  <div class="canvas" style="width:969px;height:1708px">
+      <div class="painel ini" style="left:721px;top:20px;width:22px;height:22px"></div>
+      <div class="painel estado" style="left:630px;top:114px;width:204px;height:66px"><div class="ptag">estado</div><div class="pt">Recebida</div></div>
+      <div class="painel estado" style="left:506px;top:364px;width:204px;height:90px"><div class="ptag">estado</div><div class="pt">Em análise</div><div class="ps">antifraude</div></div>
+      <div class="painel estado final" style="left:732px;top:658px;width:204px;height:66px"><div class="ptag">final</div><div class="pt">Recusada</div></div>
+      <div class="painel estado" style="left:472px;top:658px;width:204px;height:90px"><div class="ptag">estado</div><div class="pt">Debitada</div><div class="ps">débito e outbox</div></div>
+      <div class="painel estado" style="left:472px;top:912px;width:204px;height:66px"><div class="ptag">estado</div><div class="pt">Enviada ao SPI</div></div>
+      <div class="painel estado" style="left:472px;top:1142px;width:204px;height:66px"><div class="ptag">estado</div><div class="pt">Em processamento</div></div>
+      <div class="painel estado" style="left:294px;top:1372px;width:204px;height:66px"><div class="ptag">estado</div><div class="pt">Liquidada</div></div>
+      <div class="painel estado" style="left:596px;top:1372px;width:204px;height:66px"><div class="ptag">estado</div><div class="pt">Rejeitada</div></div>
+      <div class="painel estado final" style="left:596px;top:1622px;width:204px;height:66px"><div class="ptag">final</div><div class="pt">Estornada</div></div>
+      <div class="painel estado final" style="left:68px;top:1622px;width:204px;height:66px"><div class="ptag">final</div><div class="pt">Devolvida</div></div>
+      <div class="painel estado final" style="left:328px;top:1622px;width:204px;height:66px"><div class="ptag">final</div><div class="pt">Encerrada</div></div>
+      <div class="mlabel tlabel" style="left:434px;top:252px;width:168px"><span class="ev">chave e limite ok</span><br><span class="ac">/ chama o antifraude</span></div>
+      <div class="mlabel tlabel" style="left:773px;top:399px;width:176px"><span class="ev">chave ou limite falha</span></div>
+      <div class="mlabel tlabel" style="left:671px;top:536px;width:64px"><span class="ev">score</span><br><span class="gd">[≥ 0,8]</span></div>
+      <div class="mlabel tlabel" style="left:376px;top:526px;width:192px"><span class="ev">score</span><br><span class="gd">[&lt; 0,8]</span><br><span class="ac">/ grava débito e outbox</span></div>
+      <div class="mlabel tlabel" style="left:432px;top:820px;width:136px"><span class="ev"><code>pacs.008</code> enviado</span></div>
+      <div class="mlabel tlabel" style="left:169px;top:1165px;width:112px"><span class="ev"><code>pacs.002</code> ACSP</span></div>
+      <div class="mlabel tlabel" style="left:739px;top:1165px;width:112px"><span class="ev"><code>pacs.002</code> RJCT</span></div>
+      <div class="mlabel tlabel" style="left:424px;top:1050px;width:144px"><span class="ev">10 s sem resposta</span></div>
+      <div class="mlabel tlabel dir" style="left:316px;top:1155px;width:112px"><span class="ev">consulta ICOM</span><br><span class="gd">[vazio]</span></div>
+      <div class="mlabel tlabel" style="left:312px;top:1280px;width:112px"><span class="ev"><code>pacs.002</code> ACSP</span></div>
+      <div class="mlabel tlabel" style="left:490px;top:1280px;width:112px"><span class="ev"><code>pacs.002</code> RJCT</span></div>
+      <div class="mlabel tlabel" style="left:532px;top:1510px;width:160px"><span class="ev">estorno gravado</span><br><span class="ac">/ credita o pagador</span></div>
+      <div class="mlabel tlabel" style="left:20px;top:1520px;width:144px"><span class="ev"><code>pacs.004</code> recebido</span></div>
+      <div class="mlabel tlabel" style="left:224px;top:1520px;width:200px"><span class="ev">prazo de devolução acaba</span></div>
+      <svg class="edges" viewBox="0 0 969 1708">
+        <defs><marker id="s" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--apoio)"/></marker></defs>
+        <path d="M732,42 L732,114" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M698,180 L698,204 L608,204 L608,364" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M766,180 L766,610 L868,610 L868,658" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M642,454 L642,478 L741,478 L741,632 L800,632 L800,658" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M574,454 L574,658" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M574,748 L574,912" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M523,978 L523,1002 L287,1002 L287,1324 L362,1324 L362,1372" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M625,978 L625,1002 L732,1002 L732,1372" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M574,978 L574,1142" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M472,1160 L438,1160 L438,1190 L472,1190" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M540,1208 L540,1232 L430,1232 L430,1372" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M608,1208 L608,1324 L664,1324 L664,1372" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M698,1438 L698,1622" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M362,1438 L362,1462 L170,1462 L170,1622" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M430,1438 L430,1622" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+      </svg>
+  </div>
+
+  <div class="sec">Estados</div>
+  <div class="passos-seq estados-leg">
+    <div class="ps-item"><div class="pd"><b>Recebida</b> o pedido chegou com <code>idempotency-key</code>; nada foi debitado.</div></div>
+    <div class="ps-item"><div class="pd"><b>Em análise</b> aguarda o score do antifraude, até 150 ms.</div></div>
+    <div class="ps-item"><div class="pd"><b>Recusada</b> chave inválida, limite excedido ou score alto. Sem débito.</div></div>
+    <div class="ps-item"><div class="pd"><b>Debitada</b> débito e evento gravados no mesmo commit.</div></div>
+    <div class="ps-item"><div class="pd"><b>Enviada ao SPI</b> <code>pacs.008</code> entregue ao ICOM; aguarda o <code>pacs.002</code>.</div></div>
+    <div class="ps-item"><div class="pd"><b>Em processamento</b> sem resposta do SPI em 10 s; o serviço consulta o ICOM até ter resposta.</div></div>
+    <div class="ps-item"><div class="pd"><b>Liquidada</b> o recebedor tem o valor; ainda cabe devolução.</div></div>
+    <div class="ps-item"><div class="pd"><b>Rejeitada</b> o SPI recusou; o valor volta para a conta.</div></div>
+    <div class="ps-item"><div class="pd"><b>Estornada</b> crédito de volta gravado na conta do pagador.</div></div>
+    <div class="ps-item"><div class="pd"><b>Devolvida</b> o recebedor devolveu o valor com <code>pacs.004</code>.</div></div>
+    <div class="ps-item"><div class="pd"><b>Encerrada</b> o prazo de devolução acabou.</div></div>
+  </div>
+  <div class="sec">Notação</div>
+  <div class="notacao wrap"><div class="nt"><div class="ini-mini"></div>estado inicial</div><div class="nt"><div class="est-mini"></div>estado</div><div class="nt"><div class="est-mini final"></div>estado final: não tem saída</div><div class="nt"><span class="nt-rot"><span class="ev">evento</span> <span class="gd">[guarda]</span> <span class="ac">/ ação</span></span>a transição acontece no evento, se a guarda vale, e executa a ação</div></div>
+  <div class="faixa">
+    <div class="f1">Débito só existe a partir de Debitada; Recusada nunca tem débito.</div>
+    <div class="f2">Pix agendado e Pix Saque ficam fora deste desenho.</div>
+  </div>
+
+  <div class="foot"><span>ai-diagrams</span><span>Modelo de máquina de estados · 2026-11</span></div>
+
+</div>
+</body></html>

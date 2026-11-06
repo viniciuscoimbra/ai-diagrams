@@ -5,20 +5,20 @@
 # Rode de novo depois de cada git pull: a cópia antiga é apagada e substituída.
 set -euo pipefail
 R="$(cd "$(dirname "$0")/.." && pwd)"
-SK="$R/skills/prosa"
+SK="$R/skills/ai-diagrams"
 [ $# -eq 1 ] || { sed -n '2,5p' "$0"; exit 1; }
 
 if [ "$1" = "--global" ]; then
-  DEST="$HOME/.kiro/skills/prosa"
+  DEST="$HOME/.kiro/skills/ai-diagrams"
 else
   mkdir -p "$1"
   P="$(cd "$1" && pwd)"
-  DEST="$P/.kiro/skills/prosa"
+  DEST="$P/.kiro/skills/ai-diagrams"
   mkdir -p "$P/.kiro/steering" "$P/.kiro/agents"
-  cp "$R/kiro/steering/prosa.md" "$P/.kiro/steering/prosa.md"
-  cp "$R/kiro/agents/prosa.json" "$P/.kiro/agents/prosa.json"
-  echo "steering: $P/.kiro/steering/prosa.md"
-  echo "agente:   $P/.kiro/agents/prosa.json"
+  cp "$R/kiro/steering/ai-diagrams.md" "$P/.kiro/steering/ai-diagrams.md"
+  cp "$R/kiro/agents/ai-diagrams.json" "$P/.kiro/agents/ai-diagrams.json"
+  echo "steering: $P/.kiro/steering/ai-diagrams.md"
+  echo "agente:   $P/.kiro/agents/ai-diagrams.json"
 fi
 
 [ -L "$DEST" ] && rm "$DEST"
@@ -26,4 +26,4 @@ rm -rf "$DEST"
 mkdir -p "$(dirname "$DEST")"
 cp -RL "$SK" "$DEST"
 echo "skill:    $DEST"
-echo "modelos:  $(ls "$DEST/modelos" | grep -c -E '^0[1-9]-') de 9"
+echo "modelos:  $(ls "$DEST/modelos" | grep -c -E '^(0[1-9]|1[01])-') de 11"

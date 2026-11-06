@@ -1,10 +1,16 @@
-# Prosa
+# ai-diagrams
+
+[![License: MIT](https://img.shields.io/github/license/viniciuscoimbra/ai-diagrams)](LICENSE)
+[![Last commit](https://img.shields.io/github/last-commit/viniciuscoimbra/ai-diagrams)](https://github.com/viniciuscoimbra/ai-diagrams/commits)
+![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB)
+![Node 18+](https://img.shields.io/badge/node-18%2B-339933)
+![Works with: Claude Code | Codex CLI | Kiro CLI](https://img.shields.io/badge/works%20with-Claude%20Code%20%7C%20Codex%20CLI%20%7C%20Kiro%20CLI-14B8A6)
 
 **Descreva em palavras. Receba um diagrama que passa na revisão.**
 
 [English](README.md) · [Español](README.es.md)
 
-Prosa é uma skill para CLIs de IA (Claude Code, Codex CLI, Kiro CLI). Você descreve o diagrama em linguagem natural, ou aponta um documento, um DDL ou a descrição de um processo, e a IA escreve o fonte do diagrama, roda um gate geométrico e gera o PNG. O gate reprova:
+ai-diagrams é uma skill para CLIs de IA (Claude Code, Codex CLI, Kiro CLI). Você descreve o diagrama em linguagem natural, ou aponta um documento, um DDL ou a descrição de um processo, e a IA escreve o fonte do diagrama, roda um gate geométrico e gera o PNG. O gate reprova:
 - texto sobreposto;
 - seta solta ou atravessando caixa;
 - badge fora da seta;
@@ -28,6 +34,8 @@ O fonte fica no seu repositório, em texto, e qualquer pessoa edita e gera o PNG
 | Catálogo em cards | "Catálogo em cards das APIs da plataforma, com dono e contrato." | [prompt e resultado](exemplos/catalogo-cards/) |
 | DER por schema | "DER do schema de cobrança a partir deste DDL." | [prompt e resultado](exemplos/der-schema/) |
 | Matriz de dependência entre schemas | "Matriz de dependência entre os schemas deste DDL." | [prompt e resultado](exemplos/matriz-dependencia/) |
+| Máquina de estados | "Máquina de estados do ciclo de vida do cartão de débito: solicitado, em emissão, em trânsito, ativo, bloqueado, cancelado." | [prompt e resultado](exemplos/maquina-estados/) |
+| C4 de contêineres | "C4 de contêineres do sistema de cobrança por boleto, com o banco e o ERP de fora." | [prompt e resultado](exemplos/c4/) |
 
 ![Poster de arquitetura AWS](exemplos/arquitetura-aws/resultado/antifraude-transferencias.png)
 
@@ -37,7 +45,7 @@ O fonte fica no seu repositório, em texto, e qualquer pessoa edita e gera o PNG
 |---|---|---|
 | Python 3.9 ou mais novo | gate e PNG | `python3 --version` |
 | Pacote `diagrams` | ícones oficiais da AWS | `python3 -c "import diagrams"` |
-| Node 18 ou mais novo | DER e matriz | `node --version` |
+| Node 18 ou mais novo | DER, matriz e máquina de estados | `node --version` |
 | Google Chrome | gera o PNG (headless) | `ls "/Applications/Google Chrome.app"` |
 | uma CLI de IA | Claude Code, Codex CLI ou Kiro CLI | `claude --version`, `codex --version` ou `kiro-cli --version` |
 
@@ -46,23 +54,23 @@ Instale os ícones com `pip3 install diagrams`. Se o Chrome estiver em outro lug
 ## Instalação
 
 ```bash
-git clone https://github.com/viniciuscoimbra/prosa.git
+git clone https://github.com/viniciuscoimbra/ai-diagrams.git
 ```
 
 ```bash
-export PROSA="$PWD/prosa"
+export AI_DIAGRAMS="$PWD/ai-diagrams"
 ```
 
 **Claude Code**
 
 ```bash
-mkdir -p ~/.claude/skills && ln -s "$PROSA"/skills/prosa ~/.claude/skills/prosa
+mkdir -p ~/.claude/skills && ln -s "$AI_DIAGRAMS"/skills/ai-diagrams ~/.claude/skills/ai-diagrams
 ```
 
 **Codex CLI**
 
 ```bash
-mkdir -p ~/.codex/skills && ln -s "$PROSA"/skills/prosa ~/.codex/skills/prosa
+mkdir -p ~/.codex/skills && ln -s "$AI_DIAGRAMS"/skills/ai-diagrams ~/.codex/skills/ai-diagrams
 ```
 
 Rode o Codex com `codex --sandbox danger-full-access`. O sandbox padrão bloqueia o Chrome headless, e sem ele o gate não roda.
@@ -70,19 +78,19 @@ Rode o Codex com `codex --sandbox danger-full-access`. O sandbox padrão bloquei
 **Kiro CLI**
 
 ```bash
-bash "$PROSA"/ferramentas/instalar-kiro.sh /caminho/do/seu/projeto
+bash "$AI_DIAGRAMS"/ferramentas/instalar-kiro.sh /caminho/do/seu/projeto
 ```
 
-Depois, dentro do projeto, rode `kiro-cli chat --agent prosa`.
+Depois, dentro do projeto, rode `kiro-cli chat --agent ai-diagrams`.
 
 O passo a passo completo está em [docs/install.md](docs/install.md), em inglês. Ele inclui o uso sem CLI (Projetos do Claude.ai, ChatGPT).
 
 ## Como pedir
 
-Comece o pedido com "Use a skill prosa", para a IA não responder em texto:
+Comece o pedido com "Use a skill ai-diagrams", para a IA não responder em texto:
 
 ```text
-Use a skill prosa. Leia docs/decisao-antifraude.md e faça o poster de arquitetura AWS
+Use a skill ai-diagrams. Leia docs/decisao-antifraude.md e faça o poster de arquitetura AWS
 do antifraude em tempo real, com passos numerados.
 ```
 
@@ -90,8 +98,8 @@ A IA escolhe o tipo e pergunta antes de desenhar quando o pedido é ambíguo. De
 
 ## Modelos
 
-A qualidade do desenho depende do modelo. Modelo fraco erra coordenadas, gasta mais voltas do gate e pode não zerar. Use um modelo de linha principal. O resultado medido neste repositório está em [docs/models.md](docs/models.md).
+A qualidade do desenho depende do modelo. Modelo fraco erra coordenadas, gasta mais voltas do gate e pode não zerar. Use um modelo de linha principal. A tabela tipo de diagrama × modelo, só com o que foi medido, está em [docs/models.md](docs/models.md). Em resumo: no Claude Code, o Sonnet 4.5 passou no gate nos oito tipos originais; o C4 reprovou três vezes no Sonnet 4.5 e passou no Opus 5.5. No Kiro CLI só parte dos tipos foi medida, e o Codex CLI não foi medido neste repositório.
 
 ## Licença
 
-MIT, ver [LICENSE](LICENSE). As partes de terceiros, que são os ícones AWS, o bpmn-js e as fontes IBM Plex, seguem os próprios termos, listados no [README em inglês](README.md#license).
+MIT, ver [LICENSE](LICENSE). As partes de terceiros, que são os ícones AWS, o bpmn-js, o elkjs e as fontes IBM Plex, seguem os próprios termos, listados no [README em inglês](README.md#license).

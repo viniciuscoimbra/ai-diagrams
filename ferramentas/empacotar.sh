@@ -1,33 +1,33 @@
 #!/usr/bin/env bash
 # Monta os pacotes de upload em dist/:
-#   prosa-skill.zip  skill para enviar no Claude.ai (pasta com SKILL.md na raiz do zip)
-#   prosa-kb.zip     knowledge base para Projeto do Claude ou do ChatGPT, Custom GPT ou Bedrock
+#   ai-diagrams-skill.zip  skill para enviar no Claude.ai (pasta com SKILL.md na raiz do zip)
+#   ai-diagrams-kb.zip     knowledge base para Projeto do Claude ou do ChatGPT, Custom GPT ou Bedrock
 # Uso: bash ferramentas/empacotar.sh   (de qualquer pasta)
 set -euo pipefail
 R="$(cd "$(dirname "$0")/.." && pwd)"
-SK="$R/skills/prosa"
+SK="$R/skills/ai-diagrams"
 D="$R/dist"
 rm -rf "$D" && mkdir -p "$D/skill" "$D/kb"
 
 # 1. Skill para o Claude.ai: description de no máximo 200 caracteres.
-cp -R "$SK" "$D/skill/prosa"
-python3 - "$D/skill/prosa/SKILL.md" <<'PY'
+cp -R "$SK" "$D/skill/ai-diagrams"
+python3 - "$D/skill/ai-diagrams/SKILL.md" <<'PY'
 import re, sys
 p = sys.argv[1]; t = open(p).read()
-curta = ('Diagramas técnicos com gate: poster AWS, fluxo, raias, sequência, BPMN, '
-         'tabela de comparação, cards, DER e matriz. Use ao pedir diagrama, fluxo, '
+curta = ('Diagramas técnicos com gate: poster AWS, C4, fluxo, raias, sequência, estados, '
+         'BPMN, tabela, cards, DER e matriz. Use ao pedir diagrama, fluxo, '
          'processo, comparação ou modelo de dados.')
 assert len(curta) <= 200, len(curta)
 t = re.sub(r'^description: .*$', 'description: ' + curta, t, count=1, flags=re.M)
 open(p, 'w').write(t)
 PY
-(cd "$D/skill" && zip -qr "$D/prosa-skill.zip" diagramas)
+(cd "$D/skill" && zip -qr "$D/ai-diagrams-skill.zip" ai-diagrams)
 
 # 2. Knowledge base: só texto e fontes, sem o bundle do bpmn-js e sem PNG.
 cp "$R/kb/INSTRUCOES.md" "$D/kb/00-INSTRUCOES.md"
 cp "$SK/SKILL.md" "$D/kb/01-roteador-SKILL.md"
 n=2
-for f in linguagem-visual tabela raias bpmn der sequencia; do
+for f in linguagem-visual tabela raias bpmn der sequencia estados c4; do
   cp "$SK/references/$f.md" "$D/kb/$(printf '%02d' $n)-ref-$f.md"; n=$((n+1))
 done
 cp "$SK/assets/estilo.css" "$D/kb/10-estilo.css"
@@ -42,7 +42,9 @@ cp "$SK/modelos/06-raias/_src/"*.json "$D/kb/25-modelo-raias.json"
 cp "$SK/modelos/07-catalogo-cards/_src/"*.html "$D/kb/26-modelo-cards.html"
 cp "$SK/modelos/08-bpmn/_src/"*.json "$D/kb/27-modelo-bpmn.json"
 cp "$SK/modelos/09-sequencia/_src/"*.json "$D/kb/28-modelo-sequencia.json"
-(cd "$D/kb" && zip -qr "$D/prosa-kb.zip" .)
+cp "$SK/modelos/10-maquina-estados/_src/"*.json "$D/kb/29-modelo-estados.json"
+cp "$SK/modelos/11-c4/_src/"*.html "$D/kb/30-modelo-c4.html"
+(cd "$D/kb" && zip -qr "$D/ai-diagrams-kb.zip" .)
 
 ls -la "$D"/*.zip
 echo "arquivos na KB: $(ls "$D/kb" | wc -l | tr -d ' ')"

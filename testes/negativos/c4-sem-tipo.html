@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>11 · C4 do sistema Pix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*ESTILO*/
+/* C4: elementos */
+.bchip.c4{border:1.4px solid var(--tinta);border-left:1.4px solid var(--tinta);border-radius:6px;padding:12px 14px;background:var(--papel)}
+.bchip.c4 .bn{font-size:9px}
+.bchip.c4 .bt{font-size:13px;margin-top:4px}
+.bchip.c4 .bs{font-size:10px;color:var(--apoio);margin-top:5px;line-height:1.35}
+.bchip.c4 img{position:absolute;top:10px;right:10px;width:22px;height:22px}
+.bchip.c4.pessoa{background:var(--tinta);border-color:var(--tinta);border-radius:30px;padding:12px 22px}
+.bchip.c4.pessoa .bn{color:var(--c4-pessoa-tipo)}
+.bchip.c4.pessoa .bt{color:var(--papel)}
+.bchip.c4.pessoa .bs{color:var(--c4-pessoa-desc)}
+.bchip.c4.banco{border-radius:120px/18px;padding-top:18px}
+.bchip.c4.externo{background:var(--c4-externo);border:1.4px dashed var(--cinza)}
+.bchip.c4.externo .bt{color:var(--apoio)}
+.frame.limite{border:1.6px dashed var(--tinta);border-radius:8px;background:var(--c4-limite)}
+.frame.limite>.flabel{top:auto;bottom:9px;color:var(--tinta)}
+.elabel.tec{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--apoio);background:var(--papel);padding:0 2px}
+/* C4: legenda */
+.c4leg{display:flex;flex-wrap:wrap;gap:14px 30px;margin-top:14px;font-size:12.5px;color:var(--apoio);align-items:center}
+.c4leg .it{display:flex;align-items:center;gap:9px}
+.c4leg .sw{width:44px;height:24px;border:1.4px solid var(--tinta);border-radius:4px;background:var(--papel);flex:none}
+.c4leg .sw.pessoa{background:var(--tinta);border-radius:12px}
+.c4leg .sw.banco{border-radius:22px/6px}
+.c4leg .sw.externo{background:var(--c4-externo);border-style:dashed;border-color:var(--cinza)}
+.c4leg .sw.limite{border-style:dashed;background:var(--c4-limite)}
+.c4leg .seta{display:flex;align-items:center;gap:6px}
+.c4leg .seta i{display:block;width:40px;height:1.6px;background:var(--apoio);position:relative}
+.c4leg .seta i:after{content:"";position:absolute;right:-1px;top:-4px;border-left:8px solid var(--apoio);border-top:4.8px solid transparent;border-bottom:4.8px solid transparent}
+.c4leg .seta b{width:18px;height:18px;background:var(--tinta);color:var(--papel);font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.c4leg code{font-family:'IBM Plex Mono',monospace;font-size:11px}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>ai-diagrams · Modelos de diagrama · Fintech de exemplo</span><span>11 · C4 contêineres · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · nível 2, contêineres</div>
+<h1>Sistema Pix: contêineres e dependências</h1>
+<div class="sub">Quem usa o sistema Pix, em que contêineres ele se divide e de que sistemas ele depende. Cada seta é uma relação numerada, com a tecnologia escrita ao lado; o que cada uma faz está em "Relações", abaixo do desenho.</div>
+
+<div class="wrap stack">
+<div class="canvas" style="height:900px">
+
+  <div class="frame limite" style="left:40px;top:150px;width:1120px;height:610px">
+    <div class="flabel">Sistema Pix · sistema em foco</div>
+  </div>
+
+  <!-- pessoas -->
+  <div class="bchip c4 pessoa" style="left:100px;top:10px;width:260px;height:96px">
+    <div class="bn">pessoa</div>
+    <div class="bt">Cliente</div>
+    <div class="bs">correntista que envia Pix pelo app</div>
+  </div>
+  <div class="bchip c4 pessoa" style="left:820px;top:10px;width:260px;height:96px">
+    <div class="bn">pessoa</div>
+    <div class="bt">Analista de operações</div>
+    <div class="bs">acompanha e devolve transferências</div>
+  </div>
+
+  <!-- contêineres -->
+  <div class="bchip c4" style="left:100px;top:200px;width:260px;height:96px">
+    <img src="aws://general/mobile-client.png">
+    <div class="bn">contêiner · iOS e Android</div>
+    <div class="bt">App do cliente</div>
+    <div class="bs">tela de envio, comprovante e extrato</div>
+  </div>
+  <div class="bchip c4" style="left:820px;top:200px;width:260px;height:96px">
+    <img src="aws://general/client.png">
+    <div class="bn">contêiner · React</div>
+    <div class="bt">Backoffice web</div>
+    <div class="bs">consulta, devolução e bloqueio</div>
+  </div>
+  <div class="bchip c4" style="left:460px;top:400px;width:260px;height:110px">
+    <img src="aws://compute/fargate.png">
+    <div class="bt">API Pix</div>
+    <div class="bs">valida chave e limite, pede o score e grava o pedido com a outbox</div>
+  </div>
+  <div class="bchip c4 banco" style="left:460px;top:620px;width:260px;height:100px">
+    <img src="aws://database/aurora.png" style="top:16px">
+    <div class="bn">contêiner · Aurora PostgreSQL</div>
+    <div class="bt">Banco Pix</div>
+    <div class="bs">pedidos, situação e outbox</div>
+  </div>
+  <div class="bchip c4" style="left:820px;top:620px;width:260px;height:100px">
+    <img src="aws://compute/fargate.png">
+    <div class="bn">contêiner · Kotlin no Fargate</div>
+    <div class="bt">Worker de liquidação</div>
+    <div class="bs">lê a outbox, debita e envia ao SPI</div>
+  </div>
+
+  <!-- sistemas externos -->
+  <div class="bchip c4 externo" style="left:1300px;top:340px;width:300px;height:96px">
+    <div class="bn">sistema externo · Banco Central</div>
+    <div class="bt">DICT</div>
+    <div class="bs">diretório de chaves Pix</div>
+  </div>
+  <div class="bchip c4 externo" style="left:1300px;top:470px;width:300px;height:96px">
+    <div class="bn">sistema externo · outro time</div>
+    <div class="bt">Antifraude</div>
+    <div class="bs">devolve um score de 0 a 1</div>
+  </div>
+  <div class="bchip c4 externo" style="left:1300px;top:610px;width:300px;height:96px">
+    <div class="bn">sistema externo · Banco Central</div>
+    <div class="bt">SPI · ICOM</div>
+    <div class="bs">liquida a transferência</div>
+  </div>
+  <div class="bchip c4 externo" style="left:1300px;top:780px;width:300px;height:96px">
+    <div class="bn">sistema externo · outro time</div>
+    <div class="bt">Core bancário</div>
+    <div class="bs">saldo e lançamento na conta</div>
+  </div>
+
+  <svg class="edges" viewBox="0 0 1700 900">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--apoio)"/></marker></defs>
+          <path d="M230,106 V200" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M230,296 V455 H460" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M950,106 V200" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M820,248 H640 V400" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M720,420 H1300" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M720,495 H1300" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M590,510 V620" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M820,670 H720" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M1080,658 H1300" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M1000,720 V828 H1300" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+  </svg>
+
+  <div class="badge" style="left:220px;top:118px">1</div>
+  <div class="elabel tec" style="left:246px;top:121px">toque no app</div>
+  <div class="badge" style="left:330px;top:445px">2</div>
+  <div class="elabel tec" style="left:250px;top:420px">HTTPS · JSON</div>
+  <div class="badge" style="left:940px;top:118px">3</div>
+  <div class="elabel tec" style="left:966px;top:121px">navegador</div>
+  <div class="badge" style="left:700px;top:238px">4</div>
+  <div class="elabel tec" style="left:654px;top:330px">HTTPS · JSON</div>
+  <div class="badge" style="left:1000px;top:410px">5</div>
+  <div class="elabel tec" style="left:1026px;top:400px">HTTPS · mTLS</div>
+  <div class="badge" style="left:1000px;top:485px">6</div>
+  <div class="elabel tec" style="left:1026px;top:475px">HTTPS · 150 ms</div>
+  <div class="badge" style="left:580px;top:555px">7</div>
+  <div class="elabel tec" style="left:606px;top:558px">SQL · uma transação</div>
+  <div class="badge" style="left:760px;top:660px">8</div>
+  <div class="elabel tec" style="left:732px;top:690px">SQL</div>
+  <div class="badge" style="left:1180px;top:648px">9</div>
+  <div class="elabel tec" style="left:1210px;top:632px">ICOM · mTLS</div>
+  <div class="badge" style="left:1180px;top:818px">10</div>
+  <div class="elabel tec" style="left:1210px;top:838px">gRPC</div>
+
+</div>
+
+<div class="passos">
+  <div class="ptitle">Relações</div>
+  <div class="pitem"><div class="pb">1</div><div><b>Cliente → App.</b> Informa chave e valor e confirma com a senha.</div></div>
+  <div class="pitem"><div class="pb">2</div><div><b>App → API Pix.</b> Envia o pedido com <code>idempotency-key</code>; recebe a situação.</div></div>
+  <div class="pitem"><div class="pb">3</div><div><b>Analista → Backoffice.</b> Consulta transferências e pede devolução.</div></div>
+  <div class="pitem"><div class="pb">4</div><div><b>Backoffice → API Pix.</b> Usa a mesma API, com o papel de operador.</div></div>
+  <div class="pitem"><div class="pb">5</div><div><b>API Pix → DICT.</b> Resolve a chave para conta e banco do recebedor.</div></div>
+  <div class="pitem"><div class="pb">6</div><div><b>API Pix → Antifraude.</b> Pede o score; sem resposta em 150 ms, segue como 0,5.</div></div>
+  <div class="pitem"><div class="pb">7</div><div><b>API Pix → Banco Pix.</b> Grava o pedido e a linha da outbox no mesmo commit.</div></div>
+  <div class="pitem"><div class="pb">8</div><div><b>Worker → Banco Pix.</b> Lê a outbox e atualiza a situação do pedido.</div></div>
+  <div class="pitem"><div class="pb">9</div><div><b>Worker → SPI.</b> Envia o <code>pacs.008</code> e recebe o <code>pacs.002</code>.</div></div>
+  <div class="pitem"><div class="pb">10</div><div><b>Worker → Core bancário.</b> Debita a conta antes do envio; estorna se o SPI rejeitar.</div></div>
+</div>
+</div>
+
+<div class="sec">Legenda C4</div>
+<div class="c4leg">
+  <div class="it"><div class="sw pessoa"></div>pessoa</div>
+  <div class="it"><div class="sw limite"></div>limite do sistema em foco</div>
+  <div class="it"><div class="sw"></div>contêiner: aplicação ou serviço que roda sozinho</div>
+  <div class="it"><div class="sw banco"></div>contêiner de dados</div>
+  <div class="it"><div class="sw externo"></div>sistema externo</div>
+  <div class="it seta"><i></i><b>1</b>relação, com a tecnologia ao lado</div>
+</div>
+
+<div class="foot">ai-diagrams · Modelo C4 · 2026-11</div>
+</div>
+</body>
+</html>

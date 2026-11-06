@@ -1,0 +1,39 @@
+{
+  "titulo_pagina": "10 · Situação do Pix de saída",
+  "cabecalho": ["ai-diagrams · Modelos de diagrama · Fintech de exemplo", "10 · Máquina de estados"],
+  "kicker": "Máquina de estados",
+  "h1": "Pix de saída: situação da transferência",
+  "sub": "Cada caixa é uma situação gravada no ledger; cada seta é o evento que muda a situação. Liquidada ainda aceita devolução até o prazo acabar; os estados com borda dupla não mudam mais.",
+  "inicial": "recebida",
+  "estados": [
+    {"id": "recebida", "nome": "Recebida", "desc": "o pedido chegou com `idempotency-key`; nada foi debitado."},
+    {"id": "analise", "nome": "Em análise", "sub": "antifraude", "desc": "aguarda o score do antifraude, até 150 ms."},
+    {"id": "recusada", "nome": "Recusada", "final": true, "desc": "chave inválida, limite excedido ou score alto. Sem débito."},
+    {"id": "debitada", "nome": "Debitada", "sub": "débito e outbox", "desc": "débito e evento gravados no mesmo commit."},
+    {"id": "enviada", "nome": "Enviada ao SPI", "desc": "`pacs.008` entregue ao ICOM; aguarda o `pacs.002`."},
+    {"id": "processamento", "nome": "Em processamento", "desc": "sem resposta do SPI em 10 s; o serviço consulta o ICOM até ter resposta."},
+    {"id": "liquidada", "nome": "Liquidada", "desc": "o recebedor tem o valor; ainda cabe devolução."},
+    {"id": "rejeitada", "nome": "Rejeitada", "desc": "o SPI recusou; o valor volta para a conta."},
+    {"id": "estornada", "nome": "Estornada", "final": true, "desc": "crédito de volta gravado na conta do pagador."},
+    {"id": "devolvida", "nome": "Devolvida", "final": true, "desc": "o recebedor devolveu o valor com `pacs.004`."},
+    {"id": "encerrada", "nome": "Encerrada", "final": true, "desc": "o prazo de devolução acabou."}
+  ],
+  "transicoes": [
+    {"de": "recebida", "para": "analise", "evento": "chave e limite ok", "acao": "chama o antifraude"},
+    {"de": "recebida", "para": "recusada", "evento": "chave ou limite falha"},
+    {"de": "analise", "para": "recusada", "evento": "score", "guarda": "≥ 0,8"},
+    {"de": "analise", "para": "debitada", "evento": "score", "guarda": "< 0,8", "acao": "grava débito e outbox"},
+    {"de": "debitada", "para": "enviada", "evento": "`pacs.008` enviado"},
+    {"de": "enviada", "para": "liquidada", "evento": "`pacs.002` ACSP"},
+    {"de": "enviada", "para": "rejeitada", "evento": "`pacs.002` RJCT"},
+    {"de": "enviada", "para": "processamento", "evento": "10 s sem resposta"},
+    {"de": "processamento", "para": "processamento", "evento": "consulta ICOM", "guarda": "vazio"},
+    {"de": "processamento", "para": "liquidada", "evento": "`pacs.002` ACSP"},
+    {"de": "processamento", "para": "rejeitada", "evento": "`pacs.002` RJCT"},
+    {"de": "rejeitada", "para": "estornada", "evento": "estorno gravado", "acao": "credita o pagador"},
+    {"de": "liquidada", "para": "devolvida", "evento": "`pacs.004` recebido"},
+    {"de": "liquidada", "para": "encerrada", "evento": "prazo de devolução acaba"}
+  ],
+  "faixa": {"f1": "Débito só existe a partir de Debitada; Recusada nunca tem débito.", "f2": "Pix agendado e Pix Saque ficam fora deste desenho."},
+  "rodape": ["ai-diagrams", "Modelo de máquina de estados · 2026-11"]
+}

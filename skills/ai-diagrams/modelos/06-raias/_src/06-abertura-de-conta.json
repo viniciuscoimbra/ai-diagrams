@@ -1,0 +1,170 @@
+{
+  "titulo_pagina": "06 · Abertura de conta entre os times",
+  "cabecalho": [
+    "ai-diagrams · Modelos de diagrama · Fintech de exemplo",
+    "06 · Raias"
+  ],
+  "kicker": "Fluxo em raias",
+  "h1": "Abertura de conta: do pedido do cliente à conta ativa",
+  "sub": "Quatro atores e cinco fases. A verificação automática tem três saídas: abre a conta direto, manda o caso para risco ou pede documento novo ao cliente.",
+  "raias": [
+    {
+      "nome": "Cliente",
+      "sub": "pelo app"
+    },
+    {
+      "nome": "Onboarding",
+      "sub": "time do produto"
+    },
+    {
+      "nome": "Risco",
+      "sub": "analista de prevenção"
+    },
+    {
+      "nome": "Operações",
+      "sub": ""
+    }
+  ],
+  "fases": [
+    "Pedir",
+    "Verificar",
+    "Analisar",
+    "Abrir",
+    "Avisar"
+  ],
+  "elementos": [
+    {
+      "raia": 0,
+      "fase": 0,
+      "texto": "Enviar documento, selfie e dados cadastrais"
+    },
+    {
+      "raia": 1,
+      "fase": 1,
+      "texto": "Conferir documento e biometria no fornecedor",
+      "chip": "em análise"
+    },
+    {
+      "raia": 0,
+      "fase": 2,
+      "texto": "Enviar documento novo pedido pelo app",
+      "chip": "pendente cliente"
+    },
+    {
+      "raia": 2,
+      "fase": 2,
+      "texto": "Revisar o caso que a regra automática não decidiu",
+      "chip": "pendente risco"
+    },
+    {
+      "raia": 3,
+      "fase": 3,
+      "texto": "Abrir a conta e o limite inicial no core"
+    },
+    {
+      "raia": 1,
+      "fase": 4,
+      "texto": "Avisar o cliente e liberar o primeiro acesso",
+      "chip": "ativa"
+    },
+    {
+      "raia": 0,
+      "fase": 4,
+      "texto": "Receber o aviso e acessar a conta"
+    }
+  ],
+  "sequencia": [
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      0,
+      2
+    ],
+    [
+      1,
+      1,
+      2,
+      2
+    ],
+    [
+      1,
+      1,
+      3,
+      3
+    ],
+    [
+      2,
+      2,
+      3,
+      3
+    ],
+    [
+      3,
+      3,
+      1,
+      4
+    ],
+    [
+      1,
+      4,
+      0,
+      4
+    ]
+  ],
+  "secoes": [
+    {
+      "titulo": "Situação do pedido",
+      "tipo": "passos",
+      "itens": [
+        [
+          "Em análise",
+          "Documento enviado; verificação automática em curso. Prazo de 2 minutos."
+        ],
+        [
+          "Pendente cliente",
+          "Documento ilegível ou vencido; o app pede outro ao cliente."
+        ],
+        [
+          "Pendente risco",
+          "A regra não decidiu; o caso espera um analista. Prazo de 4 horas úteis."
+        ],
+        [
+          "Ativa",
+          "Conta aberta no core e cliente avisado. O pedido fecha aqui."
+        ]
+      ]
+    },
+    {
+      "titulo": "Quem recebe o resultado",
+      "tipo": "destinos",
+      "itens": [
+        [
+          "Cliente",
+          "Acesso à conta e ao limite inicial."
+        ],
+        [
+          "Risco",
+          "Caso decidido entra na base de treino da regra."
+        ],
+        [
+          "Atendimento",
+          "Histórico do pedido para responder dúvidas."
+        ]
+      ]
+    }
+  ],
+  "faixa": {
+    "f1": "A verificação automática decide a maior parte dos pedidos; o analista só vê o que ela não decidiu.",
+    "f2": "Recusa definitiva fica fora deste desenho."
+  },
+  "rodape": [
+    "ai-diagrams",
+    "Modelo de fluxo em raias · 2026-11"
+  ]
+}

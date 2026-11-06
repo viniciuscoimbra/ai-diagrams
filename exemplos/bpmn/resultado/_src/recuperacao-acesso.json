@@ -3,7 +3,7 @@
   "title": "Recuperação de acesso à conta",
   "subtitle": "Do pedido do cliente ao acesso recuperado ou à conta bloqueada. A segurança verifica a identidade por biometria; quando não confirma, a central valida por chamada, e a recusa nessa etapa bloqueia a conta.",
   "cabecalho": [
-    "Prosa · Exemplos de diagrama · Fintech de exemplo",
+    "ai-diagrams · Exemplos de diagrama · Fintech de exemplo",
     "BPMN · V1"
   ],
   "rodape": "Diagramas &nbsp;·&nbsp; exemplo de BPMN &nbsp;·&nbsp; 2026-11",

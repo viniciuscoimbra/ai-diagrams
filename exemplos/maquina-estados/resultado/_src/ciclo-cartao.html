@@ -1,0 +1,75 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>Ciclo de vida do cartão de débito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/*ESTILO*/</style></head><body>
+<div class="page">
+
+  <div class="hdr"><span>ai-diagrams · Ciclo de vida do cartão de débito</span><span>V1 · Máquina de estados</span></div>
+
+  <div class="kicker"><span class="sq">■</span> Máquina de estados</div>
+  <h1>Ciclo de vida do cartão de débito</h1>
+  <div class="sub">Situações do cartão no emissor, da solicitação ao cancelamento. A mudança gera evento e fica gravada na tabela <code>cartao</code>. Caminho feliz: Solicitado, Em emissão, Em trânsito, Aguardando ativação, Ativo.</div>
+
+  <div class="canvas" style="width:1043px;height:1660px">
+      <div class="painel ini" style="left:663px;top:20px;width:22px;height:22px"></div>
+      <div class="painel estado" style="left:572px;top:114px;width:204px;height:66px"><div class="ptag">estado</div><div class="pt">Solicitado</div></div>
+      <div class="painel estado" style="left:538px;top:344px;width:204px;height:66px"><div class="ptag">estado</div><div class="pt">Em emissão</div></div>
+      <div class="painel estado" style="left:538px;top:614px;width:204px;height:66px"><div class="ptag">estado</div><div class="pt">Em trânsito</div></div>
+      <div class="painel estado" style="left:312px;top:864px;width:204px;height:66px"><div class="ptag">estado</div><div class="pt">Aguarda ativação</div></div>
+      <div class="painel estado" style="left:299px;top:1344px;width:204px;height:66px"><div class="ptag">estado</div><div class="pt">Ativo</div></div>
+      <div class="painel estado" style="left:350px;top:1114px;width:204px;height:66px"><div class="ptag">estado</div><div class="pt">Bloqueado</div></div>
+      <div class="painel estado final" style="left:679px;top:1574px;width:204px;height:66px"><div class="ptag">final</div><div class="pt">Cancelado</div></div>
+      <div class="painel estado final" style="left:572px;top:864px;width:204px;height:66px"><div class="ptag">final</div><div class="pt">Extraviado</div></div>
+      <div class="mlabel tlabel" style="left:426px;top:252px;width:208px"><span class="ev">gráfica confirma o pedido</span></div>
+      <div class="mlabel tlabel" style="left:839px;top:877px;width:184px"><span class="ev">recusado na análise de</span><br><span class="ev">cadastro</span></div>
+      <div class="mlabel tlabel" style="left:434px;top:482px;width:200px"><span class="ev">gráfica informa postagem</span><br><span class="ac">/ registra código de</span><br><span class="ac">rastreio</span></div>
+      <div class="mlabel tlabel" style="left:208px;top:762px;width:200px"><span class="ev">Correio confirma entrega</span></div>
+      <div class="mlabel tlabel" style="left:444px;top:752px;width:224px"><span class="ev">devolução ou 30 dias parado</span><br><span class="ac">/ abre novo pedido</span></div>
+      <div class="mlabel tlabel" style="left:20px;top:1117px;width:152px"><span class="ev">cliente ativa</span><br><span class="gd">[4 dígitos + senha</span><br><span class="gd">corretos]</span></div>
+      <div class="mlabel tlabel" style="left:322px;top:1002px;width:120px"><span class="ev">erro de senha</span><br><span class="gd">[3 tentativas]</span></div>
+      <div class="mlabel tlabel" style="left:203px;top:1252px;width:192px"><span class="ev">cliente bloqueia no app</span></div>
+      <div class="mlabel tlabel" style="left:459px;top:1252px;width:216px"><span class="ev">cliente desbloqueia no app</span></div>
+      <div class="mlabel tlabel" style="left:179px;top:1482px;width:216px"><span class="ev">cancelamento ou vencimento</span></div>
+      <div class="mlabel tlabel" style="left:559px;top:1367px;width:216px"><span class="ev">cancelamento ou vencimento</span></div>
+      <svg class="edges" viewBox="0 0 1043 1660">
+        <defs><marker id="s" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--apoio)"/></marker></defs>
+        <path d="M674,42 L674,114" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M640,180 L640,344" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M708,180 L708,204 L832,204 L832,1574" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M640,410 L640,614" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M606,680 L606,704 L414,704 L414,864" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M674,680 L674,864" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M380,930 L380,954 L178,954 L178,1296 L350,1296 L350,1344" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M448,930 L448,1066 L452,1066 L452,1114" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M401,1344 L401,1180" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M452,1180 L452,1344" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M401,1410 L401,1526 L730,1526 L730,1574" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+        <path d="M503,1180 L503,1204 L781,1204 L781,1574" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--apoio)"/>
+      </svg>
+  </div>
+
+  <div class="sec">Estados</div>
+  <div class="passos-seq estados-leg">
+    <div class="ps-item"><div class="pd"><b>Solicitado</b> O cliente pediu o cartão no app. Ainda não há plástico.</div></div>
+    <div class="ps-item"><div class="pd"><b>Em emissão</b> O pedido foi para a gráfica; o número e o criptograma já existem.</div></div>
+    <div class="ps-item"><div class="pd"><b>Em trânsito</b> A gráfica entregou ao Correio, com código de rastreio.</div></div>
+    <div class="ps-item"><div class="pd"><b>Aguarda ativação</b> O cartão chegou ao cliente, mas não aceita compra.</div></div>
+    <div class="ps-item"><div class="pd"><b>Ativo</b> Aceita compra.</div></div>
+    <div class="ps-item"><div class="pd"><b>Bloqueado</b> O cliente bloqueou pelo app. Volta para Ativo quando ele desbloqueia.</div></div>
+    <div class="ps-item"><div class="pd"><b>Cancelado</b> Não volta mais. O número não é reaproveitado.</div></div>
+    <div class="ps-item"><div class="pd"><b>Extraviado</b> O Correio devolveu ou perdeu o envio. Não volta mais; a gráfica emite outro cartão, com outro número.</div></div>
+  </div>
+  <div class="sec">Notação</div>
+  <div class="notacao wrap"><div class="nt"><div class="ini-mini"></div>estado inicial</div><div class="nt"><div class="est-mini"></div>estado</div><div class="nt"><div class="est-mini final"></div>estado final: não tem saída</div><div class="nt"><span class="nt-rot"><span class="ev">evento</span> <span class="gd">[guarda]</span> <span class="ac">/ ação</span></span>a transição acontece no evento, se a guarda vale, e executa a ação</div></div>
+  <div class="faixa">
+    <div class="f1">Errar a senha na ativação não muda a situação; apenas na terceira tentativa errada o cartão passa a Bloqueado.</div>
+    <div class="f2">Fora do escopo: cartão virtual, segunda via por dano e cartão de crédito.</div>
+  </div>
+
+  <div class="foot"><span>ai-diagrams</span><span>Máquina de estados · 2026-11</span></div>
+
+</div>
+</body></html>

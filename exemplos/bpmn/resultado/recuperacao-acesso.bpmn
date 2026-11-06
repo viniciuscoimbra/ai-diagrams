@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<bpmn:definitions xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_recuperacao_acesso" targetNamespace="http://bpmn.io/schema/bpmn" exporter="prosa" exporterVersion="1">
+<bpmn:definitions xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_recuperacao_acesso" targetNamespace="http://bpmn.io/schema/bpmn" exporter="ai-diagrams" exporterVersion="1">
   <bpmn:collaboration id="recuperacao_acesso_collaboration">
     <bpmn:participant id="recuperacao_acesso_pool" name="Recuperação de acesso à conta" processRef="recuperacao_acesso" />
   </bpmn:collaboration>
@@ -135,13 +135,13 @@
       <bpmndi:BPMNShape id="recuperacao_acesso_entrar_di" bpmnElement="recuperacao_acesso_entrar" bioc:fill="#FFFFFF" bioc:stroke="#111827">
         <dc:Bounds x="1330" y="90" width="180" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="recuperacao_acesso_fim_ok_di" bpmnElement="recuperacao_acesso_fim_ok" bioc:fill="#CCFBF1" bioc:stroke="#111827">
+      <bpmndi:BPMNShape id="recuperacao_acesso_fim_ok_di" bpmnElement="recuperacao_acesso_fim_ok" bioc:fill="#D9F99D" bioc:stroke="#111827">
         <dc:Bounds x="1640" y="110" width="40" height="40" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1577" y="158" width="166" height="46" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="recuperacao_acesso_fim_bloqueio_di" bpmnElement="recuperacao_acesso_fim_bloqueio" bioc:fill="#CCFBF1" bioc:stroke="#111827">
+      <bpmndi:BPMNShape id="recuperacao_acesso_fim_bloqueio_di" bpmnElement="recuperacao_acesso_fim_bloqueio" bioc:fill="#D9F99D" bioc:stroke="#111827">
         <dc:Bounds x="1640" y="430" width="40" height="40" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1577" y="478" width="166" height="46" />

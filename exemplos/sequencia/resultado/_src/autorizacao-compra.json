@@ -1,6 +1,6 @@
 {
   "titulo_pagina": "Autorização de compra no cartão de débito",
-  "cabecalho": ["Prosa · Autorização de compra", "V1 · Sequência"],
+  "cabecalho": ["ai-diagrams · Autorização de compra", "V1 · Sequência"],
   "kicker": "Diagrama de sequência",
   "h1": "Autorização de compra no cartão de débito",
   "sub": "Caminho desde o terminal da loja até a resposta de aprovação ou recusa. A bandeira roteia a mensagem ISO 8583; o autorizador valida, consulta o antifraude e, conforme o score, bloqueia saldo no ledger ou recusa por suspeita. Só compra aprovada gera notificação.",
@@ -44,5 +44,5 @@
     ]}
   ],
   "faixa": {"f1": "Captura e liquidação (arquivo do adquirente no dia seguinte), estorno e compra parcelada ficam fora do escopo"},
-  "rodape": ["Prosa", "Diagrama de sequência · 2026-11"]
+  "rodape": ["ai-diagrams", "Diagrama de sequência · 2026-11"]
 }

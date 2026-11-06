@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="page">
-<div class="hdr"><span>Prosa · Antifraude em tempo real de transferências</span><span>01 · Antifraude · V1</span></div>
+<div class="hdr"><span>ai-diagrams · Antifraude em tempo real de transferências</span><span>01 · Antifraude · V1</span></div>
 <div class="kicker"><span class="sq">■</span>&nbsp; Poster de arquitetura AWS</div>
 <h1>Antifraude em tempo real de transferências</h1>
 <div class="sub">Toda transferência iniciada no app passa por decisão de risco antes de sair da conta. A Lambda decisão lê features do DynamoDB, chama o modelo no SageMaker e devolve a decisão em até 300 ms p99. Volume medido: 1,8 milhão de transferências por dia, pico de 120 por segundo.</div>
@@ -102,28 +102,28 @@
 
   <svg class="edges" viewBox="0 0 1700 700">
     <defs>
-      <marker id="a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#374151"/></marker>
+      <marker id="a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" style="fill:var(--apoio)"/></marker>
     </defs>
     <!-- app para API Gateway -->
-    <path d="M97,222 H193" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M97,222 H193" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
     <!-- API Gateway para Lambda decisão -->
-    <path d="M237,222 H373" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M237,222 H373" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
     <!-- Lambda decisão para DynamoDB features (leitura) -->
-    <path d="M373,210 H320 V340 H340" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M373,210 H320 V340 H340" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
     <!-- Lambda decisão para SageMaker -->
-    <path d="M417,222 H530" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M417,222 H530" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
     <!-- Lambda decisão para Kinesis -->
-    <path d="M417,234 H460 V422 H553" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M417,234 H460 V422 H553" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
     <!-- Kinesis para Lambda features -->
-    <path d="M597,400 V360 H780 V180 H853" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M597,400 V360 H780 V180 H853" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
     <!-- Lambda features para DynamoDB features (escrita) -->
-    <path d="M897,202 H1020" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M897,202 H1020" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
     <!-- Kinesis para Lambda alerta -->
-    <path d="M597,422 H853" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M597,422 H853" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
     <!-- Lambda alerta para SNS -->
-    <path d="M897,422 H1053" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M897,422 H1053" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
     <!-- SNS para Analista -->
-    <path d="M1097,422 H1283" fill="none" stroke="#374151" stroke-width="1.6" marker-end="url(#a)"/>
+    <path d="M1097,422 H1283" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--apoio)"/>
   </svg>
   <div class="badge" style="left:135px;top:212px">1</div>
   <div class="badge" style="left:295px;top:212px">2</div>

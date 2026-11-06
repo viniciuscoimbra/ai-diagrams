@@ -6,7 +6,7 @@ dist/
 *.log
 
 # Self-contained HTML built next to each model (icons inlined); the source lives in _src/
-skills/prosa/modelos/*/*.html
+skills/ai-diagrams/modelos/*/*.html
 exemplos/*/resultado/*.html
 
 # Credentials never go into the repository

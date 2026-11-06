@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>C4 do sistema de cobrança por boleto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*ESTILO*/
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>ai-diagrams · Sistema de cobrança por boleto</span><span>C4 contêineres · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · nível 2, contêineres</div>
+<h1>Sistema de cobrança por boleto: contêineres e dependências</h1>
+<div class="sub">Quem usa o sistema de cobrança, em que contêineres ele se divide e de que sistemas ele depende, da emissão do boleto à baixa pelo arquivo de retorno. Cada seta é uma relação numerada, com a tecnologia ao lado; o que cada uma faz está em "Relações". Pix cobrança, protesto e negativação ficam fora do desenho.</div>
+
+<div class="wrap stack">
+<div class="canvas" style="height:1030px">
+
+  <div class="frame limite" style="left:40px;top:150px;width:1120px;height:610px">
+    <div class="flabel">Sistema de cobrança · sistema em foco</div>
+  </div>
+
+  <!-- pessoas -->
+  <div class="bchip c4 pessoa" style="left:100px;top:10px;width:260px;height:96px">
+    <div class="bn">pessoa</div>
+    <div class="bt">Cliente PJ</div>
+    <div class="bs">emite boletos e acompanha os pagamentos</div>
+  </div>
+  <div class="bchip c4 pessoa" style="left:820px;top:10px;width:260px;height:96px">
+    <div class="bn">pessoa</div>
+    <div class="bt">Analista financeiro</div>
+    <div class="bs">trata pagamento em duplicidade e devolução</div>
+  </div>
+
+  <!-- contêineres -->
+  <div class="bchip c4" style="left:100px;top:200px;width:260px;height:96px">
+    <div class="bn">contêiner · Next.js na Vercel</div>
+    <div class="bt">Portal PJ</div>
+    <div class="bs">emissão em lote e painel de recebimentos</div>
+  </div>
+  <div class="bchip c4" style="left:820px;top:200px;width:260px;height:96px">
+    <div class="bn">contêiner · React</div>
+    <div class="bt">Backoffice</div>
+    <div class="bs">consulta e ajuste manual de boletos</div>
+  </div>
+  <div class="bchip c4" style="left:460px;top:400px;width:260px;height:110px">
+    <img src="aws://compute/lambda.png">
+    <div class="bn">contêiner · Node.js em Lambda</div>
+    <div class="bt">API de cobrança</div>
+    <div class="bs">atrás do API Gateway; valida o pagador e grava o boleto</div>
+  </div>
+  <div class="bchip c4 banco" style="left:460px;top:620px;width:260px;height:100px">
+    <img src="aws://database/dynamodb.png" style="top:16px">
+    <div class="bn">contêiner · DynamoDB</div>
+    <div class="bt">Banco de cobrança</div>
+    <div class="bs">boletos, situação e histórico de eventos</div>
+  </div>
+  <div class="bchip c4" style="left:820px;top:620px;width:260px;height:100px">
+    <img src="aws://compute/lambda.png">
+    <div class="bn">contêiner · Lambda e fila SQS</div>
+    <div class="bt">Processador de retorno</div>
+    <div class="bs">lê o arquivo de retorno e dá baixa no boleto</div>
+  </div>
+
+  <!-- sistemas externos -->
+  <div class="bchip c4 externo" style="left:1300px;top:407px;width:300px;height:96px">
+    <div class="bn">sistema externo · CIP</div>
+    <div class="bt">Nova Plataforma de Cobrança</div>
+    <div class="bs">registro do boleto</div>
+  </div>
+  <div class="bchip c4 externo" style="left:1300px;top:622px;width:300px;height:96px">
+    <div class="bn">sistema externo · parceiro</div>
+    <div class="bt">Banco liquidante</div>
+    <div class="bs">gera o arquivo CNAB 240 de retorno</div>
+  </div>
+  <div class="bchip c4 externo" style="left:1300px;top:780px;width:300px;height:96px">
+    <div class="bn">sistema externo · cliente PJ</div>
+    <div class="bt">Webhook do cliente</div>
+    <div class="bs">recebe o aviso de boleto pago</div>
+  </div>
+  <div class="bchip c4 externo" style="left:1300px;top:910px;width:300px;height:96px">
+    <div class="bn">sistema externo · outro time</div>
+    <div class="bt">ERP contábil</div>
+    <div class="bs">registra o lançamento de cada baixa</div>
+  </div>
+
+  <svg class="edges" viewBox="0 0 1700 1030">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--apoio)"/></marker></defs>
+      <path d="M230,106 V200" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M360,58 H530 V400" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M230,296 V455 H460" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M950,106 V200" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M820,248 H640 V400" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M720,455 H1300" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M590,510 V620" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M1300,670 H1080" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M820,670 H720" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M1030,720 V828 H1300" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+      <path d="M900,720 V958 H1300" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--apoio)"/>
+  </svg>
+
+  <div class="badge" style="left:220px;top:118px">1</div>
+  <div class="elabel tec" style="left:246px;top:121px">navegador</div>
+  <div class="badge" style="left:520px;top:110px">2</div>
+  <div class="elabel tec" style="left:546px;top:113px">HTTPS · JSON</div>
+  <div class="badge" style="left:330px;top:445px">3</div>
+  <div class="elabel tec" style="left:250px;top:420px">HTTPS · JSON</div>
+  <div class="badge" style="left:940px;top:118px">4</div>
+  <div class="elabel tec" style="left:966px;top:121px">navegador</div>
+  <div class="badge" style="left:700px;top:238px">5</div>
+  <div class="elabel tec" style="left:654px;top:330px">HTTPS · JSON</div>
+  <div class="badge" style="left:1000px;top:445px">6</div>
+  <div class="elabel tec" style="left:1026px;top:420px">HTTPS · certificado</div>
+  <div class="badge" style="left:580px;top:555px">7</div>
+  <div class="elabel tec" style="left:606px;top:558px">DynamoDB API</div>
+  <div class="badge" style="left:1180px;top:660px">8</div>
+  <div class="elabel tec" style="left:1170px;top:636px">SFTP → S3 → SQS</div>
+  <div class="badge" style="left:760px;top:660px">9</div>
+  <div class="elabel tec" style="left:732px;top:690px">DynamoDB API</div>
+  <div class="badge" style="left:1180px;top:818px">10</div>
+  <div class="elabel tec" style="left:1170px;top:794px">HTTPS · HMAC</div>
+  <div class="badge" style="left:1180px;top:948px">11</div>
+  <div class="elabel tec" style="left:1170px;top:924px">EventBridge</div>
+
+</div>
+
+<div class="passos">
+  <div class="ptitle">Relações</div>
+  <div class="pitem"><div class="pb">1</div><div><b>Cliente PJ → Portal PJ.</b> Emite boletos em lote e acompanha os recebimentos.</div></div>
+  <div class="pitem"><div class="pb">2</div><div><b>Cliente PJ → API de cobrança.</b> Integração direta do sistema do cliente para emitir e consultar boletos.</div></div>
+  <div class="pitem"><div class="pb">3</div><div><b>Portal PJ → API de cobrança.</b> Envia o pedido de emissão e consulta a situação dos boletos.</div></div>
+  <div class="pitem"><div class="pb">4</div><div><b>Analista financeiro → Backoffice.</b> Trata boleto pago em duplicidade e devolução.</div></div>
+  <div class="pitem"><div class="pb">5</div><div><b>Backoffice → API de cobrança.</b> Usa a mesma API, com o papel de operador.</div></div>
+  <div class="pitem"><div class="pb">6</div><div><b>API de cobrança → CIP.</b> Registra cada boleto antes de devolver a linha digitável.</div></div>
+  <div class="pitem"><div class="pb">7</div><div><b>API de cobrança → Banco de cobrança.</b> Grava o boleto, a situação e o evento de emissão.</div></div>
+  <div class="pitem"><div class="pb">8</div><div><b>Banco liquidante → Processador de retorno.</b> Deposita o CNAB 240 por SFTP num bucket; o evento do bucket vai para a fila do processador.</div></div>
+  <div class="pitem"><div class="pb">9</div><div><b>Processador de retorno → Banco de cobrança.</b> Dá baixa no boleto e grava o evento de pagamento.</div></div>
+  <div class="pitem"><div class="pb">10</div><div><b>Processador de retorno → Webhook do cliente.</b> Avisa o cliente PJ a cada boleto pago, com assinatura HMAC.</div></div>
+  <div class="pitem"><div class="pb">11</div><div><b>Processador de retorno → ERP contábil.</b> Publica o lançamento de cada baixa como evento.</div></div>
+</div>
+</div>
+
+<div class="sec">Legenda C4</div>
+<div class="c4leg">
+  <div class="it"><div class="sw pessoa"></div>pessoa</div>
+  <div class="it"><div class="sw limite"></div>limite do sistema em foco</div>
+  <div class="it"><div class="sw"></div>contêiner: aplicação ou serviço que roda sozinho</div>
+  <div class="it"><div class="sw banco"></div>contêiner de dados</div>
+  <div class="it"><div class="sw externo"></div>sistema externo</div>
+  <div class="it seta"><i></i><b>1</b>relação, com a tecnologia ao lado</div>
+</div>
+
+<div class="foot">ai-diagrams · C4 de contêineres · 2026-11</div>
+</div>
+</body>
+</html>
