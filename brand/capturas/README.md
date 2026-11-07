@@ -10,7 +10,7 @@ Na raiz do repositório, em ambiente com Chrome disponível:
 node brand/src/capture.mjs
 ```
 
-O script reutiliza Playwright de `../local-ui` e Sharp de `../plyngo`, já instalados. A variável `CHROME` permite indicar outro executável do Chrome. Nenhum pacote adicional é necessário neste workspace.
+O script reutiliza o Playwright do projeto indicado em `PLAYWRIGHT_FROM` (padrão: a pasta atual) e o Sharp de `../plyngo`, já instalados. A variável `CHROME` permite indicar outro executável do Chrome. Nenhum pacote adicional é necessário neste workspace.
 
 Arquivos produzidos:
 

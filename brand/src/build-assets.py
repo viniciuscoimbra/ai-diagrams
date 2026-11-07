@@ -6,6 +6,7 @@ from xml.etree import ElementTree as ET
 from html import escape
 from itertools import combinations
 import json
+import os
 import math
 import subprocess
 from fontTools.ttLib import TTFont, woff2
@@ -13,7 +14,7 @@ from fontTools.pens.svgPathPen import SVGPathPen
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'brand/assets'
-FONTS = ROOT.parent / 'local-ui/src/assets/fonts'
+FONTS = Path(os.environ['BRAND_FONTS'])  # pasta local com Inter, JetBrains Mono e as licenças OFL
 INK, SUPPORT, PAPER, ZONE = '#171717', '#525252', '#FFFFFF', '#F5F5F5'
 COLORS = [('Ciano', '#24C8F5'), ('Coral', '#FF5B59'), ('Amarelo', '#FFE600'), ('Violeta', '#9868F5')]
 CYAN, CORAL, YELLOW, VIOLET = [color for _, color in COLORS]

@@ -18,7 +18,7 @@ let browser;
 
 await mkdir(output, { recursive: true });
 try {
-  const { chromium } = createRequire(resolve(brand, '../../local-ui/package.json'))('playwright');
+  const { chromium } = createRequire(resolve(process.env.PLAYWRIGHT_FROM || process.cwd(), 'package.json'))('playwright');
   const sharp = createRequire(resolve(brand, '../../plyngo/package.json'))('sharp');
   browser = await chromium.launch({
     executablePath: process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',

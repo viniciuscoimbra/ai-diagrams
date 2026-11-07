@@ -89,7 +89,7 @@ node brand/src/build.mjs
 python3 brand/src/check.py
 ```
 
-Para reconstruir também os vetores e PNGs, use um Python com `fontTools`, Node e `rsvg-convert` instalado. O gerador lê as fontes locais de `../local-ui/src/assets/fonts/`. Não inicia navegador.
+Para reconstruir também os vetores e PNGs, use um Python com `fontTools`, Node e `rsvg-convert` instalado. O gerador lê as fontes locais da pasta indicada em `BRAND_FONTS`. Não inicia navegador.
 
 ```sh
 python3 brand/src/build-assets.py
@@ -97,7 +97,7 @@ node brand/src/build.mjs
 python3 brand/src/check.py
 ```
 
-Fora do sandbox, com Playwright de `../local-ui`, Sharp de `../plyngo` e Chrome disponível:
+Fora do sandbox, com Playwright no projeto indicado em `PLAYWRIGHT_FROM`, Sharp de `../plyngo` e Chrome disponível:
 
 ```sh
 node brand/src/capture.mjs

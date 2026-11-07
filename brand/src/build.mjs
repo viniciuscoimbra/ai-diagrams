@@ -77,10 +77,12 @@ await writeFile(join(brand, 'brandkit.html'), html);
 
 const licenses = join(brand, 'licenses');
 await mkdir(licenses, { recursive: true });
+const fontsDir = process.env.BRAND_FONTS;
+assert(fontsDir, 'Set BRAND_FONTS to the local folder with the Inter and JetBrains Mono OFL files');
 await writeFile(join(licenses, 'refy-NOTICE.txt'), '@refy/ui 0.4.0\nOrigin: plyngo/node_modules/@refy/ui.\nThe package declares license: UNLICENSED and supplies no LICENSE file.\nThis guide does not assign an open-source license to that private package.\n');
 await copyFile(join(plyngo, 'node_modules/react/LICENSE'), join(licenses, 'react-MIT.txt'));
 await copyFile(join(plyngo, 'node_modules/react-dom/LICENSE'), join(licenses, 'react-dom-MIT.txt'));
 for (const name of ['inter', 'jetbrains-mono']) {
-  await copyFile(resolve(brand, `../../local-ui/src/assets/fonts/${name}-OFL.txt`), join(licenses, `${name}-OFL.txt`));
+  await copyFile(join(fontsDir, `${name}-OFL.txt`), join(licenses, `${name}-OFL.txt`));
 }
 console.log(`brandkit.html: ${Math.round(Buffer.byteLength(html) / 1024)} KB, ${Object.keys(assets).length} assets, ${fonts.length} embedded font faces; @refy/ui 0.4.0 + Plyngo neutral tokens.`);
