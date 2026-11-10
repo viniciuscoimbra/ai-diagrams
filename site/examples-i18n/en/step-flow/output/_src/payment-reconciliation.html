@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="idioma" content="en">
+<title>Daily payment reconciliation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*STYLE*/
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>ai-diagrams · Diagram examples · Sample fintech</span><span>Payment reconciliation · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Flow with numbered steps</div>
+<h1>Daily payment reconciliation with the partner file</h1>
+<div class="sub">The partner's D-1 file, with about 400,000 rows, arrives in S3 by 6 a.m. and triggers reconciliation. Step Functions processes the file in batches of 5,000 rows against Aurora; each mismatch becomes a message in the analyst's queue. Measured average duration: 11 minutes.</div>
+
+<div class="wrap stack">
+<div class="canvas" style="height:360px">
+
+  <div class="frame ext" style="left:10px;top:140px;width:150px;height:170px">
+    <div class="flabel">External</div>
+  </div>
+  <div class="frame awscloud" style="left:190px;top:10px;width:1270px;height:340px">
+    <div class="flabel"><img src="aws://aws.png">AWS Cloud</div>
+  </div>
+  <div class="frame zone" style="left:220px;top:50px;width:400px;height:280px">
+    <div class="flabel">Ingestion</div>
+  </div>
+  <div class="frame zone" style="left:640px;top:50px;width:790px;height:280px">
+    <div class="flabel">Reconciliation</div>
+  </div>
+
+  <div class="node" style="left:30px;top:200px">
+    <img src="aws://general/client.png">
+    <div class="nl">Settlement partner</div>
+    <div class="ns">D-1 CSV file</div>
+  </div>
+
+  <div class="node" style="left:260px;top:200px">
+    <img src="aws://storage/simple-storage-service-s3.png">
+    <div class="nl">S3 input</div>
+    <div class="ns">parceiro/ prefix</div>
+  </div>
+  <div class="node" style="left:470px;top:200px">
+    <img src="aws://integration/eventbridge.png">
+    <div class="nl">EventBridge</div>
+    <div class="ns">Object Created rule</div>
+  </div>
+  <div class="node" style="left:700px;top:200px">
+    <img src="aws://integration/step-functions.png">
+    <div class="nl">Step Functions</div>
+    <div class="ns">Distributed Map per batch</div>
+  </div>
+  <div class="node" style="left:940px;top:200px">
+    <img src="aws://compute/lambda.png">
+    <div class="nl">Reconciliation Lambda</div>
+    <div class="ns">compares each batch</div>
+  </div>
+  <div class="svc" style="left:1130px;top:110px;width:190px;height:44px">
+    <img src="aws://database/aurora.png">
+    <div class="ot">Aurora PostgreSQL</div>
+    <div class="os">ledger pagamentos table</div>
+  </div>
+  <div class="node" style="left:1220px;top:200px">
+    <img src="aws://integration/simple-queue-service-sqs.png">
+    <div class="nl">SQS mismatches</div>
+    <div class="ns">DLQ after 3 failures</div>
+  </div>
+
+  <div class="node" style="left:1560px;top:200px">
+    <img src="aws://general/user.png">
+    <div class="nl">Reconciliation analyst</div>
+    <div class="ns">internal console</div>
+  </div>
+
+  <svg class="edges" viewBox="0 0 1700 360">
+    <defs>
+      <marker id="a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" style="fill:var(--support)"/></marker>
+    </defs>
+    <path d="M107,222 H293" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M337,222 H503" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M547,222 H733" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M777,222 H973" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M980,200 V100 H315 V200" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M1010,200 V132 H1130" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M1017,222 H1253" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M1297,222 H1593" fill="none" stroke-width="1.6" marker-end="url(#a)" style="stroke:var(--support)"/>
+  </svg>
+  <div class="badge" style="left:245px;top:212px">1</div>
+  <div class="badge" style="left:410px;top:212px">2</div>
+  <div class="badge" style="left:670px;top:212px">3</div>
+  <div class="badge" style="left:865px;top:212px">4</div>
+  <div class="badge" style="left:440px;top:90px">5</div>
+  <div class="badge" style="left:1060px;top:122px">6</div>
+  <div class="badge" style="left:1125px;top:212px">7</div>
+  <div class="badge" style="left:1500px;top:212px">8</div>
+
+</div>
+
+<div class="passos">
+  <div class="ptitle">Steps</div>
+  <div class="pitem"><div class="pb">1</div><div>The <b>settlement partner</b> writes <code>liquidacao_AAAAMMDD.csv</code> to the input bucket, under the prefix <code>parceiro/</code>, by 6 a.m.</div></div>
+  <div class="pitem"><div class="pb">2</div><div><b>S3</b> emits the event <code>Object Created</code> to <b>EventBridge</b>.</div></div>
+  <div class="pitem"><div class="pb">3</div><div>The rule filters the prefix and starts <b>Step Functions</b>; the file name is the idempotency key.</div></div>
+  <div class="pitem"><div class="pb">4</div><div>The Distributed Map state splits the file into batches of 5,000 rows and calls the <b>Reconciliation Lambda</b> for each batch.</div></div>
+  <div class="pitem"><div class="pb">5</div><div>The Lambda reads its batch directly from <b>S3</b>.</div></div>
+  <div class="pitem"><div class="pb">6</div><div>Each row is compared with the table <code>pagamentos</code> in <b>Aurora</b> by transaction ID: amount, settlement date and status.</div></div>
+  <div class="pitem"><div class="pb">7</div><div>Each mismatch becomes a message in the <b>SQS queue</b>; amounts above BRL 10,000 receive priority.</div></div>
+  <div class="pitem"><div class="pb">8</div><div>The <b>reconciliation analyst</b> processes the queue in the internal console by 9 a.m.</div></div>
+</div>
+</div>
+
+<div class="foot">Diagrams &nbsp;·&nbsp; numbered flow example &nbsp;·&nbsp; 2026-11</div>
+</div>
+</body>
+</html>

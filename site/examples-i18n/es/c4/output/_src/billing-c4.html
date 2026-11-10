@@ -1,0 +1,124 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Sistema de cobro por boleto: contenedores y dependencias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="es">
+<meta name="width" content="1400">
+<style>/*STYLE*/
+body{width:1400px}</style></head><body>
+<div class="page">
+
+<div class="hdr"><span>ai-diagrams · Sistema de cobro por boleto</span><span>C4 · V2</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · nivel 2, contenedores</div>
+<h1>Sistema de cobro por boleto: contenedores y dependencias</h1>
+<div class="sub">En qué contenedores se divide el sistema de cobro y de qué sistemas depende, desde la emisión del boleto hasta la liquidación con el archivo de retorno. Pix cobro, protesto e inscripción en burós quedan fuera del diagrama.</div>
+<div class="c4nav"><span class="cn">Vistas</span><a href="billing-c4-landscape.html">panorama</a><a href="billing-c4-context.html">contexto</a><b>contenedores</b><a href="billing-c4-api.html">componentes de API de cobro</a><a href="billing-c4-emission.html">emisión de un boleto</a><a href="billing-c4-deployment.html">despliegue</a></div>
+
+<div class="wrap stack"><div class="canvas" style="width:1192px;height:1124px">
+  <div class="frame limite" style="left:144px;top:304px;width:888px;height:544px"><div class="flabel" style="top:auto;bottom:9px;left:88px">Sistema de cobro · sistema en foco</div></div>
+  <div class="bchip c4 pessoa" style="left:432px;top:44px;width:250px;height:80px">
+    <div class="bn">persona</div>
+    <div class="bt">Cliente empresa</div>
+    <div class="bs">emite boletos y sigue los pagos</div>
+  </div>
+  <div class="c4head" style="left:537px;top:16px"></div>
+  <div class="bchip c4 pessoa" style="left:925px;top:44px;width:250px;height:80px">
+    <div class="bn">persona</div>
+    <div class="bt">Analista financiero</div>
+    <div class="bs">gestiona pagos duplicados y devoluciones</div>
+  </div>
+  <div class="c4head" style="left:1030px;top:16px"></div>
+  <div class="bchip c4 externo" style="left:729px;top:1028px;width:260px;height:80px">
+    <div class="bn">sistema externo · CIP</div>
+    <div class="bt">Nueva Plataforma de Cobro</div>
+    <div class="bs">registro del boleto</div>
+  </div>
+  <div class="bchip c4 externo" style="left:108px;top:44px;width:260px;height:80px">
+    <div class="bn">sistema externo · socio</div>
+    <div class="bt">Banco liquidador</div>
+    <div class="bs">genera el archivo de retorno CNAB 240</div>
+  </div>
+  <div class="bchip c4 externo" style="left:405px;top:1028px;width:260px;height:80px">
+    <div class="bn">sistema externo · cliente empresa</div>
+    <div class="bt">Webhook del cliente</div>
+    <div class="bs">recibe el aviso de boleto pagado</div>
+  </div>
+  <div class="bchip c4 outro" style="left:81px;top:1028px;width:260px;height:80px">
+    <div class="bn">sistema · otro equipo</div>
+    <div class="bt">ERP contable</div>
+    <div class="bs">registra el asiento de cada liquidación</div>
+  </div>
+  <div class="bchip c4 web" style="left:385px;top:338px;width:260px;height:88px">
+    <div class="bn">contenedor · Next.js en Vercel</div>
+    <div class="bt">Portal empresarial</div>
+    <div class="bs">emisión por lotes y panel de cobros</div>
+  </div>
+  <div class="bchip c4 web" style="left:738px;top:338px;width:260px;height:88px">
+    <div class="bn">contenedor · React</div>
+    <div class="bt">Backoffice</div>
+    <div class="bs">consulta y ajuste manual de boletos</div>
+  </div>
+  <div class="bchip c4" style="left:525px;top:507px;width:260px;height:112px">
+    <img src="aws://compute/lambda.png">
+    <div class="bn">contenedor · Node.js en Lambda</div>
+    <div class="bt">API de cobro</div>
+    <div class="bs">detrás de API Gateway; valida al pagador y guarda el boleto</div>
+    <a class="drill" href="billing-c4-api.html">abrir componentes →</a>
+  </div>
+  <div class="bchip c4 banco" style="left:428px;top:710px;width:260px;height:86px">
+    <img src="aws://database/dynamodb.png">
+    <div class="bn">contenedor · DynamoDB</div>
+    <div class="bt">Base de datos de cobro</div>
+    <div class="bs">boletos, estado e historial de eventos</div>
+  </div>
+  <div class="bchip c4" style="left:178px;top:531px;width:260px;height:80px">
+    <img src="aws://compute/lambda.png">
+    <div class="bn">contenedor · Lambda y cola SQS</div>
+    <div class="bt">Procesador de retorno</div>
+    <div class="bs">lee el archivo de retorno y liquida el boleto</div>
+  </div>
+  <svg class="edges" viewBox="0 0 1192 1124">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+    <path d="M515,124 L515,338" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M598,124 L598,267 L655,267 L655,507" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M1050,124 L1050,267 L868,267 L868,338" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M515,426 L515,497 L590,497 L590,507" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M868,426 L868,497 L720,497 L720,507" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M698,619 L698,885 L859,885 L859,1028" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M612,619 L612,629 L602,629 L602,710" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M238,124 L238,267 L308,267 L308,531" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M373,611 L373,700 L515,700 L515,710" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M308,611 L308,639 L222,639 L222,885 L535,885 L535,1028" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M243,611 L243,629 L211,629 L211,1028" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+  </svg>
+  <div class="rel" data-edge="0" style="left:335px;top:214px;width:169px;align-items:flex-end;text-align:right"><span class="rd">Emite boletos y sigue los cobros</span><span class="rt">[navegador]</span></div>
+  <div class="rel" data-edge="1" style="left:550px;top:436px;width:210px"><span class="rd">Integra su propio sistema para emitir y consultar</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="2" style="left:957px;top:179px;width:187px"><span class="rd">Gestiona duplicados y devoluciones</span><span class="rt">[navegador]</span></div>
+  <div class="rel" data-edge="3" style="left:318px;top:445px;width:186px;align-items:flex-end;text-align:right"><span class="rd">Pide la emisión y consulta el estado</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="4" style="left:772px;top:445px;width:192px"><span class="rd">Ajusta boletos con el rol de operador</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="5" style="left:754px;top:933px;width:210px"><span class="rd">Registra el boleto antes del código de pago</span><span class="rt">[HTTPS · certificado]</span></div>
+  <div class="rel" data-edge="6" style="left:520px;top:653px;width:164px"><span class="rd">Guarda boleto, estado y evento</span><span class="rt">[DynamoDB API]</span></div>
+  <div class="rel" data-edge="7" style="left:154px;top:179px;width:168px"><span class="rd">Entrega el CNAB 240 de retorno</span><span class="rt">[SFTP → S3 → SQS]</span></div>
+  <div class="rel" data-edge="8" style="left:308px;top:645px;width:130px"><span class="rd">Liquida y guarda el pago</span><span class="rt">[DynamoDB API]</span></div>
+  <div class="rel" data-edge="9" style="left:310px;top:868px;width:136px"><span class="rd">Avisa cada boleto pagado</span><span class="rt">[HTTPS · HMAC]</span></div>
+  <div class="rel" data-edge="10" style="left:121px;top:890px;width:181px"><span class="rd">Publica el asiento de la liquidación</span><span class="rt">[EventBridge]</span></div>
+</div></div>
+
+<div class="sec">Leyenda C4</div>
+<div class="c4leg">
+<div class="it"><div class="sw pessoa"></div>persona</div>
+<div class="it"><div class="sw limite"></div>límite del sistema en foco</div>
+<div class="it"><div class="sw "></div>contenedor: aplicación o servicio</div>
+<div class="it"><div class="sw web"></div>contenedor de interfaz web</div>
+<div class="it"><div class="sw banco"></div>contenedor de datos</div>
+<div class="it"><div class="sw outro"></div>otro sistema de la empresa</div>
+<div class="it"><div class="sw externo"></div>sistema externo</div>
+<div class="it"><span class="sw drill">abrir →</span>abre una vista más detallada</div>
+<div class="it"><span class="seta"><i></i></span>relación: qué hace <code>[tecnología]</code></div>
+</div>
+
+<div class="foot" style="display:flex;justify-content:space-between"><span>ai-diagrams · modelo C4</span><span>cobro por boleto</span></div>
+
+</div>
+</body></html>

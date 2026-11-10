@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="idioma" content="en">
+<title>Domain event catalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/*STYLE*/
+.card .txt code{font-family:var(--font-mono);font-size:13px;overflow-wrap:anywhere}
+.card .linha:nth-last-child(2){margin-bottom:16px}
+</style></head><body>
+<div class="page">
+
+  <div class="hdr"><span>ai-diagrams · Diagram examples · Sample fintech</span><span>Event catalog</span></div>
+
+  <div class="kicker"><span class="sq">■</span> Conceptual card catalog</div>
+  <h1>Platform domain event catalog</h1>
+  <div class="sub">Ten events published by four producers: registration, accounts, billing and security. Each card shows when the event is emitted, its payload and its consumers.</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="sid">E01</div>
+      <div class="snome">Customer registered</div>
+      <div class="linha"><div class="rot">Producer</div>
+        <div class="txt">Registration.</div></div>
+      <div class="linha"><div class="rot">When</div>
+        <div class="txt">Onboarding approves the customer registration.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>cliente_id, documento, situacao</code></div></div>
+      <div class="linha"><div class="rot">Consumers</div>
+        <div class="txt">Accounts, notifications.</div></div>
+      <div class="slug">cliente.cadastrado.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E02</div>
+      <div class="snome">Customer updated</div>
+      <div class="linha"><div class="rot">Producer</div>
+        <div class="txt">Registration.</div></div>
+      <div class="linha"><div class="rot">When</div>
+        <div class="txt">The customer's personal details or address change.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>cliente_id, campos_alterados</code></div></div>
+      <div class="linha"><div class="rot">Consumers</div>
+        <div class="txt">Accounts, billing.</div></div>
+      <div class="slug">cliente.atualizado.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E03</div>
+      <div class="snome">Account opened</div>
+      <div class="linha"><div class="rot">Producer</div>
+        <div class="txt">Accounts.</div></div>
+      <div class="linha"><div class="rot">When</div>
+        <div class="txt">The account status changes to open.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>conta_id, cliente_id, numero</code></div></div>
+      <div class="linha"><div class="rot">Consumers</div>
+        <div class="txt">Billing, statements, notifications.</div></div>
+      <div class="slug">conta.aberta.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E04</div>
+      <div class="snome">Account blocked</div>
+      <div class="linha"><div class="rot">Producer</div>
+        <div class="txt">Accounts.</div></div>
+      <div class="linha"><div class="rot">When</div>
+        <div class="txt">Security or customer support blocks the account.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>conta_id, motivo, origem</code></div></div>
+      <div class="linha"><div class="rot">Consumers</div>
+        <div class="txt">Billing, notifications.</div></div>
+      <div class="slug">conta.bloqueada.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E05</div>
+      <div class="snome">Transaction recorded</div>
+      <div class="linha"><div class="rot">Producer</div>
+        <div class="txt">Accounts.</div></div>
+      <div class="linha"><div class="rot">When</div>
+        <div class="txt">Each credit or debit recorded in the account.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>movimento_id, conta_id, valor</code></div></div>
+      <div class="linha"><div class="rot">Consumers</div>
+        <div class="txt">Statements, fraud prevention.</div></div>
+      <div class="slug">movimento.registrado.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E06</div>
+      <div class="snome">Invoice issued</div>
+      <div class="linha"><div class="rot">Producer</div>
+        <div class="txt">Billing.</div></div>
+      <div class="linha"><div class="rot">When</div>
+        <div class="txt">The invoice is finalized and assigned a number.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>fatura_id, valor_total, vencimento</code></div></div>
+      <div class="linha"><div class="rot">Consumers</div>
+        <div class="txt">Notifications, statements.</div></div>
+      <div class="slug">fatura.emitida.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E07</div>
+      <div class="snome">Invoice overdue</div>
+      <div class="linha"><div class="rot">Producer</div>
+        <div class="txt">Billing.</div></div>
+      <div class="linha"><div class="rot">When</div>
+        <div class="txt">The invoice becomes overdue with no identified payment.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>fatura_id, dias_atraso</code></div></div>
+      <div class="linha"><div class="rot">Consumers</div>
+        <div class="txt">Notifications, customer support.</div></div>
+      <div class="slug">fatura.vencida.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E08</div>
+      <div class="snome">Attempt declined</div>
+      <div class="linha"><div class="rot">Producer</div>
+        <div class="txt">Billing.</div></div>
+      <div class="linha"><div class="rot">When</div>
+        <div class="txt">The automatic collection attempt is declined.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>tentativa_id, fatura_id, resultado</code></div></div>
+      <div class="linha"><div class="rot">Consumers</div>
+        <div class="txt">Notifications, customer support.</div></div>
+      <div class="slug">tentativa_cobranca.recusada.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E09</div>
+      <div class="snome">Payment received</div>
+      <div class="linha"><div class="rot">Producer</div>
+        <div class="txt">Billing.</div></div>
+      <div class="linha"><div class="rot">When</div>
+        <div class="txt">The amount is credited and reconciled with the invoice.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>pagamento_recebido_id, fatura_id, valor</code></div></div>
+      <div class="linha"><div class="rot">Consumers</div>
+        <div class="txt">Accounts, statements.</div></div>
+      <div class="slug">pagamento.recebido.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E10</div>
+      <div class="snome">Access restored</div>
+      <div class="linha"><div class="rot">Producer</div>
+        <div class="txt">Security.</div></div>
+      <div class="linha"><div class="rot">When</div>
+        <div class="txt">The customer completes account access recovery.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>cliente_id, canal, dispositivo_id</code></div></div>
+      <div class="linha"><div class="rot">Consumers</div>
+        <div class="txt">Notifications, fraud prevention.</div></div>
+      <div class="slug">acesso.recuperado.v1</div>
+    </div>
+  </div>
+
+  <div class="faixa">
+    <div class="f1">Each event goes through the producer's outbox; the consumer never reads a table from another schema.</div>
+    <div class="f2">The complete payload schema is in the schema registry; the v1 suffix is the contract version.</div>
+  </div>
+
+  <div class="foot"><span>ai-diagrams · card catalog example · 2026-11</span></div>
+
+</div>
+</body></html>

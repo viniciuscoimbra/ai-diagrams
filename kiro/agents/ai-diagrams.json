@@ -1,7 +1,7 @@
 {
   "name": "ai-diagrams",
-  "description": "Gera diagramas com a skill ai-diagrams",
-  "prompt": "Use a skill ai-diagrams em todo pedido de diagrama. Rode os comandos da skill direto, sem criar script auxiliar.",
+  "description": "Generates diagrams with the ai-diagrams skill",
+  "prompt": "Use the ai-diagrams skill for every diagram request. Run the skill's commands directly, without creating a helper script.",
   "tools": [
     "read",
     "shell",
@@ -13,15 +13,15 @@
   "toolsSettings": {
     "execute_bash": {
       "allowedCommands": [
-        "python3 [^;&|]*diagramas/[^;&|]*",
-        "node [^;&|]*diagramas/[^;&|]*",
-        "mkdir -p diagramas[^;&|]*",
+        "python3 [^;&|]* diagrams/[^;&|]*",
+        "node [^;&|]* diagrams/[^;&|]*",
+        "mkdir -p diagrams[^;&|]*",
         "ls[^;&|]*"
       ]
     },
     "fs_write": {
       "allowedPaths": [
-        "diagramas/**"
+        "diagrams/**"
       ]
     }
   },
@@ -34,9 +34,9 @@
       {
         "capability": "shell",
         "match": [
-          "python3 *diagramas/*",
-          "node *diagramas/*",
-          "mkdir -p diagramas*",
+          "python3 * diagrams/*",
+          "node * diagrams/*",
+          "mkdir -p diagrams*",
           "ls*"
         ],
         "effect": "allow"
@@ -44,7 +44,7 @@
       {
         "capability": "fs_write",
         "match": [
-          "diagramas/**"
+          "diagrams/**"
         ],
         "effect": "allow"
       },

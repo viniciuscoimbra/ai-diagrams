@@ -7,28 +7,28 @@ Changes to the skill go in `skills/ai-diagrams/`. Read [docs/how-it-works.md](do
 Run these four commands in this order:
 
 ```bash
-bash ferramentas/checar-segredos.sh
+bash tools/check-secrets.sh
 ```
 
-**Expected:** `nenhuma credencial encontrada` (no credential found).
+**Expected:** `no credential found`.
 
 ```bash
-bash testes/rodar.sh
+bash tests/run.sh
 ```
 
-**Expected:** ends with `total: 0`. The cases in `testes/negativos/` each carry one planted defect: overflow on the right, collinear arrows, marketing text, text over a lifeline, text inside a box or on its border, a cut capture, a loose badge, a missing style marker, a literal color outside the theme, a theme file that diverges from the CSS, defects in the C4 frame and arrows, and one broken graph per state machine check. The script checks that the gate still rejects each one for the right reason.
+**Expected:** ends with `total: 0`. The cases in `tests/negative/` each carry one planted defect: overflow on the right, collinear arrows, marketing text, text over a lifeline, text inside a box or on its border, a cut capture, a loose badge, a missing style marker, a literal color outside the theme, a theme file that diverges from the CSS, defects in the C4 frame and arrows, and one broken graph per state machine check. The script checks that the gate still rejects each one for the right reason.
 
 ```bash
-bash skills/ai-diagrams/modelos/gerar.sh
+bash skills/ai-diagrams/templates/build-all.sh
 ```
 
-**Expected:** every model passes its gate, the last lines are `total: 0` and `tema: 34 tokens conferidos, 0 falhas` (theme checked), and the command exits without error.
+**Expected:** every model passes its gate, the last lines are `total: 0` and `theme: 39 tokens checked, 0 failures`, and the command exits without error.
 
 ```bash
-bash exemplos/gerar.sh
+bash examples/build-all.sh
 ```
 
-**Expected:** ends with `exemplos: total: 0`.
+**Expected:** ends with `examples: total: 0`.
 
 ## PNG files
 
@@ -41,17 +41,17 @@ bash exemplos/gerar.sh
 
 A new type must:
 
-1. **Use only the theme colors and fonts.** Write every color as `var(--token)` and every font as `var(--fonte-texto)` or `var(--fonte-mono)`; `skills/ai-diagrams/scripts/tema.py` generates the tokens from the theme JSON in `skills/ai-diagrams/temas/`. A literal color fails with `COR-FORA-DO-TEMA`, a literal font family with `FONTE-FORA-DO-TEMA`. A new token goes in every theme file, in `OBRIGATORIAS` of `tema.py` and in the fallback `:root` of both base stylesheets, and `scripts/conferir_tema.py` must pass. A new command takes `--tema` through `tema.py` (see [docs/how-it-works.md](docs/how-it-works.md#5-theme)).
-2. **Ship a reference model** in `skills/ai-diagrams/modelos/NN-<type>/`, with the source in `_src/` and the generated PNG. Add its build command to `skills/ai-diagrams/modelos/gerar.sh`.
-3. **Pass the gate.** Use an existing gate (`skills/ai-diagrams/scripts/build.py`, `skills/ai-diagrams/scripts/conceitual.py` or `skills/ai-diagrams/bpmn/gerar_bpmn.py`), or add a gate that exits with code 1 on any defect and writes no PNG.
-4. **Add a negative test** in `testes/negativos/` and a line in `testes/rodar.sh` for each new defect code.
+1. **Use only the theme colors and fonts.** Write every color as `var(--token)` and every font as `var(--font-text)` or `var(--font-mono)`; `skills/ai-diagrams/scripts/theme.py` generates the tokens from the theme JSON in `skills/ai-diagrams/themes/`. A literal color fails with `COLOR-OUTSIDE-THEME`, a literal font family with `FONT-OUTSIDE-THEME`. A new token goes in every theme file, in `OBRIGATORIAS` of `theme.py` and in the fallback `:root` of both base stylesheets, and `scripts/check_theme.py` must pass. A new command takes `--theme` through `theme.py` (see [docs/how-it-works.md](docs/how-it-works.md#5-theme)).
+2. **Ship a reference model** in `skills/ai-diagrams/templates/NN-<type>/`, with the source in `_src/` and the generated PNG. Add its build command to `skills/ai-diagrams/templates/build-all.sh`.
+3. **Pass the gate.** Use an existing gate (`skills/ai-diagrams/scripts/build.py`, `skills/ai-diagrams/scripts/conceptual.py` or `skills/ai-diagrams/bpmn/build_bpmn.py`), or add a gate that exits with code 1 on any defect and writes no PNG.
+4. **Add a negative test** in `tests/negative/` and a line in `tests/run.sh` for each new defect code.
 5. **Add a row to the router** in `skills/ai-diagrams/SKILL.md` and a reference in `skills/ai-diagrams/references/`.
-6. **Add an example** in `exemplos/<type>/` with `prompt.md`, a data file and `resultado/`, and its build command in `exemplos/gerar.sh`.
+6. **Add an example** in `examples/<type>/` with `prompt.md`, a data file and `output/`, and its build command in `examples/build-all.sh`.
 
 ## Text in diagrams
 
-Titles, subtitles, kickers and bands describe what the diagram shows. The gate rejects marketing vocabulary with `TEXTO-MARKETING`. The word list is in `skills/ai-diagrams/scripts/texto_tecnico.py`.
+Titles, subtitles, kickers and bands describe what the diagram shows. The gate rejects marketing vocabulary with `MARKETING-COPY`. The word list is in `skills/ai-diagrams/scripts/technical_text.py`.
 
 ## Credentials
 
-No key, token or password goes into the repository. `ferramentas/checar-segredos.sh` rejects common credential patterns and files such as `.env`, `*.pem` and `*.key`.
+No key, token or password goes into the repository. `tools/check-secrets.sh` rejects common credential patterns and files such as `.env`, `*.pem` and `*.key`.

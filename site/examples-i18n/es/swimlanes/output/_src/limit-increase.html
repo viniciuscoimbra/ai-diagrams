@@ -1,0 +1,106 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Aumento de límite entre equipos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="es">
+<style>/*STYLE*/</style></head><body>
+<div class="page">
+
+  <div class="hdr"><span>ai-diagrams · Ejemplos de diagramas · Fintech de ejemplo</span><span>Aumento de límite · Carriles</span></div>
+
+  <div class="kicker"><span class="sq">■</span> Flujo por carriles</div>
+  <h1>Aumento de límite: de la solicitud al nuevo límite en la cuenta</h1>
+  <div class="sub">Cinco actores y seis fases. El motor de crédito decide el 71% de las solicitudes por sí solo; el analista interviene cuando el importe supera el límite máximo o el score está en la zona gris.</div>
+
+  <div class="canvas" style="width:1318px;height:868px">
+      <div class="lane" style="left:0px;top:38px;width:1318px;height:148px">
+        <div class="lt">Cliente</div>
+        <div class="ls">por la app</div>
+      </div>
+      <div class="lane" style="left:0px;top:186px;width:1318px;height:176px">
+        <div class="lt">App</div>
+        <div class="ls">canal digital</div>
+      </div>
+      <div class="lane" style="left:0px;top:362px;width:1318px;height:176px">
+        <div class="lt">Motor de crédito</div>
+        <div class="ls">política automática</div>
+      </div>
+      <div class="lane" style="left:0px;top:538px;width:1318px;height:176px">
+        <div class="lt">Analista de crédito</div>
+        <div class="ls">plazo de 1 día hábil</div>
+      </div>
+      <div class="lane" style="left:0px;top:714px;width:1318px;height:148px">
+        <div class="lt">Operaciones</div>
+      </div>
+      <div class="fase" style="left:170px;width:166px">1 · Solicitar</div>
+      <div class="fase" style="left:362px;width:166px">2 · Recibir</div>
+      <div class="fase" style="left:554px;width:166px">3 · Evaluar</div>
+      <div class="fase" style="left:768px;width:166px">4 · Analizar</div>
+      <div class="fase" style="left:960px;width:166px">5 · Aplicar</div>
+      <div class="fase" style="left:1152px;width:166px">6 · Avisar</div>
+      <div class="painel" style="left:170px;top:50px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Indicar importe deseado e ingresos actuales y confirmar</div>
+      </div>
+      <div class="painel" style="left:362px;top:198px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Validar sesión, revisar solicitudes abiertas y enviar al motor</div>
+      </div>
+      <div class="chip" style="left:362px;top:330px">recibido</div>
+      <div class="painel" style="left:554px;top:374px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Calcular score (12 meses) y límite máximo de la política</div>
+      </div>
+      <div class="chip" style="left:554px;top:506px">en evaluación</div>
+      <div class="painel fora" style="left:768px;top:198px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Avisar del rechazo y la fecha para volver a solicitar (90 días)</div>
+      </div>
+      <div class="chip" style="left:768px;top:330px">rechazado</div>
+      <div class="painel foco" style="left:768px;top:550px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Revisar, pedir justificante si hace falta y decidir el importe</div>
+      </div>
+      <div class="chip" style="left:768px;top:682px">en análisis</div>
+      <div class="painel" style="left:960px;top:726px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Aplicar el nuevo límite en la cuenta y registrar la auditoría</div>
+      </div>
+      <div class="painel" style="left:1152px;top:198px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Avisar al cliente del límite aprobado</div>
+      </div>
+      <div class="chip" style="left:1152px;top:330px">completado</div>
+      <div class="painel" style="left:1152px;top:50px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Ver el nuevo límite en la pantalla de la cuenta</div>
+      </div>
+      <svg class="edges" viewBox="0 0 1318 868">
+        <defs><marker id="s" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+        <path d="M336,112 H349 V260 H362" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M528,260 H541 V436 H554" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M720,436 H756 V612 H768" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M720,467 H744 V809 H960" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M720,405 H732 V260 H768" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M851,550 V354" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M934,612 H947 V767 H960" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M1126,788 H1139 V260 H1152" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M1235,198 V174" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+      </svg>
+  </div>
+
+  <div class="sec">Decisión del motor de crédito</div>
+  <div class="legenda" style="grid-template-columns:repeat(3,1fr)">
+    <div class="passo"><div class="pn">Aprobación automática</div><div class="pd">Importe dentro del límite máximo y score por encima del umbral. Pasa a operaciones; aviso en unos 3 minutos.</div></div>
+    <div class="passo"><div class="pn">Pasa al analista</div><div class="pd">Importe por encima del límite máximo o score en la zona gris. Aprueba, aprueba un importe menor o rechaza; aviso en unas 9 horas.</div></div>
+    <div class="passo"><div class="pn">Rechazado</div><div class="pd">Score por debajo del umbral. El cliente recibe el motivo y puede volver a solicitar en 90 días.</div></div>
+  </div>
+  <div class="sec">Quién recibe el resultado</div>
+  <div class="destinos" style="grid-template-columns:repeat(3,1fr)">
+    <div class="destino"><div class="dt">Cliente</div><div class="dd">El nuevo límite, o el motivo del rechazo y la fecha para volver a solicitar.</div></div>
+    <div class="destino"><div class="dt">Analista de crédito</div><div class="dd">El resultado de cada caso vuelve a la calibración de la política.</div></div>
+    <div class="destino"><div class="dt">Atención al cliente</div><div class="dd">El historial de la solicitud para responder consultas.</div></div>
+  </div>
+  <div class="faixa">
+    <div class="f1">42 mil solicitudes al mes; el motor decide el 71% sin analista, con aviso en 3 minutos frente a 9 horas cuando interviene el analista.</div>
+    <div class="f2">La solicitud de justificante de ingresos por la app forma parte del análisis y no aparece como etapa independiente.</div>
+  </div>
+
+  <div class="foot"><span>ai-diagrams</span><span>ejemplo de carriles · 2026-11</span></div>
+
+</div>
+</body></html>

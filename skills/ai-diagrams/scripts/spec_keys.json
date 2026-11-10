@@ -1,0 +1,65 @@
+{
+  "_doc": "Spec files are written with the English keys and values below. The 0.1.x Portuguese names (left) are still read until 0.3.0. Engine code reads specs through spec.py (Python) or er/spec.mjs (Node); geometry keys (x, y, w, f1, f2, h1, sub, kicker, id...) are the same in both versions.",
+  "common": {
+    "keys": {
+      "cabecalho": "header", "rodape": "footer", "titulo_pagina": "page_title", "faixa": "band",
+      "idioma": "lang", "titulo": "title", "subtitulo": "subtitle", "nome": "name", "tipo": "type",
+      "texto": "text", "estilo": "style", "desc": "desc"
+    },
+    "values": {}
+  },
+  "swimlanes": {
+    "keys": {
+      "raias": "lanes", "raia": "lane", "fases": "phases", "fase": "phase", "elementos": "elements",
+      "sequencia": "sequence", "secoes": "sections", "itens": "items", "opcoes": "options",
+      "entrada": "entry", "saida": "exit"
+    },
+    "values": {"type": {"coluna": "column", "lateral": "side", "destinos": "targets", "passos": "steps"},
+               "style": {"foco": "focus", "fora": "out"}}
+  },
+  "sequence": {
+    "keys": {
+      "participantes": "participants", "mensagens": "messages", "de": "from", "para": "to", "passo": "step",
+      "fragmento": "fragment", "guarda": "guard", "ramos": "branches", "ramo": "branch", "icone": "icon",
+      "nota": "note", "sobre": "over", "abre": "opens", "nivel": "level", "linhas": "lines"
+    },
+    "values": {"type": {"ator": "actor", "banco": "database", "servico": "service", "externo": "external",
+                        "fila": "queue", "sistema": "system", "resposta": "reply", "assincrona": "async", "sincrona": "sync"}}
+  },
+  "states": {
+    "keys": {
+      "estados": "states", "transicoes": "transitions", "inicial": "initial", "evento": "event", "acao": "action",
+      "de": "from", "para": "to", "guarda": "guard", "direcao": "direction", "largura": "width"
+    },
+    "values": {"style": {"foco": "focus", "fora": "out"}}
+  },
+  "bpmn": {
+    "keys": {"cabecalho": "header", "rodape": "footer", "idioma": "lang"},
+    "values": {}
+  },
+  "c4": {
+    "keys": {"cabecalho": "header", "rodape": "footer", "idioma": "lang"},
+    "values": {}
+  },
+  "er_model": {
+    "keys": {
+      "schemaComum": "commonSchema", "schemaLeitura": "readSchema", "colunasControle": "controlColumns",
+      "tabelas": "tables", "rotulo": "label", "colunas": "columns"
+    },
+    "values": {"type": {"forte": "strong", "dependente": "dependent", "associativa": "associative", "controle": "control",
+                        "fato": "fact", "versionada": "versioned", "projecao": "projection", "trilha": "trail",
+                        "dominio": "domain", "configuracao": "config", "referencia": "reference", "visao": "view"}}
+  },
+  "er_layout": {
+    "keys": {
+      "modelo": "model", "tabelas": "tables", "arestas": "edges", "de": "from", "para": "to", "coluna": "column",
+      "sai": "exit", "chega": "enter", "raia": "lane", "pontos": "points", "yRaia": "laneY",
+      "semSeta": "noArrow", "externas": "external", "leitura": "readView"
+    },
+    "values": {"dy": {"reto": "straight"}}
+  },
+  "comparison_yaml": {
+    "keys": {"opcoes": "options", "criterios": "criteria", "valores": "values"},
+    "values": {}
+  }
+}

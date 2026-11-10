@@ -1,0 +1,567 @@
+{
+  "header": "ai-diagrams · Ejemplos de diagramas · Fintech de ejemplo",
+  "footer": "Diagramas &nbsp;·&nbsp; ejemplo de DER &nbsp;·&nbsp; 2026-11",
+  "commonSchema": "comum",
+  "readSchema": null,
+  "controlColumns": [],
+  "schemas": {
+    "comum": "referencias generales",
+    "cadastro": "Registro de clientes",
+    "conta": "Cuentas y movimientos",
+    "cobranca": "Facturas y cobros"
+  },
+  "tables": {
+    "comum.moedas": {
+      "type": "reference",
+      "label": "monedas ISO 4217",
+      "columns": [
+        [
+          "moeda_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "codigo",
+          "char(3)",
+          "UQ"
+        ],
+        [
+          "nome",
+          "varchar(60)",
+          ""
+        ]
+      ]
+    },
+    "comum.paises": {
+      "type": "reference",
+      "label": "países ISO 3166",
+      "columns": [
+        [
+          "pais_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "codigo",
+          "char(2)",
+          "UQ"
+        ],
+        [
+          "nome",
+          "varchar(80)",
+          ""
+        ]
+      ]
+    },
+    "comum.feriados": {
+      "type": "reference",
+      "label": "festivos bancarios",
+      "columns": [
+        [
+          "feriado_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "data",
+          "date",
+          "UQ"
+        ],
+        [
+          "descricao",
+          "varchar(80)",
+          ""
+        ]
+      ]
+    },
+    "cadastro.situacoes_cliente": {
+      "type": "domain",
+      "label": "activo, bloqueado, cerrado",
+      "columns": [
+        [
+          "situacao_cliente_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "codigo",
+          "varchar(20)",
+          "UQ"
+        ]
+      ]
+    },
+    "cadastro.clientes": {
+      "type": "strong",
+      "label": "la persona que abre cuentas",
+      "columns": [
+        [
+          "cliente_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "documento",
+          "varchar(14)",
+          "UQ"
+        ],
+        [
+          "nome",
+          "varchar(120)",
+          ""
+        ],
+        [
+          "situacao_cliente_id",
+          "uuid",
+          "FK",
+          "cadastro.situacoes_cliente",
+          true
+        ],
+        [
+          "criado_em",
+          "timestamptz",
+          ""
+        ]
+      ]
+    },
+    "cadastro.enderecos": {
+      "type": "dependent",
+      "label": "direcciones del cliente",
+      "columns": [
+        [
+          "endereco_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "cliente_id",
+          "uuid",
+          "FK",
+          "cadastro.clientes",
+          true
+        ],
+        [
+          "pais_id",
+          "uuid",
+          "FK",
+          "comum.paises",
+          true
+        ],
+        [
+          "logradouro",
+          "varchar(160)",
+          ""
+        ],
+        [
+          "cep",
+          "varchar(9)",
+          ""
+        ]
+      ]
+    },
+    "conta.situacoes_conta": {
+      "type": "domain",
+      "label": "abierta, bloqueada, cerrada",
+      "columns": [
+        [
+          "situacao_conta_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "codigo",
+          "varchar(20)",
+          "UQ"
+        ]
+      ]
+    },
+    "conta.contas": {
+      "type": "strong",
+      "label": "la cuenta de pago del cliente",
+      "columns": [
+        [
+          "conta_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "cliente_id",
+          "uuid",
+          "FK",
+          "cadastro.clientes",
+          true
+        ],
+        [
+          "numero",
+          "varchar(20)",
+          "UQ"
+        ],
+        [
+          "moeda_id",
+          "uuid",
+          "FK",
+          "comum.moedas",
+          true
+        ],
+        [
+          "situacao_conta_id",
+          "uuid",
+          "FK",
+          "conta.situacoes_conta",
+          true
+        ],
+        [
+          "aberta_em",
+          "timestamptz",
+          ""
+        ]
+      ]
+    },
+    "conta.movimentos": {
+      "type": "fact",
+      "label": "cada crédito o débito en la cuenta",
+      "columns": [
+        [
+          "movimento_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "conta_id",
+          "uuid",
+          "FK",
+          "conta.contas",
+          true
+        ],
+        [
+          "valor",
+          "numeric(18,2)",
+          ""
+        ],
+        [
+          "ocorrido_em",
+          "timestamptz",
+          ""
+        ]
+      ]
+    },
+    "conta.outbox": {
+      "type": "trail",
+      "label": "evento a publicar",
+      "columns": [
+        [
+          "outbox_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "evento_id",
+          "uuid",
+          "UQ"
+        ],
+        [
+          "tipo_evento",
+          "varchar(80)",
+          ""
+        ],
+        [
+          "payload",
+          "jsonb",
+          ""
+        ]
+      ]
+    },
+    "cobranca.situacoes_fatura": {
+      "type": "domain",
+      "label": "abierta, pagada, vencida, cancelada",
+      "columns": [
+        [
+          "situacao_fatura_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "codigo",
+          "varchar(20)",
+          "UQ"
+        ]
+      ]
+    },
+    "cobranca.meios_pagamento": {
+      "type": "domain",
+      "label": "boleto, Pix, débito en cuenta",
+      "columns": [
+        [
+          "meio_pagamento_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "codigo",
+          "varchar(20)",
+          "UQ"
+        ]
+      ]
+    },
+    "cobranca.faturas_cobranca": {
+      "type": "strong",
+      "label": "la factura emitida al cliente",
+      "columns": [
+        [
+          "fatura_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "numero",
+          "varchar(20)",
+          "UQ"
+        ],
+        [
+          "cliente_id",
+          "uuid",
+          "FK",
+          "cadastro.clientes",
+          true
+        ],
+        [
+          "conta_id",
+          "uuid",
+          "FK",
+          "conta.contas",
+          true
+        ],
+        [
+          "moeda_id",
+          "uuid",
+          "FK",
+          "comum.moedas",
+          true
+        ],
+        [
+          "situacao_fatura_id",
+          "uuid",
+          "FK",
+          "cobranca.situacoes_fatura",
+          true
+        ],
+        [
+          "valor_total",
+          "numeric(18,2)",
+          ""
+        ],
+        [
+          "vencimento",
+          "date",
+          ""
+        ],
+        [
+          "emitida_em",
+          "timestamptz",
+          ""
+        ],
+        [
+          "criado_em",
+          "timestamptz",
+          ""
+        ],
+        [
+          "atualizado_em",
+          "timestamptz",
+          ""
+        ]
+      ]
+    },
+    "cobranca.itens_fatura": {
+      "type": "dependent",
+      "label": "cada concepto cobrado en la factura",
+      "columns": [
+        [
+          "item_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "fatura_id",
+          "uuid",
+          "FK",
+          "cobranca.faturas_cobranca",
+          true
+        ],
+        [
+          "descricao",
+          "varchar(140)",
+          ""
+        ],
+        [
+          "quantidade",
+          "integer",
+          ""
+        ],
+        [
+          "valor_unitario",
+          "numeric(18,2)",
+          ""
+        ]
+      ]
+    },
+    "cobranca.execucoes_cobranca": {
+      "type": "control",
+      "label": "ejecución del lote de cobro del día",
+      "columns": [
+        [
+          "execucao_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "data_referencia",
+          "date",
+          "UQ"
+        ],
+        [
+          "situacao",
+          "varchar(20)",
+          ""
+        ],
+        [
+          "iniciada_em",
+          "timestamptz",
+          ""
+        ]
+      ]
+    },
+    "cobranca.pagamentos_recebidos": {
+      "type": "fact",
+      "label": "cada importe recibido; nunca cambia",
+      "columns": [
+        [
+          "pagamento_recebido_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "fatura_id",
+          "uuid",
+          "FK",
+          "cobranca.faturas_cobranca",
+          false
+        ],
+        [
+          "conta_id",
+          "uuid",
+          "FK",
+          "conta.contas",
+          true
+        ],
+        [
+          "meio_pagamento_id",
+          "uuid",
+          "FK",
+          "cobranca.meios_pagamento",
+          true
+        ],
+        [
+          "identificador_externo",
+          "varchar(40)",
+          "UQ"
+        ],
+        [
+          "valor",
+          "numeric(18,2)",
+          ""
+        ],
+        [
+          "recebido_em",
+          "timestamptz",
+          ""
+        ]
+      ]
+    },
+    "cobranca.tentativas_cobranca": {
+      "type": "fact",
+      "label": "cada intento de cobrar la factura",
+      "columns": [
+        [
+          "tentativa_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "fatura_id",
+          "uuid",
+          "FK",
+          "cobranca.faturas_cobranca",
+          true
+        ],
+        [
+          "pagamento_recebido_id",
+          "uuid",
+          "FK",
+          "cobranca.pagamentos_recebidos",
+          false
+        ],
+        [
+          "meio_pagamento_id",
+          "uuid",
+          "FK",
+          "cobranca.meios_pagamento",
+          true
+        ],
+        [
+          "execucao_id",
+          "uuid",
+          "FK",
+          "cobranca.execucoes_cobranca",
+          false
+        ],
+        [
+          "numero_tentativa",
+          "integer",
+          ""
+        ],
+        [
+          "resultado",
+          "varchar(20)",
+          ""
+        ],
+        [
+          "tentada_em",
+          "timestamptz",
+          ""
+        ]
+      ]
+    },
+    "cobranca.outbox": {
+      "type": "trail",
+      "label": "evento a publicar, leído por CDC",
+      "columns": [
+        [
+          "outbox_id",
+          "uuid",
+          "PK"
+        ],
+        [
+          "evento_id",
+          "uuid",
+          "UQ"
+        ],
+        [
+          "agregado_id",
+          "uuid",
+          ""
+        ],
+        [
+          "tipo_evento",
+          "varchar(80)",
+          ""
+        ],
+        [
+          "payload",
+          "jsonb",
+          ""
+        ]
+      ]
+    }
+  },
+  "lang": "es"
+}

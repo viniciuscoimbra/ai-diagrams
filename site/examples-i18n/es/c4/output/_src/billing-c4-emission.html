@@ -1,0 +1,87 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Emisión de un boleto por el portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="es">
+<meta name="width" content="1400">
+<style>/*STYLE*/
+body{width:1400px}</style></head><body>
+<div class="page">
+
+<div class="hdr"><span>ai-diagrams · Sistema de cobro por boleto</span><span>C4 · V2</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · vista dinámica</div>
+<h1>Emisión de un boleto por el portal</h1>
+<div class="sub">El recorrido de una solicitud de emisión hecha en el portal, hasta que el cliente recibe el código de pago.</div>
+<div class="c4nav"><span class="cn">Vistas</span><a href="billing-c4-landscape.html">panorama</a><a href="billing-c4-context.html">contexto</a><a href="billing-c4.html">contenedores</a><a href="billing-c4-api.html">componentes de API de cobro</a><b>emisión de un boleto</b><a href="billing-c4-deployment.html">despliegue</a></div>
+
+<div class="wrap stack"><div class="canvas" style="width:560px;height:1186px">
+  <div class="frame limite" style="left:16px;top:324px;width:426px;height:574px"><div class="flabel" style="top:auto;bottom:9px;left:10px">Sistema de cobro · sistema en foco</div></div>
+  <div class="bchip c4 pessoa" style="left:152px;top:44px;width:250px;height:80px">
+    <div class="bn">persona</div>
+    <div class="bt">Cliente empresa</div>
+    <div class="bs">emite boletos y sigue los pagos</div>
+  </div>
+  <div class="c4head" style="left:257px;top:16px"></div>
+  <div class="bchip c4 web" style="left:148px;top:358px;width:260px;height:88px">
+    <div class="bn">contenedor · Next.js en Vercel</div>
+    <div class="bt">Portal empresarial</div>
+    <div class="bs">emisión por lotes y panel de cobros</div>
+  </div>
+  <div class="bchip c4" style="left:148px;top:547px;width:260px;height:112px">
+    <img src="aws://compute/lambda.png">
+    <div class="bn">contenedor · Node.js en Lambda</div>
+    <div class="bt">API de cobro</div>
+    <div class="bs">detrás de API Gateway; valida al pagador y guarda el boleto</div>
+    <a class="drill" href="billing-c4-api.html">abrir componentes →</a>
+  </div>
+  <div class="bchip c4 externo" style="left:245px;top:1090px;width:260px;height:80px">
+    <div class="bn">sistema externo · CIP</div>
+    <div class="bt">Nueva Plataforma de Cobro</div>
+    <div class="bs">registro del boleto</div>
+  </div>
+  <div class="bchip c4 banco" style="left:105px;top:760px;width:260px;height:86px">
+    <img src="aws://database/dynamodb.png">
+    <div class="bn">contenedor · DynamoDB</div>
+    <div class="bt">Base de datos de cobro</div>
+    <div class="bs">boletos, estado e historial de eventos</div>
+  </div>
+  <svg class="edges" viewBox="0 0 560 1186">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+    <path d="M318,124 L318,358" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M278,446 L278,547" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M322,659 L322,669 L375,669 L375,1090" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M235,659 L235,760" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M235,358 L235,124" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+  </svg>
+  <div class="rel" data-edge="0" style="left:329px;top:208px;width:210px;align-items:flex-start;text-align:left"><span class="rn">1</span><span class="rd">Completa pagador, importe y vencimiento</span><span class="rt">[navegador]</span></div>
+  <div class="rel" data-edge="1" style="left:203px;top:470px;width:150px"><span class="rn">2</span><span class="rd">Envía la solicitud de emisión</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="2" style="left:270px;top:906px;width:210px"><span class="rn">3</span><span class="rd">Registra el boleto y recibe el código de pago</span><span class="rt">[HTTPS · certificado]</span></div>
+  <div class="rel" data-edge="3" style="left:148px;top:683px;width:175px"><span class="rn">4</span><span class="rd">Guarda el boleto como registrado</span><span class="rt">[DynamoDB API]</span></div>
+  <div class="rel" data-edge="4" style="left:42px;top:214px;width:182px;align-items:flex-end;text-align:right"><span class="rn">5</span><span class="rd">Muestra el código de pago y el PDF</span><span class="rt">[navegador]</span></div>
+</div></div>
+
+<div class="sec">Secuencia</div>
+<div class="c4steps">
+<div class="cs"><span class="rn">1</span><div><b>Cliente empresa → Portal empresarial.</b> Completa pagador, importe y vencimiento <code>[navegador]</code></div></div>
+<div class="cs"><span class="rn">2</span><div><b>Portal empresarial → API de cobro.</b> Envía la solicitud de emisión <code>[HTTPS · JSON]</code></div></div>
+<div class="cs"><span class="rn">3</span><div><b>API de cobro → Nueva Plataforma de Cobro.</b> Registra el boleto y recibe el código de pago <code>[HTTPS · certificado]</code></div></div>
+<div class="cs"><span class="rn">4</span><div><b>API de cobro → Base de datos de cobro.</b> Guarda el boleto como registrado <code>[DynamoDB API]</code></div></div>
+<div class="cs"><span class="rn">5</span><div><b>Portal empresarial → Cliente empresa.</b> Muestra el código de pago y el PDF <code>[navegador]</code></div></div>
+</div>
+<div class="sec">Leyenda C4</div>
+<div class="c4leg">
+<div class="it"><div class="sw pessoa"></div>persona</div>
+<div class="it"><div class="sw limite"></div>límite del sistema en foco</div>
+<div class="it"><div class="sw "></div>contenedor: aplicación o servicio</div>
+<div class="it"><div class="sw web"></div>contenedor de interfaz web</div>
+<div class="it"><div class="sw banco"></div>contenedor de datos</div>
+<div class="it"><div class="sw externo"></div>sistema externo</div>
+<div class="it"><span class="sw drill">abrir →</span>abre una vista más detallada</div>
+<div class="it"><span class="seta"><b>1</b><i></i></span>paso, en orden: qué hace <code>[tecnología]</code></div>
+</div>
+
+<div class="foot" style="display:flex;justify-content:space-between"><span>ai-diagrams · modelo C4</span><span>cobro por boleto</span></div>
+
+</div>
+</body></html>

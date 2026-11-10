@@ -1,0 +1,9 @@
+{
+  "input": "../../process.bpmn",
+  "type": "bpmn",
+  "language": "es",
+  "sources": [
+    "process.html"
+  ],
+  "gate": "passed"
+}

@@ -1,0 +1,87 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Billing system: context</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="en">
+<meta name="width" content="1400">
+<style>/*STYLE*/
+body{width:1400px}</style></head><body>
+<div class="page">
+
+<div class="hdr"><span>ai-diagrams · Boleto billing system</span><span>C4 · V2</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · level 1, system context</div>
+<h1>Billing system: context</h1>
+<div class="sub">The billing system as a single box: who uses it and which systems it depends on. Pix billing, debt protest and credit bureau reporting are left out.</div>
+<div class="c4nav"><span class="cn">Views</span><a href="billing-c4-landscape.html">landscape</a><b>context</b><a href="billing-c4.html">containers</a><a href="billing-c4-api.html">components of Billing API</a><a href="billing-c4-emission.html">issuing a boleto</a><a href="billing-c4-deployment.html">deployment</a></div>
+
+<div class="wrap stack"><div class="canvas" style="width:993px;height:682px">
+  <div class="bchip c4 pessoa" style="left:712px;top:44px;width:250px;height:80px">
+    <div class="bn">person</div>
+    <div class="bt">Business customer</div>
+    <div class="bs">issues boletos and tracks payments</div>
+  </div>
+  <div class="c4head" style="left:817px;top:16px"></div>
+  <div class="bchip c4 pessoa" style="left:398px;top:44px;width:250px;height:80px">
+    <div class="bn">person</div>
+    <div class="bt">Finance analyst</div>
+    <div class="bs">handles duplicate payments and refunds</div>
+  </div>
+  <div class="c4head" style="left:503px;top:16px"></div>
+  <div class="bchip c4 foco" style="left:393px;top:285px;width:260px;height:114px">
+    <div class="bn">software system</div>
+    <div class="bt">Billing system</div>
+    <div class="bs">issues the boleto, registers it with CIP and settles it from the return file</div>
+    <a class="drill" href="billing-c4.html">open containers →</a>
+  </div>
+  <div class="bchip c4 externo" style="left:393px;top:574px;width:260px;height:92px">
+    <div class="bn">external system · CIP</div>
+    <div class="bt">New Billing Platform</div>
+    <div class="bs">boleto registration</div>
+  </div>
+  <div class="bchip c4 externo" style="left:74px;top:32px;width:260px;height:92px">
+    <div class="bn">external system · partner</div>
+    <div class="bt">Settlement bank</div>
+    <div class="bs">generates the CNAB 240 return file</div>
+  </div>
+  <div class="bchip c4 externo" style="left:717px;top:574px;width:260px;height:92px">
+    <div class="bn">external system · business customer</div>
+    <div class="bt">Customer webhook</div>
+    <div class="bs">receives the boleto payment notification</div>
+  </div>
+  <div class="bchip c4 outro" style="left:69px;top:574px;width:260px;height:80px">
+    <div class="bn">software system · another team</div>
+    <div class="bt">Accounting ERP</div>
+    <div class="bs">records the entry for each settlement</div>
+  </div>
+  <svg class="edges" viewBox="0 0 993 682">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+    <path d="M837,124 L837,253 L588,253 L588,285" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M523,124 L523,285" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M523,399 L523,574" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M204,124 L204,253 L458,253 L458,285" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M588,399 L588,431 L847,431 L847,574" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M458,399 L458,431 L199,431 L199,574" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+  </svg>
+  <div class="rel" data-edge="0" style="left:644px;top:236px;width:137px"><span class="rd">Issues and tracks boletos</span><span class="rt">[web portal or API]</span></div>
+  <div class="rel" data-edge="1" style="left:440px;top:188px;width:167px"><span class="rd">Handles duplicates and refunds</span><span class="rt">[browser]</span></div>
+  <div class="rel" data-edge="2" style="left:418px;top:463px;width:210px"><span class="rd">Registers the boleto before the payment code</span><span class="rt">[HTTPS · certificate]</span></div>
+  <div class="rel" data-edge="3" style="left:244px;top:236px;width:174px"><span class="rd">Delivers the CNAB 240 return file</span><span class="rt">[SFTP → S3 → SQS]</span></div>
+  <div class="rel" data-edge="4" style="left:651px;top:414px;width:133px"><span class="rd">Notifies each paid boleto</span><span class="rt">[HTTPS · HMAC]</span></div>
+  <div class="rel" data-edge="5" style="left:248px;top:414px;width:162px"><span class="rd">Publishes the settlement entry</span><span class="rt">[EventBridge]</span></div>
+</div></div>
+
+<div class="sec">C4 legend</div>
+<div class="c4leg">
+<div class="it"><div class="sw pessoa"></div>person</div>
+<div class="it"><div class="sw foco"></div>system in focus</div>
+<div class="it"><div class="sw outro"></div>another system of the company</div>
+<div class="it"><div class="sw externo"></div>external system</div>
+<div class="it"><span class="sw drill">open →</span>opens a more detailed view</div>
+<div class="it"><span class="seta"><i></i></span>relationship: what it does <code>[technology]</code></div>
+</div>
+
+<div class="foot" style="display:flex;justify-content:space-between"><span>ai-diagrams · C4 model</span><span>boleto billing</span></div>
+
+</div>
+</body></html>

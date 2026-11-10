@@ -1,0 +1,438 @@
+{
+  "lang": "es",
+  "header": [
+    "ai-diagrams · Sistema de cobro por boleto",
+    "C4 · V2"
+  ],
+  "footer": [
+    "ai-diagrams · modelo C4",
+    "cobro por boleto"
+  ],
+  "main": "containers",
+  "elements": [
+    {
+      "id": "cliente",
+      "type": "person",
+      "name": "Cliente empresa",
+      "description": "emite boletos y sigue los pagos"
+    },
+    {
+      "id": "analista",
+      "type": "person",
+      "name": "Analista financiero",
+      "description": "gestiona pagos duplicados y devoluciones"
+    },
+    {
+      "id": "cobranca",
+      "type": "system",
+      "name": "Sistema de cobro",
+      "description": "emite el boleto, lo registra en la CIP y lo liquida con el archivo de retorno"
+    },
+    {
+      "id": "cip",
+      "type": "system",
+      "external": true,
+      "owner": "CIP",
+      "name": "Nueva Plataforma de Cobro",
+      "description": "registro del boleto"
+    },
+    {
+      "id": "liquidante",
+      "type": "system",
+      "external": true,
+      "owner": "socio",
+      "name": "Banco liquidador",
+      "description": "genera el archivo de retorno CNAB 240"
+    },
+    {
+      "id": "webhook",
+      "type": "system",
+      "external": true,
+      "owner": "cliente empresa",
+      "name": "Webhook del cliente",
+      "description": "recibe el aviso de boleto pagado"
+    },
+    {
+      "id": "erp",
+      "type": "system",
+      "owner": "otro equipo",
+      "name": "ERP contable",
+      "description": "registra el asiento de cada liquidación"
+    },
+    {
+      "id": "portal",
+      "type": "container",
+      "parent": "cobranca",
+      "shape": "web",
+      "technology": "Next.js en Vercel",
+      "name": "Portal empresarial",
+      "description": "emisión por lotes y panel de cobros"
+    },
+    {
+      "id": "backoffice",
+      "type": "container",
+      "parent": "cobranca",
+      "shape": "web",
+      "technology": "React",
+      "name": "Backoffice",
+      "description": "consulta y ajuste manual de boletos"
+    },
+    {
+      "id": "api",
+      "type": "container",
+      "parent": "cobranca",
+      "technology": "Node.js en Lambda",
+      "icon": "aws://compute/lambda.png",
+      "name": "API de cobro",
+      "description": "detrás de API Gateway; valida al pagador y guarda el boleto"
+    },
+    {
+      "id": "banco",
+      "type": "container",
+      "parent": "cobranca",
+      "shape": "database",
+      "technology": "DynamoDB",
+      "icon": "aws://database/dynamodb.png",
+      "name": "Base de datos de cobro",
+      "description": "boletos, estado e historial de eventos"
+    },
+    {
+      "id": "processador",
+      "type": "container",
+      "parent": "cobranca",
+      "technology": "Lambda y cola SQS",
+      "icon": "aws://compute/lambda.png",
+      "name": "Procesador de retorno",
+      "description": "lee el archivo de retorno y liquida el boleto"
+    },
+    {
+      "id": "rotas",
+      "type": "component",
+      "parent": "api",
+      "technology": "Fastify",
+      "name": "Rutas de boleto",
+      "description": "recibe la emisión, la consulta y el ajuste"
+    },
+    {
+      "id": "acesso",
+      "type": "component",
+      "parent": "api",
+      "technology": "JWT de Cognito",
+      "name": "Control de acceso",
+      "description": "comprueba si quien llama es cliente u operador"
+    },
+    {
+      "id": "pagador",
+      "type": "component",
+      "parent": "api",
+      "technology": "TypeScript",
+      "name": "Validador de pagador",
+      "description": "comprueba CPF o CNPJ, vencimiento e importe"
+    },
+    {
+      "id": "registro",
+      "type": "component",
+      "parent": "api",
+      "technology": "cliente HTTPS con certificado",
+      "name": "Registro en la CIP",
+      "description": "registra el boleto y devuelve el código de pago"
+    },
+    {
+      "id": "repositorio",
+      "type": "component",
+      "parent": "api",
+      "technology": "AWS SDK",
+      "name": "Repositorio de boletos",
+      "description": "lee y guarda boleto, estado y evento"
+    },
+    {
+      "id": "aws",
+      "type": "deploymentNode",
+      "environment": "producao",
+      "name": "Cuenta AWS cobro-prod",
+      "technology": "sa-east-1"
+    },
+    {
+      "id": "gateway",
+      "type": "infrastructureNode",
+      "parent": "aws",
+      "technology": "Amazon API Gateway, con WAF",
+      "name": "API pública",
+      "description": "termina el TLS y comprueba el token"
+    },
+    {
+      "id": "lambda-api",
+      "type": "deploymentNode",
+      "parent": "aws",
+      "name": "AWS Lambda",
+      "technology": "Node.js 20"
+    },
+    {
+      "id": "api-1",
+      "type": "containerInstance",
+      "parent": "lambda-api",
+      "container": "api"
+    },
+    {
+      "id": "dynamo",
+      "type": "deploymentNode",
+      "parent": "aws",
+      "name": "Amazon DynamoDB",
+      "technology": "bajo demanda"
+    },
+    {
+      "id": "banco-1",
+      "type": "containerInstance",
+      "parent": "dynamo",
+      "container": "banco"
+    },
+    {
+      "id": "bucket",
+      "type": "infrastructureNode",
+      "parent": "aws",
+      "technology": "Amazon S3, vía Transfer Family",
+      "name": "Buzón de retorno",
+      "description": "recibe el CNAB 240 por SFTP"
+    },
+    {
+      "id": "fila",
+      "type": "infrastructureNode",
+      "parent": "aws",
+      "technology": "Amazon SQS",
+      "name": "Cola de retorno",
+      "description": "un evento por archivo nuevo"
+    },
+    {
+      "id": "lambda-ret",
+      "type": "deploymentNode",
+      "parent": "aws",
+      "name": "AWS Lambda",
+      "technology": "Node.js 20"
+    },
+    {
+      "id": "processador-1",
+      "type": "containerInstance",
+      "parent": "lambda-ret",
+      "container": "processador"
+    },
+    {
+      "id": "vercel",
+      "type": "deploymentNode",
+      "environment": "producao",
+      "name": "Vercel",
+      "technology": "red de borde"
+    },
+    {
+      "id": "portal-1",
+      "type": "containerInstance",
+      "parent": "vercel",
+      "container": "portal"
+    },
+    {
+      "id": "cdn",
+      "type": "deploymentNode",
+      "environment": "producao",
+      "name": "Amazon CloudFront",
+      "technology": "sitio estático en S3"
+    },
+    {
+      "id": "backoffice-1",
+      "type": "containerInstance",
+      "parent": "cdn",
+      "container": "backoffice"
+    }
+  ],
+  "relationships": [
+    {
+      "from": "cliente",
+      "to": "cobranca",
+      "description": "Emite y sigue boletos",
+      "technology": "portal web o API"
+    },
+    {
+      "from": "cliente",
+      "to": "portal",
+      "description": "Emite boletos y sigue los cobros",
+      "technology": "navegador"
+    },
+    {
+      "from": "cliente",
+      "to": "rotas",
+      "description": "Integra su propio sistema para emitir y consultar",
+      "technology": "HTTPS · JSON"
+    },
+    {
+      "from": "analista",
+      "to": "backoffice",
+      "description": "Gestiona duplicados y devoluciones",
+      "technology": "navegador"
+    },
+    {
+      "from": "portal",
+      "to": "rotas",
+      "description": "Pide la emisión y consulta el estado",
+      "technology": "HTTPS · JSON"
+    },
+    {
+      "from": "backoffice",
+      "to": "rotas",
+      "description": "Ajusta boletos con el rol de operador",
+      "technology": "HTTPS · JSON"
+    },
+    {
+      "from": "rotas",
+      "to": "acesso",
+      "description": "Comprueba el rol de quien llama",
+      "technology": "llamada interna"
+    },
+    {
+      "from": "rotas",
+      "to": "pagador",
+      "description": "Valida la solicitud de emisión",
+      "technology": "llamada interna"
+    },
+    {
+      "from": "rotas",
+      "to": "registro",
+      "description": "Pide el registro del boleto",
+      "technology": "llamada interna"
+    },
+    {
+      "from": "rotas",
+      "to": "repositorio",
+      "description": "Guarda y consulta boletos",
+      "technology": "llamada interna"
+    },
+    {
+      "from": "registro",
+      "to": "cip",
+      "description": "Registra el boleto antes del código de pago",
+      "technology": "HTTPS · certificado"
+    },
+    {
+      "from": "repositorio",
+      "to": "banco",
+      "description": "Guarda boleto, estado y evento",
+      "technology": "DynamoDB API"
+    },
+    {
+      "from": "liquidante",
+      "to": "processador",
+      "description": "Entrega el CNAB 240 de retorno",
+      "technology": "SFTP → S3 → SQS"
+    },
+    {
+      "from": "processador",
+      "to": "banco",
+      "description": "Liquida y guarda el pago",
+      "technology": "DynamoDB API"
+    },
+    {
+      "from": "processador",
+      "to": "webhook",
+      "description": "Avisa cada boleto pagado",
+      "technology": "HTTPS · HMAC"
+    },
+    {
+      "from": "processador",
+      "to": "erp",
+      "description": "Publica el asiento de la liquidación",
+      "technology": "EventBridge"
+    },
+    {
+      "from": "gateway",
+      "to": "api-1",
+      "description": "Reenvía la llamada autenticada",
+      "technology": "integración Lambda"
+    },
+    {
+      "from": "bucket",
+      "to": "fila",
+      "description": "Avisa archivo nuevo",
+      "technology": "evento de S3"
+    },
+    {
+      "from": "fila",
+      "to": "processador-1",
+      "description": "Activa con el archivo",
+      "technology": "disparador SQS"
+    }
+  ],
+  "views": [
+    {
+      "type": "landscape",
+      "key": "landscape",
+      "title": "Cobro por boleto: sistemas y personas",
+      "description": "Quién usa el cobro por boleto y con qué sistemas, de dentro y de fuera de la empresa, se comunica."
+    },
+    {
+      "type": "context",
+      "key": "context",
+      "scope": "cobranca",
+      "title": "Sistema de cobro: contexto",
+      "description": "El sistema de cobro como una sola caja: quién lo usa y de qué sistemas depende. Pix cobro, protesto e inscripción en burós quedan fuera."
+    },
+    {
+      "type": "container",
+      "key": "containers",
+      "scope": "cobranca",
+      "title": "Sistema de cobro por boleto: contenedores y dependencias",
+      "description": "En qué contenedores se divide el sistema de cobro y de qué sistemas depende, desde la emisión del boleto hasta la liquidación con el archivo de retorno. Pix cobro, protesto e inscripción en burós quedan fuera del diagrama."
+    },
+    {
+      "type": "component",
+      "key": "api",
+      "scope": "api",
+      "title": "API de cobro: componentes",
+      "description": "Las partes de la API de cobro y quién llama a cada una, desde la solicitud de emisión hasta el registro en la CIP y la escritura en la base."
+    },
+    {
+      "type": "dynamic",
+      "key": "emission",
+      "scope": "cobranca",
+      "label": "emisión de un boleto",
+      "title": "Emisión de un boleto por el portal",
+      "description": "El recorrido de una solicitud de emisión hecha en el portal, hasta que el cliente recibe el código de pago.",
+      "steps": [
+        {
+          "from": "cliente",
+          "to": "portal",
+          "description": "Completa pagador, importe y vencimiento",
+          "technology": "navegador"
+        },
+        {
+          "from": "portal",
+          "to": "api",
+          "description": "Envía la solicitud de emisión",
+          "technology": "HTTPS · JSON"
+        },
+        {
+          "from": "api",
+          "to": "cip",
+          "description": "Registra el boleto y recibe el código de pago",
+          "technology": "HTTPS · certificado"
+        },
+        {
+          "from": "api",
+          "to": "banco",
+          "description": "Guarda el boleto como registrado",
+          "technology": "DynamoDB API"
+        },
+        {
+          "from": "portal",
+          "to": "cliente",
+          "description": "Muestra el código de pago y el PDF",
+          "technology": "navegador"
+        }
+      ]
+    },
+    {
+      "type": "deployment",
+      "key": "deployment",
+      "scope": "cobranca",
+      "environment": "producao",
+      "title": "Sistema de cobro: despliegue en producción",
+      "description": "Dónde corre cada contenedor en producción: las funciones y la base en una cuenta AWS, el portal en Vercel y el backoffice en CloudFront."
+    }
+  ]
+}

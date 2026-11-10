@@ -1,0 +1,381 @@
+Home	Início	Inicio
+Diagrams	Diagramas	Diagramas
+AWS architecture	Arquitetura AWS	Arquitectura AWS
+Themes	Temas	Temas
+Compatibility & install	Compatibilidade e instalação	Compatibilidad e instalación
+Brand	Marca	Marca
+Light	Claro	Claro
+Dark	Escuro	Oscuro
+Copy	Copiar	Copiar
+Copied	Copiado	Copiado
+ai-diagrams home	Início do ai-diagrams	Inicio de ai-diagrams
+Main navigation	Navegação principal	Navegación principal
+Models	Modelos	Modelos
+Search diagrams	Buscar diagramas	Buscar diagramas
+Site appearance	Aparência do site	Apariencia del sitio
+Menu	Menu	Menú
+Site language	Idioma do site	Idioma del sitio
+Describe it. Keep the source.	Descreva. Guarde o fonte.	Descríbelo. Conserva el fuente.
+All six boards →	Todas as seis pranchas →	Las seis láminas →
+Project links	Links do projeto	Enlaces del proyecto
+MIT license	Licença MIT	Licencia MIT
+Contribute	Contribuir	Contribuir
+Changelog	Histórico de alterações	Historial de cambios
+Next on the drawing board	Próximos na prancheta	Próximos en la mesa de dibujo
+Eight proposed types. None started yet.	Oito tipos propostos. Nenhum iniciado.	Ocho tipos propuestos. Ninguno iniciado.
+Coming soon	Em breve	Próximamente
+Proposed	Proposto	Propuesto
+Installation tool	Ferramenta de instalação	Herramienta de instalación
+Use absolute paths for <AI_DIAGRAMS> and <PROJECT>. Check existing installs before creating a link.	Use caminhos absolutos para <AI_DIAGRAMS> e <PROJECT>. Confira as instalações existentes antes de criar um link.	Usa rutas absolutas para <AI_DIAGRAMS> y <PROJECT>. Revisa las instalaciones existentes antes de crear un enlace.
+Install in	Instalar no	Instalar en
+Expected output	Saída esperada	Salida esperada
+Before you install: requirements	Antes de instalar: requisitos	Antes de instalar: requisitos
+Verify the complete pipeline	Verificar o pipeline completo	Verificar el pipeline completo
+Smoke test	Teste de verificação	Prueba de verificación
+Claude.ai and ChatGPT	Claude.ai e ChatGPT	Claude.ai y ChatGPT
+The documented installation targets Claude Code, Codex CLI and Kiro CLI. A verified web-app installation is not provided in INSTALL.md.	A instalação documentada atende Claude Code, Codex CLI e Kiro CLI. O INSTALL.md não fornece uma instalação verificada para aplicações web.	La instalación documentada cubre Claude Code, Codex CLI y Kiro CLI. INSTALL.md no incluye una instalación verificada para aplicaciones web.
+Explore ai-diagrams	Explorar ai-diagrams	Explorar ai-diagrams
+Install	Instalar	Instalar
+Runs in your CLI	Roda na sua CLI	Se ejecuta en tu CLI
+Real examples. Editable source.	Exemplos reais. Fonte editável.	Ejemplos reales. Fuente editable.
+Example	Exemplo	Ejemplo
+Diagram preset	Preset do diagrama	Preset del diagrama
+Diagram appearance	Aparência do diagrama	Apariencia del diagrama
+Open playground →	Abrir playground →	Abrir playground →
+Example:	Exemplo:	Ejemplo:
+An open skill for Claude Code, Codex CLI and Kiro CLI	Uma skill aberta para Claude Code, Codex CLI e Kiro CLI	Una skill abierta para Claude Code, Codex CLI y Kiro CLI
+Describe it in words.	Descreva com palavras.	Descríbelo con palabras.
+See how it connects.	Veja como se conecta.	Mira cómo se conecta.
+Turn a document, a process or a database schema into a diagram. Get editable source and a PNG, checked by a geometric gate.	Transforme um documento, um processo ou um schema de banco em um diagrama. Receba o fonte editável e um PNG, verificados por um gate geométrico.	Convierte un documento, un proceso o un schema de base de datos en un diagrama. Recibe el fuente editable y un PNG, verificados por un gate geométrico.
+Install ai-diagrams →	Instalar ai-diagrams →	Instalar ai-diagrams →
+See diagrams	Ver diagramas	Ver diagramas
+Encontro, the ai-diagrams symbol	Encontro, o símbolo do ai-diagrams	Encontro, el símbolo de ai-diagrams
+Ideas, systems	Ideias, sistemas	Ideas, sistemas
+and processes.	e processos.	y procesos.
+Give them a shape.	Dê forma a eles.	Dales forma.
+How it works	Como funciona	Cómo funciona
+Describe	Descreva	Describe
+A plain-language request, a document or a DDL.	Um pedido em linguagem natural, um documento ou um DDL.	Una petición en lenguaje natural, un documento o un DDL.
+The gate rejects	O gate reprova	El gate rechaza
+Loose arrows, overlapping text and clipped margins.	Setas soltas, textos sobrepostos e margens cortadas.	Flechas sueltas, textos superpuestos y márgenes recortados.
+Receive	Receba	Recibe
+Editable source and a PNG you can keep in your repository.	Fonte editável e um PNG para guardar no seu repositório.	Fuente editable y un PNG para guardar en tu repositorio.
+A diagram for the question at hand	Um diagrama para cada pergunta	Un diagrama para cada pregunta
+11 types, from the first service call to the last database relationship.	11 tipos, da primeira chamada ao serviço à última relação no banco.	11 tipos, desde la primera llamada al servicio hasta la última relación en la base de datos.
+Browse all diagrams →	Explorar todos os diagramas →	Explorar todos los diagramas →
+Choose a model with evidence	Escolha um modelo com evidência	Elige un modelo con evidencia
+Best available evidence for each type. A measured pass is not a universal ranking.	A melhor evidência disponível por tipo. Uma aprovação medida não é um ranking universal.	La mejor evidencia disponible por tipo. Una aprobación medida no es un ranking universal.
+See all measurements →	Ver todas as medições →	Ver todas las mediciones →
+Keep the workflow in your CLI	Mantenha o fluxo na sua CLI	Mantén el flujo en tu CLI
+Install once. Describe the next diagram in the project where it belongs.	Instale uma vez. Descreva o próximo diagrama no projeto ao qual ele pertence.	Instala una vez. Describe el próximo diagrama en el proyecto al que pertenece.
+Requirements and full installation →	Requisitos e instalação completa →	Requisitos e instalación completa →
+The diagram library	A biblioteca de diagramas	La biblioteca de diagramas
+Start with a question.	Comece com uma pergunta.	Empieza con una pregunta.
+Find the form that makes the answer visible. Every preview comes from a real example in the repository.	Encontre a forma que torna a resposta visível. Cada prévia vem de um exemplo real do repositório.	Encuentra la forma que hace visible la respuesta. Cada vista previa viene de un ejemplo real del repositorio.
+Diagram family	Família do diagrama	Familia del diagrama
+All types	Todos os tipos	Todos los tipos
+Filter diagrams	Filtrar diagramas	Filtrar diagramas
+Find a diagram…	Encontre um diagrama…	Encuentra un diagrama…
+of 11 types	de 11 tipos	de 11 tipos
+No diagrams match. Try a broader question or choose another family.	Nenhum diagrama encontrado. Tente uma pergunta mais ampla ou escolha outra família.	No hay diagramas coincidentes. Prueba una pregunta más amplia o elige otra familia.
+Diagram type	Tipo de diagrama	Tipo de diagrama
+Measured compatibility by diagram type and model	Compatibilidade medida por tipo de diagrama e modelo	Compatibilidad medida por tipo de diagrama y modelo
+Diagram types / 11	Tipos de diagrama / 11	Tipos de diagrama / 11
+Find a type	Encontrar um tipo	Encontrar un tipo
+Find a type…	Encontre um tipo…	Encuentra un tipo…
+Diagram types	Tipos de diagrama	Tipos de diagrama
+Coming soon →	Em breve →	Próximamente →
+Diagrams / Architecture	Diagramas / Arquitetura	Diagramas / Arquitectura
+AWS architecture poster	Poster de arquitetura AWS	Póster de arquitectura AWS
+Which services exist, and how does a request move through them?	Quais serviços existem e como uma requisição passa por eles?	¿Qué servicios existen y cómo pasa una petición por ellos?
+Example theme	Tema do exemplo	Tema del ejemplo
+Example appearance	Aparência do exemplo	Apariencia del ejemplo
+Example frame	Moldura do exemplo	Marco del ejemplo
+Full frame	Moldura completa	Marco completo
+Drawing only	Só o desenho	Solo el dibujo
+Transfer fraud decision	Decisão de fraude em transferências	Decisión de fraude en transferencias
+When to use it	Quando usar	Cuándo usarlo
+What it makes clear	O que esclarece	Qué aclara
+When another type fits	Quando outro tipo serve melhor	Cuándo conviene otro tipo
+Start with the actual example	Comece pelo exemplo real	Empieza por el ejemplo real
+The request and source document use the selected language.	O pedido e o documento fonte usam o idioma selecionado.	La petición y el documento fuente usan el idioma seleccionado.
+Read the accompanying source document	Ler o documento fonte que acompanha	Leer el documento fuente adjunto
+What the gate checks	O que o gate confere	Qué verifica el gate
+Geometry checks help catch drawing defects. Review the meaning of the diagram yourself.	As verificações geométricas ajudam a encontrar defeitos no desenho. Revise você mesmo o significado do diagrama.	Las verificaciones geométricas ayudan a detectar defectos del dibujo. Revisa el significado del diagrama.
+A rejected case	Um caso reprovado	Un caso rechazado
+Measured compatibility	Compatibilidade medida	Compatibilidad medida
+Results for this type, copied from docs/models.md.	Resultados deste tipo, copiados de docs/models.md.	Resultados de este tipo, copiados de docs/models.md.
+Read all measurements and sources →	Ler todas as medições e fontes →	Leer todas las mediciones y fuentes →
+Ink	Tinta	Tinta
+Support	Apoio	Apoyo
+Muted	Cinza	Gris
+Zone	Zona	Zona
+Paper	Papel	Papel
+Accent	Acento	Acento
+Risk	Risco	Riesgo
+Risk background	Fundo de risco	Fondo de riesgo
+Themes / Playground	Temas / Playground	Temas / Playground
+One drawing. Your visual language.	Um desenho. Sua linguagem visual.	Un dibujo. Tu lenguaje visual.
+Change the tokens, keep the geometry. Try the two included presets, then make a theme of your own.	Troque os tokens, preserve a geometria. Teste os dois presets incluídos e crie seu próprio tema.	Cambia los tokens, conserva la geometría. Prueba los dos presets incluidos y crea tu propio tema.
+Same diagram in two themes	O mesmo diagrama em dois temas	El mismo diagrama en dos temas
+Same source · Same coordinates	Mesmo fonte · Mesmas coordenadas	Mismo fuente · Mismas coordenadas
+Edit the theme	Editar o tema	Editar el tema
+Preset	Preset	Preset
+Theme name	Nome do tema	Nombre del tema
+Colors	Cores	Colores
+Derived colors	Cores derivadas	Colores derivados
+Data diagram palette	Paleta dos diagramas de dados	Paleta de diagramas de datos
+Fonts	Fontes	Fuentes
+Text	Texto	Texto
+Code and labels	Código e rótulos	Código y etiquetas
+Frame	Moldura	Marco
+Preview frame	Moldura da prévia	Marco de la vista previa
+Include client in exported frame	Incluir cliente na moldura exportada	Incluir cliente en el marco exportado
+Client	Cliente	Cliente
+Header template	Modelo do cabeçalho	Plantilla del encabezado
+Footer template	Modelo do rodapé	Plantilla del pie
+Version / right footer	Versão / rodapé direito	Versión / pie derecho
+Classification	Classificação	Clasificación
+Frame text is saved in the exported theme. The examples keep their original labels and positions.	O texto da moldura é salvo no tema exportado. Os exemplos mantêm seus rótulos e posições.	El texto del marco se guarda en el tema exportado. Los ejemplos conservan sus etiquetas y posiciones.
+Export tema.json ↓	Exportar tema.json ↓	Exportar tema.json ↓
+Across all 11 types	Nos 11 tipos	En los 11 tipos
+Your edits update each preview.	Suas edições atualizam cada prévia.	Tus cambios actualizan cada vista previa.
+Preview appearance	Aparência da prévia	Apariencia de la vista previa
+Measured text contrast	Contraste de texto medido	Contraste de texto medido
+Actual ratios from the edited palette. Normal text needs at least 4.5:1. Preview mode does not change the exported colors.	Razões reais da paleta editada. Texto normal precisa de pelo menos 4,5:1. O modo da prévia não altera as cores exportadas.	Razones reales de la paleta editada. El texto normal necesita al menos 4,5:1. El modo de vista previa no altera los colores exportados.
+Meets 4.5:1	Atende 4,5:1	Cumple 4,5:1
+Below 4.5:1	Abaixo de 4,5:1	Por debajo de 4,5:1
+Take it back to the skill	Leve de volta à skill	Llévalo a la skill
+Export the theme JSON, then pass its path when you generate the next diagram.	Exporte o JSON do tema e passe seu caminho ao gerar o próximo diagrama.	Exporta el JSON del tema y pasa su ruta al generar el próximo diagrama.
+Compatibility / Install	Compatibilidade / Instalação	Compatibilidad / Instalación
+Choose from what was measured.	Escolha pelo que foi medido.	Elige según lo medido.
+Quality depends on the model. These are recorded runs, with visible defects kept in the table.	A qualidade depende do modelo. Estas execuções foram registradas, com defeitos visíveis mantidos na tabela.	La calidad depende del modelo. Estas ejecuciones están registradas, con los defectos visibles conservados en la tabla.
+Where each result comes from	De onde vem cada resultado	De dónde viene cada resultado
+Source: docs/models.md. An unmeasured cell stays “not measured”.	Fonte: docs/models.md. Uma célula sem medição continua “não medido”.	Fuente: docs/models.md. Una celda sin medición sigue como “sin medir”.
+Read the source table on GitHub ↗	Ler a tabela fonte no GitHub ↗	Leer la tabla fuente en GitHub ↗
+Install ai-diagrams	Instalar ai-diagrams	Instalar ai-diagrams
+Choose your CLI, check the requirements, and run the documented steps.	Escolha sua CLI, confira os requisitos e execute os passos documentados.	Elige tu CLI, revisa los requisitos y ejecuta los pasos documentados.
+Installation source:	Fonte da instalação:	Fuente de instalación:
+. The diagram workflow uses local headless Chrome; the mockup itself does not need it.	. O fluxo dos diagramas usa Chrome headless local; a prancha não precisa dele.	. El flujo de diagramas usa Chrome headless local; la lámina no lo necesita.
+Cyan	Ciano	Cian
+Coral	Coral	Coral
+Yellow	Amarelo	Amarillo
+Violet	Violeta	Violeta
+The ai-diagrams brand	A marca ai-diagrams	La marca ai-diagrams
+Documents	Documentos	Documentos
+come to life.	ganham vida.	cobran vida.
+Download the signature ↓	Baixar a assinatura ↓	Descargar la firma ↓
+Ideas, systems and processes find a shape. A neutral interface gives the drawing room to speak.	Ideias, sistemas e processos ganham forma. Uma interface neutra dá espaço para o desenho falar.	Ideas, sistemas y procesos toman forma. Una interfaz neutra deja espacio para que hable el dibujo.
+Brand sections	Seções da marca	Secciones de la marca
+01 Signature	01 Assinatura	01 Firma
+02 Color & type	02 Cor e tipografia	02 Color y tipografía
+03 Voice	03 Voz	03 Voz
+04 Applications	04 Aplicações	04 Aplicaciones
+Encontro. A D with an A inside.	Encontro. Um D com um A dentro.	Encontro. Una D con una A dentro.
+Encontro: cyan stem, coral circle and an upright yellow triangle	Encontro: haste ciano, círculo coral e triângulo amarelo apontado para cima	Encontro: asta cian, círculo coral y triángulo amarillo hacia arriba
+Different shapes. One meeting point.	Formas diferentes. Um ponto de encontro.	Formas distintas. Un punto de encuentro.
+The stem and the circle form a D. The equilateral triangle points up like an A. Yellow stays solid on top; only cyan and coral overlap in multiply.	A haste e o círculo formam um D. O triângulo equilátero aponta para cima como um A. O amarelo fica sólido por cima; só ciano e coral se sobrepõem em multiply.	El asta y el círculo forman una D. El triángulo equilátero apunta hacia arriba como una A. El amarillo queda sólido encima; solo cian y coral se superponen en multiply.
+Symbol	Símbolo	Símbolo
+Keep clear space equal to ¼ of the symbol width. Minimum: 16 px for the symbol, 160 px for the signature. Always write ai-diagrams in lowercase.	Mantenha respiro igual a ¼ da largura do símbolo. Mínimo: 16 px para o símbolo, 160 px para a assinatura. Escreva sempre ai-diagrams em minúsculas.	Mantén un espacio libre igual a ¼ del ancho del símbolo. Mínimo: 16 px para el símbolo, 160 px para la firma. Escribe siempre ai-diagrams en minúsculas.
+Primary signature	Assinatura principal	Firma principal
+On a dark background	Sobre fundo escuro	Sobre fondo oscuro
+Signature SVG ↓	Assinatura SVG ↓	Firma SVG ↓
+Symbol SVG ↓	Símbolo SVG ↓	Símbolo SVG ↓
+Monochrome SVG ↓	Monocromático SVG ↓	Monocromático SVG ↓
+02 Color & typography	02 Cor e tipografia	02 Color y tipografía
+Color belongs to the drawing. Controls stay neutral.	A cor pertence ao desenho. Os controles ficam neutros.	El color pertenece al dibujo. Los controles se mantienen neutros.
+Where the colors meet	Onde as cores se encontram	Donde se encuentran los colores
+Suddenly,	De repente,	De repente,
+it all connects.	tudo se conecta.	todo se conecta.
+Titles, body text and the signature.	Títulos, texto e assinatura.	Títulos, texto y firma.
+Labels, measurements and code.	Rótulos, medições e código.	Etiquetas, mediciones y código.
+Lively. Clear. Grounded.	Viva. Clara. Concreta.	Viva. Clara. Concreta.
+Use short sentences and concrete verbs. Explain the next step. Be curious about the drawing, precise about what was checked.	Use frases curtas e verbos concretos. Explique o próximo passo. Tenha curiosidade pelo desenho e precisão sobre o que foi verificado.	Usa frases cortas y verbos concretos. Explica el siguiente paso. Muestra curiosidad por el dibujo y precisión sobre lo verificado.
+“The diagram is ready. See how the parts connect.”	“O diagrama está pronto. Veja como as partes se conectam.”	“El diagrama está listo. Mira cómo se conectan las partes.”
+“Two boxes overlap. Let's make room between them.”	“Duas caixas se sobrepõem. Vamos abrir espaço entre elas.”	“Dos cajas se superponen. Vamos a dejar espacio entre ellas.”
+Geometry checks help with the drawing. Content still needs a human review.	As verificações geométricas ajudam no desenho. O conteúdo ainda precisa de revisão humana.	Las verificaciones geométricas ayudan con el dibujo. El contenido aún necesita revisión humana.
+From the browser tab to the complete drawing.	Da aba do navegador ao desenho completo.	Desde la pestaña del navegador hasta el dibujo completo.
+Brand diagram using the four colors and numbered connections	Diagrama da marca com as quatro cores e conexões numeradas	Diagrama de marca con los cuatro colores y conexiones numeradas
+Identity study with the brand palette.	Estudo de identidade com a paleta da marca.	Estudio de identidad con la paleta de marca.
+Favicon / actual size	Favicon / tamanho real	Favicon / tamaño real
+Favicon SVG ↓	Favicon SVG ↓	Favicon SVG ↓
+The same Encontro geometry, from the smallest icon to the full signature.	A mesma geometria Encontro, do menor ícone à assinatura completa.	La misma geometría Encontro, desde el icono más pequeño hasta la firma completa.
+ai-diagrams / design review	ai-diagrams / revisão de design	ai-diagrams / revisión de diseño
+Six boards. One direction.	Seis pranchas. Uma direção.	Seis láminas. Una dirección.
+Static mockups for approval before the real site is built. Open each board to review content, layout and local interactions.	Pranchas estáticas para aprovação antes de construir o site real. Abra cada prancha para revisar conteúdo, layout e interações locais.	Láminas estáticas para aprobar antes de construir el sitio real. Abre cada lámina para revisar contenido, layout e interacciones locales.
+Each HTML contains its own scripts, fonts and example assets. Use Light / Dark to compare appearances. Browser captures and visual approval remain pending.	Cada HTML contém seus scripts, fontes e assets dos exemplos. Use Claro / Escuro para comparar. Capturas no navegador e aprovação visual estão pendentes.	Cada HTML contiene sus scripts, fuentes y assets de los ejemplos. Usa Claro / Oscuro para comparar. Las capturas del navegador y la aprobación visual siguen pendientes.
+Skip to content	Pular para o conteúdo	Saltar al contenido
+Ink / paper	Tinta / papel	Tinta / papel
+Support / paper	Apoio / papel	Apoyo / papel
+Muted / paper	Cinza / papel	Gris / papel
+Accent / paper	Acento / papel	Acento / papel
+Ink / zone	Tinta / zona	Tinta / zona
+Risk / risk background	Risco / fundo de risco	Riesgo / fondo de riesgo
+Diagrams from a description	Diagramas a partir de uma descrição	Diagramas a partir de una descripción
+Compatibility and installation	Compatibilidade e instalação	Compatibilidad e instalación
+Page mockups	Pranchas do site	Láminas del sitio
+Static page mockup for ai-diagrams design review.	Prancha estática para revisão do design do ai-diagrams.	Lámina estática para revisar el diseño de ai-diagrams.
+Light gray	Cinza claro	Gris claro
+Strong accent	Acento forte	Acento fuerte
+C4 person type	C4: tipo da pessoa	C4: tipo de persona
+C4 person description	C4: descrição da pessoa	C4: descripción de persona
+C4 external system	C4: sistema externo	C4: sistema externo
+C4 boundary	C4: limite	C4: límite
+ER border	DER: borda	DER: borde
+ER legend	DER: legenda	DER: leyenda
+ER even row	DER: linha par	DER: fila par
+ER key	DER: chave	DER: clave
+ER domain	DER: domínio	DER: dominio
+ER external	DER: externo	DER: externo
+ER copy	DER: cópia	DER: copia
+ER strong entity	DER: entidade forte	DER: entidad fuerte
+ER dependent	DER: dependente	DER: dependiente
+ER associative	DER: associativa	DER: asociativa
+ER control	DER: controle	DER: control
+ER fact	DER: fato	DER: hecho
+ER versioned	DER: versionada	DER: versionada
+ER projection	DER: projeção	DER: proyección
+ER trail	DER: trilha	DER: traza
+ER domain background	DER: fundo de domínio	DER: fondo de dominio
+ER configuration	DER: configuração	DER: configuración
+ER reference	DER: referência	DER: referencia
+ER view	DER: visão	DER: vista
+ER heatmap	DER: mapa de calor	DER: mapa de calor
+Import	Importar	Importar
+All seven boards →	Todas as sete pranchas →	Las siete láminas →
+Seven boards. One direction.	Sete pranchas. Uma direção.	Siete láminas. Una dirección.
+Made by Vinícius Coimbra	Feito por Vinícius Coimbra	Hecho por Vinícius Coimbra
+Package prepared locally. Publication on npm is pending; these commands become available after publication.	Pacote preparado localmente. A publicação no npm está pendente; estes comandos ficam disponíveis após a publicação.	Paquete preparado localmente. La publicación en npm está pendiente; estos comandos estarán disponibles después de publicarlo.
+Explore all 11 diagrams	Explore os 11 diagramas	Explora los 11 diagramas
+Choose a diagram	Escolha um diagrama	Elige un diagrama
+Input format	Formato de entrada	Formato de entrada
+Parser and native source tests passed. Browser layout validation is pending.	Testes de leitura e fonte nativo aprovados. A validação de layout no navegador está pendente.	Pruebas de lectura y fuente nativa aprobadas. La validación de diseño en el navegador está pendiente.
+Import command	Comando de importação	Comando de importación
+Generated by the ai-diagrams engine	Gerado pelo motor ai-diagrams	Generado por el motor ai-diagrams
+Download input ↓	Baixar entrada ↓	Descargar entrada ↓
+Unsupported syntax returns an error with its location. The importer keeps the engine's native source, then runs the regular generator and gate.	Sintaxe não suportada retorna um erro com sua localização. O importador mantém o fonte nativo do motor e executa o gerador e o gate de sempre.	La sintaxis no admitida devuelve un error con su ubicación. El importador conserva la fuente nativa del motor y ejecuta el generador y el gate habituales.
+Source and package	Código e pacote	Código y paquete
+Source, examples and issue tracking. MIT license.	Código, exemplos e acompanhamento de problemas. Licença MIT.	Código, ejemplos y seguimiento de problemas. Licencia MIT.
+Open repository ↗	Abrir repositório ↗	Abrir repositorio ↗
+Package prepared locally. Publication pending.	Pacote preparado localmente. Publicação pendente.	Paquete preparado localmente. Publicación pendiente.
+Package address after publication ↗	Endereço do pacote após publicação ↗	Dirección del paquete después de publicarlo ↗
+Import an existing source	Importe um fonte existente	Importa una fuente existente
+Keep the source. Redraw with ai-diagrams.	Mantenha o fonte. Redesenhe com ai-diagrams.	Conserva la fuente. Redibuja con ai-diagrams.
+Start from Mermaid, BPMN XML, DDL, CSV or YAML. These examples are converted into the engine's native formats and rendered by its existing generators.	Comece com Mermaid, BPMN XML, DDL, CSV ou YAML. Estes exemplos são convertidos para os formatos nativos do motor e desenhados pelos geradores existentes.	Empieza con Mermaid, BPMN XML, DDL, CSV o YAML. Estos ejemplos se convierten a los formatos nativos del motor y se dibujan con los generadores existentes.
+From file to checked diagram	Do arquivo ao diagrama verificado	Del archivo al diagrama verificado
+The layout is rebuilt by the engine; original drawing coordinates are not preserved.	O layout é refeito pelo motor; as coordenadas do desenho original não são preservadas.	El motor rehace el diseño; las coordenadas del dibujo original no se conservan.
+A Mermaid flowchart becomes BPMN. A flowchart with subgraph lanes becomes swimlanes. DDL can also produce a schema dependency matrix with --tipo matriz.	Um flowchart Mermaid vira BPMN. Um flowchart com raias em subgraph vira raias. DDL também pode gerar uma matriz de dependência de schemas com --tipo matriz.	Un flowchart Mermaid se convierte en BPMN. Un flowchart con carriles en subgraph se convierte en carriles. DDL también puede producir una matriz de dependencias de schemas con --tipo matriz.
+DDL to dependency matrix	DDL para matriz de dependência	DDL a matriz de dependencias
+Already have a source file?	Já tem um arquivo fonte?	¿Ya tienes un archivo fuente?
+Nine input formats, using the same generators and gate.	Nove formatos de entrada, com os mesmos geradores e gate.	Nueve formatos de entrada, con los mismos generadores y gate.
+Explore importing →	Explore a importação →	Explora la importación →
+Mermaid flowchart	Mermaid flowchart	Mermaid flowchart
+Mermaid sequence	Mermaid sequência	Mermaid secuencia
+Mermaid state	Mermaid estados	Mermaid estados
+Mermaid ER	Mermaid ER	Mermaid ER
+BPMN XML	BPMN XML	BPMN XML
+DDL SQL	DDL SQL	DDL SQL
+CSV catalog	Catálogo CSV	Catálogo CSV
+YAML comparison	Comparação YAML	Comparación YAML
+GitHub	GitHub	GitHub
+Parser and native source tests passed. Browser layout validation passed.	Testes de leitura e fonte nativo aprovados. Validação de layout no navegador aprovada.	Pruebas de lectura y fuente nativa aprobadas. Validación de diseño en el navegador aprobada.
+Published on npm as ai-diagrams. npx downloads it on first use.	Publicado no npm como ai-diagrams. O npx baixa o pacote no primeiro uso.	Publicado en npm como ai-diagrams. npx descarga el paquete en el primer uso.
+Open the theme editor →	Abrir o editor de tema →	Abrir el editor de tema →
+Published on npm. Zero npm dependencies.	Publicado no npm. Nenhuma dependência npm.	Publicado en npm. Ninguna dependencia npm.
+Open on npm ↗	Abrir no npm ↗	Abrir en npm ↗
+A Mermaid flowchart becomes BPMN. A flowchart with subgraph lanes becomes swimlanes. DDL can also produce a schema dependency matrix with --type matrix. A Structurizr DSL workspace becomes one page per C4 view.	Um flowchart Mermaid vira BPMN. Um flowchart com raias em subgraph vira fluxo em raias. O DDL também gera a matriz de dependência entre schemas com --type matrix. Um workspace em Structurizr DSL vira uma página por visão C4.	Un flowchart Mermaid se convierte en BPMN. Un flowchart con carriles en subgraph se convierte en carriles. El DDL también genera la matriz de dependencias entre schemas con --type matrix. Un workspace en Structurizr DSL se convierte en una página por vista C4.
+Setups with a recorded clean pass, read from docs/models/runs.json. A measured pass is not a universal ranking.	Combinações com aprovação limpa registrada, lidas de docs/models/runs.json. Uma aprovação medida não é um ranking universal.	Combinaciones con aprobación limpia registrada, leídas de docs/models/runs.json. Una aprobación medida no es un ranking universal.
+No clean pass yet	Nenhuma aprovação limpa ainda	Ninguna aprobación limpia todavía
+measured setups passed with a clean PNG	combinações medidas passaram com PNG limpo	combinaciones medidas aprobaron con PNG limpio
+Passed	Passou	Aprobado
+Failed	Falhou	Falló
+Not measured	Não medido	No medido
+Gate only	Só gate	Solo gate
+Defect	Defeito	Defecto
+Source	Fonte	Fuente
+Totals	Totais	Totales
+Filter by CLI	Filtrar por CLI	Filtrar por CLI
+All CLIs	Todas as CLIs	Todas las CLI
+Template gate	Gate do modelo	Gate de la plantilla
+not run	não rodou	sin ejecutar
+Any CLI	Qualquer CLI	Cualquier CLI
+Installation checks	Verificações de instalação	Verificaciones de instalación
+npm smoke test	smoke test do npm	smoke test de npm
+The npm smoke test has not written a report yet.	O smoke test do npm ainda não gravou relatório.	El smoke test de npm todavía no escribió un informe.
+Import samples	Amostras de importação	Muestras de importación
+Source test and full gate of each sample in examples/import/manifest.json.	Teste do fonte e gate completo de cada amostra em examples/import/manifest.json.	Prueba del fuente y gate completo de cada muestra en examples/import/manifest.json.
+Sample	Amostra	Muestra
+Source test · gate	Teste do fonte · gate	Prueba del fuente · gate
+Results for this type, read from docs/models/runs.json.	Resultados deste tipo, lidos de docs/models/runs.json.	Resultados de este tipo, leídos de docs/models/runs.json.
+What works, measured.	O que funciona, medido.	Lo que funciona, medido.
+Every cell is a recorded run. Green passed, red failed, gray was not measured. Nothing on this page is typed by hand: it is read from the files the tests and runs write.	Cada célula é uma execução registrada. Verde passou, vermelho falhou, cinza não foi medido. Nada nesta página é digitado à mão: tudo vem dos arquivos que os testes e as execuções gravam.	Cada celda es una ejecución registrada. Verde aprobó, rojo falló, gris no se midió. Nada en esta página se escribe a mano: todo viene de los archivos que escriben las pruebas y las ejecuciones.
+Sources: docs/models/runs.json, docs/models/gates.json, docs/models/install-checks.json and examples/import/manifest.json.	Fontes: docs/models/runs.json, docs/models/gates.json, docs/models/install-checks.json e examples/import/manifest.json.	Fuentes: docs/models/runs.json, docs/models/gates.json, docs/models/install-checks.json y examples/import/manifest.json.
+. The diagram workflow uses local headless Chrome; this site does not need it.	. O fluxo de diagramas usa o Chrome headless local; este site não precisa dele.	. El flujo de diagramas usa Chrome headless local; este sitio no lo necesita.
+Light muted	Cinza claro	Gris claro
+ER audit trail	DER trilha de auditoria	DER pista de auditoría
+Matrix heat	Calor da matriz	Calor de la matriz
+Fill	Preenchimento	Relleno
+Line	Linha	Línea
+color	cor	color
+Show in the diagram	Mostrar no diagrama	Mostrar en el diagrama
+Not used in this diagram	Não usado neste diagrama	No se usa en este diagrama
+Themes / Editor	Temas / Editor	Temas / Editor
+Click a shape. Change its color.	Clique numa forma. Troque a cor.	Haz clic en una forma. Cambia su color.
+Pick a diagram and click any box, line or label: the panel jumps to the color token it uses. Every change repaints the drawing, and the file you export is the theme the engine reads.	Escolha um diagrama e clique em qualquer caixa, linha ou rótulo: o painel vai até o token de cor que ele usa. Cada mudança redesenha o diagrama, e o arquivo exportado é o tema que o motor lê.	Elige un diagrama y haz clic en cualquier caja, línea o etiqueta: el panel salta al token de color que usa. Cada cambio vuelve a pintar el diagrama, y el archivo exportado es el tema que lee el motor.
+Start from	Começar de	Empezar desde
+Imported file	Arquivo importado	Archivo importado
+Open theme.json	Abrir theme.json	Abrir theme.json
+Export theme ↓	Exportar tema ↓	Exportar tema ↓
+Diagram canvas	Canvas do diagrama	Lienzo del diagrama
+Zoom	Zoom	Zoom
+Zoom out	Diminuir zoom	Alejar
+Zoom in	Aumentar zoom	Acercar
+Fit	Ajustar	Ajustar
+Click a shape to select it.	Clique numa forma para selecioná-la.	Haz clic en una forma para seleccionarla.
+Selected	Selecionado	Seleccionado
+element	elemento	elemento
+This element uses no theme color.	Este elemento não usa cor do tema.	Este elemento no usa colores del tema.
+Nothing selected yet. Tokens used by this diagram show a count in the panel; click the count to outline every element that uses it.	Nada selecionado ainda. Os tokens usados neste diagrama mostram uma contagem no painel; clique nela para contornar todos os elementos que usam o token.	Nada seleccionado todavía. Los tokens usados en este diagrama muestran un conteo en el panel; haz clic en él para resaltar todos los elementos que usan el token.
+Theme tokens	Tokens do tema	Tokens del tema
+in this diagram	neste diagrama	en este diagrama
+Actual ratios from the edited palette. Normal text needs at least 4.5:1.	Razões reais da paleta editada. Texto normal precisa de pelo menos 4.5:1.	Razones reales de la paleta editada. El texto normal necesita al menos 4.5:1.
+Save the file in your project and pass it to every command, or ask the agent to use it. The engine reads exactly this file.	Salve o arquivo no projeto e passe-o a cada comando, ou peça ao agente para usá-lo. O motor lê exatamente este arquivo.	Guarda el archivo en tu proyecto y pásalo a cada comando, o pide al agente que lo use. El motor lee exactamente este archivo.
+Build with this theme	Gerar com este tema	Generar con este tema
+Pages share one stylesheet, one script per language and the fonts in assets/. Each diagram is its own HTML in diagrams/. Use Light / Dark to compare appearances.	As páginas compartilham uma folha de estilo, um script por idioma e as fontes em assets/. Cada diagrama é um HTML próprio em diagrams/. Use Claro / Escuro para comparar as aparências.	Las páginas comparten una hoja de estilo, un script por idioma y las fuentes en assets/. Cada diagrama es su propio HTML en diagrams/. Usa Claro / Oscuro para comparar las apariencias.
+the PNG was produced, the gate returned 0 when re-run on the saved source, and the PNG shows no visible defect	o PNG foi gerado, o gate devolveu 0 ao rodar de novo no fonte salvo, e o PNG não tem defeito visível	se generó el PNG, el gate devolvió 0 al ejecutarse de nuevo sobre el fuente guardado, y el PNG no tiene defectos visibles
+the PNG was produced and the gate returned 0, but the PNG has a visible defect the gate does not catch	o PNG foi gerado e o gate devolveu 0, mas o PNG tem um defeito visível que o gate não pega	se generó el PNG y el gate devolvió 0, pero el PNG tiene un defecto visible que el gate no detecta
+the gate returned 0; the PNG was not re-read	o gate devolveu 0; o PNG não foi relido	el gate devolvió 0; el PNG no se volvió a revisar
+the run did not deliver a correct diagram	a execução não entregou um diagrama correto	la ejecución no entregó un diagrama correcto
+no run, or no run on the current skill	nenhuma execução, ou nenhuma na skill atual	ninguna ejecución, o ninguna con la skill actual
+End-to-end run of the eight original types (all except sequence) in a clean install, before later fixes to the skill. Result: 8 of 8 with the gate at 0.	Execução de ponta a ponta dos oito tipos originais (todos menos sequência) numa instalação limpa, antes de correções posteriores da skill. Resultado: 8 de 8 com o gate em 0.	Ejecución de punta a punta de los ocho tipos originales (todos menos secuencia) en una instalación limpia, antes de correcciones posteriores de la skill. Resultado: 8 de 8 con el gate en 0.
+One run per cell, before the visual theme of this repository. The gate and the layout scripts were the same; only colors, fonts and names changed afterwards.	Uma execução por célula, antes do tema visual deste repositório. O gate e os scripts de layout eram os mesmos; só cores, fontes e nomes mudaram depois.	Una ejecución por celda, antes del tema visual de este repositorio. El gate y los scripts de layout eran los mismos; solo cambiaron después colores, fuentes y nombres.
+On this repository under its previous name, Claude Code 2.1.318, before the state machine, C4 and color tokens were added. Poster: one frame ends about 8 px past the right margin (5 gate calls, 5 min 34 s, US$0.53). Sequence: 7 gate calls, 2 rejected and then fixed (6 min 12 s, US$0.41). Before the theme change, the same model also passed both types.	Neste repositório, com o nome anterior, Claude Code 2.1.318, antes da máquina de estados, do C4 e dos tokens de cor. Poster: um frame termina cerca de 8 px depois da margem direita (5 chamadas do gate, 5 min 34 s, US$0.53). Sequência: 7 chamadas do gate, 2 reprovadas e depois corrigidas (6 min 12 s, US$0.41). Antes da troca de tema, o mesmo modelo também passou nos dois tipos.	En este repositorio, con su nombre anterior, Claude Code 2.1.318, antes de la máquina de estados, el C4 y los tokens de color. Póster: un frame termina unos 8 px después del margen derecho (5 llamadas al gate, 5 min 34 s, US$0.53). Secuencia: 7 llamadas al gate, 2 rechazadas y luego corregidas (6 min 12 s, US$0.41). Antes del cambio de tema, el mismo modelo también aprobó ambos tipos.
+One run. The gate returned 0, but two-line labels sat far from their arrow. The generator was fixed and the PNG regenerated from the same spec; the model was not run again.	Uma execução. O gate devolveu 0, mas rótulos de duas linhas ficaram longe da seta. O gerador foi corrigido e o PNG regenerado a partir da mesma spec; o modelo não rodou de novo.	Una ejecución. El gate devolvió 0, pero las etiquetas de dos líneas quedaron lejos de su flecha. Se corrigió el generador y se regeneró el PNG con la misma spec; el modelo no se volvió a ejecutar.
+Sonnet 4.5, three runs: the first delivered a PNG without CSS, the second passed the gate of the time with arrows starting inside boxes and a loose label (that source became the negative test tests/negative/c4-arrows.html), the third passed the new gate but one arrow reached the wrong system. Opus 5.5, one run: gate 0 and a clean PNG, 11 relations, all to the right target. It is the result in examples/c4/output/.	Sonnet 4.5, três execuções: a primeira entregou um PNG sem CSS, a segunda passou no gate da época com setas saindo de dentro das caixas e um rótulo solto (esse fonte virou o teste negativo tests/negative/c4-arrows.html), a terceira passou no gate novo mas uma seta chegou ao sistema errado. Opus 5.5, uma execução: gate 0 e PNG limpo, 11 relações, todas ao destino certo. É o resultado em examples/c4/output/.	Sonnet 4.5, tres ejecuciones: la primera entregó un PNG sin CSS, la segunda pasó el gate de entonces con flechas que salían de dentro de las cajas y una etiqueta suelta (ese fuente se convirtió en la prueba negativa tests/negative/c4-arrows.html), la tercera pasó el gate nuevo pero una flecha llegó al sistema equivocado. Opus 5.5, una ejecución: gate 0 y PNG limpio, 11 relaciones, todas al destino correcto. Es el resultado en examples/c4/output/.
+no side margin	sem margem lateral	sin margen lateral
+panel past the margin	painel passa da margem	panel pasa del margen
+box past the margin	caixa passa da margem	caja pasa del margen
+one arrow crosses another	uma seta cruza outra	una flecha cruza otra
+labels touching	rótulos encostados	etiquetas pegadas
+note over activation bars	nota sobre as barras de ativação	nota sobre las barras de activación
+labels far from their arrow	rótulos longe da seta	etiquetas lejos de su flecha
+3 runs	3 execuções	3 ejecuciones
+install --claude links the skill in the home folder	install --claude cria o link da skill na pasta do usuário	install --claude enlaza la skill en la carpeta del usuario
+install --claude --project links the skill in a project	install --claude --project cria o link da skill num projeto	install --claude --project enlaza la skill en un proyecto
+an existing installation is kept outside a terminal	uma instalação existente é preservada fora de um terminal	una instalación existente se conserva fuera de una terminal
+install --codex links the skill in the home folder	install --codex cria o link da skill na pasta do usuário	install --codex enlaza la skill en la carpeta del usuario
+install --codex --project links the skill in a project	install --codex --project cria o link da skill num projeto	install --codex --project enlaza la skill en un proyecto
+replacement confirmed in a terminal keeps a backup	a substituição confirmada no terminal guarda um backup	el reemplazo confirmado en la terminal guarda una copia
+install --kiro copies the skill, steering and agent	install --kiro copia a skill, o steering e o agente	install --kiro copia la skill, el steering y el agente
+a failed Kiro install restores every original file	uma instalação Kiro que falha restaura todos os arquivos originais	una instalación de Kiro que falla restaura todos los archivos originales
+import converts a Mermaid file with --source-only	import converte um arquivo Mermaid com --source-only	import convierte un archivo Mermaid con --source-only
+0.1.x names (importar, --projeto, --saida) still work with a warning	os nomes da 0.1.x (importar, --projeto, --saida) ainda funcionam, com aviso	los nombres de 0.1.x (importar, --projeto, --saida) siguen funcionando, con aviso
+doctor reports Node, Python and Chrome	doctor informa Node, Python e Chrome	doctor informa Node, Python y Chrome
+The skill is installed for the selected CLI. doctor reports Python 3, Chrome and Node availability.	A skill fica instalada para a CLI escolhida. O doctor informa se Python 3, Chrome e Node estão disponíveis.	La skill queda instalada para la CLI elegida. doctor informa si Python 3, Chrome y Node están disponibles.
+Use --codex or --kiro instead of --claude. For a project installation, add --project <PROJECT>.	Use --codex ou --kiro no lugar de --claude. Para instalar num projeto, acrescente --project <PROJECT>.	Usa --codex o --kiro en lugar de --claude. Para instalar en un proyecto, agrega --project <PROJECT>.
+Clone: Cloning into '<AI_DIAGRAMS>'... with no fatal line. Update: Already up to date. or a list of changed files. Install: four lines starting with steering:, agent:, skill: and templates:. The last is templates: 11 of 11. Validation: no error message.	Clone: Cloning into '<AI_DIAGRAMS>'... sem linha fatal. Atualização: Already up to date. ou uma lista de arquivos alterados. Instalação: quatro linhas começando com steering:, agent:, skill: e templates:. A última é templates: 11 of 11. Validação: nenhuma mensagem de erro.	Clon: Cloning into '<AI_DIAGRAMS>'... sin línea fatal. Actualización: Already up to date. o una lista de archivos cambiados. Instalación: cuatro líneas que empiezan con steering:, agent:, skill: y templates:. La última es templates: 11 of 11. Validación: ningún mensaje de error.
+Two lines starting with OK. The last ends in 05-messaging-comparison.png.	Duas linhas começando com OK. A última termina em 05-messaging-comparison.png.	Dos líneas que empiezan con OK. La última termina en 05-messaging-comparison.png.
+Checks Python, AWS icons, Chrome and the gate. Chrome not found: set POSTER_CHROME to the installed path. AWS icons not found: install diagrams with the same python3.	Confere Python, ícones AWS, Chrome e o gate. Chrome not found: defina POSTER_CHROME com o caminho instalado. AWS icons not found: instale diagrams com o mesmo python3.	Revisa Python, íconos AWS, Chrome y el gate. Chrome not found: define POSTER_CHROME con la ruta instalada. AWS icons not found: instala diagrams con el mismo python3.
+Theme editor	Editor de tema	Editor de tema
+Edit colors in a diagram →	Editar as cores de um diagrama →	Editar los colores de un diagrama →
+Structurizr DSL	Structurizr DSL	Structurizr DSL

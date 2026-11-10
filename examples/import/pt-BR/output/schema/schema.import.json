@@ -1,0 +1,10 @@
+{
+  "input": "../../schema.sql",
+  "type": "er",
+  "language": "pt-BR",
+  "sources": [
+    "_src/schema/er-public.html",
+    "_src/schema/er-billing.html"
+  ],
+  "gate": "passed"
+}

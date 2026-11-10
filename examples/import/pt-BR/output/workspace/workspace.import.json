@@ -1,0 +1,9 @@
+{
+  "input": "../../workspace.dsl",
+  "type": "c4",
+  "language": "pt-BR",
+  "sources": [
+    "_src/workspace.html"
+  ],
+  "gate": "passed"
+}

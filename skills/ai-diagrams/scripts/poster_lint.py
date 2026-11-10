@@ -1,43 +1,53 @@
 #!/usr/bin/env python3
-"""Lint geométrico de posters.
-Uso: poster_lint.py [--fix] [--static] arquivo.html [...]
+"""Geometric lint for posters.
+Usage: poster_lint.py [--fix] [--static] file.html [...]
 Checks:
-1. Ponta e início de seta encostam numa caixa ou borda de frame (tol 6px);
-   entre 6 e 60px na direção do segmento, --fix faz o snap.
-2. Roteamento ortogonal: nenhum segmento de seta atravessa o interior de
-   caixa que não é seu endpoint (ATRAVESSA); segmentos paralelos de setas
-   diferentes não podem ser colineares (COLINEAR); rotear por corredores.
-3. Passos numerados obrigatórios: o canvas precisa de badges 1..N e a seção
-   .passos precisa de itens correspondentes (SEM-BADGES / SEM-PASSOS /
-   PASSOS-DIVERGEM).
-4. Badge nasce com a seta: o centro de cada badge fica sobre a linha da seta
-   (tol 6px), podendo deslizar ao longo dela; badge ao lado ou solto reprova
-   (BADGE-SOLTO).
-5. Sobreposicao medida no Chrome (mesmas condicoes do screenshot): badge,
-   rotulos de no (.nl/.ns), icones, .elabel, .flabel e chips nao podem se
-   sobrepor (SOBREPOE); seta nao passa por cima de texto, inclusive o de
-   dentro dos .bchip (SETA-SOBRE-TEXTO); seta nao corre sobre a borda de frame
-   (SETA-NA-BORDA); .elabel fica a ate 30px de alguma seta (ROTULO-SOLTO);
-   ponta de seta nao fica no miolo de uma caixa (PONTA-DENTRO).
-   Pula-se com --static (ou sem Chrome disponivel, com aviso).
-7. Transbordo medido no Chrome: nada passa da borda direita da pagina, que e
-   onde a captura corta (TRANSBORDA).
-8. Registro tecnico: titulo, subtitulo, kicker e faixas sem vocabulario de
-   marketing (TEXTO-MARKETING; lista em texto_tecnico.py).
-9. C4: cada elemento .bchip.c4 tem tipo (.bn) e nome (.bt), e a página tem a
-   legenda .c4leg (C4-SEM-TIPO, C4-SEM-LEGENDA).
-10. Cor e fonte só do tema: hexadecimal ou rgb() literal no fonte reprova
-   (COR-FORA-DO-TEMA); font-family com família literal também
-   (FONTE-FORA-DO-TEMA; regras em cor_tema.py).
-Tema: --tema <nome ou caminho.json>, <meta name="tema"> do fonte, AI_DIAGRAMS_TEMA ou
-ai-diagrams, nessa ordem (scripts/tema.py). A medição no Chrome usa as fontes do tema.
-Idioma: --idioma pt-BR|en|es, meta idioma, AI_DIAGRAMS_IDIOMA ou pt-BR.
-As verificações estruturais usam classes, sem depender do texto dos rótulos.
-6. Documento sem desenho de setas (sem <svg class="edges">, como a matriz de
-   dependencia) nao narra fluxo: os checks 3 e 4 nao se aplicam a ele. Os
-   demais continuam valendo.
-Saida: exit code 1 se houver qualquer problema. O build.py chama este lint
-antes do PNG e reprova o poster com problema."""
+1. Arrow head and arrow start touch a box or a frame border (tol 6px);
+   between 6 and 60px along the segment, --fix snaps them (DETACHED,
+   ADJUSTABLE, FIXED; -START for the arrow start).
+2. Orthogonal routing: no arrow segment crosses the interior of a box that
+   is not its endpoint (CROSSES); parallel segments of different arrows
+   cannot be collinear (COLLINEAR-V / COLLINEAR-H); route through corridors.
+   An arrow running inside the box it connects fails with INSIDE-BOX.
+3. Numbered steps are required: the canvas needs badges 1..N and the .passos
+   section needs matching items (NO-BADGES / NO-STEPS / STEPS-MISMATCH).
+4. A badge is born with its arrow: the center of each badge sits on the
+   arrow line (tol 6px) and may slide along it; a badge beside the line or
+   loose fails (BADGE-DETACHED). --fix moves it onto the arrow (FIXED-BADGE).
+5. Overlap measured in Chrome (same conditions as the screenshot): badges,
+   node labels (.nl/.ns), icons, .elabel, .flabel and chips cannot overlap
+   (OVERLAP); an arrow does not run over text, including the text inside
+   .bchip (ARROW-OVER-TEXT); an arrow does not run along a frame border
+   (ARROW-ON-EDGE); a frame border does not cut node text (TEXT-OVER-EDGE);
+   an .elabel sits within 30px of some arrow (LABEL-DETACHED); an arrow tip
+   does not sit in the middle of a box (ARROWHEAD-INSIDE).
+   Skipped with --static (or when Chrome is not available, with NO-CHROME).
+   A render that returns no measurement fails with MEASURE-FAILED.
+6. A document without drawn arrows (no <svg class="edges">, like the
+   dependency matrix) does not narrate a flow: checks 3 and 4 do not apply
+   to it. The others still do.
+7. Overflow measured in Chrome: nothing goes past the right edge of the
+   page, where the capture cuts (OVERFLOW).
+8. Technical register: title, subtitle, kicker and bands without marketing
+   vocabulary (MARKETING-COPY; list in technical_text.py).
+9. C4: every .bchip.c4 element has a type (.bn) and a name (.bt), and the
+   page has the .c4leg legend (C4-NO-TYPE, C4-NO-LEGEND). A page whose arrows
+   carry .rel labels (the C4 generator, scripts/build_c4.py) needs no badges:
+   every arrow has exactly one .rel with what it does (.rd) and its [technology]
+   (.rt) (C4-REL-MISSING, C4-REL-INCOMPLETE); in Chrome, the label sits on or
+   beside its own arrow (C4-REL-DETACHED) and no other arrow crosses it
+   (ARROW-OVER-TEXT); it does not touch a box, a border label or another label
+   (OVERLAP).
+10. Color and font only from the theme: a literal hex or rgb() in the source
+   fails (COLOR-OUTSIDE-THEME); so does a font-family with a literal family
+   name (FONT-OUTSIDE-THEME; rules in theme_color.py).
+Theme: --theme <name or path.json>, <meta name="theme"> in the source,
+AI_DIAGRAMS_THEME or ai-diagrams, in that order (scripts/theme.py). The Chrome
+measurement uses the theme fonts.
+Language: --lang pt-BR|en|es, <meta name="lang">, AI_DIAGRAMS_LANG or pt-BR.
+The structural checks use classes and do not depend on the label text.
+Output: exit code 1 on any problem. build.py runs this lint before the PNG
+and fails the poster when there is a problem."""
 import re, sys, os
 
 def boxes(t):
@@ -154,15 +164,15 @@ def check_routing(t, solid):
             if x1 == x2 and a + 2 < x1 < c - 2:
                 lo, hi = max(min(y1, y2), b + 2), min(max(y1, y2), d - 2)
                 if hi - lo > 4 and not (_near_box_pt(x1, y1, box) or _near_box_pt(x2, y2, box)):
-                    issues.append(('ATRAVESSA', x1, (lo + hi) / 2, None))
+                    issues.append(('CROSSES', x1, (lo + hi) / 2, None))
                 elif hi - lo > 10 and ultimo[i] == k and _near_box_pt(x2, y2, box):
-                    issues.append(('DENTRO-DA-CAIXA %gpx: a seta corre por dentro da caixa que liga; encoste a ponta na borda' % (hi - lo), x1, (lo + hi) / 2, None))
+                    issues.append(('INSIDE-BOX %gpx: the arrow runs inside the box it connects (end the tip at the border)' % (hi - lo), x1, (lo + hi) / 2, None))
             elif y1 == y2 and b + 2 < y1 < d - 2:
                 lo, hi = max(min(x1, x2), a + 2), min(max(x1, x2), c - 2)
                 if hi - lo > 4 and not (_near_box_pt(x1, y1, box) or _near_box_pt(x2, y2, box)):
-                    issues.append(('ATRAVESSA', (lo + hi) / 2, y1, None))
+                    issues.append(('CROSSES', (lo + hi) / 2, y1, None))
                 elif hi - lo > 10 and ultimo[i] == k and _near_box_pt(x2, y2, box):
-                    issues.append(('DENTRO-DA-CAIXA %gpx: a seta corre por dentro da caixa que liga; encoste a ponta na borda' % (hi - lo), (lo + hi) / 2, y1, None))
+                    issues.append(('INSIDE-BOX %gpx: the arrow runs inside the box it connects (end the tip at the border)' % (hi - lo), (lo + hi) / 2, y1, None))
     def ov(a1, a2, b1, b2):
         return min(max(a1, a2), max(b1, b2)) - max(min(a1, a2), min(b1, b2))
     seen = set()
@@ -177,17 +187,17 @@ def check_routing(t, solid):
                     key = (kind, round(s1[oi] / 4))
                     if key not in seen:
                         seen.add(key)
-                        issues.append(('COLINEAR-' + kind, s1[oi], ov(s1[r1], s1[r2], s2[r1], s2[r2]), None))
+                        issues.append(('COLLINEAR-' + kind, s1[oi], ov(s1[r1], s1[r2], s2[r1], s2[r2]), None))
     return issues
 
 def check_passos(t):
     issues = []
     badges = re.findall(r'<div class="badge"[^>]*>\s*(\d+)', t)
     pitems = re.findall(r'class="pb">\s*(\d+)', t)
-    if not badges: issues.append(('SEM-BADGES', 0, 0, None))
-    if not pitems: issues.append(('SEM-PASSOS', 0, 0, None))
+    if not badges: issues.append(('NO-BADGES', 0, 0, None))
+    if not pitems: issues.append(('NO-STEPS', 0, 0, None))
     if badges and pitems and set(badges) != set(pitems):
-        issues.append(('PASSOS-DIVERGEM', len(set(badges)), len(set(pitems)), None))
+        issues.append(('STEPS-MISMATCH', len(set(badges)), len(set(pitems)), None))
     return issues
 
 
@@ -200,7 +210,7 @@ def check_badges(t):
             if x1 == x2 and abs(cx - x1) <= 6 and min(y1, y2) - 6 <= cy <= max(y1, y2) + 6: ok = True; break
             if y1 == y2 and abs(cy - y1) <= 6 and min(x1, x2) - 6 <= cx <= max(x1, x2) + 6: ok = True; break
         if not ok:
-            issues.append(('BADGE-SOLTO ' + n, cx, cy, None))
+            issues.append(('BADGE-DETACHED ' + n, cx, cy, None))
     return issues
 
 def fix_badges(t):
@@ -266,30 +276,44 @@ def recuar(x, y, dx, dy, vizinho, solid, frames):
 
 def check_texto(t):
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import texto_tecnico as tt
-    return [('TEXTO-MARKETING "%s" em "%s"' % (termo, trecho), 0, 0, None)
+    import technical_text as tt
+    return [('MARKETING-COPY "%s" in "%s"' % (termo, trecho), 0, 0, None)
             for termo, trecho in tt.marketing(tt.textos_de_abertura(t))]
 
 
 def check_cores(t):
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import cor_tema
-    return [('COR-FORA-DO-TEMA %s na linha %d: %s' % (lit, linha, cor_tema.MENSAGEM), 0, 0, None)
-            for lit, linha in cor_tema.cores_fora(t)] + \
-           [('FONTE-FORA-DO-TEMA %s na linha %d: %s' % (dec, linha, cor_tema.MENSAGEM_FONTE), 0, 0, None)
-            for dec, linha in cor_tema.fontes_fora(t)]
+    import theme_color
+    return [('COLOR-OUTSIDE-THEME %s on line %d: %s' % (lit, linha, theme_color.MENSAGEM), 0, 0, None)
+            for lit, linha in theme_color.cores_fora(t)] + \
+           [('FONT-OUTSIDE-THEME %s on line %d: %s' % (dec, linha, theme_color.MENSAGEM_FONTE), 0, 0, None)
+            for dec, linha in theme_color.fontes_fora(t)]
+
+
+def check_rel(t):
+    """C4 gerado: cada seta tem um rótulo .rel, com o que faz e a tecnologia."""
+    setas = len(re.findall(r'<path d="[^"]+"[^>]*marker-end[^>]*/>', t))
+    rels = re.findall(r'<div class="rel" data-edge="(\d+)"[^>]*>(.*?)</div>', t)
+    issues = []
+    if sorted(int(k) for k, _ in rels) != list(range(setas)):
+        issues.append(('C4-REL-MISSING: %d arrows and %d .rel labels; every arrow needs one label, data-edge 0..%d'
+                       % (setas, len(rels), setas - 1), 0, 0, None))
+    for k, corpo in rels:
+        if 'class="rd"' not in corpo or not re.search(r'class="rt">\[[^\]]+\]', corpo):
+            issues.append(('C4-REL-INCOMPLETE: label of arrow %s needs what it does (.rd) and [technology] (.rt)' % k, 0, 0, None))
+    return issues
 
 
 def check_c4(t):
     """C4: todo elemento diz o tipo (.bn) e o nome (.bt), e a página traz a legenda (.c4leg)."""
-    els = re.findall(r'<div class="bchip c4[^"]*"[^>]*>(.*?)\n  </div>', t, re.S)
+    els = re.findall(r'<div class="bchip c4[^"]*"[^>]*>(.*?)\n\s*</div>', t, re.S)
     if not els:
         return []
-    issues = [('C4-SEM-TIPO: elemento "%s" precisa de .bn (tipo e tecnologia) e .bt (nome)'
+    issues = [('C4-NO-TYPE: element "%s" needs .bn (type and technology) and .bt (name)'
                % re.sub(r'<[^>]+>|\s+', ' ', e).strip()[:40], 0, 0, None)
               for e in els if 'class="bn"' not in e or 'class="bt"' not in e]
     if 'class="c4leg"' not in t:
-        issues.append(('C4-SEM-LEGENDA: inclua a seção "Legenda C4" com .c4leg', 0, 0, None))
+        issues.append(('C4-NO-LEGEND: add the C4 legend section with .c4leg', 0, 0, None))
     return issues
 
 
@@ -305,9 +329,9 @@ def lint(fn, fix=False):
         s = march(x, y, dx, dy, solid, frames) or recuar(x, y, dx, dy, vertices(m.group(1))[-2], solid, frames)
         if s and fix:
             out = out.replace(m.group(1), fix_path_d(m.group(1), *s), 1)
-            issues.append(('FIXADO', x, y, s))
+            issues.append(('FIXED', x, y, s))
         else:
-            issues.append(('SOLTA', x, y, ('sugestao',) + tuple(caixa_mais_proxima(x, y, solid, frames)[1:])) if not s else ('AJUSTAVEL', x, y, s))
+            issues.append(('DETACHED', x, y, ('sugestao',) + tuple(caixa_mais_proxima(x, y, solid, frames)[1:])) if not s else ('ADJUSTABLE', x, y, s))
     for m in re.finditer(r'<path d="([^"]+)"[^>]*marker-end[^>]*/>', t):
         r = start_of_path(m.group(1))
         if not r: continue
@@ -316,9 +340,9 @@ def lint(fn, fix=False):
         s = march(x, y, dx, dy, solid, frames) or recuar(x, y, dx, dy, vertices(m.group(1))[1], solid, frames)
         if s and fix:
             out = out.replace(m.group(1), fix_path_start(m.group(1), *s), 1)
-            issues.append(('FIXADO-INICIO', x, y, s))
+            issues.append(('FIXED-START', x, y, s))
         else:
-            issues.append(('SOLTA-INICIO', x, y, ('sugestao',) + tuple(caixa_mais_proxima(x, y, solid, frames)[1:])) if not s else ('AJUSTAVEL-INICIO', x, y, s))
+            issues.append(('DETACHED-START', x, y, ('sugestao',) + tuple(caixa_mais_proxima(x, y, solid, frames)[1:])) if not s else ('ADJUSTABLE-START', x, y, s))
     for m in re.finditer(r'<line x1="(-?[\d.]+)" y1="(-?[\d.]+)" x2="(-?[\d.]+)" y2="(-?[\d.]+)"[^>]*marker-end[^>]*/>', t):
         x1, y1, x, y = map(float, m.groups())
         dx = 0 if x == x1 else (1 if x > x1 else -1)
@@ -329,9 +353,9 @@ def lint(fn, fix=False):
             o2 = m.group(0)
             n2 = o2.replace('x2="%s"' % m.group(3), 'x2="%g"' % s[0]).replace('y2="%s"' % m.group(4), 'y2="%g"' % s[1])
             out = out.replace(o2, n2, 1)
-            issues.append(('FIXADO', x, y, s))
+            issues.append(('FIXED', x, y, s))
         else:
-            issues.append(('SOLTA', x, y, ('sugestao',) + tuple(caixa_mais_proxima(x, y, solid, frames)[1:])) if not s else ('AJUSTAVEL', x, y, s))
+            issues.append(('DETACHED', x, y, ('sugestao',) + tuple(caixa_mais_proxima(x, y, solid, frames)[1:])) if not s else ('ADJUSTABLE', x, y, s))
         sx, sy = x1, y1
         if not (near_solid(sx, sy, solid) or near_frame_border(sx, sy, frames)):
             s2 = march(sx, sy, -dx, -dy, solid, frames)
@@ -340,15 +364,17 @@ def lint(fn, fix=False):
                 if o2:
                     n2 = o2.replace('x1="%s"' % m.group(1), 'x1="%g"' % s2[0], 1).replace('y1="%s"' % m.group(2), 'y1="%g"' % s2[1], 1)
                     out = out.replace(o2, n2, 1)
-                    issues.append(('FIXADO-INICIO', sx, sy, s2))
+                    issues.append(('FIXED-START', sx, sy, s2))
             elif not (s2 and fix):
-                issues.append(('SOLTA-INICIO' if not s2 else 'AJUSTAVEL-INICIO', sx, sy, s2))
+                issues.append(('DETACHED-START' if not s2 else 'ADJUSTABLE-START', sx, sy, s2))
     issues += check_routing(t, solid)
-    if '<svg class="edges"' in t:
+    if '<svg class="edges"' in t and 'class="rel"' in t:
+        issues += check_rel(t)
+    elif '<svg class="edges"' in t:
         issues += check_passos(t)
         if fix:
             out, fixos = fix_badges(out)
-            issues += [('FIXADO-BADGE ' + n, x, y, (nx, ny)) for n, x, y, nx, ny in fixos]
+            issues += [('FIXED-BADGE ' + n, x, y, (nx, ny)) for n, x, y, nx, ny in fixos]
         issues += check_badges(out)
     issues += check_texto(t)
     issues += check_c4(t)
@@ -384,7 +410,8 @@ window.addEventListener('load', function () {
     document.querySelectorAll('.elabel').forEach(function (b) { push('elabel', -1, b); });
     document.querySelectorAll('.frame > .flabel').forEach(function (b) { push('flabel', -1, b); });
     document.querySelectorAll('.frame').forEach(function (b) { push('frame', -1, b); });
-    document.querySelectorAll('.chip,.bchip,.oss,.svc').forEach(function (b) { push('chip', -1, b); });
+    document.querySelectorAll('.chip,.bchip,.oss,.svc,.c4head').forEach(function (b) { push('chip', -1, b); });
+    document.querySelectorAll('.rel').forEach(function (b) { push('rel', parseInt(b.getAttribute('data-edge'), 10), b); });
     document.querySelectorAll('.bchip .bn,.bchip .bt,.bchip .bs').forEach(function (b) { push('btx', -1, b); });
     // transbordo pela direita: a captura corta tudo que passa da largura da página
     var bw = document.body.getBoundingClientRect().width;
@@ -405,13 +432,14 @@ window.addEventListener('load', function () {
 
 
 def find_css(src_dir):
-    """Mesma busca do build.py: _estilo.css ou estilo.css do projeto, senao o da skill."""
-    for name in ('_estilo.css', 'estilo.css'):
+    """Mesma busca do build.py: _style.css ou style.css do projeto (ou os nomes antigos
+    _style.css/style.css), senao o da skill."""
+    for name in ('_style.css', 'style.css', '_style.css', 'style.css'):
         p = os.path.join(src_dir, name)
         if os.path.exists(p):
             return p
     return os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                        'assets', 'estilo.css')
+                        'assets', 'style.css')
 
 
 def find_chrome():
@@ -432,9 +460,9 @@ def find_chrome():
 def measure(fn, chrome, tm=None):
     """Renderiza no Chrome, com o tema, e devolve as caixas reais (coordenadas do canvas)."""
     t = open(fn).read()
-    if '/*ESTILO*/' in t:
-        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-        import tema
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import theme as tema
+    if tema.tem_marcador(t):
         d = os.path.dirname(os.path.abspath(fn))
         t = tema.aplicar(t, open(find_css(d)).read(), tm or tema.tema(None, t, d))
     t = t.replace('</body>', MEASURE_JS + '</body>')
@@ -447,9 +475,9 @@ def measure(fn, chrome, tm=None):
                                 '--virtual-time-budget=4000', '--dump-dom', 'file://' + tmp],
                                capture_output=True, timeout=120)
         except subprocess.TimeoutExpired:
-            sys.exit('O Chrome não respondeu em 120s ao medir %s. Confira a rede (as fontes vêm do '
-                     'Google Fonts), feche outros Chrome headless presos e confira POSTER_CHROME (%s). '
-                     'Para rodar só os checks sem Chrome, use --static.' % (fn, chrome))
+            sys.exit('Chrome did not respond within 120s while measuring %s. Check the network (fonts come from '
+                     'Google Fonts), close other stuck headless Chrome processes and check POSTER_CHROME (%s). '
+                     'To run only the checks that do not need Chrome, use --static.' % (fn, chrome))
         m = re.search(r'data-lint="([^"]+)"', r.stdout.decode())
         if not m:
             return None
@@ -471,16 +499,18 @@ _PARES = {('badge', 'icon'), ('badge', 'nl'), ('badge', 'ns'), ('badge', 'elabel
           ('elabel', 'icon'), ('elabel', 'nl'), ('elabel', 'ns'), ('elabel', 'elabel'),
           ('elabel', 'flabel'), ('elabel', 'chip'),
           ('nl', 'nl'), ('nl', 'ns'), ('ns', 'ns'), ('nl', 'icon'), ('ns', 'icon'),
-          ('nl', 'chip'), ('ns', 'chip')}
+          ('nl', 'chip'), ('ns', 'chip'),
+          ('rel', 'rel'), ('rel', 'chip'), ('rel', 'flabel'), ('rel', 'badge'), ('rel', 'elabel'), ('rel', 'icon'),
+          ('rel', 'nl'), ('rel', 'ns')}
 
 
 def check_medido(data, t):
     issues = []
     bw, sw = data.get('largura', [0, 0])
     if sw > bw + 1 or data.get('fora'):
-        alvo = '; '.join('%s "%s" até %dpx' % (c[:20], tx, r) for c, r, tx in data.get('fora', [])[:3])
-        issues.append(('TRANSBORDA conteúdo passa da largura da página (%dpx, documento com %dpx): %s'
-                       % (bw, sw, alvo or 'ver o PNG'), 0, 0, None))
+        alvo = '; '.join('%s "%s" up to %dpx' % (c[:20], tx, r) for c, r, tx in data.get('fora', [])[:3])
+        issues.append(('OVERFLOW content goes past the page width (%dpx, document is %dpx): %s'
+                       % (bw, sw, alvo or 'see the PNG'), 0, 0, None))
     bx = data['boxes']
     for i in range(len(bx)):
         for j in range(i + 1, len(bx)):
@@ -490,7 +520,7 @@ def check_medido(data, t):
                 continue  # partes do mesmo no
             if (k1, k2) in _PARES or (k2, k1) in _PARES:
                 if _inter(r1, r2):
-                    issues.append(('SOBREPOE %s×%s "%s"' % (k1, k2, (tx1 or tx2)[:24]),
+                    issues.append(('OVERLAP %s×%s "%s"' % (k1, k2, (tx1 or tx2)[:24]),
                                    max(r1[0], r2[0]), max(r1[1], r2[1]), None))
     # borda de frame (AWS Cloud, conta, zona) cruzando texto de nó ou rótulo
     for k, n, a, b, c, d, tx in [x for x in bx if x[0] in ('nl', 'ns', 'elabel')]:
@@ -498,25 +528,27 @@ def check_medido(data, t):
             corta_v = any(a + 2 < xb < c - 2 for xb in (fa, fc)) and min(d, fd) - max(b, fb) > 2
             corta_h = any(b + 2 < yb < d - 2 for yb in (fb, fd)) and min(c, fc) - max(a, fa) > 2
             if corta_v or corta_h:
-                issues.append(('TEXTO-SOBRE-BORDA %s "%s": a borda de um frame corta o texto; mova o nó para dentro ou para fora do frame' % (k, tx[:24]), a, b, None))
+                issues.append(('TEXT-OVER-EDGE %s "%s": a frame border cuts the text; move the node inside or outside the frame' % (k, tx[:24]), a, b, None))
                 break
     ox, oy = data.get('svg', [0, 0])
-    textos = [b for b in bx if b[0] in ('nl', 'ns', 'elabel', 'flabel', 'btx')]
-    for (_, x1, y1, x2, y2) in segments(t):
+    textos = [b for b in bx if b[0] in ('nl', 'ns', 'elabel', 'flabel', 'btx', 'rel')]
+    for (seta, x1, y1, x2, y2) in segments(t):
         x1, y1, x2, y2 = x1 + ox, y1 + oy, x2 + ox, y2 + oy
         for k, n, a, b, c, d, tx in textos:
             box = (a, b, c, d)
+            if k == 'rel' and n == seta:
+                continue  # o rótulo da relação fica sobre a própria seta
             if _near_box_pt(x1, y1, box) or _near_box_pt(x2, y2, box):
                 continue
             if x1 == x2 and a + 2 < x1 < c - 2:
                 lo, hi = max(min(y1, y2), b + 2), min(max(y1, y2), d - 2)
                 if hi - lo > 3:
-                    issues.append(('SETA-SOBRE-TEXTO %s "%s": a vertical em x=%g cruza o texto (x %g a %g); passe a seta por x<%g ou x>%g, ou saia pela lateral do ícone'
+                    issues.append(('ARROW-OVER-TEXT %s "%s": the vertical at x=%g crosses the text (x %g to %g); route the arrow through x<%g or x>%g, or leave from the side of the icon'
                                    % (k, tx[:24], x1 - ox, a - ox, c - ox, a - ox - 8, c - ox + 8), x1, (lo + hi) / 2, None))
             elif y1 == y2 and b + 2 < y1 < d - 2:
                 lo, hi = max(min(x1, x2), a + 2), min(max(x1, x2), c - 2)
                 if hi - lo > 3:
-                    issues.append(('SETA-SOBRE-TEXTO %s "%s": a horizontal em y=%g cruza o texto (y %g a %g); passe a seta por y<%g ou y>%g'
+                    issues.append(('ARROW-OVER-TEXT %s "%s": the horizontal at y=%g crosses the text (y %g to %g); route the arrow through y<%g or y>%g'
                                    % (k, tx[:24], y1 - oy, b - oy, d - oy, b - oy - 8, d - oy + 8), (lo + hi) / 2, y1, None))
     # seta correndo em cima da borda de um frame: some no tracejado e parece parte do frame
     frames = [x for x in bx if x[0] == 'frame']
@@ -525,11 +557,11 @@ def check_medido(data, t):
         for _, _, fa, fb, fc, fd, ftx in frames:
             if x1 == x2 and any(abs(x1 - xb) <= 3 for xb in (fa, fc)):
                 if min(max(y1, y2), fd) - max(min(y1, y2), fb) > 20:
-                    issues.append(('SETA-NA-BORDA a vertical em x=%g corre sobre a borda do frame "%s"; afaste pelo menos 16px'
+                    issues.append(('ARROW-ON-EDGE the vertical at x=%g runs along the border of frame "%s"; keep it at least 16px away'
                                    % (x1 - ox, ftx[:24]), x1, (y1 + y2) / 2, None))
             elif y1 == y2 and any(abs(y1 - yb) <= 3 for yb in (fb, fd)):
                 if min(max(x1, x2), fc) - max(min(x1, x2), fa) > 20:
-                    issues.append(('SETA-NA-BORDA a horizontal em y=%g corre sobre a borda do frame "%s"; afaste pelo menos 16px'
+                    issues.append(('ARROW-ON-EDGE the horizontal at y=%g runs along the border of frame "%s"; keep it at least 16px away'
                                    % (y1 - oy, ftx[:24]), (x1 + x2) / 2, y1, None))
     # ponta de seta no miolo de uma caixa: a seta nasce ou morre por cima do conteúdo
     por_seta = {}
@@ -540,16 +572,26 @@ def check_medido(data, t):
         for px, py in ((ss[0][0], ss[0][1]), (ss[-1][2], ss[-1][3])):
             for _, _, ca, cb, cc, cd, ctx in caixas:
                 if ca + 6 < px < cc - 6 and cb + 6 < py < cd - 6:
-                    issues.append(('PONTA-DENTRO a seta tem ponta em (%g,%g), no miolo da caixa "%s"; leve a ponta até a borda'
+                    issues.append(('ARROWHEAD-INSIDE the arrow has a tip at (%g,%g), in the middle of box "%s"; move the tip to the border'
                                    % (px - ox, py - oy, ctx[:24]), px, py, None))
                     break
+    # rótulo da relação longe da própria seta: em cima dela ou ao lado, a no máximo 14px
+    for k, n, a, b, c, d, tx in [x for x in bx if x[0] == 'rel']:
+        proprios = [s for s, (i, *_r) in zip(segs, segments(t)) if i == n]
+        if not proprios:
+            continue
+        dist = min(math.hypot(max(a - max(x1, x2), 0, min(x1, x2) - c), max(b - max(y1, y2), 0, min(y1, y2) - d))
+                   for x1, y1, x2, y2 in proprios)
+        if dist > 14:
+            issues.append(('C4-REL-DETACHED label "%s" is %dpx from its arrow; keep it on the arrow or within 14px'
+                           % (tx[:24], dist), a, b, None))
     # rótulo de aresta longe de qualquer seta: o leitor não sabe a que seta ele pertence
     if segs:
         for k, n, a, b, c, d, tx in [x for x in bx if x[0] == 'elabel']:
             dist = min(math.hypot(max(a - max(x1, x2), 0, min(x1, x2) - c), max(b - max(y1, y2), 0, min(y1, y2) - d))
                        for x1, y1, x2, y2 in segs)
             if dist > 30:
-                issues.append(('ROTULO-SOLTO elabel "%s" está a %dpx da seta mais próxima; encoste a até 30px da sua seta'
+                issues.append(('LABEL-DETACHED elabel "%s" is %dpx from the nearest arrow; keep it within 30px of its arrow'
                                % (tx[:24], dist), a, b, None))
     return issues
 
@@ -562,11 +604,11 @@ def lint_completo(fn, fix=False, static=False, tm=None):
     if not static:
         chrome = find_chrome()
         if chrome is None:
-            issues.append(('SEM-CHROME (sobreposicao nao verificada; use --static para silenciar)', 0, 0, None))
+            issues.append(('NO-CHROME (overlap not checked; use --static to silence)', 0, 0, None))
         else:
             data = measure(fn, chrome, tm)
             if data is None:
-                issues.append(('MEDICAO-FALHOU', 0, 0, None))
+                issues.append(('MEASURE-FAILED', 0, 0, None))
             else:
                 ULTIMA_MEDICAO.clear()
                 ULTIMA_MEDICAO.update(data)
@@ -576,7 +618,7 @@ def lint_completo(fn, fix=False, static=False, tm=None):
 
 if __name__ == '__main__':
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import tema, idioma
+    import theme as tema, lang as idioma
     flag_tema, resto = tema.tirar_flag(sys.argv[1:])
     flag_idioma, resto = idioma.tirar_flag(resto)
     args = [a for a in resto if not a.startswith('--')]
@@ -591,23 +633,23 @@ if __name__ == '__main__':
             total += len(iss)
             print(fn)
             for kind, x, y, s in iss:
-                if kind.startswith('TRANSBORDA'):
-                    print('  %s. Reduza o conteúdo, fixe larguras ou declare <meta name="largura">' % kind)
-                elif kind.startswith(('C4-', 'COR-FORA-DO-TEMA', 'FONTE-FORA-DO-TEMA')):
+                if kind.startswith('OVERFLOW'):
+                    print('  %s. Reduce the content, fix widths or declare <meta name="width">' % kind)
+                elif kind.startswith(('C4-', 'COLOR-OUTSIDE-THEME', 'FONT-OUTSIDE-THEME')) and not kind.startswith('C4-REL-DETACHED'):
                     print('  %s' % kind)
-                elif kind.startswith('TEXTO-MARKETING'):
-                    print('  %s: reescreva em registro técnico' % kind)
-                elif kind.startswith(('SEM-', 'PASSOS', 'MEDICAO')):
-                    print('  %s' % kind if kind.startswith(('SEM-CHROME', 'MEDICAO')) else '  %s (badges=%g, passos=%g)' % (kind, x, y))
-                elif kind.startswith(('ATRAVESSA', 'COLINEAR', 'BADGE-SOLTO', 'SOBREPOE', 'SETA-SOBRE-TEXTO', 'DENTRO-DA-CAIXA', 'TEXTO-SOBRE-BORDA', 'SETA-NA-BORDA', 'ROTULO-SOLTO', 'PONTA-DENTRO')):
-                    print('  %s em (%g,%g)' % (kind, x, y))
+                elif kind.startswith('MARKETING-COPY'):
+                    print('  %s: rewrite in technical register' % kind)
+                elif kind.startswith(('NO-BADGES', 'NO-STEPS', 'STEPS-MISMATCH', 'NO-CHROME', 'MEASURE-FAILED')):
+                    print('  %s' % kind if kind.startswith(('NO-CHROME', 'MEASURE-FAILED')) else '  %s (badges=%g, steps=%g)' % (kind, x, y))
+                elif kind.startswith(('CROSSES', 'COLLINEAR', 'BADGE-DETACHED', 'OVERLAP', 'ARROW-OVER-TEXT', 'INSIDE-BOX', 'TEXT-OVER-EDGE', 'ARROW-ON-EDGE', 'LABEL-DETACHED', 'ARROWHEAD-INSIDE', 'C4-REL-DETACHED')):
+                    print('  %s at (%g,%g)' % (kind, x, y))
                 else:
-                    if kind.startswith('FIXADO-BADGE'):
-                        print('  %s: centro de (%g,%g) para (%g,%g), sobre a seta' % (kind, x, y, s[0], s[1]))
+                    if kind.startswith('FIXED-BADGE'):
+                        print('  %s: center moved from (%g,%g) to (%g,%g), on the arrow' % (kind, x, y, s[0], s[1]))
                     elif s and s[0] == 'sugestao':
-                        print('  %s ponta em (%g,%g): a caixa mais próxima tem borda em (%g,%g); leve a ponta até lá'
+                        print('  %s tip at (%g,%g): the nearest box has its border at (%g,%g); move the tip there'
                               % (kind, x, y, s[1], s[2]))
                     else:
-                        print('  %s ponta em (%g,%g)%s' % (kind, x, y, ' -> snap (%g,%g)' % s if s else ''))
+                        print('  %s tip at (%g,%g)%s' % (kind, x, y, ' -> snap (%g,%g)' % s if s else ''))
     print('total:', total)
     sys.exit(1 if total else 0)

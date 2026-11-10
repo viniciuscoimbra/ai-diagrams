@@ -1,0 +1,62 @@
+{
+  "lang": "en",
+  "page_title": "Imported diagram",
+  "header": [
+    "Imported diagram",
+    "V1"
+  ],
+  "kicker": "Import",
+  "h1": "Imported diagram",
+  "sub": "Content from the input file. The engine recalculates the layout of the elements.",
+  "footer": [
+    "",
+    "Import"
+  ],
+  "lanes": [
+    {
+      "name": "Customer",
+      "sub": ""
+    },
+    {
+      "name": "Orders",
+      "sub": ""
+    }
+  ],
+  "phases": [
+    "1",
+    "2",
+    "3"
+  ],
+  "elements": [
+    {
+      "lane": 0,
+      "phase": 0,
+      "text": "Send order"
+    },
+    {
+      "lane": 1,
+      "phase": 1,
+      "text": "Receive order"
+    },
+    {
+      "lane": 1,
+      "phase": 2,
+      "text": "Check order"
+    }
+  ],
+  "sequence": [
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      2
+    ]
+  ],
+  "sections": []
+}

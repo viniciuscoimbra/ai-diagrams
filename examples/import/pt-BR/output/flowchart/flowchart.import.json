@@ -1,0 +1,9 @@
+{
+  "input": "../../flowchart.mmd",
+  "type": "bpmn",
+  "language": "pt-BR",
+  "sources": [
+    "flowchart.html"
+  ],
+  "gate": "passed"
+}

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="width" content="1796">
+<title>DER · billing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="pt-BR">
+<style>
+:root{
+  /* theme ai-diagrams: written by scripts/theme.py from ai-diagrams.json */
+  --ink:#111827;
+  --support:#374151;
+  --muted:#6B7280;
+  --zone:#F3F4F6;
+  --paper:#FFFFFF;
+  --accent:#14B8A6;
+  --risk:#B42318;
+  --risk-bg:#FEF3F2;
+  --accent-strong:#0F766E;
+  --muted-light:#D1D5DB;
+  --c4-person-type:#9CA3AF;
+  --c4-person-desc:#E5E7EB;
+  --c4-external:#E9EBEF;
+  --c4-boundary:#F9FAFB;
+  --er-border:#CBD5E1;
+  --er-legend:#F9FAFB;
+  --er-row-even:#F8FAFC;
+  --er-key:#A16207;
+  --er-domain:#15803D;
+  --er-external:#1D4ED8;
+  --er-copy:#7E22CE;
+  --er-strong:#FCA5A5;
+  --er-dependent:#99F6E4;
+  --er-associative:#C7D2FE;
+  --er-control:#DDD6FE;
+  --er-fact:#FED7AA;
+  --er-versioned:#FEF08A;
+  --er-projection:#BBF7D0;
+  --er-trail:#E5E7EB;
+  --er-domain-bg:#D9F99D;
+  --er-config:#BAE6FD;
+  --er-reference:#FDE68A;
+  --er-view:#FBCFE8;
+  --support-rgb:55,65,81;
+  --paper-rgb:255,255,255;
+  --risk-rgb:180,35,24;
+  --er-heat-rgb:255,140,180;
+  --font-text:'IBM Plex Sans',Arial,sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-text);background:var(--paper);color:var(--ink);width:1760px}
+.page{padding:36px 48px 28px}
+.hdr{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;letter-spacing:.15em;color:var(--support);font-weight:500;text-transform:uppercase}
+.kicker{font-family:var(--font-mono);font-size:11px;letter-spacing:.28em;font-weight:500;text-transform:uppercase;color:var(--muted);margin-top:26px}
+.kicker .sq{color:var(--accent)}
+h1{font-size:38px;font-weight:600;letter-spacing:-.025em;line-height:1.05;margin-top:10px}
+.sub{font-size:15px;color:var(--support);margin-top:10px;max-width:900px;line-height:1.5}
+.wrap{display:flex;gap:40px;margin-top:34px;align-items:flex-start}
+.canvas{position:relative;width:1140px;height:700px;flex:none}
+.frame{position:absolute}
+.flabel{position:absolute;top:7px;left:12px;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;font-weight:600;text-transform:uppercase;color:var(--support);white-space:nowrap}
+.awscloud{border:1.6px solid var(--ink);background:var(--paper)}
+.awscloud>.flabel{display:flex;align-items:center;gap:7px;color:var(--ink)}
+.awscloud>.flabel img{width:17px;height:17px}
+.region{border:1.4px dashed var(--support)}
+.account{border:1px dashed var(--muted);background:var(--paper)}
+.zone{border:1px solid rgba(var(--support-rgb),.22);background:var(--zone)}
+.zone>.flabel{color:var(--muted)}
+.ext{border:1.5px solid var(--risk);background:var(--risk-bg)}
+.ext>.flabel{color:var(--risk)}
+.node{position:absolute;width:110px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.node img{width:44px;height:44px}
+.node .nl{margin-top:6px;font-size:11px;font-weight:600;line-height:1.25;color:var(--ink)}
+.node .ns{font-size:9.5px;color:var(--muted);line-height:1.3;margin-top:2px}
+.bchip{position:absolute;background:var(--paper);border:1px solid var(--support);border-left:4px solid var(--ink);padding:7px 12px}
+.bchip .bn{font-family:var(--font-mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.bchip .bt{font-size:11.5px;font-weight:600;line-height:1.2;margin-top:2px}
+.bchip .bs{font-size:9px;color:var(--muted);margin-top:2px;line-height:1.25}
+svg.edges{position:absolute;inset:0;pointer-events:none}
+.badge{position:absolute;width:20px;height:20px;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.elabel{position:absolute;font-size:10px;color:var(--muted);line-height:1.25}
+.passos{flex:1;min-width:0}
+.ptitle{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;font-weight:600;text-transform:uppercase;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.pitem{display:flex;gap:12px;margin-top:14px;font-size:13px;line-height:1.5;color:var(--ink)}
+.pitem .pb{flex:none;width:22px;height:22px;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.pitem b{font-weight:600}
+.sec{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;font-weight:600;text-transform:uppercase;margin:40px 0 4px;border-top:1px solid rgba(var(--support-rgb),.15);padding-top:22px}
+table.comp{width:100%;table-layout:fixed;border-collapse:collapse;font-size:12.5px;margin-top:10px}
+table.comp th{text-align:left;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:6px 10px;border-bottom:2px solid var(--ink);overflow-wrap:anywhere}
+table.comp td{padding:8px 10px;border-bottom:1px solid rgba(var(--support-rgb),.15);vertical-align:top;line-height:1.45;overflow-wrap:anywhere}
+/* layout fixo: a tabela nunca passa da largura da página; a primeira coluna tem largura própria e as outras dividem o resto */
+table.comp th:first-child,table.comp td:first-child{width:220px}
+table.comp td:first-child{font-weight:600}
+.foot{margin-top:34px;font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+/* chips de tópico */
+.chip{position:absolute;height:32px;border:1px solid var(--muted);background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600}
+.chip.red{border-color:var(--risk);background:var(--risk-bg);color:var(--risk)}
+
+/* motor plugável open source: capacidade genérica + implementação, com selo */
+.oss{position:absolute;border:1.5px solid var(--ink);background:var(--paper);text-align:left;padding:7px 10px 7px 44px;line-height:1.25;display:flex;flex-direction:column;justify-content:center}
+.oss img{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:28px;height:28px}
+.oss .ot{font-size:11px;font-weight:700}
+.oss .os{font-size:8.5px;color:var(--muted);font-weight:400}
+.oss .tag{position:absolute;top:-9px;right:6px;background:var(--accent);color:var(--ink);font-family:var(--font-mono);font-size:7.5px;font-weight:600;padding:1px 5px;letter-spacing:.08em}
+/* serviço AWS em formato compacto, com ícone */
+.svc{position:absolute;border:1px solid var(--muted);background:var(--paper);text-align:left;padding:6px 8px 6px 40px;line-height:1.25;display:flex;flex-direction:column;justify-content:center}
+.svc img{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:24px;height:24px}
+.svc .ot{font-size:10.5px;font-weight:700}
+.svc .os{font-size:8.5px;color:var(--muted);font-weight:400}
+
+/* passos abaixo do desenho: canvas usa a largura inteira */
+.wrap.stack{display:block}
+.wrap.stack .canvas{width:1700px}
+.wrap.stack .passos{width:auto;max-width:1700px;columns:3;column-gap:36px;margin-top:26px}
+.wrap.stack .passos .pitem{break-inside:avoid;margin-top:0;padding-top:14px}
+.wrap.stack .passos .ptitle{column-span:all}
+
+/* C4: elementos */
+.bchip.c4{border:1.4px solid var(--ink);border-left:1.4px solid var(--ink);border-radius:6px;padding:12px 14px;background:var(--paper)}
+.bchip.c4 .bn{font-size:9px}
+.bchip.c4 .bt{font-size:13px;margin-top:4px}
+.bchip.c4 .bs{font-size:10px;color:var(--support);margin-top:5px;line-height:1.35}
+.bchip.c4 img{position:absolute;top:10px;right:10px;width:22px;height:22px}
+.bchip.c4.pessoa{background:var(--ink);border-color:var(--ink);border-radius:30px;padding:12px 22px}
+.bchip.c4.pessoa .bn{color:var(--c4-person-type)}
+.bchip.c4.pessoa .bt{color:var(--paper)}
+.bchip.c4.pessoa .bs{color:var(--c4-person-desc)}
+.bchip.c4.banco{border-radius:120px/18px;padding-top:18px}
+.bchip.c4.externo{background:var(--c4-external);border:1.4px dashed var(--muted)}
+.bchip.c4.externo .bt{color:var(--support)}
+.frame.limite{border:1.6px dashed var(--ink);border-radius:8px;background:var(--c4-boundary)}
+.frame.limite>.flabel{top:auto;bottom:9px;color:var(--ink)}
+.elabel.tec{font-family:var(--font-mono);font-size:9.5px;color:var(--support);background:var(--paper);padding:0 2px}
+/* C4: legenda */
+.c4leg{display:flex;flex-wrap:wrap;gap:14px 30px;margin-top:14px;font-size:12.5px;color:var(--support);align-items:center}
+.c4leg .it{display:flex;align-items:center;gap:9px}
+.c4leg .sw{width:44px;height:24px;border:1.4px solid var(--ink);border-radius:4px;background:var(--paper);flex:none}
+.c4leg .sw.pessoa{background:var(--ink);border-radius:12px}
+.c4leg .sw.banco{border-radius:22px/6px}
+.c4leg .sw.externo{background:var(--c4-external);border-style:dashed;border-color:var(--muted)}
+.c4leg .sw.limite{border-style:dashed;background:var(--c4-boundary)}
+.c4leg .seta{display:flex;align-items:center;gap:6px}
+.c4leg .seta i{display:block;width:40px;height:1.6px;background:var(--support);position:relative}
+.c4leg .seta i:after{content:"";position:absolute;right:-1px;top:-4px;border-left:8px solid var(--support);border-top:4.8px solid transparent;border-bottom:4.8px solid transparent}
+.c4leg .seta b{width:18px;height:18px;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.c4leg code{font-family:var(--font-mono);font-size:11px}
+/* C4 gerado pelo modelo (scripts/build_c4.py): formas por tipo, rótulo na seta, navegação entre visões */
+.bchip.c4.foco{border-width:2.4px}
+.bchip.c4.outro{background:var(--zone);border-color:var(--muted)}
+.bchip.c4.web{border-top-width:9px;border-radius:6px 6px 4px 4px}
+.bchip.c4.movel{border-width:1.4px 7px;border-radius:14px}
+.bchip.c4.fila{border-radius:18px/50%;padding-left:24px;padding-right:24px}
+.bchip.c4.comp:before,.bchip.c4.comp:after{content:"";position:absolute;left:-8px;width:16px;height:9px;border:1.4px solid var(--ink);background:var(--paper)}
+.bchip.c4.comp{padding-left:24px}
+.bchip.c4.comp:before{top:14px}
+.bchip.c4.comp:after{top:30px}
+.bchip.c4.infra{background:var(--zone);border:1.2px solid var(--muted);border-radius:4px}
+.bchip.c4 .drill{display:block;margin-top:7px;font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-strong);text-decoration:none}
+.bchip.c4.pessoa .drill{color:var(--c4-person-desc)}
+.bchip.c4 .drill:after{content:"";position:absolute;inset:0}
+.c4head{position:absolute;width:40px;height:40px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 3px var(--paper)}
+.frame.dnode{border:1.3px solid var(--support);border-radius:6px;background:rgba(var(--support-rgb),.035)}
+.frame.dnode>.flabel{color:var(--ink)}
+.rel{position:absolute;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--paper);padding:2px 5px;line-height:14px}
+.rel .rd{font-size:11px;color:var(--ink)}
+.rel .rt{font-family:var(--font-mono);font-size:9.5px;color:var(--muted);margin-top:1px}
+.rel .rn,.c4steps .rn{display:flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:10px;font-weight:600;margin-bottom:2px;flex:none}
+.c4nav{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin-top:16px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.c4nav .cn{color:var(--muted);margin-right:4px}
+.c4nav a,.c4nav b{padding:4px 9px;border:1px solid var(--muted-light);color:var(--support);text-decoration:none;font-weight:500}
+.c4nav b{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.c4steps{columns:2;column-gap:36px;margin-top:12px}
+.c4steps .cs{display:flex;gap:10px;break-inside:avoid;padding-top:10px;font-size:13px;line-height:1.5;color:var(--support)}
+.c4steps .rn{margin-top:2px}
+.c4steps b{font-weight:600;color:var(--ink)}
+.c4steps code{font-family:var(--font-mono);font-size:11px}
+.c4leg .sw.foco{border-width:2.4px}
+.c4leg .sw.outro{background:var(--zone);border-color:var(--muted)}
+.c4leg .sw.web{border-top-width:6px}
+.c4leg .sw.movel{border-width:1.4px 5px;border-radius:8px;width:30px}
+.c4leg .sw.fila{border-radius:10px/50%}
+.c4leg .sw.comp{position:relative;margin-left:5px}
+.c4leg .sw.comp:before{content:"";position:absolute;left:-6px;top:4px;width:10px;height:6px;border:1.2px solid var(--ink);background:var(--paper)}
+.c4leg .sw.infra{background:var(--zone);border-color:var(--muted);border-width:1.2px}
+.c4leg .sw.dnode{border:1.3px solid var(--support);border-radius:4px;background:rgba(var(--support-rgb),.035)}
+.c4leg .sw.drill{border:none;background:none;width:auto;height:auto;display:flex;align-items:center;font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;color:var(--accent-strong)}
+.c4leg .sw.pessoa{position:relative;margin-top:12px}
+.c4leg .sw.pessoa:after{content:"";position:absolute;width:16px;height:16px;border-radius:50%;background:var(--ink);left:13px;top:-13px;box-shadow:0 0 0 2px var(--paper)}
+.c4leg .seta b{margin-right:4px}
+
+
+.bchip.tabela{padding:0;border:1.4px solid var(--support);border-left:1.4px solid var(--support);background:var(--paper);overflow:hidden}
+.tabela .th{height:52px;padding:6px 10px;border-bottom:1px solid var(--support)}
+.tabela .tt{font-size:13px;font-weight:700;font-family:var(--font-mono);color:var(--ink);display:flex;justify-content:space-between;align-items:baseline}
+.tabela .tp{font-family:var(--font-text);font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--support)}
+.tabela .td{font-size:10.5px;color:var(--ink);line-height:1.25;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabela .tr{height:17px;display:flex;align-items:center;padding:0 10px;font-family:var(--font-mono);font-size:10.5px}
+.tabela .tr:nth-child(odd){background:var(--er-row-even)}
+.tabela .tk{width:24px;flex:none;font-size:9px;font-weight:700;color:var(--er-key)}
+.tabela .tn{flex:1;min-width:0;font-size:10px;color:var(--ink);white-space:nowrap;overflow:hidden;padding-right:6px}
+.tabela .ti{flex:none;max-width:165px;text-align:right;font-size:9px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabela .ti.dom{color:var(--er-domain)}
+.tabela .ti.fora{color:var(--er-external);font-weight:600}
+.tabela .ti.cop{color:var(--er-copy)}
+.tabela.externa{border-style:dashed}
+.tabela.externa .th{border-bottom:none}
+.tabela.leve .th{padding:4px 10px}
+.tabela.leve .tt{font-size:11.5px}
+.tabela .lu{font-size:9.5px;color:var(--er-domain);padding:2px 10px 0;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.front{position:absolute;font-size:10.5px;color:var(--ink);line-height:1.55}
+.front h4{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--support);margin:0 0 4px}
+.front code{font-family:var(--font-mono);font-size:10px}
+.front .fora{color:var(--er-external);font-weight:600}
+.sub{min-height:66px}
+.legfixa{display:flex;gap:28px;margin-top:22px;padding:14px 18px;border:1px solid var(--er-border);background:var(--er-legend);font-size:10.5px;color:var(--ink);line-height:1.35}
+.legfixa h4{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--support);margin:0 0 8px}
+.legfixa .lc{flex:none;width:330px}
+.legfixa .lc:nth-child(3){width:500px}
+.legfixa .lc.dupla{flex:1;width:auto}
+.legfixa .li{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.legfixa .pe{flex:none;width:74px;font-weight:700}
+.legfixa .rv,.legfixa .ra,.legfixa .rr,.legfixa .rk{flex:none;width:140px;font-family:var(--font-mono);font-size:9.5px;text-align:right}
+.legfixa .rv{color:var(--er-domain)}.legfixa .ra{color:var(--er-external);font-weight:600}.legfixa .rr{color:var(--er-copy)}.legfixa .rk{color:var(--er-key);font-weight:700}
+.legfixa .tps{columns:2;column-gap:22px}
+.legfixa .tipo{break-inside:avoid;display:flex;gap:8px;align-items:flex-start;margin-bottom:5px}
+.legfixa .sw{flex:none;width:14px;height:14px;border:1px solid var(--support)}
+
+/* a página acompanha o canvas do layout: legenda, faixas e desenho com a mesma largura */
+body{width:1796px}
+.wrap.stack .canvas{width:1700px}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>Diagrama importado</span><span>DER · billing · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Modelo lógico · schema billing</div>
+<h1>billing</h1>
+<div class="sub">Conteúdo do arquivo de entrada. O motor recalcula a disposição dos elementos.</div>
+<div class="legfixa">
+  <svg width="0" height="0" style="position:absolute"><defs><marker id="lum" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M5,0 V12 M9,0 V12" stroke-width="1.6" style="stroke:var(--support)"/></marker><marker id="lzeroum" markerWidth="18" markerHeight="12" refX="17" refY="6" orient="auto" markerUnits="userSpaceOnUse"><circle cx="5" cy="6" r="3.6" stroke-width="1.4" style="fill:var(--paper);stroke:var(--support)"/><path d="M14,0 V12" stroke-width="1.6" style="stroke:var(--support)"/></marker><marker id="lmuitos" markerWidth="22" markerHeight="14" refX="21" refY="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><circle cx="5" cy="7" r="3.6" stroke-width="1.4" style="fill:var(--paper);stroke:var(--support)"/><path d="M11,7 L21,0 M11,7 L21,7 M11,7 L21,14" stroke-width="1.5" fill="none" style="stroke:var(--support)"/></marker><marker id="lle" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" style="fill:var(--support)"/></marker></defs></svg>
+  <div class="lc"><h4>Linhas</h4>
+    <div class="li"><svg width="74" height="16" viewBox="0 0 74 16" style="flex:none"><path marker-start="url(#lmuitos)" marker-end="url(#lum)" d="M3,8 H70" fill="none" stroke-width="1.6" style="stroke:var(--support)"/></svg><span><b>FK obrigatória</b>: aponta exatamente uma linha</span></div>
+    <div class="li"><svg width="74" height="16" viewBox="0 0 74 16" style="flex:none"><path marker-start="url(#lmuitos)" marker-end="url(#lzeroum)" d="M3,8 H70" fill="none" stroke-width="1.6" style="stroke:var(--support)"/></svg><span><b>FK opcional</b>: aponta zero ou uma linha</span></div>
+    <div class="li"><span class="pe">pé de galinha</span><span>o lado N: zero ou muitas linhas por chave</span></div>
+    <div class="li"><svg width="74" height="16" viewBox="0 0 74 16" style="flex:none"><path marker-end="url(#lle)" d="M3,8 H70" fill="none" stroke-width="1.6" stroke-dasharray="6 4" style="stroke:var(--support)"/></svg><span><b>só em view</b>: o id aponta a tabela, sem FK</span></div></div>
+  <div class="lc"><h4>Rótulo à direita da coluna</h4>
+    <div class="li"><span class="rv">situacoes_conta</span><span>id de tabela de domínio ou de referência, sem seta</span></div>
+    <div class="li"><span class="rv">↓ na faixa</span><span>o nome não coube: a tabela está na faixa de domínio</span></div>
+    <div class="li"><span class="ra">cadastro.clientes</span><span>FK para tabela de outro schema, sem seta</span></div>
+    <div class="li"><span class="rr">motivo</span><span>FK desenhada sem seta: cópia deliberada, motivo no rótulo</span></div>
+    <div class="li"><span class="rk">PK FK UQ</span><span>chave primária, estrangeira, única; <b>id</b>: id numa view de leitura</span></div>
+    <div class="li"><span class="rk">- - -</span><span>contorno tracejado: tabela de outro schema</span></div></div>
+  <div class="lc dupla"><h4>Cor do cabeçalho: o tipo da tabela</h4><div class="tps"><div class="tipo"><span class="sw" style="background:var(--er-strong)"></span><span><b>entidade forte</b>: existe por si; as outras tabelas apontam para ela</span></div><div class="tipo"><span class="sw" style="background:var(--er-dependent)"></span><span><b>dependente</b>: só existe ligada a uma entidade forte</span></div><div class="tipo"><span class="sw" style="background:var(--er-associative)"></span><span><b>associativa</b>: liga duas entidades, muitos para muitos</span></div><div class="tipo"><span class="sw" style="background:var(--er-control)"></span><span><b>controle de processo</b>: controla um processo: execução, lote, agenda</span></div><div class="tipo"><span class="sw" style="background:var(--er-fact)"></span><span><b>fato · imutável</b>: algo que aconteceu; gravado uma vez, nunca muda</span></div><div class="tipo"><span class="sw" style="background:var(--er-versioned)"></span><span><b>versões · imutável</b>: cada mudança é uma versão nova; a anterior fica</span></div><div class="tipo"><span class="sw" style="background:var(--er-projection)"></span><span><b>projeção</b>: estado calculado a partir dos fatos</span></div><div class="tipo"><span class="sw" style="background:var(--er-trail)"></span><span><b>técnica</b>: outbox (evento a publicar) ou deduplicação de consumo</span></div><div class="tipo"><span class="sw" style="background:var(--er-domain-bg)"></span><span><b>domínio</b>: lista fechada de valores (situação, tipo, causa)</span></div><div class="tipo"><span class="sw" style="background:var(--er-config)"></span><span><b>configuração</b>: regra que o banco consulta: transições permitidas</span></div><div class="tipo"><span class="sw" style="background:var(--er-reference)"></span><span><b>referência</b>: lista oficial carregada de fonte externa (moedas, países)</span></div><div class="tipo"><span class="sw" style="background:var(--er-view)"></span><span><b>view de leitura</b>: view materializada, montada a partir de outros schemas</span></div></div></div>
+</div>
+
+<div class="wrap stack">
+<div class="canvas" style="height:292.5px">
+  <div class="bchip tabela" style="left:700px;top:60px;width:500px;height:94px"><div class="th" style="background:var(--er-dependent)"><div class="tt">receipts<span class="tp">dependente</span></div><div class="td">receipts</div></div><div class="tr"><span class="tk">PK</span><span class="tn">receipt_id</span><span class="ti "></span></div><div class="tr"><span class="tk">FK</span><span class="tn">order_id</span><span class="ti fora">public.orders</span></div></div>
+  
+  <div class="frame zone" style="left:10px;top:214px;width:1680px;height:68.5px"><div class="flabel">Fronteira com outros schemas · FK sem leitura: o banco garante que a linha existe, o serviço não lê a tabela do outro</div></div>
+  <div class="front" style="left:30px;top:244px;width:560px"><h4>este schema aponta para</h4><div><code>receipts.order_id → public.orders</code></div></div>
+  <div class="front" style="left:610px;top:244px;width:560px"><h4>outros schemas apontam para cá</h4><div>nenhuma</div></div>
+  <div class="front" style="left:1190px;top:244px;width:490px"><h4>usa de comum (domínio geral e referência)</h4><div>nada</div></div>
+  
+  
+</div>
+
+<div class="passos">
+  <div class="ptitle">Relações</div>
+  
+</div>
+</div>
+
+<div class="foot"> · Importação</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "_doc": "Written by skills/ai-diagrams/templates/build-all.sh: the gate result of each template on this run.",
+  "date": "2026-11-07",
+  "platform": "darwin",
+  "types": {
+    "aws-architecture": "pass",
+    "step-flow": "pass",
+    "er-schema": "pass",
+    "dependency-matrix": "pass",
+    "comparison-table": "pass",
+    "c4": "pass",
+    "swimlanes": "pass",
+    "card-catalog": "pass",
+    "sequence": "pass",
+    "state-machine": "pass",
+    "bpmn": "pass",
+    "poster-lint": "pass",
+    "theme": "pass"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "header": "ai-diagrams · Modelos de diagrama · Fintech de exemplo",
+  "footer": "Diagramas &nbsp;·&nbsp; modelo lógico de exemplo &nbsp;·&nbsp; 2026-11",
+  "commonSchema": "comum",
+  "readSchema": null,
+  "controlColumns": [],
+  "schemas": {
+    "comum": "domínios gerais e referências",
+    "cadastro": "Cadastro de clientes",
+    "conta": "Contas e movimentos",
+    "pagamento": "Pagamentos",
+    "extrato": "Extrato do cliente"
+  },
+  "tables": {
+    "comum.moedas": { "type": "reference", "label": "moedas ISO 4217", "columns": [
+      ["moeda_id", "uuid", "PK"], ["codigo", "char(3)", "UQ"], ["nome", "varchar(60)", ""]] },
+    "comum.paises": { "type": "reference", "label": "países ISO 3166", "columns": [
+      ["pais_id", "uuid", "PK"], ["codigo", "char(2)", "UQ"], ["nome", "varchar(80)", ""]] },
+
+    "cadastro.clientes": { "type": "strong", "label": "a pessoa que abre contas", "columns": [
+      ["cliente_id", "uuid", "PK"], ["documento", "varchar(14)", "UQ"], ["nome", "varchar(120)", ""],
+      ["situacao_cliente_id", "uuid", "FK", "cadastro.situacoes_cliente", true], ["criado_em", "timestamptz", ""]] },
+    "cadastro.enderecos": { "type": "dependent", "label": "endereços do cliente", "columns": [
+      ["endereco_id", "uuid", "PK"], ["cliente_id", "uuid", "FK", "cadastro.clientes", true],
+      ["pais_id", "uuid", "FK", "comum.paises", true], ["logradouro", "varchar(160)", ""], ["cep", "varchar(9)", ""]] },
+    "cadastro.situacoes_cliente": { "type": "domain", "label": "ativo, bloqueado, encerrado", "columns": [
+      ["situacao_cliente_id", "uuid", "PK"], ["codigo", "varchar(20)", "UQ"]] },
+
+    "conta.contas": { "type": "strong", "label": "a conta de pagamento do cliente", "columns": [
+      ["conta_id", "uuid", "PK"], ["cliente_id", "uuid", "FK", "cadastro.clientes", true], ["numero", "varchar(20)", "UQ"],
+      ["moeda_id", "uuid", "FK", "comum.moedas", true], ["situacao_conta_id", "uuid", "FK", "conta.situacoes_conta", true],
+      ["aberta_em", "timestamptz", ""], ["criado_em", "timestamptz", ""], ["atualizado_em", "timestamptz", ""]] },
+    "conta.titulares": { "type": "associative", "label": "quem pode movimentar a conta", "columns": [
+      ["titular_id", "uuid", "PK"], ["conta_id", "uuid", "FK", "conta.contas", true],
+      ["cliente_id", "uuid", "FK", "cadastro.clientes", true], ["papel", "varchar(20)", ""]] },
+    "conta.movimentos": { "type": "fact", "label": "cada crédito ou débito na conta", "columns": [
+      ["movimento_id", "uuid", "PK"], ["conta_id", "uuid", "FK", "conta.contas", true],
+      ["tipo_movimento_id", "uuid", "FK", "conta.tipos_movimento", true], ["valor", "numeric(18,2)", ""],
+      ["sequencia_evento", "bigint", ""], ["ocorrido_em", "timestamptz", ""],
+      ["pagamento_id", "uuid", "FK", "pagamento.pagamentos", false]] },
+    "conta.saldos": { "type": "projection", "label": "saldo calculado a partir dos movimentos", "columns": [
+      ["saldo_id", "uuid", "PK"], ["conta_id", "uuid", "FK", "conta.contas", true], ["saldo", "numeric(18,2)", ""],
+      ["ultimo_movimento_id", "uuid", "FK", "conta.movimentos", false], ["atualizado_em", "timestamptz", ""]] },
+    "conta.limites": { "type": "versioned", "label": "limite da conta, uma versão por mudança", "columns": [
+      ["limite_id", "uuid", "PK"], ["conta_id", "uuid", "FK", "conta.contas", true], ["valor", "numeric(18,2)", ""],
+      ["versao", "integer", ""], ["vigente_desde", "timestamptz", ""]] },
+    "conta.outbox": { "type": "trail", "label": "evento a publicar, lido pelo CDC", "columns": [
+      ["outbox_id", "uuid", "PK"], ["evento_id", "uuid", "UQ"], ["agregado_id", "uuid", ""],
+      ["tipo_evento", "varchar(80)", ""], ["payload", "jsonb", ""]] },
+    "conta.fechamentos_diarios": { "type": "control", "label": "execução do fechamento de cada dia", "columns": [
+      ["fechamento_id", "uuid", "PK"], ["data_referencia", "date", "UQ"], ["situacao", "varchar(20)", ""],
+      ["iniciado_em", "timestamptz", ""]] },
+    "conta.situacoes_conta": { "type": "domain", "label": "aberta, bloqueada, encerrada", "columns": [
+      ["situacao_conta_id", "uuid", "PK"], ["codigo", "varchar(20)", "UQ"]] },
+    "conta.tipos_movimento": { "type": "domain", "label": "crédito, débito, estorno", "columns": [
+      ["tipo_movimento_id", "uuid", "PK"], ["codigo", "varchar(20)", "UQ"]] },
+    "conta.transicoes_situacao_conta": { "type": "config", "label": "trocas de situação permitidas", "columns": [
+      ["transicao_id", "uuid", "PK"], ["situacao_origem_id", "uuid", "FK", "conta.situacoes_conta", true],
+      ["situacao_destino_id", "uuid", "FK", "conta.situacoes_conta", true]] },
+
+    "pagamento.pagamentos": { "type": "strong", "label": "ordem de pagamento do cliente", "columns": [
+      ["pagamento_id", "uuid", "PK"], ["conta_id", "uuid", "FK", "conta.contas", true], ["valor", "numeric(18,2)", ""],
+      ["moeda_id", "uuid", "FK", "comum.moedas", true], ["situacao", "varchar(20)", ""], ["criado_em", "timestamptz", ""]] },
+    "pagamento.outbox": { "type": "trail", "label": "evento a publicar", "columns": [
+      ["outbox_id", "uuid", "PK"], ["evento_id", "uuid", "UQ"], ["payload", "jsonb", ""]] },
+
+    "extrato.lancamentos": { "type": "projection", "label": "linha do extrato exibida no app", "columns": [
+      ["lancamento_id", "uuid", "PK"], ["conta_id", "uuid", "FK", "conta.contas", true],
+      ["movimento_id", "uuid", "FK", "conta.movimentos", true], ["valor", "numeric(18,2)", ""], ["descricao", "varchar(140)", ""]] },
+    "extrato.eventos_processados": { "type": "trail", "label": "deduplicação de consumo", "columns": [
+      ["evento_id", "uuid", "PK"], ["processado_em", "timestamptz", ""]] }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "lang": "en",
+  "page_title": "Imported diagram",
+  "header": [
+    "Imported diagram",
+    "V1"
+  ],
+  "kicker": "Import",
+  "h1": "Imported diagram",
+  "sub": "Content from the input file. The engine recalculates the layout of the elements.",
+  "footer": [
+    "",
+    "Import"
+  ],
+  "participants": [
+    {
+      "id": "app",
+      "name": "App",
+      "type": "actor"
+    },
+    {
+      "id": "api",
+      "name": "Orders API",
+      "type": "service"
+    }
+  ],
+  "messages": [
+    {
+      "from": "app",
+      "to": "api",
+      "text": "Create order",
+      "type": "sync"
+    },
+    {
+      "from": "api",
+      "to": "api",
+      "text": "Validate",
+      "type": "sync"
+    },
+    {
+      "from": "api",
+      "to": "app",
+      "text": "Order ID",
+      "type": "reply"
+    }
+  ]
+}

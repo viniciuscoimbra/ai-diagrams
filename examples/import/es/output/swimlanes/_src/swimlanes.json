@@ -1,0 +1,62 @@
+{
+  "lang": "es",
+  "page_title": "Diagrama importado",
+  "header": [
+    "Diagrama importado",
+    "V1"
+  ],
+  "kicker": "Importación",
+  "h1": "Diagrama importado",
+  "sub": "Contenido del archivo de entrada. El motor recalcula la disposición de los elementos.",
+  "footer": [
+    "",
+    "Importación"
+  ],
+  "lanes": [
+    {
+      "name": "Cliente",
+      "sub": ""
+    },
+    {
+      "name": "Pedidos",
+      "sub": ""
+    }
+  ],
+  "phases": [
+    "1",
+    "2",
+    "3"
+  ],
+  "elements": [
+    {
+      "lane": 0,
+      "phase": 0,
+      "text": "Enviar pedido"
+    },
+    {
+      "lane": 1,
+      "phase": 1,
+      "text": "Recibir pedido"
+    },
+    {
+      "lane": 1,
+      "phase": 2,
+      "text": "Revisar pedido"
+    }
+  ],
+  "sequence": [
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      2
+    ]
+  ],
+  "sections": []
+}

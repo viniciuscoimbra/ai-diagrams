@@ -1,0 +1,46 @@
+{
+  "lang": "en",
+  "page_title": "Imported diagram",
+  "header": [
+    "Imported diagram",
+    "V1"
+  ],
+  "kicker": "Import",
+  "h1": "Imported diagram",
+  "sub": "Content from the input file. The engine recalculates the layout of the elements.",
+  "footer": [
+    "",
+    "Import"
+  ],
+  "initial": "pending",
+  "states": [
+    {
+      "id": "pending",
+      "name": "Pending",
+      "desc": "Pending"
+    },
+    {
+      "id": "paid",
+      "name": "Paid",
+      "desc": "Paid"
+    },
+    {
+      "id": "closed",
+      "name": "Closed",
+      "desc": "Closed",
+      "final": true
+    }
+  ],
+  "transitions": [
+    {
+      "from": "pending",
+      "to": "paid",
+      "event": "Payment received"
+    },
+    {
+      "from": "paid",
+      "to": "closed",
+      "event": "Order shipped"
+    }
+  ]
+}

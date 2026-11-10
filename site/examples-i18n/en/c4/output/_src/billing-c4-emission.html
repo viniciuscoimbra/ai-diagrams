@@ -1,0 +1,87 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Issuing a boleto through the portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="en">
+<meta name="width" content="1400">
+<style>/*STYLE*/
+body{width:1400px}</style></head><body>
+<div class="page">
+
+<div class="hdr"><span>ai-diagrams · Boleto billing system</span><span>C4 · V2</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · dynamic view</div>
+<h1>Issuing a boleto through the portal</h1>
+<div class="sub">The path of an issuance request made in the portal, until the customer gets the payment code.</div>
+<div class="c4nav"><span class="cn">Views</span><a href="billing-c4-landscape.html">landscape</a><a href="billing-c4-context.html">context</a><a href="billing-c4.html">containers</a><a href="billing-c4-api.html">components of Billing API</a><b>issuing a boleto</b><a href="billing-c4-deployment.html">deployment</a></div>
+
+<div class="wrap stack"><div class="canvas" style="width:524px;height:1172px">
+  <div class="frame limite" style="left:18px;top:310px;width:413px;height:574px"><div class="flabel" style="top:auto;bottom:9px;left:10px">Billing system · system in focus</div></div>
+  <div class="bchip c4 pessoa" style="left:144px;top:44px;width:250px;height:80px">
+    <div class="bn">person</div>
+    <div class="bt">Business customer</div>
+    <div class="bs">issues boletos and tracks payments</div>
+  </div>
+  <div class="c4head" style="left:249px;top:16px"></div>
+  <div class="bchip c4 web" style="left:137px;top:344px;width:260px;height:88px">
+    <div class="bn">container · Next.js on Vercel</div>
+    <div class="bt">Business portal</div>
+    <div class="bs">batch issuance and receipts dashboard</div>
+  </div>
+  <div class="bchip c4" style="left:137px;top:533px;width:260px;height:112px">
+    <img src="aws://compute/lambda.png">
+    <div class="bn">container · Node.js on Lambda</div>
+    <div class="bt">Billing API</div>
+    <div class="bs">behind API Gateway; validates the payer and stores the boleto</div>
+    <a class="drill" href="billing-c4-api.html">open components →</a>
+  </div>
+  <div class="bchip c4 externo" style="left:234px;top:1076px;width:260px;height:80px">
+    <div class="bn">external system · CIP</div>
+    <div class="bt">New Billing Platform</div>
+    <div class="bs">boleto registration</div>
+  </div>
+  <div class="bchip c4 banco" style="left:94px;top:746px;width:260px;height:86px">
+    <img src="aws://database/dynamodb.png">
+    <div class="bn">container · DynamoDB</div>
+    <div class="bt">Billing database</div>
+    <div class="bs">boletos, status and event history</div>
+  </div>
+  <svg class="edges" viewBox="0 0 524 1172">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+    <path d="M310,124 L310,344" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M267,432 L267,533" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M310,645 L310,655 L364,655 L364,1076" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M224,645 L224,746" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M224,344 L224,124" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+  </svg>
+  <div class="rel" data-edge="0" style="left:321px;top:208px;width:182px;align-items:flex-start;text-align:left"><span class="rn">1</span><span class="rd">Enters payer, amount and due date</span><span class="rt">[browser]</span></div>
+  <div class="rel" data-edge="1" style="left:194px;top:456px;width:146px"><span class="rn">2</span><span class="rd">Sends the issuance request</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="2" style="left:259px;top:892px;width:210px"><span class="rn">3</span><span class="rd">Registers the boleto and gets the payment code</span><span class="rt">[HTTPS · certificate]</span></div>
+  <div class="rel" data-edge="3" style="left:143px;top:669px;width:162px"><span class="rn">4</span><span class="rd">Stores the boleto as registered</span><span class="rt">[DynamoDB API]</span></div>
+  <div class="rel" data-edge="4" style="left:16px;top:208px;width:197px;align-items:flex-end;text-align:right"><span class="rn">5</span><span class="rd">Shows the payment code and the PDF</span><span class="rt">[browser]</span></div>
+</div></div>
+
+<div class="sec">Sequence</div>
+<div class="c4steps">
+<div class="cs"><span class="rn">1</span><div><b>Business customer → Business portal.</b> Enters payer, amount and due date <code>[browser]</code></div></div>
+<div class="cs"><span class="rn">2</span><div><b>Business portal → Billing API.</b> Sends the issuance request <code>[HTTPS · JSON]</code></div></div>
+<div class="cs"><span class="rn">3</span><div><b>Billing API → New Billing Platform.</b> Registers the boleto and gets the payment code <code>[HTTPS · certificate]</code></div></div>
+<div class="cs"><span class="rn">4</span><div><b>Billing API → Billing database.</b> Stores the boleto as registered <code>[DynamoDB API]</code></div></div>
+<div class="cs"><span class="rn">5</span><div><b>Business portal → Business customer.</b> Shows the payment code and the PDF <code>[browser]</code></div></div>
+</div>
+<div class="sec">C4 legend</div>
+<div class="c4leg">
+<div class="it"><div class="sw pessoa"></div>person</div>
+<div class="it"><div class="sw limite"></div>boundary of the system in focus</div>
+<div class="it"><div class="sw "></div>container: application or service</div>
+<div class="it"><div class="sw web"></div>web interface container</div>
+<div class="it"><div class="sw banco"></div>data container</div>
+<div class="it"><div class="sw externo"></div>external system</div>
+<div class="it"><span class="sw drill">open →</span>opens a more detailed view</div>
+<div class="it"><span class="seta"><b>1</b><i></i></span>step, in order: what it does <code>[technology]</code></div>
+</div>
+
+<div class="foot" style="display:flex;justify-content:space-between"><span>ai-diagrams · C4 model</span><span>boleto billing</span></div>
+
+</div>
+</body></html>

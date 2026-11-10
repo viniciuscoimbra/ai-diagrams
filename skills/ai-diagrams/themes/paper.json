@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "name": "paper",
+  "company": "",
+  "logo": null,
+  "colors": {
+    "ink": "#3B2A1E",
+    "support": "#5C4636",
+    "muted": "#8A7563",
+    "zone": "#F1E8D6",
+    "paper": "#FBF6EC",
+    "accent": "#1F6F78",
+    "risk": "#A3341F",
+    "risk_bg": "#F8E4DC"
+  },
+  "derived": {
+    "accent_strong": "#154E55",
+    "muted_light": "#D8CBB6",
+    "c4_person_type": "#B7A694",
+    "c4_person_desc": "#EDE3D3",
+    "c4_external": "#EAE0CF",
+    "c4_boundary": "#F6EFE2"
+  },
+  "er_palette": {
+    "er_border": "#D3C4AC",
+    "er_legend": "#F6EFE2",
+    "er_row_even": "#F7F1E6",
+    "er_key": "#8A5A12",
+    "er_domain": "#3F6B2A",
+    "er_external": "#1F5F8B",
+    "er_copy": "#6B3F7A",
+    "er_strong": "#E8B4A0",
+    "er_dependent": "#A9D3CC",
+    "er_associative": "#C4CBE3",
+    "er_control": "#D6CCE3",
+    "er_fact": "#EFCFA8",
+    "er_versioned": "#EDE09A",
+    "er_projection": "#C3DDB8",
+    "er_trail": "#E2D9CB",
+    "er_domain_bg": "#D5E3A8",
+    "er_config": "#B9D6E2",
+    "er_reference": "#EBD69A",
+    "er_view": "#E8C3CF",
+    "er_heat": "#C8553D"
+  },
+  "fonts": {
+    "text": "Public Sans",
+    "mono": "Source Code Pro"
+  },
+  "frame": {
+    "header": "{subject} · {client}",
+    "footer": "{type} · {date}",
+    "footer_right": "",
+    "classification": "",
+    "show_client": true
+  }
+}

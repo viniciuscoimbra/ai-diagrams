@@ -1,0 +1,180 @@
+{
+  "page_title": "Debit card purchase authorization",
+  "header": [
+    "ai-diagrams · Purchase authorization",
+    "V1 · Sequence"
+  ],
+  "kicker": "Sequence diagram",
+  "h1": "Debit card purchase authorization",
+  "sub": "The path from the store terminal to the approval or decline response. The card network routes the ISO 8583 message; the authorizer validates, queries fraud prevention and, depending on the score, reserves funds in the ledger or declines for suspicion of fraud. Only approved purchases trigger a notification.",
+  "participants": [
+    {
+      "id": "terminal",
+      "name": "Terminal",
+      "sub": "POS or e-commerce",
+      "type": "actor"
+    },
+    {
+      "id": "bandeira",
+      "name": "Card network",
+      "sub": "Payment network",
+      "type": "external"
+    },
+    {
+      "id": "autorizador",
+      "name": "Authorizer",
+      "sub": "ECS Fargate",
+      "type": "service"
+    },
+    {
+      "id": "antifraude",
+      "name": "Fraud prevention",
+      "sub": "SageMaker",
+      "type": "service"
+    },
+    {
+      "id": "ledger",
+      "name": "Ledger",
+      "sub": "Aurora PostgreSQL",
+      "type": "database"
+    },
+    {
+      "id": "notificacoes",
+      "name": "Notifications",
+      "sub": "SQS queue",
+      "type": "queue"
+    }
+  ],
+  "messages": [
+    {
+      "from": "terminal",
+      "to": "bandeira",
+      "text": "purchase",
+      "step": "The terminal sends the purchase; the card network routes ISO 8583 message `0100` to the authorizer"
+    },
+    {
+      "from": "bandeira",
+      "to": "autorizador",
+      "text": "`0100`"
+    },
+    {
+      "from": "autorizador",
+      "to": "autorizador",
+      "text": "validates card",
+      "step": "The authorizer validates card status, expiry and cryptogram without calling another service"
+    },
+    {
+      "from": "autorizador",
+      "to": "antifraude",
+      "text": "requests score",
+      "step": "The authorizer calls fraud prevention and waits for the score; timeout is 120 ms, with a fallback score of 0.5 if there is no response"
+    },
+    {
+      "from": "antifraude",
+      "to": "autorizador",
+      "text": "score (0 to 1)",
+      "type": "reply"
+    },
+    {
+      "fragment": "alt",
+      "branches": [
+        {
+          "guard": "score < 0.85",
+          "messages": [
+            {
+              "from": "autorizador",
+              "to": "ledger",
+              "text": "reserve funds",
+              "step": "The authorizer requests a funds hold; the ledger checks the balance and writes the hold and outbox row in the same transaction"
+            },
+            {
+              "fragment": "alt",
+              "branches": [
+                {
+                  "guard": "sufficient funds",
+                  "messages": [
+                    {
+                      "from": "ledger",
+                      "to": "autorizador",
+                      "text": "hold confirmed",
+                      "type": "reply"
+                    },
+                    {
+                      "from": "autorizador",
+                      "to": "bandeira",
+                      "text": "`0110` code `00`",
+                      "type": "reply",
+                      "step": "With sufficient funds, response `0110` with code `00` (approved)"
+                    }
+                  ]
+                },
+                {
+                  "guard": "insufficient funds",
+                  "messages": [
+                    {
+                      "from": "ledger",
+                      "to": "autorizador",
+                      "text": "insufficient funds",
+                      "type": "reply"
+                    },
+                    {
+                      "from": "autorizador",
+                      "to": "bandeira",
+                      "text": "`0110` code `51`",
+                      "type": "reply",
+                      "step": "With insufficient funds, response `0110` with code `51` (insufficient funds); nothing is held"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "guard": "score ≥ 0.85",
+          "messages": [
+            {
+              "from": "autorizador",
+              "to": "bandeira",
+              "text": "`0110` code `59`",
+              "type": "reply",
+              "step": "Score of 0.85 or higher: response `0110` with code `59` (suspected fraud), without querying the ledger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": "bandeira",
+      "to": "terminal",
+      "text": "response",
+      "type": "reply",
+      "step": "The card network responds to the terminal in every case"
+    },
+    {
+      "fragment": "opt",
+      "branches": [
+        {
+          "guard": "purchase approved",
+          "messages": [
+            {
+              "from": "autorizador",
+              "to": "notificacoes",
+              "text": "`compra.aprovada`",
+              "type": "async",
+              "step": "Only for approved purchases, the authorizer publishes an event to the notification queue without waiting for a response; the customer receives a push notification"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "band": {
+    "f1": "Capture and settlement (the acquirer's file the next day), reversals and installment purchases are out of scope"
+  },
+  "footer": [
+    "ai-diagrams",
+    "Sequence diagram · 2026-11"
+  ],
+  "lang": "en"
+}

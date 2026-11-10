@@ -1,0 +1,126 @@
+{
+  "page_title": "Ciclo de vida de la tarjeta de débito",
+  "header": [
+    "ai-diagrams · Ciclo de vida de la tarjeta de débito",
+    "V1 · Máquina de estados"
+  ],
+  "kicker": "Máquina de estados",
+  "h1": "Ciclo de vida de la tarjeta de débito",
+  "sub": "Estados de la tarjeta en el emisor, desde la solicitud hasta la cancelación. Cada cambio genera un evento y queda registrado en la tabla `cartao`. Camino feliz: Solicitada, En emisión, En tránsito, Pendiente de activación, Activa.",
+  "initial": "solicitado",
+  "states": [
+    {
+      "id": "solicitado",
+      "name": "Solicitada",
+      "desc": "El cliente solicitó la tarjeta en la app. Aún no hay tarjeta física."
+    },
+    {
+      "id": "em-emissao",
+      "name": "En emisión",
+      "desc": "El pedido fue al fabricante; el número y el criptograma ya existen."
+    },
+    {
+      "id": "em-transito",
+      "name": "En tránsito",
+      "desc": "El fabricante entregó la tarjeta al correo con un código de seguimiento."
+    },
+    {
+      "id": "aguardando-ativacao",
+      "name": "Pendiente de activación",
+      "desc": "La tarjeta llegó al cliente, pero no admite compras.",
+      "width": 280
+    },
+    {
+      "id": "ativo",
+      "name": "Activa",
+      "desc": "Admite compras."
+    },
+    {
+      "id": "bloqueado",
+      "name": "Bloqueada",
+      "desc": "El cliente bloqueó la tarjeta en la app. Vuelve a Activa cuando la desbloquea."
+    },
+    {
+      "id": "cancelado",
+      "name": "Cancelada",
+      "final": true,
+      "desc": "No vuelve a un estado anterior. El número no se reutiliza."
+    },
+    {
+      "id": "extraviado",
+      "name": "Extraviada",
+      "final": true,
+      "desc": "El correo devolvió o perdió el envío. Es un estado final; el fabricante emite otra tarjeta con otro número."
+    }
+  ],
+  "transitions": [
+    {
+      "from": "solicitado",
+      "to": "em-emissao",
+      "event": "fabricante confirma pedido"
+    },
+    {
+      "from": "solicitado",
+      "to": "cancelado",
+      "event": "rechazo en revisión del registro"
+    },
+    {
+      "from": "em-emissao",
+      "to": "em-transito",
+      "event": "fabricante informa del envío",
+      "action": "registra código de seguimiento"
+    },
+    {
+      "from": "em-transito",
+      "to": "aguardando-ativacao",
+      "event": "correo confirma entrega"
+    },
+    {
+      "from": "em-transito",
+      "to": "extraviado",
+      "event": "devolución o 30 días sin avance",
+      "action": "abre nuevo pedido"
+    },
+    {
+      "from": "aguardando-ativacao",
+      "to": "ativo",
+      "event": "cliente activa",
+      "guard": "4 dígitos + PIN correctos"
+    },
+    {
+      "from": "aguardando-ativacao",
+      "to": "bloqueado",
+      "event": "PIN incorrecto",
+      "guard": "3 intentos"
+    },
+    {
+      "from": "ativo",
+      "to": "bloqueado",
+      "event": "cliente bloquea en la app"
+    },
+    {
+      "from": "bloqueado",
+      "to": "ativo",
+      "event": "cliente desbloquea en la app"
+    },
+    {
+      "from": "ativo",
+      "to": "cancelado",
+      "event": "cancelación o caducidad"
+    },
+    {
+      "from": "bloqueado",
+      "to": "cancelado",
+      "event": "cancelación o caducidad"
+    }
+  ],
+  "band": {
+    "f1": "Un PIN incorrecto durante la activación no cambia el estado; solo el tercer intento fallido pasa la tarjeta a Bloqueada.",
+    "f2": "Fuera del alcance: tarjeta virtual, reposición por daño y tarjeta de crédito."
+  },
+  "footer": [
+    "ai-diagrams",
+    "Máquina de estados · 2026-11"
+  ],
+  "lang": "es"
+}

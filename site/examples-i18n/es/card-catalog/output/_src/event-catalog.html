@@ -1,0 +1,160 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="idioma" content="es">
+<title>Catálogo de eventos de dominio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/*STYLE*/
+.card .txt code{font-family:var(--font-mono);font-size:13px;overflow-wrap:anywhere}
+.card .linha:nth-last-child(2){margin-bottom:16px}
+</style></head><body>
+<div class="page">
+
+  <div class="hdr"><span>ai-diagrams · Ejemplos de diagramas · Fintech de ejemplo</span><span>Catálogo de eventos</span></div>
+
+  <div class="kicker"><span class="sq">■</span> Catálogo conceptual en tarjetas</div>
+  <h1>Catálogo de eventos de dominio de la plataforma</h1>
+  <div class="sub">Diez eventos publicados por cuatro productores: registro, cuentas, cobro y seguridad. Cada tarjeta indica cuándo se emite el evento, qué contiene el payload y quién lo consume.</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="sid">E01</div>
+      <div class="snome">Cliente registrado</div>
+      <div class="linha"><div class="rot">Productor</div>
+        <div class="txt">Registro.</div></div>
+      <div class="linha"><div class="rot">Cuándo</div>
+        <div class="txt">El onboarding aprueba el registro del cliente.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>cliente_id, documento, situacao</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Cuentas, notificaciones.</div></div>
+      <div class="slug">cliente.cadastrado.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E02</div>
+      <div class="snome">Cliente actualizado</div>
+      <div class="linha"><div class="rot">Productor</div>
+        <div class="txt">Registro.</div></div>
+      <div class="linha"><div class="rot">Cuándo</div>
+        <div class="txt">Cambian los datos personales o la dirección del cliente.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>cliente_id, campos_alterados</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Cuentas, cobro.</div></div>
+      <div class="slug">cliente.atualizado.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E03</div>
+      <div class="snome">Cuenta abierta</div>
+      <div class="linha"><div class="rot">Productor</div>
+        <div class="txt">Cuentas.</div></div>
+      <div class="linha"><div class="rot">Cuándo</div>
+        <div class="txt">La cuenta pasa al estado abierto.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>conta_id, cliente_id, numero</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Cobro, extracto, notificaciones.</div></div>
+      <div class="slug">conta.aberta.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E04</div>
+      <div class="snome">Cuenta bloqueada</div>
+      <div class="linha"><div class="rot">Productor</div>
+        <div class="txt">Cuentas.</div></div>
+      <div class="linha"><div class="rot">Cuándo</div>
+        <div class="txt">Seguridad o atención al cliente bloquea la cuenta.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>conta_id, motivo, origem</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Cobro, notificaciones.</div></div>
+      <div class="slug">conta.bloqueada.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E05</div>
+      <div class="snome">Movimiento registrado</div>
+      <div class="linha"><div class="rot">Productor</div>
+        <div class="txt">Cuentas.</div></div>
+      <div class="linha"><div class="rot">Cuándo</div>
+        <div class="txt">Cada crédito o débito registrado en la cuenta.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>movimento_id, conta_id, valor</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Extracto, prevención de fraude.</div></div>
+      <div class="slug">movimento.registrado.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E06</div>
+      <div class="snome">Factura emitida</div>
+      <div class="linha"><div class="rot">Productor</div>
+        <div class="txt">Cobro.</div></div>
+      <div class="linha"><div class="rot">Cuándo</div>
+        <div class="txt">La factura se cierra y recibe un número.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>fatura_id, valor_total, vencimento</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Notificaciones, extracto.</div></div>
+      <div class="slug">fatura.emitida.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E07</div>
+      <div class="snome">Factura vencida</div>
+      <div class="linha"><div class="rot">Productor</div>
+        <div class="txt">Cobro.</div></div>
+      <div class="linha"><div class="rot">Cuándo</div>
+        <div class="txt">La factura vence sin un pago identificado.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>fatura_id, dias_atraso</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Notificaciones, atención al cliente.</div></div>
+      <div class="slug">fatura.vencida.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E08</div>
+      <div class="snome">Intento rechazado</div>
+      <div class="linha"><div class="rot">Productor</div>
+        <div class="txt">Cobro.</div></div>
+      <div class="linha"><div class="rot">Cuándo</div>
+        <div class="txt">Se rechaza el intento de cobro automático.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>tentativa_id, fatura_id, resultado</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Notificaciones, atención al cliente.</div></div>
+      <div class="slug">tentativa_cobranca.recusada.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E09</div>
+      <div class="snome">Pago recibido</div>
+      <div class="linha"><div class="rot">Productor</div>
+        <div class="txt">Cobro.</div></div>
+      <div class="linha"><div class="rot">Cuándo</div>
+        <div class="txt">El importe se abona y se concilia con la factura.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>pagamento_recebido_id, fatura_id, valor</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Cuentas, extracto.</div></div>
+      <div class="slug">pagamento.recebido.v1</div>
+    </div>
+    <div class="card">
+      <div class="sid">E10</div>
+      <div class="snome">Acceso recuperado</div>
+      <div class="linha"><div class="rot">Productor</div>
+        <div class="txt">Seguridad.</div></div>
+      <div class="linha"><div class="rot">Cuándo</div>
+        <div class="txt">El cliente completa la recuperación del acceso a la cuenta.</div></div>
+      <div class="linha"><div class="rot">Payload</div>
+        <div class="txt"><code>cliente_id, canal, dispositivo_id</code></div></div>
+      <div class="linha"><div class="rot">Consumidores</div>
+        <div class="txt">Notificaciones, prevención de fraude.</div></div>
+      <div class="slug">acesso.recuperado.v1</div>
+    </div>
+  </div>
+
+  <div class="faixa">
+    <div class="f1">Cada evento sale por la outbox del productor; el consumidor nunca lee una tabla de otro schema.</div>
+    <div class="f2">El schema completo del payload está en el schema registry; el sufijo v1 es la versión del contrato.</div>
+  </div>
+
+  <div class="foot"><span>ai-diagrams · ejemplo de catálogo en tarjetas · 2026-11</span></div>
+
+</div>
+</body></html>

@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Online store: containers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="en">
+<meta name="width" content="1400">
+<style>/*STYLE*/
+body{width:1400px}</style></head><body>
+<div class="page">
+
+<div class="hdr"><span>Online store</span><span>V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · level 2, containers</div>
+<h1>Online store: containers</h1>
+<div class="sub">The containers of the online store.</div>
+
+
+<div class="wrap stack"><div class="canvas" style="width:466px;height:1038px">
+  <div class="frame limite" style="left:16px;top:282px;width:371px;height:502px"><div class="flabel" style="top:auto;bottom:9px;left:10px">Online store · system in focus</div></div>
+  <div class="bchip c4 pessoa" style="left:98px;top:44px;width:250px;height:80px">
+    <div class="bn">person</div>
+    <div class="bt">Customer</div>
+    <div class="bs">buys from the web store</div>
+  </div>
+  <div class="c4head" style="left:203px;top:16px"></div>
+  <div class="bchip c4 externo" style="left:190px;top:942px;width:260px;height:80px">
+    <div class="bn">external system</div>
+    <div class="bt">Payment provider</div>
+    <div class="bs">charges the card</div>
+  </div>
+  <div class="bchip c4 web" style="left:93px;top:316px;width:260px;height:88px">
+    <div class="bn">container · Next.js</div>
+    <div class="bt">Web store</div>
+    <div class="bs">catalog and checkout</div>
+  </div>
+  <div class="bchip c4" style="left:93px;top:485px;width:260px;height:80px">
+    <div class="bn">container · Node.js</div>
+    <div class="bt">Orders API</div>
+    <div class="bs">takes and tracks orders</div>
+  </div>
+  <div class="bchip c4 banco" style="left:50px;top:646px;width:260px;height:86px">
+    <div class="bn">container · PostgreSQL</div>
+    <div class="bt">Orders database</div>
+    <div class="bs">orders and payments</div>
+  </div>
+  <svg class="edges" viewBox="0 0 466 1038">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+    <path d="M223,124 L223,316" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M223,404 L223,485" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M180,565 L180,646" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M267,565 L267,575 L320,575 L320,942" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+  </svg>
+  <div class="rel" data-edge="0" style="left:185px;top:204px;width:77px"><span class="rd">Places orders</span><span class="rt">[browser]</span></div>
+  <div class="rel" data-edge="1" style="left:178px;top:428px;width:90px"><span class="rd">Sends the order</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="2" style="left:135px;top:589px;width:90px"><span class="rd">Stores the order</span><span class="rt">[SQL]</span></div>
+  <div class="rel" data-edge="3" style="left:274px;top:742px;width:93px"><span class="rd">Charges the card</span><span class="rt">[HTTPS]</span></div>
+</div></div>
+
+<div class="sec">C4 legend</div>
+<div class="c4leg">
+<div class="it"><div class="sw pessoa"></div>person</div>
+<div class="it"><div class="sw limite"></div>boundary of the system in focus</div>
+<div class="it"><div class="sw "></div>container: application or service</div>
+<div class="it"><div class="sw web"></div>web interface container</div>
+<div class="it"><div class="sw banco"></div>data container</div>
+<div class="it"><div class="sw externo"></div>external system</div>
+<div class="it"><span class="seta"><i></i></span>relationship: what it does <code>[technology]</code></div>
+</div>
+
+<div class="foot" style="display:flex;justify-content:space-between"><span>Import</span><span>Online store</span></div>
+
+</div>
+</body></html>

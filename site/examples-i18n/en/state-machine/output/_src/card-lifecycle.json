@@ -1,0 +1,126 @@
+{
+  "page_title": "Debit card lifecycle",
+  "header": [
+    "ai-diagrams · Debit card lifecycle",
+    "V1 · State machine"
+  ],
+  "kicker": "State machine",
+  "h1": "Debit card lifecycle",
+  "sub": "Card states at the issuer, from request to cancellation. Each change generates an event and is recorded in the `cartao` table. Happy path: Requested, In production, In transit, Awaiting activation, Active.",
+  "initial": "solicitado",
+  "states": [
+    {
+      "id": "solicitado",
+      "name": "Requested",
+      "desc": "The customer requested the card in the app. No physical card exists yet."
+    },
+    {
+      "id": "em-emissao",
+      "name": "In production",
+      "desc": "The order was sent to the card manufacturer; the number and cryptogram already exist."
+    },
+    {
+      "id": "em-transito",
+      "name": "In transit",
+      "desc": "The manufacturer handed the card to the postal service with a tracking number."
+    },
+    {
+      "id": "aguardando-ativacao",
+      "name": "Awaiting activation",
+      "desc": "The card reached the customer but cannot accept purchases.",
+      "width": 280
+    },
+    {
+      "id": "ativo",
+      "name": "Active",
+      "desc": "Accepts purchases."
+    },
+    {
+      "id": "bloqueado",
+      "name": "Blocked",
+      "desc": "The customer blocked the card in the app. It returns to Active when unblocked."
+    },
+    {
+      "id": "cancelado",
+      "name": "Canceled",
+      "final": true,
+      "desc": "Cannot return to a previous state. The number is not reused."
+    },
+    {
+      "id": "extraviado",
+      "name": "Lost in transit",
+      "final": true,
+      "desc": "The postal service returned or lost the shipment. This is terminal; the manufacturer issues a new card with a new number."
+    }
+  ],
+  "transitions": [
+    {
+      "from": "solicitado",
+      "to": "em-emissao",
+      "event": "manufacturer confirms order"
+    },
+    {
+      "from": "solicitado",
+      "to": "cancelado",
+      "event": "registration review declined"
+    },
+    {
+      "from": "em-emissao",
+      "to": "em-transito",
+      "event": "manufacturer confirms dispatch",
+      "action": "records tracking number"
+    },
+    {
+      "from": "em-transito",
+      "to": "aguardando-ativacao",
+      "event": "postal service confirms delivery"
+    },
+    {
+      "from": "em-transito",
+      "to": "extraviado",
+      "event": "returned or idle for 30 days",
+      "action": "opens new order"
+    },
+    {
+      "from": "aguardando-ativacao",
+      "to": "ativo",
+      "event": "customer activates",
+      "guard": "4 digits + correct PIN"
+    },
+    {
+      "from": "aguardando-ativacao",
+      "to": "bloqueado",
+      "event": "incorrect PIN",
+      "guard": "3 attempts"
+    },
+    {
+      "from": "ativo",
+      "to": "bloqueado",
+      "event": "customer blocks in app"
+    },
+    {
+      "from": "bloqueado",
+      "to": "ativo",
+      "event": "customer unblocks in app"
+    },
+    {
+      "from": "ativo",
+      "to": "cancelado",
+      "event": "cancellation or expiry"
+    },
+    {
+      "from": "bloqueado",
+      "to": "cancelado",
+      "event": "cancellation or expiry"
+    }
+  ],
+  "band": {
+    "f1": "An incorrect PIN during activation does not change the state; only the third failed attempt moves the card to Blocked.",
+    "f2": "Out of scope: virtual cards, replacements for damage and credit cards."
+  },
+  "footer": [
+    "ai-diagrams",
+    "State machine · 2026-11"
+  ],
+  "lang": "en"
+}

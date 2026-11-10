@@ -1,0 +1,10 @@
+title: "Storage for orders"
+subtitle: "A customer sends an order. The service checks and records it."
+options:
+  - "Relational table"
+  - "Document collection"
+criteria:
+  - name: "Identifier"
+    values: ["Primary key", "Document ID"]
+  - name: "Relation"
+    values: ["Foreign key", "Reference field"]

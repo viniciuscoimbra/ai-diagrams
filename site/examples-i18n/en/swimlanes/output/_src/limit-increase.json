@@ -1,0 +1,192 @@
+{
+  "page_title": "Limit increase across teams",
+  "header": [
+    "ai-diagrams · Diagram examples · Sample fintech",
+    "Limit increase · Swimlanes"
+  ],
+  "kicker": "Swimlane flow",
+  "h1": "Limit increase: from request to the new account limit",
+  "sub": "Five actors and six phases. The credit engine decides 71% of requests on its own; the analyst intervenes only when the amount exceeds the maximum limit or the score is in the gray zone.",
+  "lanes": [
+    {
+      "name": "Customer",
+      "sub": "via the app"
+    },
+    {
+      "name": "App",
+      "sub": "digital channel"
+    },
+    {
+      "name": "Credit engine",
+      "sub": "automated policy"
+    },
+    {
+      "name": "Credit analyst",
+      "sub": "1 business day deadline"
+    },
+    {
+      "name": "Operations",
+      "sub": ""
+    }
+  ],
+  "phases": [
+    "Request",
+    "Receive",
+    "Evaluate",
+    "Review",
+    "Apply",
+    "Notify"
+  ],
+  "elements": [
+    {
+      "lane": 0,
+      "phase": 0,
+      "text": "Enter the requested amount and current income, then confirm"
+    },
+    {
+      "lane": 1,
+      "phase": 1,
+      "text": "Validate the session, check open requests and send to the engine",
+      "chip": "received"
+    },
+    {
+      "lane": 2,
+      "phase": 2,
+      "text": "Calculate the score (12 months) and policy maximum limit",
+      "chip": "being evaluated"
+    },
+    {
+      "lane": 1,
+      "phase": 3,
+      "text": "Notify the decline and next request date (90 days)",
+      "chip": "declined",
+      "style": "out"
+    },
+    {
+      "lane": 3,
+      "phase": 3,
+      "text": "Review, request proof if needed and decide the amount",
+      "chip": "under review",
+      "style": "focus"
+    },
+    {
+      "lane": 4,
+      "phase": 4,
+      "text": "Apply the new account limit and record the audit trail"
+    },
+    {
+      "lane": 1,
+      "phase": 5,
+      "text": "Notify the customer of the approved limit",
+      "chip": "completed"
+    },
+    {
+      "lane": 0,
+      "phase": 5,
+      "text": "View the new limit on the account screen"
+    }
+  ],
+  "sequence": [
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      2,
+      2
+    ],
+    [
+      2,
+      2,
+      3,
+      3
+    ],
+    [
+      2,
+      2,
+      4,
+      4
+    ],
+    [
+      2,
+      2,
+      1,
+      3
+    ],
+    [
+      3,
+      3,
+      1,
+      3
+    ],
+    [
+      3,
+      3,
+      4,
+      4
+    ],
+    [
+      4,
+      4,
+      1,
+      5
+    ],
+    [
+      1,
+      5,
+      0,
+      5
+    ]
+  ],
+  "sections": [
+    {
+      "title": "Credit engine decision",
+      "type": "steps",
+      "items": [
+        [
+          "Approved automatically",
+          "Amount within the maximum limit and score above the threshold. Sent to operations; notification in about 3 minutes."
+        ],
+        [
+          "Sent to the analyst",
+          "Amount above the maximum limit or score in the gray zone. Approves, approves a lower amount or declines; notification in about 9 hours."
+        ],
+        [
+          "Declined",
+          "Score below the threshold. The customer receives the reason and can request again in 90 days."
+        ]
+      ]
+    },
+    {
+      "title": "Who receives the result",
+      "type": "targets",
+      "items": [
+        [
+          "Customer",
+          "The new limit, or the reason for declining and the next request date."
+        ],
+        [
+          "Credit analyst",
+          "Each case outcome feeds back into policy calibration."
+        ],
+        [
+          "Customer support",
+          "The request history to answer questions."
+        ]
+      ]
+    }
+  ],
+  "band": {
+    "f1": "42,000 requests per month; the engine decides 71% without an analyst, notifying in 3 minutes versus 9 hours with analyst involvement.",
+    "f2": "Requesting proof of income through the app is part of the review and is not shown as a separate step."
+  },
+  "footer": [
+    "ai-diagrams",
+    "swimlane example · 2026-11"
+  ],
+  "lang": "en"
+}

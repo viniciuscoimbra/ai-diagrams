@@ -1,0 +1,100 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Sistema de cobro: despliegue en producción</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="es">
+<meta name="width" content="1400">
+<style>/*STYLE*/
+body{width:1400px}</style></head><body>
+<div class="page">
+
+<div class="hdr"><span>ai-diagrams · Sistema de cobro por boleto</span><span>C4 · V2</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · despliegue</div>
+<h1>Sistema de cobro: despliegue en producción</h1>
+<div class="sub">Dónde corre cada contenedor en producción: las funciones y la base en una cuenta AWS, el portal en Vercel y el backoffice en CloudFront.</div>
+<div class="c4nav"><span class="cn">Vistas</span><a href="billing-c4-landscape.html">panorama</a><a href="billing-c4-context.html">contexto</a><a href="billing-c4.html">contenedores</a><a href="billing-c4-api.html">componentes de API de cobro</a><a href="billing-c4-emission.html">emisión de un boleto</a><b>despliegue</b></div>
+
+<div class="wrap stack"><div class="canvas" style="width:1079px;height:1265px">
+  <div class="frame dnode" style="left:179px;top:363px;width:845px;height:886px"><div class="flabel" style="top:9px;left:10px">Cuenta AWS cobro-prod · sa-east-1</div></div>
+  <div class="frame dnode" style="left:16px;top:16px;width:608px;height:176px"><div class="flabel" style="top:9px;left:10px">Amazon CloudFront · sitio estático en S3</div></div>
+  <div class="frame dnode" style="left:518px;top:1031px;width:472px;height:174px"><div class="flabel" style="top:auto;bottom:9px;left:10px">Amazon DynamoDB · bajo demanda</div></div>
+  <div class="frame dnode" style="left:609px;top:758px;width:376px;height:182px"><div class="flabel" style="top:auto;bottom:9px;left:10px">AWS Lambda · Node.js 20</div></div>
+  <div class="frame dnode" style="left:213px;top:758px;width:376px;height:182px"><div class="flabel" style="top:9px;left:10px">AWS Lambda · Node.js 20</div></div>
+  <div class="frame dnode" style="left:688px;top:16px;width:348px;height:176px"><div class="flabel" style="top:9px;left:10px">Vercel · red de borde</div></div>
+  <div class="bchip c4 infra" style="left:557px;top:580px;width:230px;height:92px">
+    <div class="bn">infraestructura · Amazon API Gateway, con WAF</div>
+    <div class="bt">API pública</div>
+    <div class="bs">termina el TLS y comprueba el token</div>
+  </div>
+  <div class="bchip c4 infra" style="left:286px;top:407px;width:230px;height:92px">
+    <div class="bn">infraestructura · Amazon S3, vía Transfer Family</div>
+    <div class="bt">Buzón de retorno</div>
+    <div class="bs">recibe el CNAB 240 por SFTP</div>
+  </div>
+  <div class="bchip c4 infra" style="left:286px;top:580px;width:230px;height:92px">
+    <div class="bn">infraestructura · Amazon SQS</div>
+    <div class="bt">Cola de retorno</div>
+    <div class="bs">un evento por archivo nuevo</div>
+  </div>
+  <div class="bchip c4" style="left:667px;top:802px;width:260px;height:94px">
+    <img src="aws://compute/lambda.png">
+    <div class="bn">contenedor · Node.js en Lambda</div>
+    <div class="bt">API de cobro</div>
+    <div class="bs">detrás de API Gateway; valida al pagador y guarda el boleto</div>
+  </div>
+  <div class="bchip c4 banco" style="left:624px;top:1075px;width:260px;height:86px">
+    <img src="aws://database/dynamodb.png">
+    <div class="bn">contenedor · DynamoDB</div>
+    <div class="bt">Base de datos de cobro</div>
+    <div class="bs">boletos, estado e historial de eventos</div>
+  </div>
+  <div class="bchip c4" style="left:271px;top:802px;width:260px;height:94px">
+    <img src="aws://compute/lambda.png">
+    <div class="bn">contenedor · Lambda y cola SQS</div>
+    <div class="bt">Procesador de retorno</div>
+    <div class="bs">lee el archivo de retorno y liquida el boleto</div>
+  </div>
+  <div class="bchip c4 web" style="left:732px;top:60px;width:260px;height:88px">
+    <div class="bn">contenedor · Next.js en Vercel</div>
+    <div class="bt">Portal empresarial</div>
+    <div class="bs">emisión por lotes y panel de cobros</div>
+  </div>
+  <div class="bchip c4 web" style="left:190px;top:60px;width:260px;height:88px">
+    <div class="bn">contenedor · React</div>
+    <div class="bt">Backoffice</div>
+    <div class="bs">consulta y ajuste manual de boletos</div>
+  </div>
+  <svg class="edges" viewBox="0 0 1079 1265">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+    <path d="M862,148 L862,802" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M320,148 L320,326 L797,326 L797,802" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M797,896 L797,1075" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M401,896 L401,1016 L710,1016 L710,1075" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M672,672 L672,743 L732,743 L732,802" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M401,499 L401,580" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M401,672 L401,802" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+  </svg>
+  <div class="rel" data-edge="0" style="left:769px;top:284px;width:186px"><span class="rd">Pide la emisión y consulta el estado</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="1" style="left:462px;top:310px;width:192px"><span class="rd">Ajusta boletos con el rol de operador</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="2" style="left:715px;top:969px;width:164px"><span class="rd">Guarda boleto, estado y evento</span><span class="rt">[DynamoDB API]</span></div>
+  <div class="rel" data-edge="3" style="left:336px;top:952px;width:130px"><span class="rd">Liquida y guarda el pago</span><span class="rt">[DynamoDB API]</span></div>
+  <div class="rel" data-edge="4" style="left:590px;top:691px;width:164px"><span class="rd">Reenvía la llamada autenticada</span><span class="rt">[integración Lambda]</span></div>
+  <div class="rel" data-edge="5" style="left:347px;top:523px;width:108px"><span class="rd">Avisa archivo nuevo</span><span class="rt">[evento de S3]</span></div>
+  <div class="rel" data-edge="6" style="left:346px;top:714px;width:111px"><span class="rd">Activa con el archivo</span><span class="rt">[disparador SQS]</span></div>
+</div></div>
+
+<div class="sec">Leyenda C4</div>
+<div class="c4leg">
+<div class="it"><div class="sw dnode"></div>nodo de despliegue: cuenta, región, plataforma o servicio gestionado</div>
+<div class="it"><div class="sw "></div>contenedor: aplicación o servicio</div>
+<div class="it"><div class="sw web"></div>contenedor de interfaz web</div>
+<div class="it"><div class="sw banco"></div>contenedor de datos</div>
+<div class="it"><div class="sw infra"></div>nodo de infraestructura</div>
+<div class="it"><span class="seta"><i></i></span>relación: qué hace <code>[tecnología]</code></div>
+</div>
+
+<div class="foot" style="display:flex;justify-content:space-between"><span>ai-diagrams · modelo C4</span><span>cobro por boleto</span></div>
+
+</div>
+</body></html>

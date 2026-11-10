@@ -1,0 +1,109 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>API de cobro: componentes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="es">
+<meta name="width" content="1400">
+<style>/*STYLE*/
+body{width:1400px}</style></head><body>
+<div class="page">
+
+<div class="hdr"><span>ai-diagrams · Sistema de cobro por boleto</span><span>C4 · V2</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · nivel 3, componentes</div>
+<h1>API de cobro: componentes</h1>
+<div class="sub">Las partes de la API de cobro y quién llama a cada una, desde la solicitud de emisión hasta el registro en la CIP y la escritura en la base.</div>
+<div class="c4nav"><span class="cn">Vistas</span><a href="billing-c4-landscape.html">panorama</a><a href="billing-c4-context.html">contexto</a><a href="billing-c4.html">contenedores</a><b>componentes de API de cobro</b><a href="billing-c4-emission.html">emisión de un boleto</a><a href="billing-c4-deployment.html">despliegue</a></div>
+
+<div class="wrap stack"><div class="canvas" style="width:1292px;height:983px">
+  <div class="frame limite" style="left:16px;top:330px;width:1201px;height:371px"><div class="flabel" style="top:auto;bottom:9px;left:10px">API de cobro · contenedor en foco</div></div>
+  <div class="bchip c4 pessoa" style="left:744px;top:44px;width:250px;height:80px">
+    <div class="bn">persona</div>
+    <div class="bt">Cliente empresa</div>
+    <div class="bs">emite boletos y sigue los pagos</div>
+  </div>
+  <div class="c4head" style="left:849px;top:16px"></div>
+  <div class="bchip c4 externo" style="left:643px;top:881px;width:260px;height:80px">
+    <div class="bn">sistema externo · CIP</div>
+    <div class="bt">Nueva Plataforma de Cobro</div>
+    <div class="bs">registro del boleto</div>
+  </div>
+  <div class="bchip c4 web" style="left:420px;top:36px;width:260px;height:88px">
+    <div class="bn">contenedor · Next.js en Vercel</div>
+    <div class="bt">Portal empresarial</div>
+    <div class="bs">emisión por lotes y panel de cobros</div>
+  </div>
+  <div class="bchip c4 web" style="left:96px;top:36px;width:260px;height:88px">
+    <div class="bn">contenedor · React</div>
+    <div class="bt">Backoffice</div>
+    <div class="bs">consulta y ajuste manual de boletos</div>
+  </div>
+  <div class="bchip c4 banco" style="left:967px;top:881px;width:260px;height:86px">
+    <img src="aws://database/dynamodb.png">
+    <div class="bn">contenedor · DynamoDB</div>
+    <div class="bt">Base de datos de cobro</div>
+    <div class="bs">boletos, estado e historial de eventos</div>
+  </div>
+  <div class="bchip c4 comp" style="left:161px;top:364px;width:260px;height:92px">
+    <div class="bn">componente · Fastify</div>
+    <div class="bt">Rutas de boleto</div>
+    <div class="bs">recibe la emisión, la consulta y el ajuste</div>
+  </div>
+  <div class="bchip c4 comp" style="left:363px;top:557px;width:260px;height:92px">
+    <div class="bn">componente · JWT de Cognito</div>
+    <div class="bt">Control de acceso</div>
+    <div class="bs">comprueba si quien llama es cliente u operador</div>
+  </div>
+  <div class="bchip c4 comp" style="left:83px;top:557px;width:260px;height:92px">
+    <div class="bn">componente · TypeScript</div>
+    <div class="bt">Validador de pagador</div>
+    <div class="bs">comprueba CPF o CNPJ, vencimiento e importe</div>
+  </div>
+  <div class="bchip c4 comp" style="left:643px;top:557px;width:260px;height:92px">
+    <div class="bn">componente · cliente HTTPS con certificado</div>
+    <div class="bt">Registro en la CIP</div>
+    <div class="bs">registra el boleto y devuelve el código de pago</div>
+  </div>
+  <div class="bchip c4 comp" style="left:923px;top:557px;width:260px;height:92px">
+    <div class="bn">componente · AWS SDK</div>
+    <div class="bt">Repositorio de boletos</div>
+    <div class="bs">lee y guarda boleto, estado y evento</div>
+  </div>
+  <svg class="edges" viewBox="0 0 1292 983">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+    <path d="M869,124 L869,293 L356,293 L356,364" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M550,124 L550,267 L291,267 L291,364" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M226,124 L226,364" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M265,456 L265,486 L493,486 L493,557" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M213,456 L213,557" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M317,456 L317,476 L773,476 L773,557" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M369,456 L369,466 L1053,466 L1053,557" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M773,649 L773,881" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M1053,649 L1053,738 L1097,738 L1097,881" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+  </svg>
+  <div class="rel" data-edge="0" style="left:556px;top:270px;width:210px"><span class="rd">Integra su propio sistema para emitir y consultar</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="1" style="left:328px;top:250px;width:186px"><span class="rd">Pide la emisión y consulta el estado</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="2" style="left:130px;top:210px;width:192px"><span class="rd">Ajusta boletos con el rol de operador</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="3" style="left:408px;top:505px;width:171px"><span class="rd">Comprueba el rol de quien llama</span><span class="rt">[llamada interna]</span></div>
+  <div class="rel" data-edge="4" style="left:136px;top:496px;width:153px"><span class="rd">Valida la solicitud de emisión</span><span class="rt">[llamada interna]</span></div>
+  <div class="rel" data-edge="5" style="left:704px;top:500px;width:137px"><span class="rd">Pide el registro del boleto</span><span class="rt">[llamada interna]</span></div>
+  <div class="rel" data-edge="6" style="left:780px;top:450px;width:139px"><span class="rd">Guarda y consulta boletos</span><span class="rt">[llamada interna]</span></div>
+  <div class="rel" data-edge="7" style="left:668px;top:742px;width:210px"><span class="rd">Registra el boleto antes del código de pago</span><span class="rt">[HTTPS · certificado]</span></div>
+  <div class="rel" data-edge="8" style="left:1015px;top:793px;width:164px"><span class="rd">Guarda boleto, estado y evento</span><span class="rt">[DynamoDB API]</span></div>
+</div></div>
+
+<div class="sec">Leyenda C4</div>
+<div class="c4leg">
+<div class="it"><div class="sw pessoa"></div>persona</div>
+<div class="it"><div class="sw limite"></div>límite del contenedor en foco</div>
+<div class="it"><div class="sw web"></div>contenedor de interfaz web</div>
+<div class="it"><div class="sw banco"></div>contenedor de datos</div>
+<div class="it"><div class="sw comp"></div>componente dentro del contenedor</div>
+<div class="it"><div class="sw externo"></div>sistema externo</div>
+<div class="it"><span class="seta"><i></i></span>relación: qué hace <code>[tecnología]</code></div>
+</div>
+
+<div class="foot" style="display:flex;justify-content:space-between"><span>ai-diagrams · modelo C4</span><span>cobro por boleto</span></div>
+
+</div>
+</body></html>

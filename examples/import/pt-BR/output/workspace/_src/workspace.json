@@ -1,0 +1,93 @@
+{
+  "lang": "pt-BR",
+  "header": [
+    "Loja on-line",
+    "V1"
+  ],
+  "footer": [
+    "Importação",
+    "Loja on-line"
+  ],
+  "elements": [
+    {
+      "id": "cliente",
+      "type": "person",
+      "name": "Cliente",
+      "description": "compra na loja web"
+    },
+    {
+      "id": "loja",
+      "type": "system",
+      "name": "Loja on-line",
+      "description": "vende e entrega pedidos"
+    },
+    {
+      "id": "web",
+      "type": "container",
+      "name": "Loja web",
+      "description": "catálogo e pagamento",
+      "technology": "Next.js",
+      "parent": "loja",
+      "shape": "web"
+    },
+    {
+      "id": "api",
+      "type": "container",
+      "name": "API de pedidos",
+      "description": "recebe e acompanha os pedidos",
+      "technology": "Node.js",
+      "parent": "loja"
+    },
+    {
+      "id": "db",
+      "type": "container",
+      "name": "Banco de pedidos",
+      "description": "pedidos e pagamentos",
+      "technology": "PostgreSQL",
+      "parent": "loja",
+      "shape": "database"
+    },
+    {
+      "id": "pagamentos",
+      "type": "system",
+      "name": "Provedor de pagamentos",
+      "description": "cobra o cartão",
+      "external": true
+    }
+  ],
+  "relationships": [
+    {
+      "from": "cliente",
+      "to": "web",
+      "description": "Faz pedidos",
+      "technology": "navegador"
+    },
+    {
+      "from": "web",
+      "to": "api",
+      "description": "Envia o pedido",
+      "technology": "HTTPS · JSON"
+    },
+    {
+      "from": "api",
+      "to": "db",
+      "description": "Grava o pedido",
+      "technology": "SQL"
+    },
+    {
+      "from": "api",
+      "to": "pagamentos",
+      "description": "Cobra o cartão",
+      "technology": "HTTPS"
+    }
+  ],
+  "views": [
+    {
+      "type": "container",
+      "scope": "loja",
+      "key": "conteineres",
+      "description": "Os contêineres da loja on-line."
+    }
+  ],
+  "main": "conteineres"
+}

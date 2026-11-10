@@ -1,0 +1,19 @@
+{
+  "name": "ai-diagrams-site",
+  "private": true,
+  "type": "module",
+  "description": "Static site of ai-diagrams. Build: npm run build (no browser needed).",
+  "scripts": {
+    "build": "node src/build.mjs",
+    "check": "node src/check.mjs && node src/check-i18n.mjs"
+  },
+  "dependencies": {
+    "@refy-design/web": "1.0.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "typescript": "^5.9.3"
+  }
+}

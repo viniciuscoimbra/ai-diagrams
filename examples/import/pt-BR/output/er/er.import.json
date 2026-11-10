@@ -1,0 +1,9 @@
+{
+  "input": "../../er.mmd",
+  "type": "er",
+  "language": "pt-BR",
+  "sources": [
+    "_src/er/er-public.html"
+  ],
+  "gate": "passed"
+}

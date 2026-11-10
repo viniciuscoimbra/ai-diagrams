@@ -1,0 +1,100 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Billing system: production deployment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="en">
+<meta name="width" content="1400">
+<style>/*STYLE*/
+body{width:1400px}</style></head><body>
+<div class="page">
+
+<div class="hdr"><span>ai-diagrams · Boleto billing system</span><span>C4 · V2</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · deployment</div>
+<h1>Billing system: production deployment</h1>
+<div class="sub">Where each container runs in production: the functions and the database in an AWS account, the portal on Vercel and the backoffice on CloudFront.</div>
+<div class="c4nav"><span class="cn">Views</span><a href="billing-c4-landscape.html">landscape</a><a href="billing-c4-context.html">context</a><a href="billing-c4.html">containers</a><a href="billing-c4-api.html">components of Billing API</a><a href="billing-c4-emission.html">issuing a boleto</a><b>deployment</b></div>
+
+<div class="wrap stack"><div class="canvas" style="width:1047px;height:1265px">
+  <div class="frame dnode" style="left:139px;top:363px;width:840px;height:886px"><div class="flabel" style="top:9px;left:10px">AWS account billing-prod · sa-east-1</div></div>
+  <div class="frame dnode" style="left:16px;top:16px;width:568px;height:176px"><div class="flabel" style="top:9px;left:10px">Amazon CloudFront · static site on S3</div></div>
+  <div class="frame dnode" style="left:189px;top:1031px;width:430px;height:174px"><div class="flabel" style="top:auto;bottom:9px;left:10px">Amazon DynamoDB · on demand</div></div>
+  <div class="frame dnode" style="left:569px;top:758px;width:376px;height:182px"><div class="flabel" style="top:auto;bottom:9px;left:10px">AWS Lambda · Node.js 20</div></div>
+  <div class="frame dnode" style="left:173px;top:758px;width:376px;height:182px"><div class="flabel" style="top:9px;left:10px">AWS Lambda · Node.js 20</div></div>
+  <div class="frame dnode" style="left:648px;top:16px;width:348px;height:176px"><div class="flabel" style="top:9px;left:10px">Vercel · edge network</div></div>
+  <div class="bchip c4 infra" style="left:517px;top:580px;width:230px;height:92px">
+    <div class="bn">infrastructure · Amazon API Gateway, with WAF</div>
+    <div class="bt">Public API</div>
+    <div class="bs">terminates TLS and checks the token</div>
+  </div>
+  <div class="bchip c4 infra" style="left:246px;top:407px;width:230px;height:92px">
+    <div class="bn">infrastructure · Amazon S3, through Transfer Family</div>
+    <div class="bt">Return inbox</div>
+    <div class="bs">receives the CNAB 240 over SFTP</div>
+  </div>
+  <div class="bchip c4 infra" style="left:246px;top:580px;width:230px;height:92px">
+    <div class="bn">infrastructure · Amazon SQS</div>
+    <div class="bt">Return queue</div>
+    <div class="bs">one event per new file</div>
+  </div>
+  <div class="bchip c4" style="left:627px;top:802px;width:260px;height:94px">
+    <img src="aws://compute/lambda.png">
+    <div class="bn">container · Node.js on Lambda</div>
+    <div class="bt">Billing API</div>
+    <div class="bs">behind API Gateway; validates the payer and stores the boleto</div>
+  </div>
+  <div class="bchip c4 banco" style="left:274px;top:1075px;width:260px;height:86px">
+    <img src="aws://database/dynamodb.png">
+    <div class="bn">container · DynamoDB</div>
+    <div class="bt">Billing database</div>
+    <div class="bs">boletos, status and event history</div>
+  </div>
+  <div class="bchip c4" style="left:231px;top:802px;width:260px;height:94px">
+    <img src="aws://compute/lambda.png">
+    <div class="bn">container · Lambda and SQS queue</div>
+    <div class="bt">Return file processor</div>
+    <div class="bs">reads the return file and settles the boleto</div>
+  </div>
+  <div class="bchip c4 web" style="left:692px;top:60px;width:260px;height:88px">
+    <div class="bn">container · Next.js on Vercel</div>
+    <div class="bt">Business portal</div>
+    <div class="bs">batch issuance and receipts dashboard</div>
+  </div>
+  <div class="bchip c4 web" style="left:170px;top:60px;width:260px;height:88px">
+    <div class="bn">container · React</div>
+    <div class="bt">Backoffice</div>
+    <div class="bs">boleto lookup and manual adjustments</div>
+  </div>
+  <svg class="edges" viewBox="0 0 1047 1265">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+    <path d="M822,148 L822,802" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M300,148 L300,326 L757,326 L757,802" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M757,896 L757,1016 L448,1016 L448,1075" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M361,896 L361,1075" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M632,672 L632,743 L692,743 L692,802" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M361,499 L361,580" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M361,672 L361,802" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+  </svg>
+  <div class="rel" data-edge="0" style="left:725px;top:284px;width:194px"><span class="rd">Requests issuance and checks status</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="1" style="left:430px;top:310px;width:196px"><span class="rd">Adjusts boletos with the operator role</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="2" style="left:676px;top:952px;width:163px"><span class="rd">Stores boleto, status and event</span><span class="rt">[DynamoDB API]</span></div>
+  <div class="rel" data-edge="3" style="left:279px;top:969px;width:164px"><span class="rd">Settles and stores the payment</span><span class="rt">[DynamoDB API]</span></div>
+  <div class="rel" data-edge="4" style="left:548px;top:691px;width:167px"><span class="rd">Forwards the authenticated call</span><span class="rt">[Lambda integration]</span></div>
+  <div class="rel" data-edge="5" style="left:313px;top:523px;width:96px"><span class="rd">Signals a new file</span><span class="rt">[S3 event]</span></div>
+  <div class="rel" data-edge="6" style="left:306px;top:714px;width:111px"><span class="rd">Triggers with the file</span><span class="rt">[SQS trigger]</span></div>
+</div></div>
+
+<div class="sec">C4 legend</div>
+<div class="c4leg">
+<div class="it"><div class="sw dnode"></div>deployment node: account, region, platform or managed service</div>
+<div class="it"><div class="sw "></div>container: application or service</div>
+<div class="it"><div class="sw web"></div>web interface container</div>
+<div class="it"><div class="sw banco"></div>data container</div>
+<div class="it"><div class="sw infra"></div>infrastructure node</div>
+<div class="it"><span class="seta"><i></i></span>relationship: what it does <code>[technology]</code></div>
+</div>
+
+<div class="foot" style="display:flex;justify-content:space-between"><span>ai-diagrams · C4 model</span><span>boleto billing</span></div>
+
+</div>
+</body></html>

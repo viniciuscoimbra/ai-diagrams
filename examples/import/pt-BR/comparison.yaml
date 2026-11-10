@@ -1,0 +1,10 @@
+title: "Armazenamento de pedidos"
+subtitle: "O cliente envia um pedido. O serviço confere e registra."
+options:
+  - "Tabela relacional"
+  - "Coleção documental"
+criteria:
+  - name: "Identificador"
+    values: ["Chave primária", "ID do documento"]
+  - name: "Relação"
+    values: ["Chave estrangeira", "Campo de referência"]

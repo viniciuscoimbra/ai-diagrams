@@ -1,0 +1,106 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Limit increase across teams</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="en">
+<style>/*STYLE*/</style></head><body>
+<div class="page">
+
+  <div class="hdr"><span>ai-diagrams · Diagram examples · Sample fintech</span><span>Limit increase · Swimlanes</span></div>
+
+  <div class="kicker"><span class="sq">■</span> Swimlane flow</div>
+  <h1>Limit increase: from request to the new account limit</h1>
+  <div class="sub">Five actors and six phases. The credit engine decides 71% of requests on its own; the analyst intervenes only when the amount exceeds the maximum limit or the score is in the gray zone.</div>
+
+  <div class="canvas" style="width:1318px;height:868px">
+      <div class="lane" style="left:0px;top:38px;width:1318px;height:148px">
+        <div class="lt">Customer</div>
+        <div class="ls">via the app</div>
+      </div>
+      <div class="lane" style="left:0px;top:186px;width:1318px;height:176px">
+        <div class="lt">App</div>
+        <div class="ls">digital channel</div>
+      </div>
+      <div class="lane" style="left:0px;top:362px;width:1318px;height:176px">
+        <div class="lt">Credit engine</div>
+        <div class="ls">automated policy</div>
+      </div>
+      <div class="lane" style="left:0px;top:538px;width:1318px;height:176px">
+        <div class="lt">Credit analyst</div>
+        <div class="ls">1 business day deadline</div>
+      </div>
+      <div class="lane" style="left:0px;top:714px;width:1318px;height:148px">
+        <div class="lt">Operations</div>
+      </div>
+      <div class="fase" style="left:170px;width:166px">1 · Request</div>
+      <div class="fase" style="left:362px;width:166px">2 · Receive</div>
+      <div class="fase" style="left:554px;width:166px">3 · Evaluate</div>
+      <div class="fase" style="left:768px;width:166px">4 · Review</div>
+      <div class="fase" style="left:960px;width:166px">5 · Apply</div>
+      <div class="fase" style="left:1152px;width:166px">6 · Notify</div>
+      <div class="painel" style="left:170px;top:50px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Enter the requested amount and current income, then confirm</div>
+      </div>
+      <div class="painel" style="left:362px;top:198px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Validate the session, check open requests and send to the engine</div>
+      </div>
+      <div class="chip" style="left:362px;top:330px">received</div>
+      <div class="painel" style="left:554px;top:374px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Calculate the score (12 months) and policy maximum limit</div>
+      </div>
+      <div class="chip" style="left:554px;top:506px">being evaluated</div>
+      <div class="painel fora" style="left:768px;top:198px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Notify the decline and next request date (90 days)</div>
+      </div>
+      <div class="chip" style="left:768px;top:330px">declined</div>
+      <div class="painel foco" style="left:768px;top:550px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Review, request proof if needed and decide the amount</div>
+      </div>
+      <div class="chip" style="left:768px;top:682px">under review</div>
+      <div class="painel" style="left:960px;top:726px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Apply the new account limit and record the audit trail</div>
+      </div>
+      <div class="painel" style="left:1152px;top:198px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">Notify the customer of the approved limit</div>
+      </div>
+      <div class="chip" style="left:1152px;top:330px">completed</div>
+      <div class="painel" style="left:1152px;top:50px;width:166px;height:124px">
+        <div class="ps" style="margin-top:0">View the new limit on the account screen</div>
+      </div>
+      <svg class="edges" viewBox="0 0 1318 868">
+        <defs><marker id="s" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+        <path d="M336,112 H349 V260 H362" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M528,260 H541 V436 H554" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M720,436 H756 V612 H768" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M720,467 H744 V809 H960" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M720,405 H732 V260 H768" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M851,550 V354" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M934,612 H947 V767 H960" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M1126,788 H1139 V260 H1152" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M1235,198 V174" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+      </svg>
+  </div>
+
+  <div class="sec">Credit engine decision</div>
+  <div class="legenda" style="grid-template-columns:repeat(3,1fr)">
+    <div class="passo"><div class="pn">Approved automatically</div><div class="pd">Amount within the maximum limit and score above the threshold. Sent to operations; notification in about 3 minutes.</div></div>
+    <div class="passo"><div class="pn">Sent to the analyst</div><div class="pd">Amount above the maximum limit or score in the gray zone. Approves, approves a lower amount or declines; notification in about 9 hours.</div></div>
+    <div class="passo"><div class="pn">Declined</div><div class="pd">Score below the threshold. The customer receives the reason and can request again in 90 days.</div></div>
+  </div>
+  <div class="sec">Who receives the result</div>
+  <div class="destinos" style="grid-template-columns:repeat(3,1fr)">
+    <div class="destino"><div class="dt">Customer</div><div class="dd">The new limit, or the reason for declining and the next request date.</div></div>
+    <div class="destino"><div class="dt">Credit analyst</div><div class="dd">Each case outcome feeds back into policy calibration.</div></div>
+    <div class="destino"><div class="dt">Customer support</div><div class="dd">The request history to answer questions.</div></div>
+  </div>
+  <div class="faixa">
+    <div class="f1">42,000 requests per month; the engine decides 71% without an analyst, notifying in 3 minutes versus 9 hours with analyst involvement.</div>
+    <div class="f2">Requesting proof of income through the app is part of the review and is not shown as a separate step.</div>
+  </div>
+
+  <div class="foot"><span>ai-diagrams</span><span>swimlane example · 2026-11</span></div>
+
+</div>
+</body></html>
