@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Horizontal C4
+
+- C4 views no longer come out top to bottom by default. `build_c4.py` tries left to right and top to bottom and the cost prefers a landscape page (`orientation: auto`). A long chain still goes top to bottom when the horizontal drawing would pass the page width.
+- New `orientation` on the model or on a view: `auto` (default), `horizontal` (left to right only, page up to 2560 px) or `vertical` (top to bottom only, the 0.2.0 behavior).
+- `ai-diagrams import` maps `autoLayout lr`/`rl` to `horizontal` and `tb`/`bt` to `vertical`.
+
 ## 0.2.0
 
 Interface in English. Commands, flags, folder and file names, error codes, messages, theme and spec keys, markers and docs move from Portuguese to English. Diagram text does not change: a diagram generated in pt-BR stays in pt-BR, and the fixed labels in `pt-BR`, `en` and `es` are the same as in 0.1.0.

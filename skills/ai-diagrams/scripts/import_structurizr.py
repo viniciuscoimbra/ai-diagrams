@@ -7,7 +7,8 @@ Reads the part of the DSL that describes the software and its views:
   a -> b "description" "technology", also `-> b` and `this -> b` inside an element block;
   deploymentEnvironment, deploymentNode (with instances), infrastructureNode, containerInstance;
   systemLandscape, systemContext, container, component, dynamic and deployment views, with
-  include (`*` or identifiers), exclude, title, description and autoLayout;
+  include (`*` or identifiers), exclude, title, description and autoLayout (lr/rl becomes
+  orientation horizontal, tb/bt vertical);
   filtered views by tag; styles that set a shape (Cylinder, WebBrowser, Pipe, MobileDevice*);
   !identifiers, !impliedRelationships, configuration, properties, perspectives, theme(s),
   branding and terminology are accepted and do not change the drawing (colors come from the theme).
@@ -398,6 +399,10 @@ class Leitor:
                 v['description'] = self.strings(t)[0]
             elif w == '{':
                 self.erro(n, 'DSL-UNSUPPORTED: parallel blocks in a dynamic view')
+            elif w == 'autolayout' and len(t) > 1 and t[1][1].lower() in ('lr', 'rl', 'tb', 'bt'):
+                # rank direction: left-right becomes a horizontal view, top-bottom a vertical one;
+                # bare autoLayout leaves the choice to build_c4.py ("auto")
+                v['orientation'] = 'horizontal' if t[1][1].lower() in ('lr', 'rl') else 'vertical'
             elif w in IGNORADOS or w in ('autolayout', 'animation', 'default'):
                 if ('p', '{') in t:
                     self.pular_bloco()

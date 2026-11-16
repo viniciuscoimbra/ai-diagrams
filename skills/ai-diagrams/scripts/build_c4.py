@@ -701,14 +701,27 @@ def coloca_nome_moldura(fr, texto_w, linhas, caixas, outros, topo_primeiro):
     raise SemEspaco('frame')
 
 
-VARIANTES = [(dr, o, c, x, 0) for x in (True, False) for o in ('NODES_AND_EDGES', 'NONE')
-             for c in ('NETWORK_SIMPLEX', 'BRANDES_KOEPF') for dr in ('DOWN',)]
+VARIANTES = [(o, c, x) for x in (True, False) for o in ('NODES_AND_EDGES', 'NONE')
+             for c in ('NETWORK_SIMPLEX', 'BRANDES_KOEPF')]
+# Which elkjs directions a view tries. "auto" (the default) tries both and the cost prefers a landscape drawing;
+# "vertical" is what every view but deployment did before: top to bottom only.
+ORIENTACOES = {'horizontal': ('RIGHT',), 'vertical': ('DOWN',), 'auto': ('RIGHT', 'DOWN')}
+PAISAGEM = 1.35      # page width / page height that "auto" aims for (slide, book spread, wide monitor)
+PESO_RETRATO = 6     # cost per px of page height above page width / PAISAGEM, in "auto"
+MOLDURA_PAGINA = 470 # page height around the canvas: header, title, subtitle, legend and footer
+LARGURA_MAX = 1660   # wider than this costs 120 per px, in "auto" and "vertical"
+LARGURA_MAX_H = 2560 # in "horizontal" the view asked for a wide page (slide, spread): the limit moves here
 
 
-def melhor_layout(M, d, tam, rel_tam, rotulo_moldura_w, vertical_ok=True):
-    variantes = list(VARIANTES)
-    if d['tipo'] == 'deployment':
-        variantes += [('RIGHT',) + v[1:] for v in VARIANTES]
+def orientacao(S, v):
+    o = v.get('orientation', S.get('orientation', 'auto'))
+    if o not in ORIENTACOES:
+        erro('C4-VIEW', 'view "%s" has orientation "%s"; use horizontal, vertical or auto' % (v.get('key'), o))
+    return o
+
+
+def melhor_layout(M, d, tam, rel_tam, rotulo_moldura_w, orient='auto'):
+    variantes = [(dr,) + v + (0,) for dr in ORIENTACOES[orient] for v in VARIANTES]
     melhor = None
     for folga in range(4):
         gs = [grafo(M, d, tam, rel_tam, v[:4] + (folga,), rotulo_moldura_w) for v in variantes]
@@ -745,7 +758,10 @@ def melhor_layout(M, d, tam, rel_tam, rotulo_moldura_w, vertical_ok=True):
             curvas = sum(max(len(p) - 2, 0) for p in linhas)
             compr = sum(abs(a[0] - b[0]) + abs(a[1] - b[1]) for p in linhas for a, b in zip(p, p[1:]))
             W, H = L['width'], L['height']
-            custo = cruzamentos(linhas) * 5000 + colados(linhas) * 3000 + curvas * 60 + compr + max(0, W - 1660) * 120 + W * H / 300
+            custo = cruzamentos(linhas) * 5000 + colados(linhas) * 3000 + curvas * 60 + compr + max(0, W - (LARGURA_MAX_H if orient == 'horizontal' else LARGURA_MAX)) * 120 + W * H / 300
+            if orient == 'auto':
+                # the page, not the canvas, is what the reader sees: at least 1400 wide, title and legend on top of the canvas
+                custo += max(0, H + MOLDURA_PAGINA - max(1400, W + 96) / PAISAGEM) * PESO_RETRATO
             if melhor is None or custo < melhor[0]:
                 melhor = (custo, L, pos, linhas, rot, nomes, fr)
         if melhor:
@@ -811,7 +827,7 @@ def pagina(M, S, v, d, tr, tm_link, meta, base, principal):
     rel_tam = [(math.ceil(w), math.ceil(h)) for w, h in mr]
     fw = {f: math.ceil(w) + 6 for f, (w, h) in zip(nomes_moldura, mf)}
 
-    custo, L, pos, linhas, rot, nomes, fr = melhor_layout(M, d, tam, rel_tam, fw)
+    custo, L, pos, linhas, rot, nomes, fr = melhor_layout(M, d, tam, rel_tam, fw, orientacao(S, v))
     cw, ch = math.ceil(L['width']), math.ceil(L['height'])
 
     usados = set()
