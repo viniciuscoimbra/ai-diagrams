@@ -186,7 +186,7 @@ SEM_TRANSBORDO = ('canvas', 'grid', 'wrap', 'page', 'col')
 # A especificação visual trata slug como "dado operacional secundário".
 SECUNDARIO = ('hdr', 'kicker', 'foot', 'slug', 'rot', 'sid', 'ptag', 'flabel', 'elabel',
               'chip', 'fase', 'pn', 'ls', 'sec', 'an', 'fk', 'ct', 'et', 'jct', 'jkey',
-              'nsub', 'cb', 'lt', 'nn', 'rlabel', 'carimbo', 'alerta')
+              'nsub', 'cb', 'lt', 'nn', 'rlabel')
 # marcadores gráficos, não texto de leitura: fora do piso de legibilidade.
 NAO_TEXTO = ('sq', 'badge', 'pnum')
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Regenera os treze modelos, cada um pelo próprio gate. Sai com erro no primeiro problema.
+# Regenera os onze modelos, cada um pelo próprio gate. Sai com erro no primeiro problema.
 # Uso: bash <skill>/modelos/gerar.sh   (de qualquer pasta)
 set -euo pipefail
 M="$(cd "$(dirname "$0")" && pwd)"
@@ -27,12 +27,6 @@ python3 "$SK/scripts/conceitual.py" "$M/09-sequencia/_src/09-pix-saida.html" | t
 # Gate gerar_estados.py (alcance, inicial, final) e conceitual.py: máquina de estados
 python3 "$SK/scripts/gerar_estados.py" "$M/10-maquina-estados/_src/10-pix-estados.json"
 python3 "$SK/scripts/conceitual.py" "$M/10-maquina-estados/_src/10-pix-estados.html" | tail -3
-
-# Gate gerar_grafo.py (carimbo, autoridade, versão, fronteira) e conceitual.py: grafo de contexto
-python3 "$SK/scripts/gerar_grafo.py" "$M/12-grafo-afirmacoes/_src/12-endereco-ana.json"
-python3 "$SK/scripts/conceitual.py" "$M/12-grafo-afirmacoes/_src/12-endereco-ana.html" | tail -3
-python3 "$SK/scripts/gerar_grafo.py" "$M/13-mapa-produtos/_src/13-produtos-entrega.json"
-python3 "$SK/scripts/conceitual.py" "$M/13-mapa-produtos/_src/13-produtos-entrega.html" | tail -3
 
 # Gate gerar_bpmn.py: estrutura, alcance, sobreposição e importação no bpmn-js
 python3 "$SK/bpmn/gerar_bpmn.py" "$M/08-bpmn/_src/08-contestacao-pagamento.json"
