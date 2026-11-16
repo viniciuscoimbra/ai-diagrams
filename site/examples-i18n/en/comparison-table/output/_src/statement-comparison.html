@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="idioma" content="en">
+<title>Database comparison for account statements</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*STYLE*/
+.page{width:1760px}
+table.comp td:first-child{width:220px}
+table.comp td:nth-child(2),table.comp td:nth-child(3),table.comp td:nth-child(4){width:480px;color:var(--ink)}
+table.comp{table-layout:fixed}
+table.comp th:first-child{width:220px}
+table.comp tr.escolha td{background:var(--zone);font-weight:600}
+table.comp tr.escolha td:first-child{border-left:4px solid var(--accent)}
+.nota{font-size:12.5px;color:var(--support);margin-top:14px;max-width:1100px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr"><span>ai-diagrams · Diagram examples · Sample fintech</span><span>Statement database · V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; Comparison table</div>
+<h1>Customer statement database: Aurora PostgreSQL, DynamoDB and DocumentDB</h1>
+<div class="sub">Three options for storing statement entries: 2.5 million new entries per day, 1.1 billion retained and a peak of 3,000 reads per second. 95% of reads request the last 90 days of an account, paginated by date.</div>
+
+<div class="sec">Criteria</div>
+<table class="comp">
+<tr><th>Criterion</th><th>Aurora PostgreSQL</th><th>DynamoDB</th><th>DocumentDB</th></tr>
+<tr><td>Data model</td><td>entries table indexed by account and date</td><td>account partition key, date and entry ID sort key</td><td>one document per entry, compound index on account and date</td></tr>
+<tr><td>Access pattern</td><td>index range scan; filtering by type uses a partial index</td><td>paginated Query on the partition; filtering by type needs a GSI</td><td>find with compound index; type filtering uses the same index</td></tr>
+<tr><td>Volume and growth</td><td>monthly partitions and cleanup by partition</td><td>no practical table limit; TTL for the 5-year retention</td><td>storage grows automatically; cleanup by job or TTL index</td></tr>
+<tr><td>Consistency</td><td>writer reads are immediate; replica lag below 100 ms</td><td>strongly consistent read on request, at twice the read cost</td><td>primary reads are immediate; replica with short lag</td></tr>
+<tr><td>Base cost</td><td>instance-hours even without traffic; Serverless v2 has an ACU floor</td><td>zero without traffic on-demand; pay per read and write</td><td>instance-hours even without traffic</td></tr>
+<tr><td>Operations</td><td>vacuum, partitions, engine version; already familiar to the team</td><td>almost none; modeling by access pattern is new to the team</td><td>instances and indexes; no engineer has MongoDB experience</td></tr>
+<tr class="escolha"><td>Choice</td><td colspan="3">DynamoDB, because the main access is a Query by account and date, and entries never change after being written. Revisit if type filtering exceeds 20% of reads or cross-account queries are needed.</td></tr>
+</table>
+<div class="nota">Cost is shown as a billing model, not an amount: calculate the figure using the measured volume of 2.5 million entries per day.</div>
+
+<div class="foot">Diagrams &nbsp;·&nbsp; comparison table example &nbsp;·&nbsp; 2026-11</div>
+</div>
+</body>
+</html>

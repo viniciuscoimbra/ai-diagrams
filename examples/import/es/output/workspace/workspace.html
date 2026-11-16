@@ -1,0 +1,256 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Tienda en línea: contenedores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="es">
+<meta name="width" content="1400">
+<style>:root{
+  /* theme ai-diagrams: written by scripts/theme.py from ai-diagrams.json */
+  --ink:#111827;
+  --support:#374151;
+  --muted:#6B7280;
+  --zone:#F3F4F6;
+  --paper:#FFFFFF;
+  --accent:#14B8A6;
+  --risk:#B42318;
+  --risk-bg:#FEF3F2;
+  --accent-strong:#0F766E;
+  --muted-light:#D1D5DB;
+  --c4-person-type:#9CA3AF;
+  --c4-person-desc:#E5E7EB;
+  --c4-external:#E9EBEF;
+  --c4-boundary:#F9FAFB;
+  --er-border:#CBD5E1;
+  --er-legend:#F9FAFB;
+  --er-row-even:#F8FAFC;
+  --er-key:#A16207;
+  --er-domain:#15803D;
+  --er-external:#1D4ED8;
+  --er-copy:#7E22CE;
+  --er-strong:#FCA5A5;
+  --er-dependent:#99F6E4;
+  --er-associative:#C7D2FE;
+  --er-control:#DDD6FE;
+  --er-fact:#FED7AA;
+  --er-versioned:#FEF08A;
+  --er-projection:#BBF7D0;
+  --er-trail:#E5E7EB;
+  --er-domain-bg:#D9F99D;
+  --er-config:#BAE6FD;
+  --er-reference:#FDE68A;
+  --er-view:#FBCFE8;
+  --support-rgb:55,65,81;
+  --paper-rgb:255,255,255;
+  --risk-rgb:180,35,24;
+  --er-heat-rgb:255,140,180;
+  --font-text:'IBM Plex Sans',Arial,sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-text);background:var(--paper);color:var(--ink);width:1760px}
+.page{padding:36px 48px 28px}
+.hdr{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;letter-spacing:.15em;color:var(--support);font-weight:500;text-transform:uppercase}
+.kicker{font-family:var(--font-mono);font-size:11px;letter-spacing:.28em;font-weight:500;text-transform:uppercase;color:var(--muted);margin-top:26px}
+.kicker .sq{color:var(--accent)}
+h1{font-size:38px;font-weight:600;letter-spacing:-.025em;line-height:1.05;margin-top:10px}
+.sub{font-size:15px;color:var(--support);margin-top:10px;max-width:900px;line-height:1.5}
+.wrap{display:flex;gap:40px;margin-top:34px;align-items:flex-start}
+.canvas{position:relative;width:1140px;height:700px;flex:none}
+.frame{position:absolute}
+.flabel{position:absolute;top:7px;left:12px;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;font-weight:600;text-transform:uppercase;color:var(--support);white-space:nowrap}
+.awscloud{border:1.6px solid var(--ink);background:var(--paper)}
+.awscloud>.flabel{display:flex;align-items:center;gap:7px;color:var(--ink)}
+.awscloud>.flabel img{width:17px;height:17px}
+.region{border:1.4px dashed var(--support)}
+.account{border:1px dashed var(--muted);background:var(--paper)}
+.zone{border:1px solid rgba(var(--support-rgb),.22);background:var(--zone)}
+.zone>.flabel{color:var(--muted)}
+.ext{border:1.5px solid var(--risk);background:var(--risk-bg)}
+.ext>.flabel{color:var(--risk)}
+.node{position:absolute;width:110px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.node img{width:44px;height:44px}
+.node .nl{margin-top:6px;font-size:11px;font-weight:600;line-height:1.25;color:var(--ink)}
+.node .ns{font-size:9.5px;color:var(--muted);line-height:1.3;margin-top:2px}
+.bchip{position:absolute;background:var(--paper);border:1px solid var(--support);border-left:4px solid var(--ink);padding:7px 12px}
+.bchip .bn{font-family:var(--font-mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.bchip .bt{font-size:11.5px;font-weight:600;line-height:1.2;margin-top:2px}
+.bchip .bs{font-size:9px;color:var(--muted);margin-top:2px;line-height:1.25}
+svg.edges{position:absolute;inset:0;pointer-events:none}
+.badge{position:absolute;width:20px;height:20px;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.elabel{position:absolute;font-size:10px;color:var(--muted);line-height:1.25}
+.passos{flex:1;min-width:0}
+.ptitle{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;font-weight:600;text-transform:uppercase;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.pitem{display:flex;gap:12px;margin-top:14px;font-size:13px;line-height:1.5;color:var(--ink)}
+.pitem .pb{flex:none;width:22px;height:22px;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.pitem b{font-weight:600}
+.sec{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;font-weight:600;text-transform:uppercase;margin:40px 0 4px;border-top:1px solid rgba(var(--support-rgb),.15);padding-top:22px}
+table.comp{width:100%;table-layout:fixed;border-collapse:collapse;font-size:12.5px;margin-top:10px}
+table.comp th{text-align:left;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:6px 10px;border-bottom:2px solid var(--ink);overflow-wrap:anywhere}
+table.comp td{padding:8px 10px;border-bottom:1px solid rgba(var(--support-rgb),.15);vertical-align:top;line-height:1.45;overflow-wrap:anywhere}
+/* layout fixo: a tabela nunca passa da largura da página; a primeira coluna tem largura própria e as outras dividem o resto */
+table.comp th:first-child,table.comp td:first-child{width:220px}
+table.comp td:first-child{font-weight:600}
+.foot{margin-top:34px;font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+/* chips de tópico */
+.chip{position:absolute;height:32px;border:1px solid var(--muted);background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600}
+.chip.red{border-color:var(--risk);background:var(--risk-bg);color:var(--risk)}
+
+/* motor plugável open source: capacidade genérica + implementação, com selo */
+.oss{position:absolute;border:1.5px solid var(--ink);background:var(--paper);text-align:left;padding:7px 10px 7px 44px;line-height:1.25;display:flex;flex-direction:column;justify-content:center}
+.oss img{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:28px;height:28px}
+.oss .ot{font-size:11px;font-weight:700}
+.oss .os{font-size:8.5px;color:var(--muted);font-weight:400}
+.oss .tag{position:absolute;top:-9px;right:6px;background:var(--accent);color:var(--ink);font-family:var(--font-mono);font-size:7.5px;font-weight:600;padding:1px 5px;letter-spacing:.08em}
+/* serviço AWS em formato compacto, com ícone */
+.svc{position:absolute;border:1px solid var(--muted);background:var(--paper);text-align:left;padding:6px 8px 6px 40px;line-height:1.25;display:flex;flex-direction:column;justify-content:center}
+.svc img{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:24px;height:24px}
+.svc .ot{font-size:10.5px;font-weight:700}
+.svc .os{font-size:8.5px;color:var(--muted);font-weight:400}
+
+/* passos abaixo do desenho: canvas usa a largura inteira */
+.wrap.stack{display:block}
+.wrap.stack .canvas{width:1700px}
+.wrap.stack .passos{width:auto;max-width:1700px;columns:3;column-gap:36px;margin-top:26px}
+.wrap.stack .passos .pitem{break-inside:avoid;margin-top:0;padding-top:14px}
+.wrap.stack .passos .ptitle{column-span:all}
+
+/* C4: elementos */
+.bchip.c4{border:1.4px solid var(--ink);border-left:1.4px solid var(--ink);border-radius:6px;padding:12px 14px;background:var(--paper)}
+.bchip.c4 .bn{font-size:9px}
+.bchip.c4 .bt{font-size:13px;margin-top:4px}
+.bchip.c4 .bs{font-size:10px;color:var(--support);margin-top:5px;line-height:1.35}
+.bchip.c4 img{position:absolute;top:10px;right:10px;width:22px;height:22px}
+.bchip.c4 img~.bn{padding-right:26px}
+.bchip.c4.pessoa{background:var(--ink);border-color:var(--ink);border-radius:30px;padding:12px 22px}
+.bchip.c4.pessoa .bn{color:var(--c4-person-type)}
+.bchip.c4.pessoa .bt{color:var(--paper)}
+.bchip.c4.pessoa .bs{color:var(--c4-person-desc)}
+.bchip.c4.banco{border-radius:120px/18px;padding-top:18px}
+.bchip.c4.externo{background:var(--c4-external);border:1.4px dashed var(--muted)}
+.bchip.c4.externo .bt{color:var(--support)}
+.frame.limite{border:1.6px dashed var(--ink);border-radius:8px;background:var(--c4-boundary)}
+.frame.limite>.flabel{top:auto;bottom:9px;color:var(--ink)}
+.elabel.tec{font-family:var(--font-mono);font-size:9.5px;color:var(--support);background:var(--paper);padding:0 2px}
+/* C4: legenda */
+.c4leg{display:flex;flex-wrap:wrap;gap:14px 30px;margin-top:14px;font-size:12.5px;color:var(--support);align-items:center}
+.c4leg .it{display:flex;align-items:center;gap:9px}
+.c4leg .sw{width:44px;height:24px;border:1.4px solid var(--ink);border-radius:4px;background:var(--paper);flex:none}
+.c4leg .sw.pessoa{background:var(--ink);border-radius:12px}
+.c4leg .sw.banco{border-radius:22px/6px}
+.c4leg .sw.externo{background:var(--c4-external);border-style:dashed;border-color:var(--muted)}
+.c4leg .sw.limite{border-style:dashed;background:var(--c4-boundary)}
+.c4leg .seta{display:flex;align-items:center;gap:6px}
+.c4leg .seta i{display:block;width:40px;height:1.6px;background:var(--support);position:relative}
+.c4leg .seta i:after{content:"";position:absolute;right:-1px;top:-4px;border-left:8px solid var(--support);border-top:4.8px solid transparent;border-bottom:4.8px solid transparent}
+.c4leg .seta b{width:18px;height:18px;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.c4leg code{font-family:var(--font-mono);font-size:11px}
+/* C4 gerado pelo modelo (scripts/build_c4.py): formas por tipo, rótulo na seta, navegação entre visões */
+.bchip.c4.foco{border-width:2.4px}
+.bchip.c4.outro{background:var(--zone);border-color:var(--muted)}
+.bchip.c4.web{border-top-width:9px;border-radius:6px 6px 4px 4px}
+.bchip.c4.movel{border-width:1.4px 7px;border-radius:14px}
+.bchip.c4.fila{border-radius:18px/50%;padding-left:24px;padding-right:24px}
+.bchip.c4.comp:before,.bchip.c4.comp:after{content:"";position:absolute;left:-8px;width:16px;height:9px;border:1.4px solid var(--ink);background:var(--paper)}
+.bchip.c4.comp{padding-left:24px}
+.bchip.c4.comp:before{top:14px}
+.bchip.c4.comp:after{top:30px}
+.bchip.c4.infra{background:var(--zone);border:1.2px solid var(--muted);border-radius:4px}
+.bchip.c4 .drill{display:block;margin-top:7px;font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-strong);text-decoration:none}
+.bchip.c4.pessoa .drill{color:var(--c4-person-desc)}
+.bchip.c4 .drill:after{content:"";position:absolute;inset:0}
+.c4head{position:absolute;width:40px;height:40px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 3px var(--paper)}
+.frame.dnode{border:1.3px solid var(--support);border-radius:6px;background:rgba(var(--support-rgb),.035)}
+.frame.dnode>.flabel{color:var(--ink)}
+.rel{position:absolute;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--paper);padding:2px 5px;line-height:14px}
+.rel .rd{font-size:11px;color:var(--ink)}
+.rel .rt{font-family:var(--font-mono);font-size:9.5px;color:var(--muted);margin-top:1px}
+.rel .rn,.c4steps .rn{display:flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:10px;font-weight:600;margin-bottom:2px;flex:none}
+.c4nav{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin-top:16px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.c4nav .cn{color:var(--muted);margin-right:4px}
+.c4nav a,.c4nav b{padding:4px 9px;border:1px solid var(--muted-light);color:var(--support);text-decoration:none;font-weight:500}
+.c4nav b{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.c4steps{columns:2;column-gap:36px;margin-top:12px}
+.c4steps .cs{display:flex;gap:10px;break-inside:avoid;padding-top:10px;font-size:13px;line-height:1.5;color:var(--support)}
+.c4steps .rn{margin-top:2px}
+.c4steps b{font-weight:600;color:var(--ink)}
+.c4steps code{font-family:var(--font-mono);font-size:11px}
+.c4leg .sw.foco{border-width:2.4px}
+.c4leg .sw.outro{background:var(--zone);border-color:var(--muted)}
+.c4leg .sw.web{border-top-width:6px}
+.c4leg .sw.movel{border-width:1.4px 5px;border-radius:8px;width:30px}
+.c4leg .sw.fila{border-radius:10px/50%}
+.c4leg .sw.comp{position:relative;margin-left:5px}
+.c4leg .sw.comp:before{content:"";position:absolute;left:-6px;top:4px;width:10px;height:6px;border:1.2px solid var(--ink);background:var(--paper)}
+.c4leg .sw.infra{background:var(--zone);border-color:var(--muted);border-width:1.2px}
+.c4leg .sw.dnode{border:1.3px solid var(--support);border-radius:4px;background:rgba(var(--support-rgb),.035)}
+.c4leg .sw.drill{border:none;background:none;width:auto;height:auto;display:flex;align-items:center;font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;color:var(--accent-strong)}
+.c4leg .sw.pessoa{position:relative;margin-top:12px}
+.c4leg .sw.pessoa:after{content:"";position:absolute;width:16px;height:16px;border-radius:50%;background:var(--ink);left:13px;top:-13px;box-shadow:0 0 0 2px var(--paper)}
+.c4leg .seta b{margin-right:4px}
+
+body{width:1400px}</style></head><body>
+<div class="page">
+
+<div class="hdr"><span>Tienda en línea</span><span>V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · nivel 2, contenedores</div>
+<h1>Tienda en línea: contenedores</h1>
+<div class="sub">Los contenedores de la tienda en línea.</div>
+
+
+<div class="wrap stack"><div class="canvas" style="width:466px;height:1038px">
+  <div class="frame limite" style="left:16px;top:282px;width:371px;height:502px"><div class="flabel" style="top:auto;bottom:9px;left:10px">Tienda en línea · sistema en foco</div></div>
+  <div class="bchip c4 pessoa" style="left:98px;top:44px;width:250px;height:80px">
+    <div class="bn">persona</div>
+    <div class="bt">Cliente</div>
+    <div class="bs">compra en la tienda web</div>
+  </div>
+  <div class="c4head" style="left:203px;top:16px"></div>
+  <div class="bchip c4 externo" style="left:190px;top:942px;width:260px;height:80px">
+    <div class="bn">sistema externo</div>
+    <div class="bt">Proveedor de pagos</div>
+    <div class="bs">cobra la tarjeta</div>
+  </div>
+  <div class="bchip c4 web" style="left:93px;top:316px;width:260px;height:88px">
+    <div class="bn">contenedor · Next.js</div>
+    <div class="bt">Tienda web</div>
+    <div class="bs">catálogo y pago</div>
+  </div>
+  <div class="bchip c4" style="left:93px;top:485px;width:260px;height:80px">
+    <div class="bn">contenedor · Node.js</div>
+    <div class="bt">API de pedidos</div>
+    <div class="bs">recibe y sigue los pedidos</div>
+  </div>
+  <div class="bchip c4 banco" style="left:50px;top:646px;width:260px;height:86px">
+    <div class="bn">contenedor · PostgreSQL</div>
+    <div class="bt">Base de pedidos</div>
+    <div class="bs">pedidos y pagos</div>
+  </div>
+  <svg class="edges" viewBox="0 0 466 1038">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+    <path d="M223,124 L223,316" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M223,404 L223,485" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M180,565 L180,646" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M267,565 L267,575 L320,575 L320,942" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+  </svg>
+  <div class="rel" data-edge="0" style="left:184px;top:204px;width:78px"><span class="rd">Hace pedidos</span><span class="rt">[navegador]</span></div>
+  <div class="rel" data-edge="1" style="left:178px;top:428px;width:90px"><span class="rd">Envía el pedido</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="2" style="left:132px;top:589px;width:95px"><span class="rd">Guarda el pedido</span><span class="rt">[SQL]</span></div>
+  <div class="rel" data-edge="3" style="left:277px;top:742px;width:86px"><span class="rd">Cobra la tarjeta</span><span class="rt">[HTTPS]</span></div>
+</div></div>
+
+<div class="sec">Leyenda C4</div>
+<div class="c4leg">
+<div class="it"><div class="sw pessoa"></div>persona</div>
+<div class="it"><div class="sw limite"></div>límite del sistema en foco</div>
+<div class="it"><div class="sw "></div>contenedor: aplicación o servicio</div>
+<div class="it"><div class="sw web"></div>contenedor de interfaz web</div>
+<div class="it"><div class="sw banco"></div>contenedor de datos</div>
+<div class="it"><div class="sw externo"></div>sistema externo</div>
+<div class="it"><span class="seta"><i></i></span>relación: qué hace <code>[tecnología]</code></div>
+</div>
+
+<div class="foot" style="display:flex;justify-content:space-between"><span>Importación</span><span>Tienda en línea</span></div>
+
+</div>
+</body></html>

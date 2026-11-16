@@ -1,0 +1,73 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Tienda en línea: contenedores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="es">
+<meta name="width" content="1400">
+<style>/*STYLE*/
+body{width:1400px}</style></head><body>
+<div class="page">
+
+<div class="hdr"><span>Tienda en línea</span><span>V1</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · nivel 2, contenedores</div>
+<h1>Tienda en línea: contenedores</h1>
+<div class="sub">Los contenedores de la tienda en línea.</div>
+
+
+<div class="wrap stack"><div class="canvas" style="width:466px;height:1038px">
+  <div class="frame limite" style="left:16px;top:282px;width:371px;height:502px"><div class="flabel" style="top:auto;bottom:9px;left:10px">Tienda en línea · sistema en foco</div></div>
+  <div class="bchip c4 pessoa" style="left:98px;top:44px;width:250px;height:80px">
+    <div class="bn">persona</div>
+    <div class="bt">Cliente</div>
+    <div class="bs">compra en la tienda web</div>
+  </div>
+  <div class="c4head" style="left:203px;top:16px"></div>
+  <div class="bchip c4 externo" style="left:190px;top:942px;width:260px;height:80px">
+    <div class="bn">sistema externo</div>
+    <div class="bt">Proveedor de pagos</div>
+    <div class="bs">cobra la tarjeta</div>
+  </div>
+  <div class="bchip c4 web" style="left:93px;top:316px;width:260px;height:88px">
+    <div class="bn">contenedor · Next.js</div>
+    <div class="bt">Tienda web</div>
+    <div class="bs">catálogo y pago</div>
+  </div>
+  <div class="bchip c4" style="left:93px;top:485px;width:260px;height:80px">
+    <div class="bn">contenedor · Node.js</div>
+    <div class="bt">API de pedidos</div>
+    <div class="bs">recibe y sigue los pedidos</div>
+  </div>
+  <div class="bchip c4 banco" style="left:50px;top:646px;width:260px;height:86px">
+    <div class="bn">contenedor · PostgreSQL</div>
+    <div class="bt">Base de pedidos</div>
+    <div class="bs">pedidos y pagos</div>
+  </div>
+  <svg class="edges" viewBox="0 0 466 1038">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+    <path d="M223,124 L223,316" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M223,404 L223,485" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M180,565 L180,646" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M267,565 L267,575 L320,575 L320,942" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+  </svg>
+  <div class="rel" data-edge="0" style="left:184px;top:204px;width:78px"><span class="rd">Hace pedidos</span><span class="rt">[navegador]</span></div>
+  <div class="rel" data-edge="1" style="left:178px;top:428px;width:90px"><span class="rd">Envía el pedido</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="2" style="left:132px;top:589px;width:95px"><span class="rd">Guarda el pedido</span><span class="rt">[SQL]</span></div>
+  <div class="rel" data-edge="3" style="left:277px;top:742px;width:86px"><span class="rd">Cobra la tarjeta</span><span class="rt">[HTTPS]</span></div>
+</div></div>
+
+<div class="sec">Leyenda C4</div>
+<div class="c4leg">
+<div class="it"><div class="sw pessoa"></div>persona</div>
+<div class="it"><div class="sw limite"></div>límite del sistema en foco</div>
+<div class="it"><div class="sw "></div>contenedor: aplicación o servicio</div>
+<div class="it"><div class="sw web"></div>contenedor de interfaz web</div>
+<div class="it"><div class="sw banco"></div>contenedor de datos</div>
+<div class="it"><div class="sw externo"></div>sistema externo</div>
+<div class="it"><span class="seta"><i></i></span>relación: qué hace <code>[tecnología]</code></div>
+</div>
+
+<div class="foot" style="display:flex;justify-content:space-between"><span>Importación</span><span>Tienda en línea</span></div>
+
+</div>
+</body></html>

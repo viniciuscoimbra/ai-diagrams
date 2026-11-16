@@ -1,0 +1,118 @@
+{
+  "page_title": "Ciclo de vida do cartão de débito",
+  "header": ["ai-diagrams · Ciclo de vida do cartão de débito", "V1 · Máquina de estados"],
+  "kicker": "Máquina de estados",
+  "h1": "Ciclo de vida do cartão de débito",
+  "sub": "Situações do cartão no emissor, da solicitação ao cancelamento. A mudança gera evento e fica gravada na tabela `cartao`. Caminho feliz: Solicitado, Em emissão, Em trânsito, Aguardando ativação, Ativo.",
+  "initial": "solicitado",
+  "states": [
+    {
+      "id": "solicitado",
+      "name": "Solicitado",
+      "desc": "O cliente pediu o cartão no app. Ainda não há plástico."
+    },
+    {
+      "id": "em-emissao",
+      "name": "Em emissão",
+      "desc": "O pedido foi para a gráfica; o número e o criptograma já existem."
+    },
+    {
+      "id": "em-transito",
+      "name": "Em trânsito",
+      "desc": "A gráfica entregou ao Correio, com código de rastreio."
+    },
+    {
+      "id": "aguardando-ativacao",
+      "name": "Aguarda ativação",
+      "desc": "O cartão chegou ao cliente, mas não aceita compra."
+    },
+    {
+      "id": "ativo",
+      "name": "Ativo",
+      "desc": "Aceita compra."
+    },
+    {
+      "id": "bloqueado",
+      "name": "Bloqueado",
+      "desc": "O cliente bloqueou pelo app. Volta para Ativo quando ele desbloqueia."
+    },
+    {
+      "id": "cancelado",
+      "name": "Cancelado",
+      "final": true,
+      "desc": "Não volta mais. O número não é reaproveitado."
+    },
+    {
+      "id": "extraviado",
+      "name": "Extraviado",
+      "final": true,
+      "desc": "O Correio devolveu ou perdeu o envio. Não volta mais; a gráfica emite outro cartão, com outro número."
+    }
+  ],
+  "transitions": [
+    {
+      "from": "solicitado",
+      "to": "em-emissao",
+      "event": "gráfica confirma o pedido"
+    },
+    {
+      "from": "solicitado",
+      "to": "cancelado",
+      "event": "recusado na análise de cadastro"
+    },
+    {
+      "from": "em-emissao",
+      "to": "em-transito",
+      "event": "gráfica informa postagem",
+      "action": "registra código de rastreio"
+    },
+    {
+      "from": "em-transito",
+      "to": "aguardando-ativacao",
+      "event": "Correio confirma entrega"
+    },
+    {
+      "from": "em-transito",
+      "to": "extraviado",
+      "event": "devolução ou 30 dias parado",
+      "action": "abre novo pedido"
+    },
+    {
+      "from": "aguardando-ativacao",
+      "to": "ativo",
+      "event": "cliente ativa",
+      "guard": "4 dígitos + senha corretos"
+    },
+    {
+      "from": "aguardando-ativacao",
+      "to": "bloqueado",
+      "event": "erro de senha",
+      "guard": "3 tentativas"
+    },
+    {
+      "from": "ativo",
+      "to": "bloqueado",
+      "event": "cliente bloqueia no app"
+    },
+    {
+      "from": "bloqueado",
+      "to": "ativo",
+      "event": "cliente desbloqueia no app"
+    },
+    {
+      "from": "ativo",
+      "to": "cancelado",
+      "event": "cancelamento ou vencimento"
+    },
+    {
+      "from": "bloqueado",
+      "to": "cancelado",
+      "event": "cancelamento ou vencimento"
+    }
+  ],
+  "band": {
+    "f1": "Errar a senha na ativação não muda a situação; apenas na terceira tentativa errada o cartão passa a Bloqueado.",
+    "f2": "Fora do escopo: cartão virtual, segunda via por dano e cartão de crédito."
+  },
+  "footer": ["ai-diagrams", "Máquina de estados · 2026-11"]
+}

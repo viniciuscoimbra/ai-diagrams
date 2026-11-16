@@ -1,22 +1,22 @@
 # BPMN 2.0
 
-Processo em BPMN nativo, editável no Camunda Modeler ou em demo.bpmn.io. Ninguém desenha SVG nem escreve XML: o modelo é um JSON, e `bpmn/gerar_bpmn.py` calcula o layout, roteia as conexões e emite BPMN 2.0 com BPMNDI. A renderização é do bpmn-js 18.31.0, empacotado em `bpmn/vendor/` com a licença (o logo do bpmn.io fica no desenho, como a licença pede).
+A process in native BPMN, editable in Camunda Modeler or at demo.bpmn.io. Nobody draws SVG or writes XML: the model is a JSON file, and `bpmn/build_bpmn.py` computes the layout, routes the connections and emits BPMN 2.0 with BPMNDI. The rendering is done by bpmn-js 18.31.0, bundled in `bpmn/vendor/` with its license (the bpmn.io logo stays on the drawing, as the license requires).
 
-Modelo: `modelos/08-bpmn/`, na pasta da skill.
+Template: `templates/08-bpmn/`, in the skill folder.
 
-## Quando é BPMN e quando é raia
+## When it is BPMN and when it is swimlanes
 
-BPMN quando o pedido diz BPMN, processo, gateway, evento, ou quando o resultado precisa ser editável numa ferramenta de processo. Fluxo entre times sem essa exigência vai para raias (`references/raias.md`), que lê melhor num documento.
+BPMN when the request says BPMN, process, gateway, event, or when the result needs to be editable in a process tool. A flow between teams without that requirement goes to swimlanes (`references/swimlanes.md`), which reads better in a document.
 
-## Modelo JSON
+## JSON model
 
 ```json
 {
   "id": "contestacao",
   "title": "Contestação de pagamento",
-  "subtitle": "uma ou duas frases factuais",
-  "cabecalho": ["Empresa · Projeto", "08 · BPMN · V1"],
-  "rodape": "Autor · Projeto · AAAA-MM",
+  "subtitle": "one or two factual sentences",
+  "header": ["Company · Project", "08 · BPMN · V1"],
+  "footer": "Author · Project · YYYY-MM",
   "lanes": [{"id": "cliente", "name": "Cliente"}, {"id": "ops", "name": "Operações"}],
   "nodes": [
     {"id": "inicio", "type": "startEvent", "name": "Cliente contesta", "lane": "cliente", "col": 0},
@@ -27,33 +27,35 @@ BPMN quando o pedido diz BPMN, processo, gateway, evento, ou quando o resultado 
 }
 ```
 
-| Campo | Regra |
+The sample content is in pt-BR, like the template; write it in the language the user asks for.
+
+| Field | Rule |
 |---|---|
 | `type` | `startEvent`, `endEvent`, `task`, `callActivity`, `exclusiveGateway`, `parallelGateway`, `intermediateCatchEvent`, `intermediateThrowEvent` |
-| `event` | opcional: `timer`, `message` ou `condition` (com `condition`) |
-| `lane` | quem executa de fato a atividade |
-| `col`, `row` | coluna de 0 a 6 (largura 240); `row: 1` abre uma segunda linha na mesma raia, para alternativa ou volta |
-| `name` | `\n` quebra a linha dentro da tarefa |
-| `doc` | opcional: texto ou objeto, vira `documentation` do elemento |
-| `flows[].name` | obrigatório em todo ramo que sai de decisão |
-| `flows[].via` | `top` ou `bottom` força a saída por cima ou por baixo, para voltas não atravessarem tarefas |
-| `columnWidth`, `laneHeight` | opcionais, no topo do modelo |
+| `event` | optional: `timer`, `message` or `condition` (with `condition`) |
+| `lane` | who actually performs the activity |
+| `col`, `row` | column from 0 to 6 (width 240); `row: 1` opens a second row in the same lane, for an alternative or a return |
+| `name` | `\n` breaks the line inside the task |
+| `doc` | optional: text or object, becomes the element's `documentation` |
+| `flows[].name` | required on every branch that leaves a decision |
+| `flows[].via` | `top` or `bottom` forces the exit from the top or the bottom, so returns do not cross tasks |
+| `columnWidth`, `laneHeight` | optional, at the top level of the model |
 
-Diagrama legível: até sete colunas, quatro a seis raias, até dezoito atividades. Todo caminho termina num `endEvent`. Dois caminhos que terminam no mesmo lugar ficam na mesma raia, em linhas diferentes, para as setas não correrem coladas.
+Legible diagram: up to seven columns, four to six lanes, up to eighteen activities. Every path ends in an `endEvent`. Two paths that end in the same place stay in the same lane, on different rows, so the arrows do not run stuck together.
 
 ## Gate
 
-`gerar_bpmn.py` só grava saída com tudo em zero:
+`build_bpmn.py` only writes output with everything at zero:
 
-- `ESTRUTURA`: ids únicos, conexão para nó existente, nó sem entrada (exceto início) ou sem saída (exceto fim), ramo de decisão sem rótulo, tipo ou raia inexistente;
-- `ALCANCE`: todo nó é alcançado a partir de um início e chega a um fim;
-- `SOBREPOSICAO`: duas formas na mesma posição;
-- `IMPORTACAO`: o bpmn-js importa o XML no Chrome sem erro e sem aviso.
+- `STRUCTURE`: unique ids, connection to an existing node, node without an incoming flow (except start) or without an outgoing flow (except end), decision branch without a label, nonexistent type or lane;
+- `REACHABILITY`: every node is reached from a start and reaches an end;
+- `OVERLAP`: two shapes in the same position;
+- `IMPORT-FAILED`: bpmn-js imports the XML in Chrome with no error and no warning.
 
-## Comandos
+## Commands
 
 ```bash
-python3 <skill>/bpmn/gerar_bpmn.py diagramas/_src/NN-processo.json
+python3 <skill>/bpmn/build_bpmn.py diagrams/_src/NN-process.json
 ```
 
-Gera `NN-processo.bpmn` (o editável, que vai para o git), `NN-processo.html` (viewer offline) e `NN-processo.png`. Olhe o PNG: seta correndo colada em outra ou rótulo longe do ramo pedem outra `col`, `row` ou `via`.
+It generates `NN-process.bpmn` (the editable file, which goes into git), `NN-process.html` (offline viewer) and `NN-process.png`. Look at the PNG: an arrow running stuck to another or a label far from its branch calls for another `col`, `row` or `via`.

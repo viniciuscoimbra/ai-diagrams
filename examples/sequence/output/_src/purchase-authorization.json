@@ -1,0 +1,48 @@
+{
+  "page_title": "Autorização de compra no cartão de débito",
+  "header": ["ai-diagrams · Autorização de compra", "V1 · Sequência"],
+  "kicker": "Diagrama de sequência",
+  "h1": "Autorização de compra no cartão de débito",
+  "sub": "Caminho desde o terminal da loja até a resposta de aprovação ou recusa. A bandeira roteia a mensagem ISO 8583; o autorizador valida, consulta o antifraude e, conforme o score, bloqueia saldo no ledger ou recusa por suspeita. Só compra aprovada gera notificação.",
+  "participants": [
+    {"id": "terminal", "name": "Terminal", "sub": "POS ou e-commerce", "type": "actor"},
+    {"id": "bandeira", "name": "Bandeira", "sub": "Rede de pagamento", "type": "external"},
+    {"id": "autorizador", "name": "Autorizador", "sub": "ECS Fargate", "type": "service"},
+    {"id": "antifraude", "name": "Antifraude", "sub": "SageMaker", "type": "service"},
+    {"id": "ledger", "name": "Ledger", "sub": "Aurora PostgreSQL", "type": "database"},
+    {"id": "notificacoes", "name": "Notificações", "sub": "Fila SQS", "type": "queue"}
+  ],
+  "messages": [
+    {"from": "terminal", "to": "bandeira", "text": "compra", "step": "Terminal envia a compra; bandeira roteia a mensagem ISO 8583 `0100` para o autorizador"},
+    {"from": "bandeira", "to": "autorizador", "text": "`0100`"},
+    {"from": "autorizador", "to": "autorizador", "text": "valida cartão", "step": "Autorizador valida situação do cartão, validade e criptograma sem chamar ninguém"},
+    {"from": "autorizador", "to": "antifraude", "text": "consulta score", "step": "Autorizador chama o antifraude e espera o score; tempo máximo 120 ms, sem resposta segue como score 0,5"},
+    {"from": "antifraude", "to": "autorizador", "text": "score (0 a 1)", "type": "reply"},
+    {"fragment": "alt", "branches": [
+      {"guard": "score < 0,85", "messages": [
+        {"from": "autorizador", "to": "ledger", "text": "bloqueio do valor", "step": "Autorizador pede bloqueio do valor; ledger confere saldo e grava bloqueio e linha da outbox na mesma transação"},
+        {"fragment": "alt", "branches": [
+          {"guard": "com saldo", "messages": [
+            {"from": "ledger", "to": "autorizador", "text": "bloqueio confirmado", "type": "reply"},
+            {"from": "autorizador", "to": "bandeira", "text": "`0110` código `00`", "type": "reply", "step": "Com saldo, resposta `0110` com código `00` (aprovada)"}
+          ]},
+          {"guard": "sem saldo", "messages": [
+            {"from": "ledger", "to": "autorizador", "text": "saldo insuficiente", "type": "reply"},
+            {"from": "autorizador", "to": "bandeira", "text": "`0110` código `51`", "type": "reply", "step": "Sem saldo, resposta `0110` com código `51` (saldo insuficiente), nada é bloqueado"}
+          ]}
+        ]}
+      ]},
+      {"guard": "score ≥ 0,85", "messages": [
+        {"from": "autorizador", "to": "bandeira", "text": "`0110` código `59`", "type": "reply", "step": "Score a partir de 0,85: resposta `0110` com código `59` (suspeita de fraude), sem consultar ledger"}
+      ]}
+    ]},
+    {"from": "bandeira", "to": "terminal", "text": "resposta", "type": "reply", "step": "Bandeira responde ao terminal em todos os casos"},
+    {"fragment": "opt", "branches": [
+      {"guard": "compra aprovada", "messages": [
+        {"from": "autorizador", "to": "notificacoes", "text": "`compra.aprovada`", "type": "async", "step": "Só na compra aprovada, autorizador publica evento na fila de notificações, sem esperar resposta; cliente recebe push"}
+      ]}
+    ]}
+  ],
+  "band": {"f1": "Captura e liquidação (arquivo do adquirente no dia seguinte), estorno e compra parcelada ficam fora do escopo"},
+  "footer": ["ai-diagrams", "Diagrama de sequência · 2026-11"]
+}

@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Debit card lifecycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="en">
+<style>/*STYLE*/</style></head><body>
+<div class="page">
+
+  <div class="hdr"><span>ai-diagrams · Debit card lifecycle</span><span>V1 · State machine</span></div>
+
+  <div class="kicker"><span class="sq">■</span> State machine</div>
+  <h1>Debit card lifecycle</h1>
+  <div class="sub">Card states at the issuer, from request to cancellation. Each change generates an event and is recorded in the <code>cartao</code> table. Happy path: Requested, In production, In transit, Awaiting activation, Active.</div>
+
+  <div class="canvas" style="width:1027px;height:1680px">
+      <div class="painel ini" style="left:671px;top:20px;width:22px;height:22px"></div>
+      <div class="painel estado" style="left:580px;top:114px;width:204px;height:66px"><div class="ptag">state</div><div class="pt">Requested</div></div>
+      <div class="painel estado" style="left:546px;top:344px;width:204px;height:66px"><div class="ptag">state</div><div class="pt">In production</div></div>
+      <div class="painel estado" style="left:546px;top:614px;width:204px;height:66px"><div class="ptag">state</div><div class="pt">In transit</div></div>
+      <div class="painel estado" style="left:244px;top:884px;width:280px;height:66px"><div class="ptag">state</div><div class="pt">Awaiting activation</div></div>
+      <div class="painel estado" style="left:339px;top:1364px;width:204px;height:66px"><div class="ptag">state</div><div class="pt">Active</div></div>
+      <div class="painel estado" style="left:390px;top:1134px;width:204px;height:66px"><div class="ptag">state</div><div class="pt">Blocked</div></div>
+      <div class="painel estado final" style="left:687px;top:1594px;width:204px;height:66px"><div class="ptag">final</div><div class="pt">Canceled</div></div>
+      <div class="painel estado final" style="left:580px;top:884px;width:204px;height:66px"><div class="ptag">final</div><div class="pt">Lost in transit</div></div>
+      <div class="mlabel tlabel" style="left:418px;top:252px;width:224px"><span class="ev">manufacturer confirms order</span></div>
+      <div class="mlabel tlabel" style="left:847px;top:897px;width:160px"><span class="ev">registration review</span><br><span class="ev">declined</span></div>
+      <div class="mlabel tlabel" style="left:434px;top:482px;width:208px"><span class="ev">manufacturer confirms</span><br><span class="ev">dispatch</span><br><span class="ac">/ records tracking number</span></div>
+      <div class="mlabel tlabel" style="left:186px;top:762px;width:192px"><span class="ev">postal service confirms</span><br><span class="ev">delivery</span></div>
+      <div class="mlabel tlabel" style="left:484px;top:752px;width:192px"><span class="ev">returned or idle for 30</span><br><span class="ev">days</span><br><span class="ac">/ opens new order</span></div>
+      <div class="mlabel tlabel" style="left:20px;top:1147px;width:200px"><span class="ev">customer activates</span><br><span class="gd">[4 digits + correct PIN]</span></div>
+      <div class="mlabel tlabel" style="left:313px;top:1022px;width:112px"><span class="ev">incorrect PIN</span><br><span class="gd">[3 attempts]</span></div>
+      <div class="mlabel tlabel" style="left:251px;top:1272px;width:184px"><span class="ev">customer blocks in app</span></div>
+      <div class="mlabel tlabel" style="left:499px;top:1272px;width:200px"><span class="ev">customer unblocks in app</span></div>
+      <div class="mlabel tlabel" style="left:251px;top:1502px;width:184px"><span class="ev">cancellation or expiry</span></div>
+      <div class="mlabel tlabel" style="left:599px;top:1387px;width:184px"><span class="ev">cancellation or expiry</span></div>
+      <svg class="edges" viewBox="0 0 1027 1680">
+        <defs><marker id="s" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+        <path d="M682,42 L682,114" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M648,180 L648,344" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M716,180 L716,204 L840,204 L840,1594" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M648,410 L648,614" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M614,680 L614,704 L384,704 L384,884" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M682,680 L682,884" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M337,950 L337,974 L226,974 L226,1316 L390,1316 L390,1364" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M431,950 L431,1086 L492,1086 L492,1134" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M441,1364 L441,1200" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M492,1200 L492,1364" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M441,1430 L441,1546 L738,1546 L738,1594" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+        <path d="M543,1200 L543,1224 L789,1224 L789,1594" stroke-width="1.6" fill="none" marker-end="url(#s)" style="stroke:var(--support)"/>
+      </svg>
+  </div>
+
+  <div class="sec">States</div>
+  <div class="passos-seq estados-leg">
+    <div class="ps-item"><div class="pd"><b>Requested</b> The customer requested the card in the app. No physical card exists yet.</div></div>
+    <div class="ps-item"><div class="pd"><b>In production</b> The order was sent to the card manufacturer; the number and cryptogram already exist.</div></div>
+    <div class="ps-item"><div class="pd"><b>In transit</b> The manufacturer handed the card to the postal service with a tracking number.</div></div>
+    <div class="ps-item"><div class="pd"><b>Awaiting activation</b> The card reached the customer but cannot accept purchases.</div></div>
+    <div class="ps-item"><div class="pd"><b>Active</b> Accepts purchases.</div></div>
+    <div class="ps-item"><div class="pd"><b>Blocked</b> The customer blocked the card in the app. It returns to Active when unblocked.</div></div>
+    <div class="ps-item"><div class="pd"><b>Canceled</b> Cannot return to a previous state. The number is not reused.</div></div>
+    <div class="ps-item"><div class="pd"><b>Lost in transit</b> The postal service returned or lost the shipment. This is terminal; the manufacturer issues a new card with a new number.</div></div>
+  </div>
+  <div class="sec">Notation</div>
+  <div class="notacao wrap"><div class="nt"><div class="ini-mini"></div>initial state</div><div class="nt"><div class="est-mini"></div>state</div><div class="nt"><div class="est-mini final"></div>final state: no outgoing transitions</div><div class="nt"><span class="nt-rot"><span class="ev">event</span> <span class="gd">[guard]</span> <span class="ac">/ action</span></span>the transition occurs on the event, if the guard holds, and executes the action</div></div>
+  <div class="faixa">
+    <div class="f1">An incorrect PIN during activation does not change the state; only the third failed attempt moves the card to Blocked.</div>
+    <div class="f2">Out of scope: virtual cards, replacements for damage and credit cards.</div>
+  </div>
+
+  <div class="foot"><span>ai-diagrams</span><span>State machine · 2026-11</span></div>
+
+</div>
+</body></html>

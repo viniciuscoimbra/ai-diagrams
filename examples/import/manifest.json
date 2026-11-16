@@ -1,0 +1,299 @@
+[
+  {
+    "id": "flowchart",
+    "language": "en",
+    "input": "en/flowchart.mmd",
+    "output": "en/output/flowchart/flowchart.html",
+    "type": "bpmn",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "swimlanes",
+    "language": "en",
+    "input": "en/swimlanes.mmd",
+    "output": "en/output/swimlanes/_src/swimlanes.html",
+    "type": "swimlanes",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "sequence",
+    "language": "en",
+    "input": "en/sequence.mmd",
+    "output": "en/output/sequence/_src/sequence.html",
+    "type": "sequence",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "state",
+    "language": "en",
+    "input": "en/state.mmd",
+    "output": "en/output/state/_src/state.html",
+    "type": "states",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "er",
+    "language": "en",
+    "input": "en/er.mmd",
+    "output": "en/output/er/_src/er/er-public.html",
+    "type": "er",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "process",
+    "language": "en",
+    "input": "en/process.bpmn",
+    "output": "en/output/process/process.html",
+    "type": "bpmn",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "schema",
+    "language": "en",
+    "input": "en/schema.sql",
+    "output": "en/output/schema/_src/schema/er-public.html",
+    "type": "er",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "catalog",
+    "language": "en",
+    "input": "en/catalog.csv",
+    "output": "en/output/catalog/_src/catalog.html",
+    "type": "catalog",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "comparison",
+    "language": "en",
+    "input": "en/comparison.yaml",
+    "output": "en/output/comparison/_src/comparison.html",
+    "type": "comparison",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "workspace",
+    "language": "en",
+    "input": "en/workspace.dsl",
+    "output": "en/output/workspace/_src/workspace.html",
+    "type": "c4",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "schema-matrix",
+    "language": "en",
+    "input": "en/schema.sql",
+    "output": "en/output/schema-matrix/_src/schema/schema.html",
+    "type": "matrix",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "flowchart",
+    "language": "es",
+    "input": "es/flowchart.mmd",
+    "output": "es/output/flowchart/flowchart.html",
+    "type": "bpmn",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "swimlanes",
+    "language": "es",
+    "input": "es/swimlanes.mmd",
+    "output": "es/output/swimlanes/_src/swimlanes.html",
+    "type": "swimlanes",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "sequence",
+    "language": "es",
+    "input": "es/sequence.mmd",
+    "output": "es/output/sequence/_src/sequence.html",
+    "type": "sequence",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "state",
+    "language": "es",
+    "input": "es/state.mmd",
+    "output": "es/output/state/_src/state.html",
+    "type": "states",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "er",
+    "language": "es",
+    "input": "es/er.mmd",
+    "output": "es/output/er/_src/er/er-public.html",
+    "type": "er",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "process",
+    "language": "es",
+    "input": "es/process.bpmn",
+    "output": "es/output/process/process.html",
+    "type": "bpmn",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "schema",
+    "language": "es",
+    "input": "es/schema.sql",
+    "output": "es/output/schema/_src/schema/er-public.html",
+    "type": "er",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "catalog",
+    "language": "es",
+    "input": "es/catalog.csv",
+    "output": "es/output/catalog/_src/catalog.html",
+    "type": "catalog",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "comparison",
+    "language": "es",
+    "input": "es/comparison.yaml",
+    "output": "es/output/comparison/_src/comparison.html",
+    "type": "comparison",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "workspace",
+    "language": "es",
+    "input": "es/workspace.dsl",
+    "output": "es/output/workspace/_src/workspace.html",
+    "type": "c4",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "schema-matrix",
+    "language": "es",
+    "input": "es/schema.sql",
+    "output": "es/output/schema-matrix/_src/schema/schema.html",
+    "type": "matrix",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "flowchart",
+    "language": "pt-BR",
+    "input": "pt-BR/flowchart.mmd",
+    "output": "pt-BR/output/flowchart/flowchart.html",
+    "type": "bpmn",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "swimlanes",
+    "language": "pt-BR",
+    "input": "pt-BR/swimlanes.mmd",
+    "output": "pt-BR/output/swimlanes/_src/swimlanes.html",
+    "type": "swimlanes",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "sequence",
+    "language": "pt-BR",
+    "input": "pt-BR/sequence.mmd",
+    "output": "pt-BR/output/sequence/_src/sequence.html",
+    "type": "sequence",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "state",
+    "language": "pt-BR",
+    "input": "pt-BR/state.mmd",
+    "output": "pt-BR/output/state/_src/state.html",
+    "type": "states",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "er",
+    "language": "pt-BR",
+    "input": "pt-BR/er.mmd",
+    "output": "pt-BR/output/er/_src/er/er-public.html",
+    "type": "er",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "process",
+    "language": "pt-BR",
+    "input": "pt-BR/process.bpmn",
+    "output": "pt-BR/output/process/process.html",
+    "type": "bpmn",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "schema",
+    "language": "pt-BR",
+    "input": "pt-BR/schema.sql",
+    "output": "pt-BR/output/schema/_src/schema/er-public.html",
+    "type": "er",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "catalog",
+    "language": "pt-BR",
+    "input": "pt-BR/catalog.csv",
+    "output": "pt-BR/output/catalog/_src/catalog.html",
+    "type": "catalog",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "comparison",
+    "language": "pt-BR",
+    "input": "pt-BR/comparison.yaml",
+    "output": "pt-BR/output/comparison/_src/comparison.html",
+    "type": "comparison",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "workspace",
+    "language": "pt-BR",
+    "input": "pt-BR/workspace.dsl",
+    "output": "pt-BR/output/workspace/_src/workspace.html",
+    "type": "c4",
+    "tested": true,
+    "gate": "passed"
+  },
+  {
+    "id": "schema-matrix",
+    "language": "pt-BR",
+    "input": "pt-BR/schema.sql",
+    "output": "pt-BR/output/schema-matrix/_src/schema/schema.html",
+    "type": "matrix",
+    "tested": true,
+    "gate": "passed"
+  }
+]

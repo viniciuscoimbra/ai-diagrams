@@ -2,23 +2,23 @@
 inclusion: always
 ---
 
-# Diagramas deste projeto
+# Diagrams in this project
 
-Todo pedido de diagrama neste projeto (poster de arquitetura AWS, C4, fluxo, sequência, máquina de estados, raias, BPMN, tabela de comparação, catálogo em cards, DER ou matriz de dependência) usa a skill `ai-diagrams`. Não responda com markdown, Mermaid ou texto no lugar do diagrama.
+Every diagram request in this project (AWS architecture poster, C4, flow, sequence, state machine, swimlanes, BPMN, comparison table, card catalog, ER diagram or dependency matrix) uses the `ai-diagrams` skill. Do not answer with markdown, Mermaid or text in place of the diagram.
 
-Antes de desenhar:
+Before drawing:
 
-1. Leia o `SKILL.md` da skill, em `.kiro/skills/ai-diagrams/` no projeto ou em `~/.kiro/skills/ai-diagrams/`. O roteador dele escolhe o tipo.
-2. Se o pedido não diz se o nome do cliente aparece no diagrama, pergunte antes, numa mensagem só: com cliente (`<Projeto> · <tema> · <Cliente>`, e qual é o nome) ou sem cliente (`<Projeto> · <tema>`), oferecendo o rodapé `<Projeto> · <tipo de diagrama> · AAAA-MM` e a versão `V1`. Nunca deduza o cliente do nome da pasta ou do repositório. Sem interação possível, siga sem cliente e diga isso na entrega.
-3. Abra o modelo do tipo em `modelos/` e a referência em `references/`, dentro da pasta da skill.
-4. Escreva o fonte em `diagramas/_src/` e rode o comando do tipo, que está no `SKILL.md` e gera o PNG em `diagramas/`.
-5. O gate do comando tem que terminar em zero. Abra o PNG e confira a leitura antes de dizer que terminou.
+1. Read the skill's `SKILL.md`, in `.kiro/skills/ai-diagrams/` in the project or in `~/.kiro/skills/ai-diagrams/`. Its router picks the type.
+2. If the request does not say whether the client name appears in the diagram, ask first, in a single message: with client (`<Project> · <subject> · <Client>`, and what the name is) or without client (`<Project> · <subject>`), offering the footer `<Project> · <diagram type> · YYYY-MM` and the version `V1`. Never infer the client from the folder or repository name. With no possible interaction, go on without a client and say so in the delivery.
+3. Open the type's template in `templates/` and the reference in `references/`, inside the skill folder.
+4. Write the source in `diagrams/_src/` and run the type's command, which is in `SKILL.md` and generates the PNG in `diagrams/`.
+5. The command's gate has to end at zero. Open the PNG and check how it reads before saying you are done.
 
-Regras:
+Rules:
 
-- Não crie script auxiliar (`.py`, `.sh` ou outro) para rodar o build. Rode o comando da skill direto. Se não puder executar, entregue o fonte e o comando exato para o usuário rodar.
-- Rode cada comando sozinho, sem pipe (`|`), sem redirecionamento (`2>&1`, `>`) e sem `&&`: o agente do projeto só libera o comando puro.
-- Não copie nem edite o CSS da skill no projeto. Largura, fonte e grade já vêm certas.
-- No poster e no fluxo com passos, siga a "Receita de coordenadas" de `references/linguagem-visual.md` e rode `poster_lint.py --fix` antes do `build.py`.
-- Gate reprovado não é entrega. Nunca diga que terminou enquanto o gate reprova. Depois de cinco rodadas de correção sem zerar, pare e entregue o fonte, a saída do último gate e a frase "o gate reprovou; o PNG não foi gerado".
-- Se o pedido de fluxo for ambíguo entre passos, raias e BPMN, pergunte antes.
+- Do not create a helper script (`.py`, `.sh` or other) to run the build. Run the skill's command directly. If you cannot run it, deliver the source and the exact command for the user to run.
+- Run each command alone, without a pipe (`|`), without redirection (`2>&1`, `>`) and without `&&`: the project's agent only allows the plain command.
+- Do not copy or edit the skill's CSS in the project. Width, font and grid already come right.
+- On the poster and the flow with steps, follow the "Coordinate recipe" in `references/visual-language.md` and run `poster_lint.py --fix` before `build.py`.
+- A failed gate is not a delivery. Never say you are done while the gate fails. After five rounds of fixes without reaching zero, stop and deliver the source, the output of the last gate and the sentence "the gate failed; the PNG was not generated" (in the user's language).
+- If a flow request is ambiguous between steps, swimlanes and BPMN, ask first.

@@ -1,180 +1,180 @@
 ---
 name: ai-diagrams
-description: Cria diagramas técnicos com um padrão visual único e escolhe sozinha o tipo certo. Poster de arquitetura AWS e fluxo com passos numerados (ícones AWS, lint geométrico, PNG); C4 de contexto e contêineres; tabela de comparação ou comparativo de opções; diagrama de sequência entre serviços (chamada, resposta, alt e loop); máquina de estados (ciclo de vida e status); fluxo em raias (swimlane) entre times; conceitual em cards ou catálogo; BPMN 2.0 editável no Camunda ou bpmn.io; DER por schema em pé de galinha; matriz de dependência. Use sempre que o usuário pedir diagrama, poster, desenho de arquitetura, topologia AWS, C4, contêineres, fluxo, processo, BPMN, raias, swimlane, sequência, chamada entre serviços, máquina de estados, status, ciclo de vida, tabela comparativa, comparação entre A e B, catálogo, DER, modelo lógico, diagrama de tabelas ou matriz de dependência, ou quiser transformar documento em diagrama. Também use para editar, auditar ou regenerar diagramas existentes em diagramas/_src/.
+description: Builds technical diagrams with one visual standard and picks the right type. AWS architecture poster and flow with numbered steps (AWS icons, geometric lint, PNG); C4 context and containers; comparison table of options; sequence diagram between services (call, reply, alt and loop); state machine (lifecycle and status); swimlane flow between teams; conceptual cards or catalog; BPMN 2.0 editable in Camunda or bpmn.io; ER diagram per schema in crow's foot; dependency matrix. Use whenever the user asks for a diagram, poster, architecture drawing, AWS topology, C4, containers, flow, process, BPMN, swimlanes, sequence, calls between services, state machine, status, lifecycle, comparison table, A vs B, catalog, ERD, logical model, table diagram or dependency matrix, or wants a document turned into a diagram (pt-BR: diagrama, fluxo, raias, sequência, máquina de estados, tabela comparativa, catálogo, DER, matriz de dependência). Also use to edit, audit or regenerate existing diagrams in diagrams/_src/.
 ---
 
-# Diagramas padronizados
+# Standardized diagrams
 
-Uma porta de entrada para todos os tipos de diagrama. Todo tipo segue o mesmo princípio: o conteúdo vem de um documento ou modelo, o layout é decidido (à mão ou por coordenadas calculadas; quando um motor de layout entra, ele só posiciona e o desenho é da skill), um gate automático reprova defeito e o PNG é olhado antes da entrega.
+One entry point for every diagram type. Every type follows the same principle: the content comes from a document or a model, the layout is decided (by hand or by computed coordinates; when a layout engine is used, it only positions things and the drawing belongs to the skill), an automatic gate fails defects and the PNG is looked at before delivery.
 
-## 1. Roteador: qual tipo fazer
+## 1. Router: which type to make
 
-Leia o pedido e escolha a linha. Os modelos ficam em `modelos/`, dentro desta skill, ao lado deste `SKILL.md`; cada um tem o fonte em `_src/` e o PNG gerado. `modelos/gerar.sh` regenera todos pelo gate de cada tipo.
+Read the request and pick the row. The templates are in `templates/`, inside this skill, next to this `SKILL.md`; each one has its source in `_src/` and the generated PNG. `templates/build-all.sh` regenerates all of them through each type's gate.
 
-| Tipo | Quando (gatilho no pedido) | Referência | Modelo | Gate |
+| Type | When (trigger in the request) | Reference | Template | Gate |
 |---|---|---|---|---|
-| Poster de arquitetura AWS | arquitetura, topologia, serviços AWS, "poster do bloco", desenho de solução | `references/linguagem-visual.md` | `01-arquitetura-aws` | `poster_lint.py` via `build.py` |
-| Fluxo com passos numerados | fluxo técnico entre componentes ou serviços, com ordem: "como o evento sai daqui e chega lá" | `references/linguagem-visual.md` | `02-fluxo-passos` | `poster_lint.py` via `build.py` |
-| C4 (contexto e contêineres) | C4, diagrama de contexto ou de contêineres, "visão do sistema", quem usa e de que sistemas depende | `references/c4.md` | `11-c4` | `poster_lint.py` via `build.py` |
-| Tabela de comparação | comparar opções, "A vs B", comparativo, critérios, trade-off, matriz de decisão | `references/tabela.md` | `05-tabela-comparacao` | `poster_lint.py` via `build.py` |
-| Diagrama de sequência | sequência, "quem chama quem", chamada e resposta entre serviços, API ou parceiro, com espera, `alt` ou `loop` | `references/sequencia.md` | `09-sequencia` | `conceitual.py` |
-| Máquina de estados | máquina de estados, ciclo de vida, status de pedido, pagamento ou conta, "de onde para onde pode ir" | `references/estados.md` | `10-maquina-estados` | `gerar_estados.py` e `conceitual.py` |
-| Fluxo em raias | fluxo entre times, papéis ou atores, sem AWS: swimlane, "quem faz o quê", handoff | `references/raias.md` | `06-raias` | `conceitual.py` |
-| Conceitual em cards | catálogo, inventário de serviços, anatomia de um artefato, mapa de responsabilidades sem ordem | `references/raias.md` | `07-catalogo-cards` | `conceitual.py` |
-| BPMN 2.0 | BPMN, processo de negócio, gateway, evento, ou resultado editável no Camunda ou bpmn.io | `references/bpmn.md` | `08-bpmn` | `gerar_bpmn.py` |
-| DER por schema | DER, modelo lógico, tabelas e FKs, diagrama do banco, schema | `references/der.md` | `03-der-schema` | `poster_lint.py` via `build.py` |
-| Matriz de dependência | dependência entre schemas, módulos ou domínios em visão geral | `references/der.md` | `04-matriz-dependencia` | `poster_lint.py` via `build.py` |
+| AWS architecture poster | architecture, topology, AWS services, "block poster", solution drawing | `references/visual-language.md` | `01-aws-architecture` | `poster_lint.py` via `build.py` |
+| Flow with numbered steps | technical flow between components or services, with an order: "how the event leaves here and gets there" | `references/visual-language.md` | `02-step-flow` | `poster_lint.py` via `build.py` |
+| C4 (landscape, context, containers, components, dynamic, deployment) | C4, context, container or component diagram, "system view", who uses it and which systems it depends on, where each part runs, or a Structurizr `workspace.dsl` | `references/c4.md` | `11-c4` | `build_c4.py` (elkjs), then `poster_lint.py` via `build.py` |
+| Comparison table | compare options, "A vs B", comparison, criteria, trade-off, decision matrix | `references/table.md` | `05-comparison-table` | `poster_lint.py` via `build.py` |
+| Sequence diagram | sequence, "who calls whom", call and reply between services, API or partner, with waiting, `alt` or `loop` | `references/sequence.md` | `09-sequence` | `conceptual.py` |
+| State machine | state machine, lifecycle, status of an order, payment or account, "where it can go from where" | `references/states.md` | `10-state-machine` | `build_states.py` and `conceptual.py` |
+| Swimlane flow | flow between teams, roles or actors, without AWS: swimlane, "who does what", handoff | `references/swimlanes.md` | `06-swimlanes` | `conceptual.py` |
+| Conceptual cards | catalog, service inventory, anatomy of an artifact, map of responsibilities with no order | `references/swimlanes.md` | `07-card-catalog` | `conceptual.py` |
+| BPMN 2.0 | BPMN, business process, gateway, event, or a result editable in Camunda or bpmn.io | `references/bpmn.md` | `08-bpmn` | `build_bpmn.py` |
+| ER diagram per schema | ERD, logical model, tables and FKs, database diagram, schema | `references/er.md` | `03-er-schema` | `poster_lint.py` via `build.py` |
+| Dependency matrix | dependency between schemas, modules or domains in an overview | `references/er.md` | `04-dependency-matrix` | `poster_lint.py` via `build.py` |
 
-Variações que usam o pipeline do poster, sem modelo próprio: glossário ilustrado ou analogia (chips e frames sem ícone AWS), mapa as-built (frames com contagem por bloco).
+Variations that use the poster pipeline, without their own template: illustrated glossary or analogy (chips and frames without AWS icons), as-built map (frames with a count per block).
 
-**"Fluxo" é ambíguo.** Decida assim:
+**"Flow" is ambiguous.** Decide like this:
 
-1. o assunto é a ordem das chamadas e quem espera a resposta, mais que onde cada serviço fica? **sequência**;
-2. o assunto é a situação de uma coisa e os eventos que a mudam, sem ordem de chamada? **máquina de estados**;
-3. tem serviço AWS, fila, banco ou API como caixa e a topologia importa? **fluxo com passos**;
-4. as linhas são times ou papéis e não há AWS? **raias**;
-5. pediu BPMN, gateway, evento, ou quer editar numa ferramenta de processo? **BPMN**.
+1. is the subject the order of the calls and who waits for the reply, more than where each service lives? **sequence**;
+2. is the subject the status of one thing and the events that change it, with no call order? **state machine**;
+3. are there AWS services, queues, databases or APIs as boxes, and does the topology matter? **flow with steps**;
+4. are the rows teams or roles, with no AWS? **swimlanes**;
+5. did the user ask for BPMN, gateway, event, or want to edit it in a process tool? **BPMN**.
 
-Se o pedido não cai claramente numa linha, ou cai em duas, pergunte ao usuário antes de desenhar, oferecendo as duas opções com uma frase sobre cada.
+If the request does not fall clearly into one row, or falls into two, ask the user before drawing, offering the two options with one sentence about each.
 
-## 2. Setup (uma vez por máquina)
+## 2. Setup (once per machine)
 
-### Quando importar um arquivo existente
+### When importing an existing file
 
-Se o usuário trouxer Mermaid, `.bpmn`, DDL SQL, CSV de catálogo ou YAML de comparação, use `scripts/importar.py` antes de escrever um fonte à mão. O importador converte o arquivo para o contrato nativo e chama os mesmos geradores e gates desta skill:
+If the user brings Mermaid, `.bpmn`, SQL DDL, a catalog CSV or a comparison YAML, use `scripts/import_cli.py` before writing a source by hand. The importer converts the file to the native contract and calls the same generators and gates of this skill:
 
 ```bash
-python3 <skill>/scripts/importar.py processo.mmd --saida diagramas --idioma pt-BR
-python3 <skill>/scripts/importar.py schema.sql --tipo matriz --saida diagramas --idioma pt-BR
+python3 <skill>/scripts/import_cli.py process.mmd --out diagrams --lang pt-BR
+python3 <skill>/scripts/import_cli.py schema.sql --type matrix --out diagrams --lang pt-BR
 ```
 
-Com a CLI instalada, `ai-diagrams importar` aceita os mesmos argumentos. A extensão e o cabeçalho escolhem o formato; `--tipo` seleciona a saída quando necessário, como `der` ou `matriz` para SQL. Mermaid `flowchart`/`graph` sem `subgraph` vira BPMN; `subgraph` representa raia, não um agrupamento genérico. `sequenceDiagram`, `stateDiagram-v2` e `erDiagram` viram sequência, estados e DER. O layout é recalculado pelo motor.
+With the CLI installed, `ai-diagrams import` accepts the same arguments. The extension and the header pick the format; `--type` selects the output when needed, such as `er` or `matrix` for SQL. Mermaid `flowchart`/`graph` without `subgraph` becomes BPMN; `subgraph` stands for a lane, not a generic grouping. `sequenceDiagram`, `stateDiagram-v2` and `erDiagram` become sequence, states and ER. The layout is recomputed by the engine.
 
-Leia `references/importar.md` para o subconjunto aceito. `MERMAID-NAO-SUPORTADO` ou `BPMN-NAO-SUPORTADO` informa o que precisa ser adaptado; nunca descarte a instrução rejeitada para simular sucesso. O importador não traduz conteúdo autoral. Em ambiente sem Chrome, `--somente-fonte` prepara o fonte e declara o gate completo e o PNG pendentes; isso não substitui a validação nem a auditoria visual. O padrão continua sendo gerar e executar o gate completo.
+Read `references/import.md` for the accepted subset. `MERMAID-UNSUPPORTED` or `BPMN-UNSUPPORTED` says what needs to be adapted; never drop the rejected statement to fake success. The importer does not translate authored content. In an environment without Chrome, `--source-only` prepares the source and declares the full gate and the PNG as pending; this does not replace validation or the visual audit. The default is still to generate and run the full gate.
 
-### Dependências
+### Dependencies
 
-1. `pip3 install diagrams`: só o acervo de ícones oficiais AWS em PNG; a biblioteca nunca roda.
-2. Google Chrome: build, lint e captura usam modo headless.
-3. Node 18 ou mais novo, para os geradores de DER, matriz e máquina de estados.
-4. Overrides se preciso: `POSTER_CHROME` (caminho do Chrome) e `POSTER_ICONBASE` (pasta `resources/aws`).
+1. `pip3 install diagrams`: only the collection of official AWS icons in PNG; the library never runs.
+2. Google Chrome: build, lint and capture use headless mode.
+3. Node 18 or newer, for the ER, matrix and state machine generators.
+4. Overrides if needed: `POSTER_CHROME` (Chrome path) and `POSTER_ICONBASE` (the `resources/aws` folder).
 
-## 3. Estrutura de trabalho
+## 3. Working layout
 
-No projeto do usuário, fontes em `diagramas/_src/`, entregáveis (HTML self-contained, PNG e, no BPMN, o `.bpmn`) na pasta pai `diagramas/`. Crie a estrutura se não existir. Os scripts usam o CSS do projeto (`_src/_estilo.css`, `_src/_estilo-conceitual.css`) quando existe; senão, o da skill.
+In the user's project, sources go in `diagrams/_src/`, deliverables (self-contained HTML, PNG and, for BPMN, the `.bpmn`) in the parent folder `diagrams/`. Create the structure if it does not exist. The scripts use the project's CSS (`_src/_style.css`, `_src/_style-conceptual.css`) when it exists; otherwise, the skill's.
 
-## 4. Ciclo comum a todos os tipos
+## 4. Cycle common to every type
 
-1. **Conteúdo antes de desenho.** O diagrama materializa um documento de decisão, um processo descrito ou um modelo de dados. Leia a fonte ou pergunte qual é. Sem fonte escrita, rascunhe a narrativa com o usuário primeiro.
-2. **Fonte.** Parta do modelo do tipo em `modelos/` e leia a referência do tipo antes de escrever.
-3. **Gate em zero.** Rode o comando do tipo (abaixo). Gate com problema não gera PNG; corrija o fonte e rode de novo.
-   - Rode o comando como está aqui, sem pipe (`|`), redirecionamento (`2>&1`, `>`) ou `&&`: alguns ambientes só liberam o comando puro.
-   - Não crie script auxiliar e não copie nem edite o CSS da skill no projeto (`_estilo.css`, `_estilo-conceitual.css`). Largura, fonte e grade já vêm certas; mudar o CSS é a causa mais comum de `TEXTO-MINIMO`.
-   - Não incorpore fontes, ícones ou imagens em base64 no fonte: o `build.py` faz isso no HTML final. O fonte fica com `/*ESTILO*/`, `aws://` e o link do Google Fonts.
-   - Se o gate der `MEDICAO-FALHOU` ou o Chrome não responder, a causa costuma ser um sandbox que bloqueia o Chrome (Codex com `workspace-write`, por exemplo). Peça para rodar o comando fora do sandbox; não contorne o gate.
-   - **Gate reprovado não é entrega.** Nunca diga que terminou enquanto o gate reprova. Se depois de cinco rodadas de correção o gate ainda reprovar, pare e entregue o fonte, a saída do último gate e a frase "o gate reprovou; o PNG não foi gerado".
-4. **Auditoria visual (obrigatória).** Leia o PNG com a tool Read e critique: texto cortado ou espremido, rótulo encostado em outro, seta colada em outra ou atravessando caixa, rodapé cortado, área morta, hierarquia confusa. O gate mede geometria, não leitura. Corrija e repita 3 e 4 até passar limpo. Nunca entregue sem olhar o PNG.
-5. **Entrega.** Fonte, HTML final e PNG juntos (no BPMN, também o `.bpmn`).
+1. **Content before drawing.** The diagram materializes a decision document, a described process or a data model. Read the source or ask what it is. Without a written source, draft the narrative with the user first.
+2. **Source.** Start from the type's template in `templates/` and read the type's reference before writing.
+3. **Gate at zero.** Run the type's command (below). A gate with problems does not generate the PNG; fix the source and run it again.
+   - Run the command as written here, without a pipe (`|`), redirection (`2>&1`, `>`) or `&&`: some environments only allow the plain command.
+   - Do not create a helper script and do not copy or edit the skill's CSS in the project (`_style.css`, `_style-conceptual.css`). Width, font and grid already come right; changing the CSS is the most common cause of `TEXT-TOO-SMALL`.
+   - Do not embed fonts, icons or images in base64 in the source: `build.py` does that in the final HTML. The source keeps `/*STYLE*/`, `aws://` and the Google Fonts link.
+   - If the gate gives `MEASURE-FAILED` or Chrome does not respond, the cause is usually a sandbox that blocks Chrome (Codex with `workspace-write`, for example). Ask for the command to be run outside the sandbox; do not work around the gate.
+   - **A failed gate is not a delivery.** Never say you are done while the gate fails. If the gate still fails after five rounds of fixes, stop and deliver the source, the output of the last gate and the sentence "the gate failed; the PNG was not generated" (in the user's language).
+4. **Visual audit (mandatory).** Read the PNG with the Read tool and critique it: text cut or squeezed, a label touching another, an arrow stuck to another or crossing a box, footer cut, dead area, confusing hierarchy. The gate measures geometry, not reading. Fix and repeat 3 and 4 until it passes clean. Never deliver without looking at the PNG.
+5. **Delivery.** Source, final HTML and PNG together (for BPMN, also the `.bpmn`).
 
-Em lote, faça o ciclo inteiro de um diagrama antes de começar o próximo.
+In a batch, do the whole cycle for one diagram before starting the next.
 
-### Legibilidade vence o tamanho padrão
+### Legibility beats the default size
 
-A largura padrão (1760px no poster, 1400px no conceitual) e as medidas dos modelos servem para padronizar, não para espremer. Se o desenho não fica legível nelas, aumente o que for preciso: a largura da página (o fonte declara `<meta name="largura" content="N">` e o `build.py` captura nessa largura; o DER já faz isso a partir do canvas do layout), a altura, o tamanho das caixas ou o espaço entre elas. Nenhum elemento sai da moldura nem passa da borda de outro bloco da página: legenda, faixas e desenho alinham na mesma largura.
+The default width (1760px on the poster, 1400px on the conceptual page) and the template measurements exist to standardize, not to squeeze. If the drawing is not legible at them, increase what is needed: the page width (the source declares `<meta name="width" content="N">` and `build.py` captures at that width; the ER diagram already does this from the layout canvas), the height, the size of the boxes or the space between them. No element leaves the frame or goes past the edge of another block on the page: legend, bands and drawing align on the same width.
 
-### Opções do pedido: cliente, rodapé e versão
+### Request options: client, footer and version
 
-Antes de desenhar, confira se o pedido diz se o nome do cliente aparece no diagrama. Se não disser, pergunte numa mensagem só, com as duas opções:
+Before drawing, check whether the request says if the client name appears in the diagram. If it does not, ask in a single message, with the two options:
 
-1. **com cliente**: cabeçalho `<Projeto> · <tema> · <Cliente>`, e diga qual é o nome;
-2. **sem cliente**: cabeçalho `<Projeto> · <tema>`.
+1. **with client**: header `<Project> · <subject> · <Client>`, and say what the name is;
+2. **without client**: header `<Project> · <subject>`.
 
-`<Projeto>` é o nome do time, do produto ou da organização que o usuário informar. Se ele não informar, o cabeçalho começa direto pelo `<tema>`.
+`<Project>` is the name of the team, product or organization the user gives. If they do not give one, the header starts directly with `<subject>`.
 
-Na mesma pergunta, confirme o rodapé (padrão `<Projeto> · <tipo de diagrama> · AAAA-MM`, ou só `<tipo de diagrama> · AAAA-MM` sem projeto) e a versão (padrão `V1`), oferecendo o padrão. Se o pedido já diz cliente, rodapé e versão, ou diz "sem cliente no cabeçalho", não pergunte.
+In the same question, confirm the footer (default `<Project> · <diagram type> · YYYY-MM`, or only `<diagram type> · YYYY-MM` without a project) and the version (default `V1`), offering the default. If the request already states client, footer and version, or says "no client in the header", do not ask.
 
-**Textos do usuário.** Se o usuário passar título, subtítulo, kicker, textos de seção ou da faixa, use o texto literal, sem reescrever. Na pergunta acima, diga que ele pode mandar esses textos; se não mandar, a skill escreve.
+**User texts.** If the user gives a title, subtitle, kicker, section texts or band texts, use the literal text, without rewriting it. In the question above, say they can send these texts; if they do not, the skill writes them.
 
-Nunca deduza o cliente, o autor ou a versão do caminho da pasta, do nome do repositório ou de outro arquivo do projeto: só vale o que o usuário ou a fonte do diagrama disserem.
+Never infer the client, the author or the version from the folder path, the repository name or another file in the project: only what the user or the diagram's source says counts.
 
-Quando não há como perguntar (execução não interativa, como `claude -p` ou o Kiro sem interação, ou uso por knowledge base), siga sem cliente, com rodapé e versão padrão, e diga isso na entrega.
+When there is no way to ask (non-interactive run, such as `claude -p` or Kiro without interaction, or use through a knowledge base), go on without a client, with the default footer and version, and say so in the delivery.
 
-### Idioma dos rótulos
+### Label language
 
-Use `--idioma <pt-BR|en|es>` no gerador e no gate para os rótulos fixos. A seleção segue esta prioridade: flag, `<meta name="idioma" content="…">` no HTML ou campo `idioma` no JSON/layout DER, variável `AI_DIAGRAMS_IDIOMA`, padrão `pt-BR`. No DER, o campo do layout prevalece sobre o do modelo. Os catálogos `i18n/pt-BR.json`, `en.json` e `es.json` têm as mesmas chaves; idioma desconhecido reprova com `IDIOMA-INEXISTENTE` e chave faltando com `IDIOMA-INCOMPLETO`. Título, subtítulo, caixas, notas e demais conteúdo autoral vêm do fonte e devem ser escritos no idioma pedido. Sem seleção de idioma, a saída em português conserva texto e geometria byte a byte. Os gates identificam seções por classe, sem depender do texto traduzido.
+Use `--lang <pt-BR|en|es>` on the generator and on the gate for the fixed labels. The selection follows this priority: flag, `<meta name="lang" content="…">` in the HTML or the `lang` field in the JSON/ER layout, the `AI_DIAGRAMS_LANG` variable, default `pt-BR`. In the ER diagram, the layout field takes precedence over the model's. The catalogs `i18n/pt-BR.json`, `en.json` and `es.json` have the same keys; an unknown language fails with `LANG-NOT-FOUND` and a missing key with `LANG-INCOMPLETE`. Title, subtitle, boxes, notes and other authored content come from the source and must be written in the requested language. With no language selected, the Portuguese output keeps text and geometry byte for byte. The gates identify sections by class, without depending on the translated text.
 
-### Tema: cor e fonte
+### Theme: color and font
 
-O tema é um json com cores e fontes. A skill traz `temas/ai-diagrams.json` (padrão) e `temas/papel.json` (papel creme, tinta marrom, Public Sans). Todo comando aceita `--tema <nome ou caminho.json>`: nome resolve para `temas/<nome>.json` desta skill; caminho aponta para um json em qualquer pasta.
+The theme is a JSON file with colors and fonts. The skill ships `themes/ai-diagrams.json` (default) and `themes/paper.json` (cream paper, brown ink, Public Sans). Every command accepts `--theme <name or path.json>`: a name resolves to `themes/<name>.json` of this skill; a path points to a JSON file in any folder.
 
-1. **O usuário nomeia um tema ou passa um json:** use-o com `--tema` em todo comando do diagrama, no gerador e no gate.
-2. **O projeto já tem tema** (`diagramas/_src/tema.json`, ou a variável `AI_DIAGRAMS_TEMA` definida): use-o sem perguntar, com `--tema diagramas/_src/tema.json`.
-3. **Nenhum dos dois:** inclua o tema na mesma pergunta de cliente, rodapé e versão, oferecendo o padrão `ai-diagrams` e os nomes que existem em `temas/`. Sem como perguntar, siga no padrão.
+1. **The user names a theme or passes a JSON file:** use it with `--theme` on every command of the diagram, generator and gate.
+2. **The project already has a theme** (`diagrams/_src/theme.json`, or the `AI_DIAGRAMS_THEME` variable is set): use it without asking, with `--theme diagrams/_src/theme.json`.
+3. **Neither:** include the theme in the same question about client, footer and version, offering the default `ai-diagrams` and the names that exist in `themes/`. With no way to ask, go on with the default.
 
-Para criar o tema do usuário (cor da marca, outra família), copie `temas/ai-diagrams.json` para `diagramas/_src/tema.json` do projeto e troque só os valores: todas as chaves de `cores`, `cores_derivadas`, `paleta_der` e `fontes` ficam. Cor em `#RRGGBB`; fonte é nome de família do Google Fonts. Nunca mude cor ou fonte editando o CSS. Tema com chave faltando reprova com `TEMA-INCOMPLETO: falta <grupo>.<chave>`: complete o json, não contorne. O gerador grava o tema escolhido no fonte (`<meta name="tema">`), e o gate usa esse tema quando não recebe `--tema`. Trocar o tema não muda a geometria: não mexa em coordenada por causa dele.
+To create the user's theme (brand color, another font family), copy `themes/ai-diagrams.json` to `diagrams/_src/theme.json` in the project and change only the values: every key in `colors`, `derived`, `er_palette` and `fonts` stays. Color as `#RRGGBB`; a font is a Google Fonts family name. Never change color or font by editing the CSS. A theme with a missing key fails with `THEME-INCOMPLETE: missing <group>.<key>`: complete the JSON, do not work around it. The generator writes the chosen theme into the source (`<meta name="theme">`), and the gate uses that theme when it does not receive `--theme`. Changing the theme does not change the geometry: do not touch coordinates because of it.
 
-### Registro do texto
+### Text register
 
-O texto que abre o diagrama serve só para situar o leitor no desenho. É estritamente técnico:
+The text that opens the diagram only serves to place the reader in the drawing. It is strictly technical:
 
-- **Título:** o nome técnico do sistema, fluxo ou decisão, com o recorte quando ajuda ("API de pagamentos e extrato assíncrono", "schema conta · Contas e movimentos"). Nunca uma frase de tese, promessa ou conclusão.
-- **Subtítulo:** uma a três frases que dizem o que o desenho mostra, o recorte (o que está dentro e o que ficou fora) e como ler (ordem dos passos, o que a cor ou a raia significa). Número só se estiver na fonte.
-- **Faixa de fechamento** (conceitual): um fato do fluxo ou o que ficou fora do desenho, não uma conclusão de venda.
-- Proibido: adjetivo de valor, promessa, benefício, metáfora, frase de efeito e antítese. O gate reprova esses termos com `TEXTO-MARKETING` (lista em `scripts/texto_tecnico.py`); o que a lista não pega, você confere ao ler o PNG. Termo técnico em inglês como o mercado usa (bucket, dead-letter topic, consumer group, deploy); nada de tradução inventada. Texto de caixa curto; a explicação vai nos passos ou nas seções.
+- **Title:** the technical name of the system, flow or decision, with the scope when it helps ("API de pagamentos e extrato assíncrono", "schema conta · Contas e movimentos"). Never a thesis, promise or conclusion.
+- **Subtitle:** one to three sentences that say what the drawing shows, the scope (what is inside and what was left out) and how to read it (order of the steps, what the color or the lane means). A number only if it is in the source.
+- **Closing band** (conceptual): a fact about the flow or what was left out of the drawing, not a sales conclusion.
+- Forbidden: value adjectives, promises, benefits, metaphors, catchphrases and antitheses. The gate fails these terms with `MARKETING-COPY` (list in `scripts/technical_text.py`); what the list does not catch, you check when reading the PNG. Technical terms in English as the market uses them (bucket, dead-letter topic, consumer group, deploy); no invented translations. Box text short; the explanation goes in the steps or the sections.
 
-**Cor e fonte só do tema.** O fonte nunca escreve hexadecimal nem `rgb()`, nem em estilo local: usa `var(--tinta)`, `var(--apoio)`, `var(--cinza)`, `var(--zona)`, `var(--papel)`, `var(--acento)`, `var(--risco)` e `var(--risco-fundo)`, que o gate declara no `:root` com os valores do tema escolhido. Fonte só por `var(--fonte-texto)` e `var(--fonte-mono)`; família escrita no fonte reprova com `FONTE-FORA-DO-TEMA`. Em SVG a cor vai em `style` (`style="stroke:var(--apoio)"`), porque atributo `stroke` e `fill` não aceita `var()`. O gate reprova cor literal com `COR-FORA-DO-TEMA`.
+**Color and font only from the theme.** The source never writes hexadecimal or `rgb()`, not even in a local style: it uses `var(--ink)`, `var(--support)`, `var(--muted)`, `var(--zone)`, `var(--paper)`, `var(--accent)`, `var(--risk)` and `var(--risk-bg)`, which the gate declares in `:root` with the values of the chosen theme. Font only through `var(--font-text)` and `var(--font-mono)`; a family written in the source fails with `FONT-OUTSIDE-THEME`. In SVG the color goes in `style` (`style="stroke:var(--support)"`), because the `stroke` and `fill` attributes do not accept `var()`. The gate fails a literal color with `COLOR-OUTSIDE-THEME`.
 
-## 5. Comandos por tipo
+## 5. Commands per type
 
-`<skill>` é a pasta desta skill. Com tema escolhido, acrescente `--tema <nome ou caminho.json>` a cada comando abaixo (seção "Tema: cor e fonte").
+`<skill>` is this skill's folder. With a chosen theme, add `--theme <name or path.json>` to each command below (section "Theme: color and font").
 
-**Poster, fluxo com passos e tabela**
+**Poster, flow with steps and table**
 ```bash
-python3 <skill>/scripts/poster_lint.py --fix diagramas/_src/NN-nome.html
-python3 <skill>/scripts/build.py diagramas/_src/NN-nome.html
+python3 <skill>/scripts/poster_lint.py --fix diagrams/_src/NN-name.html
+python3 <skill>/scripts/build.py diagrams/_src/NN-name.html
 ```
-O build mede a altura real da página e captura nela; se receber uma altura menor que a página, reprova com `CORTADO`. A largura é 1760px, ou a do `<meta name="largura">` do fonte; conteúdo que passa dela reprova com `TRANSBORDA`. Regras do poster que evitam retrabalho:
+The build measures the real page height and captures at it; if it receives a height smaller than the page, it fails with `CROPPED`. The width is 1760px, or the one in the source's `<meta name="width">`; content that goes past it fails with `OVERFLOW`. Poster rules that avoid rework:
 
-- Planeje a grade antes: colunas por camada, linhas por ator. Faça a conta das pontas, dos corredores e dos badges pela "Receita de coordenadas" de `references/linguagem-visual.md`.
-- Rode `poster_lint.py --fix` antes do build: ele encosta pontas soltas e leva badges para a seta; depois rode sem `--fix` e corrija o resto com as coordenadas que ele sugere.
-- Setas ortogonais (`path` com `H`/`V`); ponta encosta na caixa de destino. Num `.node`, a caixa sólida é o ícone de 44px: seta vertical nunca atravessa o rótulo embaixo dele.
-- Duas setas nunca correm na mesma linha: use corredores entre as colunas.
-- Cada passo tem um badge sobre a linha da própria seta e um item em `.passos`.
-- Ícones como `aws://categoria/arquivo.png`, com o nome conferido no acervo.
+- Plan the grid first: columns per layer, rows per actor. Do the math for the arrowheads, corridors and badges with the "Coordinate recipe" in `references/visual-language.md`.
+- Run `poster_lint.py --fix` before the build: it snaps detached arrowheads and moves badges onto the arrow; then run it without `--fix` and fix the rest with the coordinates it suggests.
+- Orthogonal arrows (`path` with `H`/`V`); the arrowhead touches the target box. In a `.node`, the solid box is the 44px icon: a vertical arrow never crosses the label below it.
+- Two arrows never run on the same line: use corridors between the columns.
+- Each step has a badge on the line of its own arrow and an item in `.passos`.
+- Icons as `aws://category/file.png`, with the name checked in the icon collection.
 
-O lint reprova `SOLTA`, `ATRAVESSA`, `COLINEAR`, `SEM-BADGES`, `SEM-PASSOS`, `PASSOS-DIVERGEM`, `BADGE-SOLTO`, `SOBREPOE`, `SETA-SOBRE-TEXTO`, `DENTRO-DA-CAIXA`, `TEXTO-SOBRE-BORDA`, `SETA-NA-BORDA`, `ROTULO-SOLTO`, `PONTA-DENTRO`, `TRANSBORDA`, `TEXTO-MARKETING` e `SEM-ESTILO`; `SOBREPOE`, `SETA-SOBRE-TEXTO`, `TEXTO-SOBRE-BORDA`, `SETA-NA-BORDA`, `ROTULO-SOLTO`, `PONTA-DENTRO` e `TRANSBORDA` são medidos no Chrome. Área morta (zona muito maior que o conteúdo) o gate não mede: confira no PNG e encolha a zona. Documento sem `<svg class="edges">` (tabela, matriz) não exige badges nem passos. No C4 (`references/c4.md`) entram também `C4-SEM-TIPO` e `C4-SEM-LEGENDA`.
+The lint fails `DETACHED`, `CROSSES`, `COLLINEAR`, `NO-BADGES`, `NO-STEPS`, `STEPS-MISMATCH`, `BADGE-DETACHED`, `OVERLAP`, `ARROW-OVER-TEXT`, `INSIDE-BOX`, `TEXT-OVER-EDGE`, `ARROW-ON-EDGE`, `LABEL-DETACHED`, `ARROWHEAD-INSIDE`, `OVERFLOW`, `MARKETING-COPY` and `NO-STYLE`; `OVERLAP`, `ARROW-OVER-TEXT`, `TEXT-OVER-EDGE`, `ARROW-ON-EDGE`, `LABEL-DETACHED`, `ARROWHEAD-INSIDE` and `OVERFLOW` are measured in Chrome. Dead area (a zone much larger than its content) is not measured by the gate: check it in the PNG and shrink the zone. A document without `<svg class="edges">` (table, matrix) does not require badges or steps. In C4 (`references/c4.md`), `C4-NO-TYPE` and `C4-NO-LEGEND` also apply; a C4 page drawn by `build_c4.py` carries a `.rel` label on each arrow instead of badges and steps, checked by `C4-REL-MISSING`, `C4-REL-INCOMPLETE` and `C4-REL-DETACHED`.
 
-**Raias e conceitual**
+**Swimlanes and conceptual**
 ```bash
-python3 <skill>/scripts/gerar_raias.py diagramas/_src/NN-fluxo.json
-python3 <skill>/scripts/conceitual.py diagramas/_src/NN-fluxo.html
+python3 <skill>/scripts/build_swimlanes.py diagrams/_src/NN-flow.json
+python3 <skill>/scripts/conceptual.py diagrams/_src/NN-flow.html
 ```
-O primeiro comando só existe para raias; cards e painéis são HTML escrito à mão a partir do modelo 07.
+The first command only exists for swimlanes; cards and panels are HTML written by hand from template 07.
 
-**Sequência**
+**Sequence**
 ```bash
-python3 <skill>/scripts/gerar_sequencia.py diagramas/_src/NN-nome.json
-python3 <skill>/scripts/conceitual.py diagramas/_src/NN-nome.html
+python3 <skill>/scripts/build_sequence.py diagrams/_src/NN-name.json
+python3 <skill>/scripts/conceptual.py diagrams/_src/NN-name.html
 ```
-Além das réguas do conceitual, reprova `TEXTO-SOBRE-VIDA` (rótulo em cima de linha de vida ou barra de ativação).
+Besides the conceptual rules, it fails `TEXT-OVER-LIFELINE` (a label on top of a lifeline or activation bar).
 
-**Máquina de estados**
+**State machine**
 ```bash
-python3 <skill>/scripts/gerar_estados.py diagramas/_src/NN-nome.json
-python3 <skill>/scripts/conceitual.py diagramas/_src/NN-nome.html
+python3 <skill>/scripts/build_states.py diagrams/_src/NN-name.json
+python3 <skill>/scripts/conceptual.py diagrams/_src/NN-name.html
 ```
-O gerador usa `node` (elkjs em `estados/`) e reprova antes do desenho: `SEM-INICIAL`, `DESCONHECIDO`, `SEM-EVENTO`, `SAI-DO-FINAL`, `INALCANCAVEL` e `SEM-SAIDA`.
+The generator uses `node` (elkjs in `states/`) and fails before drawing: `NO-INITIAL`, `UNKNOWN`, `NO-EVENT`, `LEAVES-FINAL`, `UNREACHABLE` and `NO-EXIT`.
 
 **BPMN**
 ```bash
-python3 <skill>/bpmn/gerar_bpmn.py diagramas/_src/NN-processo.json
+python3 <skill>/bpmn/build_bpmn.py diagrams/_src/NN-process.json
 ```
 
-**DER e matriz**
+**ER diagram and matrix**
 ```bash
-node <skill>/der/der-montar.mjs diagramas/_src/der-<schema>.layout.mjs
-python3 <skill>/scripts/build.py diagramas/_src/der-<schema>.html
-node <skill>/der/der-visao-geral.mjs diagramas/_src/modelo.json
-python3 <skill>/scripts/build.py diagramas/_src/der-visao-geral.html
+node <skill>/er/er-build.mjs diagrams/_src/er-<schema>.layout.mjs
+python3 <skill>/scripts/build.py diagrams/_src/er-<schema>.html
+node <skill>/er/er-overview.mjs diagrams/_src/model.json
+python3 <skill>/scripts/build.py diagrams/_src/er-overview.html
 ```
-O DER não é desenhado caixa a caixa: o conteúdo de cada tabela vem do `modelo.json`, e só a posição e a raia de cada seta são decididas à mão no layout.
+The ER diagram is not drawn box by box: the content of each table comes from `model.json`, and only the position and the lane of each arrow are decided by hand in the layout.

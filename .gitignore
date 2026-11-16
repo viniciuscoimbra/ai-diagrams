@@ -6,8 +6,8 @@ dist/
 *.log
 
 # Self-contained HTML built next to each model (icons inlined); the source lives in _src/
-skills/ai-diagrams/modelos/*/*.html
-exemplos/*/resultado/*.html
+skills/ai-diagrams/templates/*/*.html
+examples/*/output/*.html
 
 # Credentials never go into the repository
 .env
@@ -18,3 +18,14 @@ exemplos/*/resultado/*.html
 id_rsa*
 id_ed25519*
 credentials*
+
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+graft/
+
+# Site build output, captures and dependencies (npm run build in site/)
+site/out/
+site/captures/
+site/node_modules/
+site/.ssr-*
+site/BRIEF*.md
+site/sitemap-aprovado.html

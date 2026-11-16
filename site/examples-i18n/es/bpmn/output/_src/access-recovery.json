@@ -1,0 +1,159 @@
+{
+  "id": "recuperacao_acesso",
+  "title": "Recuperación de acceso a la cuenta",
+  "subtitle": "Desde la solicitud del cliente hasta el acceso recuperado o la cuenta bloqueada. Seguridad verifica la identidad mediante biometría; si no se confirma, atención al cliente valida por llamada y el rechazo en esta etapa bloquea la cuenta.",
+  "header": [
+    "ai-diagrams · Ejemplos de diagramas · Fintech de ejemplo",
+    "BPMN · V1"
+  ],
+  "footer": "Diagramas &nbsp;·&nbsp; ejemplo de BPMN &nbsp;·&nbsp; 2026-11",
+  "lanes": [
+    {
+      "id": "cliente",
+      "name": "Cliente"
+    },
+    {
+      "id": "app",
+      "name": "App"
+    },
+    {
+      "id": "seguranca",
+      "name": "Seguridad"
+    },
+    {
+      "id": "central",
+      "name": "Atención al cliente"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "inicio",
+      "type": "startEvent",
+      "name": "Cliente solicita\nrecuperación",
+      "lane": "cliente",
+      "col": 0
+    },
+    {
+      "id": "coletar",
+      "type": "task",
+      "name": "Recoger documento\ny selfie",
+      "lane": "app",
+      "col": 1
+    },
+    {
+      "id": "verificar",
+      "type": "task",
+      "name": "Verificar identidad\ncon biometría",
+      "lane": "seguranca",
+      "col": 1
+    },
+    {
+      "id": "confirmada",
+      "type": "exclusiveGateway",
+      "name": "¿Identidad\nconfirmada?",
+      "lane": "seguranca",
+      "col": 2
+    },
+    {
+      "id": "validar",
+      "type": "task",
+      "name": "Validar por llamada\ncon el cliente",
+      "lane": "central",
+      "col": 3
+    },
+    {
+      "id": "aceita",
+      "type": "exclusiveGateway",
+      "name": "¿Validación\naceptada?",
+      "lane": "central",
+      "col": 4
+    },
+    {
+      "id": "cadastrar",
+      "type": "task",
+      "name": "Registrar nueva clave\ny dispositivo",
+      "lane": "app",
+      "col": 4
+    },
+    {
+      "id": "bloquear",
+      "type": "task",
+      "name": "Bloquear cuenta y\nregistrar sospecha",
+      "lane": "seguranca",
+      "col": 5
+    },
+    {
+      "id": "entrar",
+      "type": "task",
+      "name": "Entrar con la\nnueva clave",
+      "lane": "cliente",
+      "col": 5
+    },
+    {
+      "id": "fim_ok",
+      "type": "endEvent",
+      "name": "Acceso recuperado",
+      "lane": "cliente",
+      "col": 6
+    },
+    {
+      "id": "fim_bloqueio",
+      "type": "endEvent",
+      "name": "Cuenta bloqueada",
+      "lane": "seguranca",
+      "col": 6
+    }
+  ],
+  "flows": [
+    {
+      "from": "inicio",
+      "to": "coletar"
+    },
+    {
+      "from": "coletar",
+      "to": "verificar"
+    },
+    {
+      "from": "verificar",
+      "to": "confirmada"
+    },
+    {
+      "from": "confirmada",
+      "to": "cadastrar",
+      "name": "Sí",
+      "via": "top"
+    },
+    {
+      "from": "confirmada",
+      "to": "validar",
+      "name": "No"
+    },
+    {
+      "from": "validar",
+      "to": "aceita"
+    },
+    {
+      "from": "aceita",
+      "to": "cadastrar",
+      "name": "Sí"
+    },
+    {
+      "from": "aceita",
+      "to": "bloquear",
+      "name": "No"
+    },
+    {
+      "from": "cadastrar",
+      "to": "entrar"
+    },
+    {
+      "from": "entrar",
+      "to": "fim_ok"
+    },
+    {
+      "from": "bloquear",
+      "to": "fim_bloqueio"
+    }
+  ],
+  "lang": "es"
+}

@@ -1,0 +1,45 @@
+{
+  "page_title": "09 · Pix de saída",
+  "header": ["ai-diagrams · Modelos de diagrama · Fintech de exemplo", "09 · Sequência"],
+  "kicker": "Diagrama de sequência",
+  "h1": "Pix de saída: da chamada do app à confirmação do SPI",
+  "sub": "Seis participantes. O antifraude responde antes de qualquer débito; débito e outbox são gravados na mesma transação; a confirmação do SPI chega por consulta ao ICOM.",
+  "participants": [
+    {"id": "app", "name": "App do cliente", "sub": "iOS e Android", "type": "actor", "icon": "aws://general/mobile-client.png"},
+    {"id": "apigw", "name": "API Gateway", "sub": "REST e JWT", "type": "service", "icon": "aws://network/api-gateway.png"},
+    {"id": "pix", "name": "Serviço Pix", "sub": "ECS Fargate", "type": "service", "icon": "aws://compute/fargate.png"},
+    {"id": "fraude", "name": "Antifraude", "sub": "endpoint SageMaker", "type": "service", "icon": "aws://ml/sagemaker.png"},
+    {"id": "aurora", "name": "Aurora", "sub": "ledger e outbox", "type": "database", "icon": "aws://database/aurora.png"},
+    {"id": "spi", "name": "SPI · ICOM", "sub": "Banco Central", "type": "external", "icon": "aws://general/office-building.png"}
+  ],
+  "messages": [
+    {"from": "app", "to": "apigw", "text": "`POST /pix/transferencias`", "step": "O app envia chave Pix, valor e `idempotency-key`. Repetir a chamada com a mesma chave não gera segundo débito."},
+    {"from": "apigw", "to": "pix", "text": "encaminha com JWT validado"},
+    {"from": "pix", "to": "pix", "text": "consulta chave no DICT e confere limite", "step": "O serviço Pix resolve a chave no DICT e confere o limite diário da conta."},
+    {"from": "pix", "to": "fraude", "text": "`score(transacao)`", "step": "O antifraude devolve score de 0 a 1 em até 150 ms, antes de qualquer gravação."},
+    {"from": "fraude", "to": "pix", "text": "score e motivos", "type": "reply"},
+    {"fragment": "alt", "branches": [
+      {"guard": "score abaixo de 0,8", "messages": [
+        {"from": "pix", "to": "aurora", "text": "débito e linha na outbox, mesma transação", "step": "Débito e outbox no mesmo commit: não existe débito sem evento nem evento sem débito."},
+        {"from": "aurora", "to": "pix", "text": "commit", "type": "reply"},
+        {"from": "pix", "to": "spi", "text": "`pacs.008`", "type": "async", "step": "A ordem de pagamento sai para o SPI pelo ICOM."},
+        {"fragment": "loop", "branches": [
+          {"guard": "até pacs.002 ou 10 s", "messages": [
+            {"from": "pix", "to": "spi", "text": "busca mensagens no ICOM"},
+            {"from": "spi", "to": "pix", "text": "`pacs.002` ou vazio", "type": "reply"}
+          ]}
+        ]},
+        {"from": "pix", "to": "aurora", "text": "grava a situação", "step": "A situação final (liquidada ou rejeitada) é gravada; sem `pacs.002` em 10 s, fica em processamento."},
+        {"from": "aurora", "to": "pix", "text": "commit", "type": "reply"}
+      ]},
+      {"guard": "score a partir de 0,8", "messages": [
+        {"from": "pix", "to": "aurora", "text": "recusa com motivo", "step": "Score alto: nada é debitado; a recusa e o motivo ficam gravados para o atendimento."},
+        {"from": "aurora", "to": "pix", "text": "commit", "type": "reply"}
+      ]}
+    ]},
+    {"from": "pix", "to": "apigw", "text": "`201` com a situação", "type": "reply"},
+    {"from": "apigw", "to": "app", "text": "`201` com a situação", "type": "reply", "step": "O app mostra a situação: liquidada, em processamento ou recusada."}
+  ],
+  "band": {"f1": "Nenhum débito sem score; nenhum evento sem débito.", "f2": "Devolução (pacs.004) e Pix agendado ficam fora deste desenho."},
+  "footer": ["ai-diagrams", "Modelo de diagrama de sequência · 2026-11"]
+}

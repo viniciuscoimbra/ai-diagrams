@@ -1,0 +1,93 @@
+{
+  "lang": "en",
+  "header": [
+    "Online store",
+    "V1"
+  ],
+  "footer": [
+    "Import",
+    "Online store"
+  ],
+  "elements": [
+    {
+      "id": "customer",
+      "type": "person",
+      "name": "Customer",
+      "description": "buys from the web store"
+    },
+    {
+      "id": "store",
+      "type": "system",
+      "name": "Online store",
+      "description": "sells and ships orders"
+    },
+    {
+      "id": "web",
+      "type": "container",
+      "name": "Web store",
+      "description": "catalog and checkout",
+      "technology": "Next.js",
+      "parent": "store",
+      "shape": "web"
+    },
+    {
+      "id": "api",
+      "type": "container",
+      "name": "Orders API",
+      "description": "takes and tracks orders",
+      "technology": "Node.js",
+      "parent": "store"
+    },
+    {
+      "id": "db",
+      "type": "container",
+      "name": "Orders database",
+      "description": "orders and payments",
+      "technology": "PostgreSQL",
+      "parent": "store",
+      "shape": "database"
+    },
+    {
+      "id": "payments",
+      "type": "system",
+      "name": "Payment provider",
+      "description": "charges the card",
+      "external": true
+    }
+  ],
+  "relationships": [
+    {
+      "from": "customer",
+      "to": "web",
+      "description": "Places orders",
+      "technology": "browser"
+    },
+    {
+      "from": "web",
+      "to": "api",
+      "description": "Sends the order",
+      "technology": "HTTPS · JSON"
+    },
+    {
+      "from": "api",
+      "to": "db",
+      "description": "Stores the order",
+      "technology": "SQL"
+    },
+    {
+      "from": "api",
+      "to": "payments",
+      "description": "Charges the card",
+      "technology": "HTTPS"
+    }
+  ],
+  "views": [
+    {
+      "type": "container",
+      "scope": "store",
+      "key": "containers",
+      "description": "The containers of the online store."
+    }
+  ],
+  "main": "containers"
+}

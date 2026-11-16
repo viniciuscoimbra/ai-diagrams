@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "name": "ai-diagrams",
+  "company": "",
+  "logo": null,
+  "colors": {
+    "ink": "#111827",
+    "support": "#374151",
+    "muted": "#6B7280",
+    "zone": "#F3F4F6",
+    "paper": "#FFFFFF",
+    "accent": "#14B8A6",
+    "risk": "#B42318",
+    "risk_bg": "#FEF3F2"
+  },
+  "derived": {
+    "accent_strong": "#0F766E",
+    "muted_light": "#D1D5DB",
+    "c4_person_type": "#9CA3AF",
+    "c4_person_desc": "#E5E7EB",
+    "c4_external": "#E9EBEF",
+    "c4_boundary": "#F9FAFB"
+  },
+  "er_palette": {
+    "er_border": "#CBD5E1",
+    "er_legend": "#F9FAFB",
+    "er_row_even": "#F8FAFC",
+    "er_key": "#A16207",
+    "er_domain": "#15803D",
+    "er_external": "#1D4ED8",
+    "er_copy": "#7E22CE",
+    "er_strong": "#FCA5A5",
+    "er_dependent": "#99F6E4",
+    "er_associative": "#C7D2FE",
+    "er_control": "#DDD6FE",
+    "er_fact": "#FED7AA",
+    "er_versioned": "#FEF08A",
+    "er_projection": "#BBF7D0",
+    "er_trail": "#E5E7EB",
+    "er_domain_bg": "#D9F99D",
+    "er_config": "#BAE6FD",
+    "er_reference": "#FDE68A",
+    "er_view": "#FBCFE8",
+    "er_heat": "#FF8CB4"
+  },
+  "fonts": {
+    "text": "IBM Plex Sans",
+    "mono": "IBM Plex Mono"
+  },
+  "frame": {
+    "header": "{subject} · {client}",
+    "footer": "{type} · {date}",
+    "footer_right": "",
+    "classification": "",
+    "show_client": true
+  }
+}

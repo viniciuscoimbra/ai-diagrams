@@ -1,0 +1,9 @@
+{
+  "input": "../../sequence.mmd",
+  "type": "sequence",
+  "language": "es",
+  "sources": [
+    "_src/sequence.html"
+  ],
+  "gate": "passed"
+}

@@ -4,6 +4,9 @@ Diagram quality depends on the model. This page lists only what was measured. A 
 
 ## Compatibility: diagram type × model
 
+The table is written from [`models/runs.json`](models/runs.json), one record per measured run, by `node site/src/models-table.mjs --write`. Record a new run in the JSON, not in the table. The gate result of each template on the last run of `skills/ai-diagrams/templates/build-all.sh` is in [`models/gates.json`](models/gates.json), and the npm install checks of the last `tests/npm-smoke.sh` are in [`models/install-checks.json`](models/install-checks.json).
+
+<!-- models-table:start (written by site/src/models-table.mjs from docs/models/runs.json) -->
 | Type | Claude Code · Sonnet 4.5 | Claude Code · Opus 5.5 | Claude Code · Sonnet 5.5 | Claude Code · Haiku 5.5 | Codex CLI | Kiro CLI · Sonnet 4.5 |
 |---|---|---|---|---|---|---|
 | AWS architecture poster | gate 0 ¹ | pass ² | pass ³ | defect: no side margin ² | not measured ⁴ | not measured ⁵ |
@@ -17,6 +20,7 @@ Diagram quality depends on the model. This page lists only what was measured. A 
 | Sequence diagram | defect: labels touching ² | defect: note over activation bars ² | pass ³ | pass ² | not measured | not measured |
 | State machine | defect: labels far from their arrow ⁶ | not measured | not measured | not measured | not measured | not measured |
 | C4 container diagram | fail: 3 runs ⁷ | pass ⁷ | not measured | not measured | not measured | not measured |
+<!-- models-table:end -->
 
 - **pass**: the PNG was produced, the gate returned 0 when re-run on the saved source, and the PNG shows no visible defect.
 - **defect**: the PNG was produced and the gate returned 0, but the PNG has a visible defect the gate does not catch.
@@ -31,7 +35,7 @@ Diagram quality depends on the model. This page lists only what was measured. A 
 4. Codex CLI was not measured on this repository. Before the theme change, one poster run passed the gate (2026-11-04); its PNG was not re-read.
 5. Kiro round 2, before later fixes to the skill. Poster, step flow and cards were not run again after those fixes: the account hit the request limit.
 6. 2026-11-06, one run. The gate returned 0, but two-line labels sat far from their arrow. The generator was fixed and the PNG regenerated from the same spec; the model was not run again.
-7. 2026-11-06. Sonnet 4.5, three runs: the first delivered a PNG without CSS, the second passed the gate of the time with arrows starting inside boxes and a loose label (that source became the negative test `testes/negativos/c4-setas.html`), the third passed the new gate but one arrow reached the wrong system. Opus 5.5, one run: gate 0 and a clean PNG, 11 relations, all to the right target. It is the result in `exemplos/c4/resultado/`.
+7. 2026-11-06. Sonnet 4.5, three runs: the first delivered a PNG without CSS, the second passed the gate of the time with arrows starting inside boxes and a loose label (that source became the negative test `tests/negative/c4-arrows.html`), the third passed the new gate but one arrow reached the wrong system. Opus 5.5, one run: gate 0 and a clean PNG, 11 relations, all to the right target. It is the result in `examples/c4/output/`.
 
 ### Versions
 
@@ -43,7 +47,7 @@ Diagram quality depends on the model. This page lists only what was measured. A 
 | Haiku 5.5 | Claude Code 2.1.318 | `claude-haiku-5-5` |
 | Kiro CLI | Kiro CLI | Claude Sonnet 4.5 |
 
-Each run was a fresh, non-interactive session with only this skill installed, using the prompt from `exemplos/<type>/prompt.md`, one run at a time.
+Each run was a fresh, non-interactive session with only this skill installed, using the prompt from `examples/<type>/prompt.md`, one run at a time.
 
 ## Known issues the gate does not catch
 

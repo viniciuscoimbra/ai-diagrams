@@ -1,0 +1,489 @@
+{
+  "_doc": "Every measured run of a diagram type on a CLI and model. One record per table cell; a cell without a record is \"not measured\". docs/models.md and the site read this file; tests/models_table.py checks that the markdown table matches it.",
+  "results": {
+    "pass": "the PNG was produced, the gate returned 0 when re-run on the saved source, and the PNG shows no visible defect",
+    "defect": "the PNG was produced and the gate returned 0, but the PNG has a visible defect the gate does not catch",
+    "gate_only": "the gate returned 0; the PNG was not re-read",
+    "fail": "the run did not deliver a correct diagram",
+    "not_measured": "no run, or no run on the current skill"
+  },
+  "columns": [
+    {
+      "id": "claude-code:claude-sonnet-4-5",
+      "cli": "claude-code",
+      "model": "claude-sonnet-4-5",
+      "cli_label": "Claude Code",
+      "model_label": "Sonnet 4.5",
+      "cli_version": null
+    },
+    {
+      "id": "claude-code:claude-opus-5-5",
+      "cli": "claude-code",
+      "model": "claude-opus-5-5",
+      "cli_label": "Claude Code",
+      "model_label": "Opus 5.5",
+      "cli_version": "2.1.318"
+    },
+    {
+      "id": "claude-code:claude-sonnet-5-5",
+      "cli": "claude-code",
+      "model": "claude-sonnet-5-5",
+      "cli_label": "Claude Code",
+      "model_label": "Sonnet 5.5",
+      "cli_version": "2.1.318"
+    },
+    {
+      "id": "claude-code:claude-haiku-5-5",
+      "cli": "claude-code",
+      "model": "claude-haiku-5-5",
+      "cli_label": "Claude Code",
+      "model_label": "Haiku 5.5",
+      "cli_version": "2.1.318"
+    },
+    {
+      "id": "codex-cli:default",
+      "cli": "codex-cli",
+      "model": null,
+      "cli_label": "Codex CLI",
+      "model_label": null,
+      "cli_version": null
+    },
+    {
+      "id": "kiro-cli:claude-sonnet-4-5",
+      "cli": "kiro-cli",
+      "model": "claude-sonnet-4-5",
+      "cli_label": "Kiro CLI",
+      "model_label": "Sonnet 4.5",
+      "cli_version": null
+    }
+  ],
+  "types": [
+    "aws-architecture",
+    "step-flow",
+    "comparison-table",
+    "er-schema",
+    "dependency-matrix",
+    "swimlanes",
+    "card-catalog",
+    "bpmn",
+    "sequence",
+    "state-machine",
+    "c4"
+  ],
+  "sources": {
+    "1": {
+      "date": "2026-11-04",
+      "text": "End-to-end run of the eight original types (all except sequence) in a clean install, before later fixes to the skill. Result: 8 of 8 with the gate at 0."
+    },
+    "2": {
+      "date": "2026-11-06",
+      "text": "One run per cell, before the visual theme of this repository. The gate and the layout scripts were the same; only colors, fonts and names changed afterwards."
+    },
+    "3": {
+      "date": "2026-11-06",
+      "text": "On this repository under its previous name, Claude Code 2.1.318, before the state machine, C4 and color tokens were added. Poster: one frame ends about 8 px past the right margin (5 gate calls, 5 min 34 s, US$0.53). Sequence: 7 gate calls, 2 rejected and then fixed (6 min 12 s, US$0.41). Before the theme change, the same model also passed both types."
+    },
+    "4": {
+      "date": "2026-11-04",
+      "text": "Codex CLI was not measured on this repository. Before the theme change, one poster run passed the gate (2026-11-04); its PNG was not re-read."
+    },
+    "5": {
+      "date": null,
+      "text": "Kiro round 2, before later fixes to the skill. Poster, step flow and cards were not run again after those fixes: the account hit the request limit."
+    },
+    "6": {
+      "date": "2026-11-06",
+      "text": "One run. The gate returned 0, but two-line labels sat far from their arrow. The generator was fixed and the PNG regenerated from the same spec; the model was not run again."
+    },
+    "7": {
+      "date": "2026-11-06",
+      "text": "Sonnet 4.5, three runs: the first delivered a PNG without CSS, the second passed the gate of the time with arrows starting inside boxes and a loose label (that source became the negative test tests/negative/c4-arrows.html), the third passed the new gate but one arrow reached the wrong system. Opus 5.5, one run: gate 0 and a clean PNG, 11 relations, all to the right target. It is the result in examples/c4/output/."
+    }
+  },
+  "runs": [
+    {
+      "type": "aws-architecture",
+      "cli": "claude-code",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 1
+    },
+    {
+      "type": "aws-architecture",
+      "cli": "claude-code",
+      "model": "claude-opus-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "aws-architecture",
+      "cli": "claude-code",
+      "model": "claude-sonnet-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 3
+    },
+    {
+      "type": "aws-architecture",
+      "cli": "claude-code",
+      "model": "claude-haiku-5-5",
+      "result": "defect",
+      "note": "no side margin",
+      "source": 2
+    },
+    {
+      "type": "aws-architecture",
+      "cli": "codex-cli",
+      "model": null,
+      "result": "not_measured",
+      "note": null,
+      "source": 4
+    },
+    {
+      "type": "aws-architecture",
+      "cli": "kiro-cli",
+      "model": "claude-sonnet-4-5",
+      "result": "not_measured",
+      "note": null,
+      "source": 5
+    },
+    {
+      "type": "step-flow",
+      "cli": "claude-code",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 1
+    },
+    {
+      "type": "step-flow",
+      "cli": "claude-code",
+      "model": "claude-opus-5-5",
+      "result": "defect",
+      "note": "panel past the margin",
+      "source": 2
+    },
+    {
+      "type": "step-flow",
+      "cli": "claude-code",
+      "model": "claude-sonnet-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "step-flow",
+      "cli": "claude-code",
+      "model": "claude-haiku-5-5",
+      "result": "defect",
+      "note": "box past the margin",
+      "source": 2
+    },
+    {
+      "type": "step-flow",
+      "cli": "kiro-cli",
+      "model": "claude-sonnet-4-5",
+      "result": "not_measured",
+      "note": null,
+      "source": 5
+    },
+    {
+      "type": "comparison-table",
+      "cli": "claude-code",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 1
+    },
+    {
+      "type": "comparison-table",
+      "cli": "claude-code",
+      "model": "claude-opus-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "comparison-table",
+      "cli": "claude-code",
+      "model": "claude-sonnet-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "comparison-table",
+      "cli": "claude-code",
+      "model": "claude-haiku-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "comparison-table",
+      "cli": "kiro-cli",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 5
+    },
+    {
+      "type": "er-schema",
+      "cli": "claude-code",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 1
+    },
+    {
+      "type": "er-schema",
+      "cli": "claude-code",
+      "model": "claude-opus-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "er-schema",
+      "cli": "claude-code",
+      "model": "claude-sonnet-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "er-schema",
+      "cli": "claude-code",
+      "model": "claude-haiku-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "er-schema",
+      "cli": "kiro-cli",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 5
+    },
+    {
+      "type": "dependency-matrix",
+      "cli": "claude-code",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 1
+    },
+    {
+      "type": "dependency-matrix",
+      "cli": "claude-code",
+      "model": "claude-opus-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "dependency-matrix",
+      "cli": "claude-code",
+      "model": "claude-sonnet-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "dependency-matrix",
+      "cli": "claude-code",
+      "model": "claude-haiku-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "dependency-matrix",
+      "cli": "kiro-cli",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 5
+    },
+    {
+      "type": "swimlanes",
+      "cli": "claude-code",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 1
+    },
+    {
+      "type": "swimlanes",
+      "cli": "claude-code",
+      "model": "claude-opus-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "swimlanes",
+      "cli": "claude-code",
+      "model": "claude-sonnet-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "swimlanes",
+      "cli": "claude-code",
+      "model": "claude-haiku-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "swimlanes",
+      "cli": "kiro-cli",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 5
+    },
+    {
+      "type": "card-catalog",
+      "cli": "claude-code",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 1
+    },
+    {
+      "type": "card-catalog",
+      "cli": "claude-code",
+      "model": "claude-opus-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "card-catalog",
+      "cli": "claude-code",
+      "model": "claude-sonnet-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "card-catalog",
+      "cli": "claude-code",
+      "model": "claude-haiku-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "card-catalog",
+      "cli": "kiro-cli",
+      "model": "claude-sonnet-4-5",
+      "result": "not_measured",
+      "note": null,
+      "source": 5
+    },
+    {
+      "type": "bpmn",
+      "cli": "claude-code",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 1
+    },
+    {
+      "type": "bpmn",
+      "cli": "claude-code",
+      "model": "claude-opus-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "bpmn",
+      "cli": "claude-code",
+      "model": "claude-sonnet-5-5",
+      "result": "defect",
+      "note": "one arrow crosses another",
+      "source": 2
+    },
+    {
+      "type": "bpmn",
+      "cli": "claude-code",
+      "model": "claude-haiku-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "bpmn",
+      "cli": "kiro-cli",
+      "model": "claude-sonnet-4-5",
+      "result": "gate_only",
+      "note": null,
+      "source": 5
+    },
+    {
+      "type": "sequence",
+      "cli": "claude-code",
+      "model": "claude-sonnet-4-5",
+      "result": "defect",
+      "note": "labels touching",
+      "source": 2
+    },
+    {
+      "type": "sequence",
+      "cli": "claude-code",
+      "model": "claude-opus-5-5",
+      "result": "defect",
+      "note": "note over activation bars",
+      "source": 2
+    },
+    {
+      "type": "sequence",
+      "cli": "claude-code",
+      "model": "claude-sonnet-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 3
+    },
+    {
+      "type": "sequence",
+      "cli": "claude-code",
+      "model": "claude-haiku-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 2
+    },
+    {
+      "type": "state-machine",
+      "cli": "claude-code",
+      "model": "claude-sonnet-4-5",
+      "result": "defect",
+      "note": "labels far from their arrow",
+      "source": 6
+    },
+    {
+      "type": "c4",
+      "cli": "claude-code",
+      "model": "claude-sonnet-4-5",
+      "result": "fail",
+      "note": "3 runs",
+      "source": 7
+    },
+    {
+      "type": "c4",
+      "cli": "claude-code",
+      "model": "claude-opus-5-5",
+      "result": "pass",
+      "note": null,
+      "source": 7
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+title: "Almacenamiento de pedidos"
+subtitle: "El cliente envía un pedido. El servicio lo revisa y registra."
+options:
+  - "Tabla relacional"
+  - "Colección documental"
+criteria:
+  - name: "Identificador"
+    values: ["Clave primaria", "ID del documento"]
+  - name: "Relación"
+    values: ["Clave foránea", "Campo de referencia"]

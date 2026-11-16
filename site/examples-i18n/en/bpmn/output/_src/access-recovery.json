@@ -1,0 +1,159 @@
+{
+  "id": "recuperacao_acesso",
+  "title": "Account access recovery",
+  "subtitle": "From the customer's request to restored access or a blocked account. Security verifies identity through biometrics; if unconfirmed, customer support validates it by phone, and rejection at this stage blocks the account.",
+  "header": [
+    "ai-diagrams · Diagram examples · Sample fintech",
+    "BPMN · V1"
+  ],
+  "footer": "Diagrams &nbsp;·&nbsp; BPMN example &nbsp;·&nbsp; 2026-11",
+  "lanes": [
+    {
+      "id": "cliente",
+      "name": "Customer"
+    },
+    {
+      "id": "app",
+      "name": "App"
+    },
+    {
+      "id": "seguranca",
+      "name": "Security"
+    },
+    {
+      "id": "central",
+      "name": "Customer support"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "inicio",
+      "type": "startEvent",
+      "name": "Customer requests\nrecovery",
+      "lane": "cliente",
+      "col": 0
+    },
+    {
+      "id": "coletar",
+      "type": "task",
+      "name": "Collect ID\nand selfie",
+      "lane": "app",
+      "col": 1
+    },
+    {
+      "id": "verificar",
+      "type": "task",
+      "name": "Verify identity\nwith biometrics",
+      "lane": "seguranca",
+      "col": 1
+    },
+    {
+      "id": "confirmada",
+      "type": "exclusiveGateway",
+      "name": "Identity\nconfirmed?",
+      "lane": "seguranca",
+      "col": 2
+    },
+    {
+      "id": "validar",
+      "type": "task",
+      "name": "Validate by phone\nwith the customer",
+      "lane": "central",
+      "col": 3
+    },
+    {
+      "id": "aceita",
+      "type": "exclusiveGateway",
+      "name": "Validation\naccepted?",
+      "lane": "central",
+      "col": 4
+    },
+    {
+      "id": "cadastrar",
+      "type": "task",
+      "name": "Register new password\nand device",
+      "lane": "app",
+      "col": 4
+    },
+    {
+      "id": "bloquear",
+      "type": "task",
+      "name": "Block account and\nrecord suspicion",
+      "lane": "seguranca",
+      "col": 5
+    },
+    {
+      "id": "entrar",
+      "type": "task",
+      "name": "Sign in with\nnew password",
+      "lane": "cliente",
+      "col": 5
+    },
+    {
+      "id": "fim_ok",
+      "type": "endEvent",
+      "name": "Access restored",
+      "lane": "cliente",
+      "col": 6
+    },
+    {
+      "id": "fim_bloqueio",
+      "type": "endEvent",
+      "name": "Account blocked",
+      "lane": "seguranca",
+      "col": 6
+    }
+  ],
+  "flows": [
+    {
+      "from": "inicio",
+      "to": "coletar"
+    },
+    {
+      "from": "coletar",
+      "to": "verificar"
+    },
+    {
+      "from": "verificar",
+      "to": "confirmada"
+    },
+    {
+      "from": "confirmada",
+      "to": "cadastrar",
+      "name": "Yes",
+      "via": "top"
+    },
+    {
+      "from": "confirmada",
+      "to": "validar",
+      "name": "No"
+    },
+    {
+      "from": "validar",
+      "to": "aceita"
+    },
+    {
+      "from": "aceita",
+      "to": "cadastrar",
+      "name": "Yes"
+    },
+    {
+      "from": "aceita",
+      "to": "bloquear",
+      "name": "No"
+    },
+    {
+      "from": "cadastrar",
+      "to": "entrar"
+    },
+    {
+      "from": "entrar",
+      "to": "fim_ok"
+    },
+    {
+      "from": "bloquear",
+      "to": "fim_bloqueio"
+    }
+  ],
+  "lang": "en"
+}

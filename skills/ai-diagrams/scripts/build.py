@@ -1,31 +1,32 @@
 #!/usr/bin/env python3
-"""Build de poster de arquitetura: inline de CSS e ícones aws://, PNG via Chrome headless.
+"""Poster build: inlines CSS and aws:// icons, renders the PNG with headless Chrome.
 
-Uso: python3 build.py <fonte.html> [altura-px] [--out DIR] [--tema NOME|caminho.json] [--idioma pt-BR|en|es]
+Usage: python3 build.py <source.html> [height-px] [--out DIR] [--theme NAME|path.json] [--lang pt-BR|en|es]
 
-Sem altura, usa a altura real da página medida no Chrome. Altura menor que a
-página reprova (CORTADO), porque cortaria o rodapé.
+Without a height, it uses the real page height measured in Chrome. A height smaller
+than the page fails (CROPPED), because it would cut the footer.
 
-Lê o fonte, injeta o design system no marcador /*ESTILO*/, embute os ícones
-aws://categoria/arquivo.png em base64 e tira o screenshot (1760px de largura,
-escala 1.5; outra largura se o fonte declarar <meta name="largura">). Grava o HTML self-contained e o PNG no diretório de saída.
+Reads the source, injects the design system at the /*STYLE*/ marker, embeds the
+aws://category/file.png icons as base64 and takes the screenshot (1760px wide,
+scale 1.5; another width if the source declares <meta name="width">). Writes the
+self-contained HTML and the PNG to the output folder.
 
-Saída default: se o fonte está numa pasta chamada _src, grava na pasta pai
-(convenção fonte em _src/, entregável ao lado); senão, grava junto do fonte.
+Default output: if the source is in a folder named _src, writes to the parent folder
+(source in _src/, deliverable next to it); otherwise, writes next to the source.
 
-CSS: usa _estilo.css ou estilo.css na pasta do fonte se existir; senão, o
-estilo.css empacotado nesta skill (assets/).
+CSS: uses _style.css or style.css in the source folder if present; otherwise the
+style.css bundled with this skill (assets/).
 
-Tema: --tema, <meta name="tema"> do fonte, AI_DIAGRAMS_TEMA ou ai-diagrams, nessa
-ordem (scripts/tema.py). O :root de tokens do CSS vira o do tema e o link do Google
-Fonts vira o das famílias do tema; a geometria do fonte não muda.
+Theme: --theme, <meta name="theme"> in the source, AI_DIAGRAMS_THEME or ai-diagrams, in
+that order (scripts/theme.py). The CSS :root of tokens becomes the theme's and the Google
+Fonts link becomes the one for the theme families; the source geometry does not change.
 
-Ícones: pacote pip `diagrams` (mingrammer), que instala os PNGs oficiais da
-AWS em <site-packages>/resources/aws. Detectado automaticamente; override
-com a variável de ambiente POSTER_ICONBASE.
+Icons: the `diagrams` pip package (mingrammer), which installs the official AWS PNGs
+in <site-packages>/resources/aws. Detected automatically; override with the
+POSTER_ICONBASE environment variable.
 
-Chrome: detectado nos caminhos usuais de macOS e Linux; override com a
-variável de ambiente POSTER_CHROME.
+Chrome: detected in the usual macOS and Linux paths; override with the
+POSTER_CHROME environment variable.
 """
 import sys, os, re, base64, subprocess, shutil
 
@@ -42,8 +43,8 @@ def find_iconbase():
             return cand
     except ImportError:
         pass
-    sys.exit('Ícones AWS não encontrados. Instale com pip3 install diagrams, '
-             'ou aponte POSTER_ICONBASE para uma pasta resources/aws.')
+    sys.exit('AWS icons not found. Install them with pip3 install diagrams, '
+             'or point POSTER_ICONBASE to a resources/aws folder.')
 
 
 def find_chrome():
@@ -61,28 +62,26 @@ def find_chrome():
         p = shutil.which(name)
         if p:
             return p
-    sys.exit('Chrome não encontrado. Instale o Google Chrome ou aponte POSTER_CHROME.')
+    sys.exit('Chrome not found. Install Google Chrome or point POSTER_CHROME to it.')
 
 
 def find_css(src_dir):
-    for name in ('_estilo.css', 'estilo.css'):
+    for name in ('_style.css', 'style.css', '_style.css', 'style.css'):
         p = os.path.join(src_dir, name)
         if os.path.exists(p):
             return p
     return os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                        'assets', 'estilo.css')
+                        'assets', 'style.css')
 
 
 def main():
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import tema, idioma
+    import theme as tema, lang as idioma, compat
     flag_tema, sys.argv[1:] = tema.tirar_flag(sys.argv[1:])
     flag_idioma, sys.argv[1:] = idioma.tirar_flag(sys.argv[1:])
+    out_dir, sys.argv[1:] = compat.take_flag(sys.argv[1:], '--out', '--saida',
+                                             '--out without a value; pass the output folder')
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
-    out_dir = None
-    if '--out' in sys.argv:
-        out_dir = sys.argv[sys.argv.index('--out') + 1]
-        args = [a for a in args if a != out_dir]
     if not args:
         sys.exit(__doc__)
     fonte = os.path.abspath(args[0])
@@ -96,8 +95,8 @@ def main():
     tr = idioma.idioma(flag_idioma, fonte_html=src)
     iconbase = find_iconbase()
     chrome = find_chrome()
-    if '/*ESTILO*/' not in src:
-        sys.exit('SEM-ESTILO: o fonte não tem o marcador /*ESTILO*/ dentro do <style>; sem ele o PNG sai sem o design system. Copie o <head> do modelo do tipo.')
+    if not tema.tem_marcador(src):
+        sys.exit('NO-STYLE: the source has no /*STYLE*/ marker inside <style>; without it the PNG comes out without the design system. Copy the <head> from the template of the diagram type.')
     src = idioma.aplicar(tema.aplicar(src, open(find_css(src_dir)).read(), tm), tr)
 
     _cache = {}
@@ -114,7 +113,7 @@ def main():
 
     final = re.sub(r'aws://([a-z0-9/._-]+)', repl, src)
     if faltando:
-        sys.exit('Ícone(s) inexistente(s) em %s: %s. Liste os disponíveis com ls %s/<categoria>/' %
+        sys.exit('Icon(s) not found in %s: %s. List the available ones with ls %s/<category>/' %
                  (iconbase, ', '.join(sorted(set(faltando))), iconbase))
 
     # Gate determinístico: o lint roda no fonte ANTES de qualquer saída.
@@ -126,10 +125,10 @@ def main():
     _spec.loader.exec_module(_pl)
     _issues = _pl.lint_completo(fonte, tm=tm)
     if _issues:
-        print('LINT REPROVOU %s:' % fonte)
+        print('LINT FAILED %s:' % fonte)
         for kind, x, y, _s in _issues:
-            print('  %s em (%g,%g)' % (kind, x, y))
-        sys.exit('Corrija o fonte e rode de novo. (checks: ver docstring de poster_lint.py)')
+            print('  %s at (%g,%g)' % (kind, x, y))
+        sys.exit('Fix the source and run again. (checks: see the docstring of poster_lint.py)')
 
     # Altura da captura: a medida no Chrome quando não vem no comando; altura menor que
     # o conteúdo corta o rodapé, e isso reprova.
@@ -137,12 +136,12 @@ def main():
     if H is None:
         H = precisa or 1500
     elif precisa and H < precisa:
-        sys.exit('CORTADO: a página tem %dpx de altura e a captura pediu %dpx. Rode sem a altura '
-                 '(a medida é automática) ou com %d.' % (precisa, H, precisa))
+        sys.exit('CROPPED: the page is %dpx tall and the capture asked for %dpx. Run without the height '
+                 '(it is measured automatically) or with %d.' % (precisa, H, precisa))
 
     # Largura da captura: 1760px, ou a que o fonte declara em <meta name="largura">
     # quando o desenho precisa de mais espaço para ficar legível (o DER declara).
-    m = re.search(r'<meta name="largura" content="(\d+)"', src)
+    m = re.search(r'<meta name="(?:width|largura)" content="(\d+)"', src)
     W = int(m.group(1)) if m else 1760
 
     name = os.path.basename(fonte)
@@ -155,7 +154,7 @@ def main():
                         '--force-device-scale-factor=1.5', 'file://' + html_out],
                        capture_output=True, timeout=120)
     if not os.path.exists(png):
-        sys.exit('Chrome não gerou o PNG. ' + r.stderr.decode()[-800:])
+        sys.exit('Chrome did not write the PNG. ' + r.stderr.decode()[-800:])
     print(f'OK {html_out}')
     print(f'OK {png}')
 
@@ -164,5 +163,5 @@ if __name__ == '__main__':
     try:
         main()
     except subprocess.TimeoutExpired:
-        sys.exit('O Chrome não respondeu a tempo. Confira a rede (as fontes vêm do Google Fonts), '
-                 'feche outros Chrome headless presos e confira POSTER_CHROME.')
+        sys.exit('Chrome did not respond in time. Check the network (fonts come from Google Fonts), '
+                 'close other stuck headless Chrome processes and check POSTER_CHROME.')

@@ -1,0 +1,109 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>API de cobrança: componentes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="lang" content="pt-BR">
+<meta name="width" content="1400">
+<style>/*STYLE*/
+body{width:1400px}</style></head><body>
+<div class="page">
+
+<div class="hdr"><span>ai-diagrams · Sistema de cobrança por boleto</span><span>C4 · V2</span></div>
+<div class="kicker"><span class="sq">■</span>&nbsp; C4 · nível 3, componentes</div>
+<h1>API de cobrança: componentes</h1>
+<div class="sub">As partes da API de cobrança e quem chama cada uma, do pedido de emissão ao registro na CIP e à gravação no banco.</div>
+<div class="c4nav"><span class="cn">Visões</span><a href="billing-c4-landscape.html">paisagem</a><a href="billing-c4-context.html">contexto</a><a href="billing-c4.html">contêineres</a><b>componentes de API de cobrança</b><a href="billing-c4-emission.html">emissão de um boleto</a><a href="billing-c4-deployment.html">implantação</a></div>
+
+<div class="wrap stack"><div class="canvas" style="width:1295px;height:969px">
+  <div class="frame limite" style="left:26px;top:330px;width:1193px;height:371px"><div class="flabel" style="top:auto;bottom:9px;left:10px">API de cobrança · contêiner em foco</div></div>
+  <div class="bchip c4 pessoa" style="left:746px;top:44px;width:250px;height:80px">
+    <div class="bn">pessoa</div>
+    <div class="bt">Cliente PJ</div>
+    <div class="bs">emite boletos e acompanha os pagamentos</div>
+  </div>
+  <div class="c4head" style="left:851px;top:16px"></div>
+  <div class="bchip c4 externo" style="left:645px;top:867px;width:260px;height:80px">
+    <div class="bn">sistema externo · CIP</div>
+    <div class="bt">Nova Plataforma de Cobrança</div>
+    <div class="bs">registro do boleto</div>
+  </div>
+  <div class="bchip c4 web" style="left:422px;top:36px;width:260px;height:88px">
+    <div class="bn">contêiner · Next.js na Vercel</div>
+    <div class="bt">Portal PJ</div>
+    <div class="bs">emissão em lote e painel de recebimentos</div>
+  </div>
+  <div class="bchip c4 web" style="left:98px;top:36px;width:260px;height:88px">
+    <div class="bn">contêiner · React</div>
+    <div class="bt">Backoffice</div>
+    <div class="bs">consulta e ajuste manual de boletos</div>
+  </div>
+  <div class="bchip c4 banco" style="left:969px;top:867px;width:260px;height:86px">
+    <img src="aws://database/dynamodb.png">
+    <div class="bn">contêiner · DynamoDB</div>
+    <div class="bt">Banco de cobrança</div>
+    <div class="bs">boletos, situação e histórico de eventos</div>
+  </div>
+  <div class="bchip c4 comp" style="left:163px;top:364px;width:260px;height:92px">
+    <div class="bn">componente · Fastify</div>
+    <div class="bt">Rotas de boleto</div>
+    <div class="bs">recebe a emissão, a consulta e o ajuste</div>
+  </div>
+  <div class="bchip c4 comp" style="left:365px;top:557px;width:260px;height:92px">
+    <div class="bn">componente · JWT da Cognito</div>
+    <div class="bt">Controle de acesso</div>
+    <div class="bs">confere se quem chama é cliente ou operador</div>
+  </div>
+  <div class="bchip c4 comp" style="left:85px;top:557px;width:260px;height:92px">
+    <div class="bn">componente · TypeScript</div>
+    <div class="bt">Validador de pagador</div>
+    <div class="bs">confere CPF ou CNPJ, vencimento e valor</div>
+  </div>
+  <div class="bchip c4 comp" style="left:645px;top:557px;width:260px;height:92px">
+    <div class="bn">componente · cliente HTTPS com certificado</div>
+    <div class="bt">Registro na CIP</div>
+    <div class="bs">registra o boleto e devolve a linha digitável</div>
+  </div>
+  <div class="bchip c4 comp" style="left:925px;top:557px;width:260px;height:92px">
+    <div class="bn">componente · AWS SDK</div>
+    <div class="bt">Repositório de boletos</div>
+    <div class="bs">lê e grava boleto, situação e evento</div>
+  </div>
+  <svg class="edges" viewBox="0 0 1295 969">
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
+    <path d="M871,124 L871,293 L358,293 L358,364" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M552,124 L552,267 L293,267 L293,364" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M228,124 L228,364" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M267,456 L267,486 L495,486 L495,557" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M215,456 L215,557" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M319,456 L319,476 L775,476 L775,557" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M371,456 L371,466 L1055,466 L1055,557" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M775,649 L775,867" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M1055,649 L1055,738 L1099,738 L1099,867" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+  </svg>
+  <div class="rel" data-edge="0" style="left:558px;top:270px;width:210px"><span class="rd">Integra o próprio sistema para emitir e consultar</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="1" style="left:326px;top:250px;width:194px"><span class="rd">Pede a emissão e consulta a situação</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="2" style="left:129px;top:210px;width:198px"><span class="rd">Ajusta boletos com papel de operador</span><span class="rt">[HTTPS · JSON]</span></div>
+  <div class="rel" data-edge="3" style="left:410px;top:505px;width:170px"><span class="rd">Confere o papel de quem chama</span><span class="rt">[chamada interna]</span></div>
+  <div class="rel" data-edge="4" style="left:142px;top:496px;width:145px"><span class="rd">Valida o pedido de emissão</span><span class="rt">[chamada interna]</span></div>
+  <div class="rel" data-edge="5" style="left:708px;top:500px;width:134px"><span class="rd">Pede o registro do boleto</span><span class="rt">[chamada interna]</span></div>
+  <div class="rel" data-edge="6" style="left:785px;top:450px;width:132px"><span class="rd">Grava e consulta boletos</span><span class="rt">[chamada interna]</span></div>
+  <div class="rel" data-edge="7" style="left:670px;top:742px;width:210px"><span class="rd">Registra o boleto antes da linha digitável</span><span class="rt">[HTTPS · certificado]</span></div>
+  <div class="rel" data-edge="8" style="left:1016px;top:786px;width:165px"><span class="rd">Grava boleto, situação e evento</span><span class="rt">[DynamoDB API]</span></div>
+</div></div>
+
+<div class="sec">Legenda C4</div>
+<div class="c4leg">
+<div class="it"><div class="sw pessoa"></div>pessoa</div>
+<div class="it"><div class="sw limite"></div>limite do contêiner em foco</div>
+<div class="it"><div class="sw web"></div>contêiner de interface web</div>
+<div class="it"><div class="sw banco"></div>contêiner de dados</div>
+<div class="it"><div class="sw comp"></div>componente dentro do contêiner</div>
+<div class="it"><div class="sw externo"></div>sistema externo</div>
+<div class="it"><span class="seta"><i></i></span>relação: o que faz <code>[tecnologia]</code></div>
+</div>
+
+<div class="foot" style="display:flex;justify-content:space-between"><span>ai-diagrams · modelo C4</span><span>cobrança por boleto</span></div>
+
+</div>
+</body></html>

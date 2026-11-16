@@ -25,19 +25,19 @@ La fuente queda en tu repositorio, en texto, y cualquiera puede editarla y volve
 
 | Tipo | Ejemplo de pedido | Ejemplo |
 |---|---|---|
-| Póster de arquitectura AWS | "Póster de arquitectura de la API de pagos: API Gateway, Lambda, Aurora y EventBridge." | [prompt y resultado](exemplos/arquitetura-aws/) |
-| Flujo con pasos numerados | "Flujo con pasos del outbox al consumidor, con Debezium y MSK." | [prompt y resultado](exemplos/fluxo-passos/) |
-| Diagrama de secuencia | "Diagrama de secuencia de la autorización de compra con tarjeta: terminal, red de tarjetas, autorizador, antifraude y ledger." | [prompt y resultado](exemplos/sequencia/) |
-| Carriles (swimlanes) | "Flujo en carriles de la apertura de cuenta entre cliente, onboarding, riesgo y operaciones." | [prompt y resultado](exemplos/raias/) |
-| BPMN 2.0 (editable en Camunda o bpmn.io) | "BPMN del proceso de disputa de pago." | [prompt y resultado](exemplos/bpmn/) |
-| Tabla comparativa | "Tabla que compare SQS, Kinesis y MSK para eventos entre dominios." | [prompt y resultado](exemplos/tabela-comparacao/) |
-| Catálogo en tarjetas | "Catálogo en tarjetas de las APIs de la plataforma, con responsable y contrato." | [prompt y resultado](exemplos/catalogo-cards/) |
-| Diagrama ER por schema | "Diagrama ER del schema de cobros a partir de este DDL." | [prompt y resultado](exemplos/der-schema/) |
-| Matriz de dependencias entre schemas | "Matriz de dependencias entre los schemas de este DDL." | [prompt y resultado](exemplos/matriz-dependencia/) |
-| Máquina de estados | "Máquina de estados del ciclo de vida de la tarjeta de débito: solicitada, en emisión, en tránsito, activa, bloqueada, cancelada." | [prompt y resultado](exemplos/maquina-estados/) |
-| C4 de contenedores | "C4 de contenedores del sistema de cobro por boleto, con el banco y el ERP fuera." | [prompt y resultado](exemplos/c4/) |
+| Póster de arquitectura AWS | "Póster de arquitectura de la API de pagos: API Gateway, Lambda, Aurora y EventBridge." | [prompt y resultado](examples/aws-architecture/) |
+| Flujo con pasos numerados | "Flujo con pasos del outbox al consumidor, con Debezium y MSK." | [prompt y resultado](examples/step-flow/) |
+| Diagrama de secuencia | "Diagrama de secuencia de la autorización de compra con tarjeta: terminal, red de tarjetas, autorizador, antifraude y ledger." | [prompt y resultado](examples/sequence/) |
+| Carriles (swimlanes) | "Flujo en carriles de la apertura de cuenta entre cliente, onboarding, riesgo y operaciones." | [prompt y resultado](examples/swimlanes/) |
+| BPMN 2.0 (editable en Camunda o bpmn.io) | "BPMN del proceso de disputa de pago." | [prompt y resultado](examples/bpmn/) |
+| Tabla comparativa | "Tabla que compare SQS, Kinesis y MSK para eventos entre dominios." | [prompt y resultado](examples/comparison-table/) |
+| Catálogo en tarjetas | "Catálogo en tarjetas de las APIs de la plataforma, con responsable y contrato." | [prompt y resultado](examples/card-catalog/) |
+| Diagrama ER por schema | "Diagrama ER del schema de cobros a partir de este DDL." | [prompt y resultado](examples/er-schema/) |
+| Matriz de dependencias entre schemas | "Matriz de dependencias entre los schemas de este DDL." | [prompt y resultado](examples/dependency-matrix/) |
+| Máquina de estados | "Máquina de estados del ciclo de vida de la tarjeta de débito: solicitada, en emisión, en tránsito, activa, bloqueada, cancelada." | [prompt y resultado](examples/state-machine/) |
+| C4 de contenedores | "C4 de contenedores del sistema de cobro por boleto, con el banco y el ERP fuera." | [prompt y resultado](examples/c4/) |
 
-![Póster de arquitectura AWS](exemplos/arquitetura-aws/resultado/antifraude-transferencias.png)
+![Póster de arquitectura AWS](examples/aws-architecture/output/transfer-antifraud.png)
 
 ## Requisitos
 
@@ -53,7 +53,7 @@ Instala los iconos con `pip3 install diagrams`. Si Chrome está en otra ruta, in
 
 ## Instalación
 
-El paquete npm está preparado localmente y todavía no se ha publicado. Después de la publicación:
+Con npm:
 
 ```bash
 npx ai-diagrams install --claude
@@ -61,7 +61,7 @@ npm install -g ai-diagrams
 ai-diagrams doctor
 ```
 
-Usa `--codex` para Codex o `--kiro --projeto /ruta/del/proyecto` para Kiro. Reemplazar una instalación existente requiere confirmación. Para instalar ahora, usa el tarball local descrito en [docs/install.md](docs/install.md) o clona el repositorio:
+Usa `--codex` para Codex o `--kiro --project /ruta/del/proyecto` para Kiro. Reemplazar una instalación existente requiere confirmación. Sin npm, clona el repositorio:
 
 ```bash
 git clone https://github.com/viniciuscoimbra/ai-diagrams.git
@@ -88,7 +88,7 @@ Ejecuta Codex con `codex --sandbox danger-full-access`. El sandbox por defecto b
 **Kiro CLI**
 
 ```bash
-bash "$AI_DIAGRAMS"/ferramentas/instalar-kiro.sh /ruta/de/tu/proyecto
+bash "$AI_DIAGRAMS"/tools/install-kiro.sh /ruta/de/tu/proyecto
 ```
 
 Después, dentro del proyecto, ejecuta `kiro-cli chat --agent ai-diagrams`.
@@ -104,34 +104,34 @@ Usa la skill ai-diagrams. Lee docs/decision-antifraude.md y haz el póster de ar
 del antifraude en tiempo real, con pasos numerados.
 ```
 
-La IA elige el tipo y pregunta antes de dibujar cuando el pedido es ambiguo. Después escribe la fuente en `diagramas/_src/`, ejecuta el gate hasta que pase y guarda el PNG en `diagramas/`.
+La IA elige el tipo y pregunta antes de dibujar cuando el pedido es ambiguo. Después escribe la fuente en `diagrams/_src/`, ejecuta el gate hasta que pase y guarda el PNG en `diagrams/`.
 
 ## Importar diagramas y datos existentes
 
 El importador convierte Mermaid (`flowchart`/`graph`, `sequenceDiagram`, `stateDiagram-v2`, `erDiagram`), BPMN 2.0 XML, DDL SQL, catálogos CSV y comparaciones YAML a fuentes nativas y ejecuta el generador y el gate existentes:
 
 ```bash
-python3 skills/ai-diagrams/scripts/importar.py exemplos/importar/es/sequence.mmd --saida diagramas --idioma es
-ai-diagrams importar schema.sql --tipo matriz --saida diagramas --idioma es
+python3 skills/ai-diagrams/scripts/import_cli.py examples/import/es/sequence.mmd --out diagrams --lang es
+ai-diagrams import schema.sql --type matrix --out diagrams --lang es
 ```
 
-Los flowcharts con carriles en `subgraph` se convierten en carriles; los demás flowcharts compatibles se convierten en BPMN. La sintaxis no soportada falla con el número de línea, sin descartarse en silencio. `--somente-fonte` prepara las fuentes sin Chrome y deja pendientes el gate completo y el PNG. El importador no traduce el texto del autor. Consulta [sintaxis soportada, límites y ejemplos](docs/importing.md).
+Los flowcharts con carriles en `subgraph` se convierten en carriles; los demás flowcharts compatibles se convierten en BPMN. La sintaxis no soportada falla con el número de línea, sin descartarse en silencio. `--source-only` prepara las fuentes sin Chrome y deja pendientes el gate completo y el PNG. El importador no traduce el texto del autor. Consulta [sintaxis soportada, límites y ejemplos](docs/importing.md).
 
 ## Temas
 
-El color y la fuente vienen de un archivo de tema. La skill trae dos en `skills/ai-diagrams/temas/`: `ai-diagrams` (el predeterminado) y `papel` (papel crema, tinta marrón oscura, Public Sans). Para crear el tuyo, copia `temas/ai-diagrams.json`, cambia los valores de `cores`, `cores_derivadas`, `paleta_der` (colores del DER) y `fontes` (nombre de la familia en Google Fonts) y conserva todas las claves: una clave que falta detiene el build con `TEMA-INCOMPLETO`. Después pasa el tema en cualquier comando, o defínelo una vez:
+El color y la fuente vienen de un archivo de tema. La skill trae dos en `skills/ai-diagrams/themes/`: `ai-diagrams` (el predeterminado) y `paper` (papel crema, tinta marrón oscura, Public Sans). Para crear el tuyo, copia `themes/ai-diagrams.json`, cambia los valores de `colors`, `derived`, `er_palette` (colores del DER) y `fonts` (nombre de la familia en Google Fonts) y conserva todas las claves: una clave que falta detiene el build con `THEME-INCOMPLETE`. Después pasa el tema en cualquier comando, o defínelo una vez:
 
 ```bash
-python3 skills/ai-diagrams/scripts/build.py diagramas/_src/01-api.html --tema papel
-python3 skills/ai-diagrams/scripts/build.py diagramas/_src/01-api.html --tema ./mi-tema.json
-export AI_DIAGRAMS_TEMA=./mi-tema.json
+python3 skills/ai-diagrams/scripts/build.py diagrams/_src/01-api.html --theme paper
+python3 skills/ai-diagrams/scripts/build.py diagrams/_src/01-api.html --theme ./mi-tema.json
+export AI_DIAGRAMS_THEME=./mi-tema.json
 ```
 
-Un nombre resuelve a `temas/<nombre>.json`; una ruta puede apuntar a cualquier carpeta. El tema cambia color y fuente, nunca la posición de cajas y flechas. Detalles en [docs/how-it-works.md](docs/how-it-works.md#5-theme), en inglés. Al pedir a la IA, di el nombre del tema o adjunta el json.
+Un nombre resuelve a `themes/<nombre>.json`; una ruta puede apuntar a cualquier carpeta. El tema cambia color y fuente, nunca la posición de cajas y flechas. Detalles en [docs/how-it-works.md](docs/how-it-works.md#5-theme), en inglés. Al pedir a la IA, di el nombre del tema o adjunta el json.
 
 ## Idioma del diagrama
 
-Las etiquetas fijas están disponibles en `pt-BR`, `en` y `es`, en `skills/ai-diagrams/i18n/`. Usa `--idioma es` en el generador y el gate. La prioridad es la flag, después `<meta name="idioma" content="es">` en HTML o `"idioma": "es"` en JSON (también `idioma: 'es'` en el layout DER), después `AI_DIAGRAMS_IDIOMA` y, por defecto, `pt-BR`. Un idioma desconocido falla con `IDIOMA-INEXISTENTE`; una clave ausente del catálogo falla con `IDIOMA-INCOMPLETO`. Los títulos y el contenido del autor deben traducirse en la fuente. Sin selección de idioma, la salida en portugués permanece igual.
+Las etiquetas fijas están disponibles en `pt-BR`, `en` y `es`, en `skills/ai-diagrams/i18n/`. Usa `--lang es` en el generador y el gate. La prioridad es la flag, después `<meta name="lang" content="es">` en HTML o `"lang": "es"` en JSON (también `lang: 'es'` en el layout DER), después `AI_DIAGRAMS_LANG` y, por defecto, `pt-BR`. Un idioma desconocido falla con `LANG-NOT-FOUND`; una clave ausente del catálogo falla con `LANG-INCOMPLETE`. Los títulos y el contenido del autor deben traducirse en la fuente. Sin selección de idioma, la salida en portugués permanece igual.
 
 ## Modelos
 
@@ -139,4 +139,4 @@ La calidad del diagrama depende del modelo. Un modelo débil se equivoca en las 
 
 ## Licencia
 
-MIT, ver [LICENSE](LICENSE). Las partes de terceros, que son los iconos de AWS, bpmn-js, elkjs y las fuentes (IBM Plex en el tema predeterminado, Public Sans y Source Code Pro en el tema `papel`), siguen sus propios términos, listados en el [README en inglés](README.md#license).
+MIT, ver [LICENSE](LICENSE). Las partes de terceros, que son los iconos de AWS, bpmn-js, elkjs y las fuentes (IBM Plex en el tema predeterminado, Public Sans y Source Code Pro en el tema `paper`), siguen sus propios términos, listados en el [README en inglés](README.md#license).

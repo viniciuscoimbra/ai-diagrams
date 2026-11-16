@@ -6,8 +6,6 @@ For a manual install, see [docs/install.md](docs/install.md).
 
 ## npm route
 
-The npm package is prepared locally and has not been published. These registry commands become available after publication. Until then, use the git clone route or test the tarball with `bash testes/npm-smoke.sh` from a checkout.
-
 Use the tool and project already named by the user; ask only for missing choices. With Node 18+ and npm installed, run the command for that tool:
 
 ```bash
@@ -19,12 +17,12 @@ npx ai-diagrams install --codex
 ```
 
 ```bash
-npx ai-diagrams install --kiro --projeto <PROJECT>
+npx ai-diagrams install --kiro --project <PROJECT>
 ```
 
-Claude Code and Codex receive the same global links as the git route, in `~/.claude/skills/ai-diagrams` and `~/.codex/skills/ai-diagrams`. For a project-local link, add `--projeto <PROJECT>`. Kiro always receives real copies of the skill, steering and agent in the project; without `--projeto`, it uses the current directory. Choose exactly one CLI flag.
+Claude Code and Codex receive the same global links as the git route, in `~/.claude/skills/ai-diagrams` and `~/.codex/skills/ai-diagrams`. For a project-local link, add `--project <PROJECT>`. Kiro always receives real copies of the skill, steering and agent in the project; without `--project`, it uses the current directory. Choose exactly one CLI flag.
 
-Expected: `skill:` with the link path, or the four Kiro lines described in step 3. Existing files are preserved unless the user confirms replacement in an interactive terminal. Approved replacement keeps a backup next to each replaced path and prints `Backup preservado:` with its location. If installation fails, the originals are restored. Non-interactive conflicts fail without changing the installation; an identical Claude/Codex link reports `Já instalado` (already installed).
+Expected: `skill:` with the link path, or the four Kiro lines described in step 3. Existing files are preserved unless the user confirms replacement in an interactive terminal. Approved replacement keeps a backup next to each replaced path and prints `Backup kept:` with its location. If installation fails, the originals are restored. Non-interactive conflicts fail without changing the installation; an identical Claude/Codex link reports `Already installed:`.
 
 For a persistent global package and the `ai-diagrams` command:
 
@@ -44,11 +42,11 @@ Check the requirements:
 npx ai-diagrams doctor
 ```
 
-Expected: `OK` lines for Node 18+, Python 3.9+, Chrome and AWS icons. A missing requirement reports `FALHA` and exits with status 1. The doctor detects Chrome using the same `POSTER_CHROME` override and search paths as the engine; it does not launch Chrome or claim that a rendering gate passed. Install missing requirements with step 1 below, then follow the tool-specific first-use instructions in [docs/install.md](docs/install.md). Import existing sources with `ai-diagrams importar <file> --saida diagramas`; see [the import guide](docs/importing.md).
+Expected: `OK` lines for Node 18+, Python 3.9+, Chrome and AWS icons. A missing requirement reports `FAIL` and exits with status 1. The doctor detects Chrome using the same `POSTER_CHROME` override and search paths as the engine; it does not launch Chrome or claim that a rendering gate passed. Install missing requirements with step 1 below, then follow the tool-specific first-use instructions in [docs/install.md](docs/install.md). Import existing sources with `ai-diagrams import <file> --out diagrams`; see [the import guide](docs/importing.md).
 
 ## git clone route
 
-The following steps remain available without npm publication.
+The following steps need no npm.
 
 ## Rules
 
@@ -56,7 +54,6 @@ The following steps remain available without npm publication.
 - Do not edit files outside the project folder and the folder the user picks for the skill.
 - In every command below, replace `<AI_DIAGRAMS>` and `<PROJECT>` with the absolute paths from step 0. Do not use environment variables: each command can run in a new shell.
 - Do not use a symlink for Kiro. Kiro does not read files outside the project.
-- Program output is in Portuguese. Match it exactly as written below.
 
 ## Step 0. Ask the user
 
@@ -203,10 +200,10 @@ Expected: the file path.
 ### If TOOL = kiro
 
 ```bash
-bash <AI_DIAGRAMS>/ferramentas/instalar-kiro.sh <PROJECT>
+bash <AI_DIAGRAMS>/tools/install-kiro.sh <PROJECT>
 ```
 
-Expected: four lines starting with `steering:`, `agente:`, `skill:` and `modelos:`. The last one is `modelos:  11 de 11`. The script copies the skill, the steering file and the agent into `<PROJECT>/.kiro/`.
+Expected: four lines starting with `steering:`, `agent:`, `skill:` and `templates:`. The last one is `templates: 11 of 11`. The script copies the skill, the steering file and the agent into `<PROJECT>/.kiro/`.
 
 ```bash
 kiro-cli agent validate --path <PROJECT>/.kiro/agents/ai-diagrams.json
@@ -219,13 +216,13 @@ Expected: no error message.
 This command builds the PNG of one reference model into a temporary folder. It checks Python, the icons, Chrome and the gate in one run.
 
 ```bash
-python3 <AI_DIAGRAMS>/skills/ai-diagrams/scripts/build.py <AI_DIAGRAMS>/skills/ai-diagrams/modelos/05-tabela-comparacao/_src/05-comparacao-mensageria.html --out /tmp
+python3 <AI_DIAGRAMS>/skills/ai-diagrams/scripts/build.py <AI_DIAGRAMS>/skills/ai-diagrams/templates/05-comparison-table/_src/05-messaging-comparison.html --out /tmp
 ```
 
-Expected: two lines starting with `OK`. The last one ends in `05-comparacao-mensageria.png`.
+Expected: two lines starting with `OK`. The last one ends in `05-messaging-comparison.png`.
 
-- `Chrome não encontrado` (Chrome not found): ask the user for the Chrome path and run the command again with `POSTER_CHROME="<path>"` in front of it.
-- `Ícones AWS não encontrados` (AWS icons not found): go back to step 1 and install the `diagrams` package with the same `python3`.
+- `Chrome not found`: ask the user for the Chrome path and run the command again with `POSTER_CHROME="<path>"` in front of it.
+- `AWS icons not found`: go back to step 1 and install the `diagrams` package with the same `python3`.
 
 ## Step 5. Tell the user how to use it
 
@@ -237,18 +234,18 @@ Reply with the line for the user's tool:
 
 Also say: "Drawing quality depends on the model. Use a frontier model. Weak models get coordinates wrong, need more gate rounds and may never pass."
 
-In every case, show the user the eleven diagram types and point them to `exemplos/<type>/prompt.md` for sample requests:
+In every case, show the user the eleven diagram types and point them to `examples/<type>/prompt.md` for sample requests:
 
 | Type | Example folder |
 |---|---|
-| AWS architecture poster | `exemplos/arquitetura-aws/` |
-| Numbered-step flow | `exemplos/fluxo-passos/` |
-| Comparison table | `exemplos/tabela-comparacao/` |
-| Sequence diagram | `exemplos/sequencia/` |
-| Swimlanes | `exemplos/raias/` |
-| Cards catalog | `exemplos/catalogo-cards/` |
-| BPMN 2.0 | `exemplos/bpmn/` |
-| ER diagram per schema | `exemplos/der-schema/` |
-| Schema dependency matrix | `exemplos/matriz-dependencia/` |
-| State machine | `exemplos/maquina-estados/` |
-| C4 container diagram | `exemplos/c4/` |
+| AWS architecture poster | `examples/aws-architecture/` |
+| Numbered-step flow | `examples/step-flow/` |
+| Comparison table | `examples/comparison-table/` |
+| Sequence diagram | `examples/sequence/` |
+| Swimlanes | `examples/swimlanes/` |
+| Cards catalog | `examples/card-catalog/` |
+| BPMN 2.0 | `examples/bpmn/` |
+| ER diagram per schema | `examples/er-schema/` |
+| Schema dependency matrix | `examples/dependency-matrix/` |
+| State machine | `examples/state-machine/` |
+| C4 container diagram | `examples/c4/` |

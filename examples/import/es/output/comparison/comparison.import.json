@@ -1,0 +1,9 @@
+{
+  "input": "../../comparison.yaml",
+  "type": "comparison",
+  "language": "es",
+  "sources": [
+    "_src/comparison.html"
+  ],
+  "gate": "passed"
+}

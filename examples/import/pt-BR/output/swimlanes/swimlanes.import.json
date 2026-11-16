@@ -1,0 +1,9 @@
+{
+  "input": "../../swimlanes.mmd",
+  "type": "swimlanes",
+  "language": "pt-BR",
+  "sources": [
+    "_src/swimlanes.html"
+  ],
+  "gate": "passed"
+}

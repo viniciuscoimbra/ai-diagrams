@@ -1,0 +1,9 @@
+{
+  "input": "../../catalog.csv",
+  "type": "catalog",
+  "language": "en",
+  "sources": [
+    "_src/catalog.html"
+  ],
+  "gate": "passed"
+}

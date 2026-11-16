@@ -1,0 +1,87 @@
+{
+  "_doc": "Written by tests/npm-smoke.sh. \"pass\" only when the whole smoke test passed on this run.",
+  "date": "2026-11-07",
+  "package": "0.2.0",
+  "node": "22.22.3",
+  "platform": "darwin",
+  "checks": [
+    {
+      "cli": "claude",
+      "id": "install-global",
+      "label": "install --claude links the skill in the home folder",
+      "result": "pass"
+    },
+    {
+      "cli": "claude",
+      "id": "install-project",
+      "label": "install --claude --project links the skill in a project",
+      "result": "pass"
+    },
+    {
+      "cli": "claude",
+      "id": "keep-existing",
+      "label": "an existing installation is kept outside a terminal",
+      "result": "pass"
+    },
+    {
+      "cli": "codex",
+      "id": "install-global",
+      "label": "install --codex links the skill in the home folder",
+      "result": "pass"
+    },
+    {
+      "cli": "codex",
+      "id": "install-project",
+      "label": "install --codex --project links the skill in a project",
+      "result": "pass"
+    },
+    {
+      "cli": "codex",
+      "id": "keep-existing",
+      "label": "an existing installation is kept outside a terminal",
+      "result": "pass"
+    },
+    {
+      "cli": "claude",
+      "id": "replace-with-backup",
+      "label": "replacement confirmed in a terminal keeps a backup",
+      "result": "pass"
+    },
+    {
+      "cli": "kiro",
+      "id": "install-project",
+      "label": "install --kiro copies the skill, steering and agent",
+      "result": "pass"
+    },
+    {
+      "cli": "kiro",
+      "id": "keep-existing",
+      "label": "an existing installation is kept outside a terminal",
+      "result": "pass"
+    },
+    {
+      "cli": "kiro",
+      "id": "rollback",
+      "label": "a failed Kiro install restores every original file",
+      "result": "pass"
+    },
+    {
+      "cli": null,
+      "id": "import",
+      "label": "import converts a Mermaid file with --source-only",
+      "result": "pass"
+    },
+    {
+      "cli": null,
+      "id": "deprecated-names",
+      "label": "0.1.x names (importar, --projeto, --saida) still work with a warning",
+      "result": "pass"
+    },
+    {
+      "cli": null,
+      "id": "doctor",
+      "label": "doctor reports Node, Python and Chrome",
+      "result": "pass"
+    }
+  ]
+}

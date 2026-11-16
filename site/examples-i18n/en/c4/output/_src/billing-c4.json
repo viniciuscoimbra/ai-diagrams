@@ -1,0 +1,438 @@
+{
+  "lang": "en",
+  "header": [
+    "ai-diagrams · Boleto billing system",
+    "C4 · V2"
+  ],
+  "footer": [
+    "ai-diagrams · C4 model",
+    "boleto billing"
+  ],
+  "main": "containers",
+  "elements": [
+    {
+      "id": "cliente",
+      "type": "person",
+      "name": "Business customer",
+      "description": "issues boletos and tracks payments"
+    },
+    {
+      "id": "analista",
+      "type": "person",
+      "name": "Finance analyst",
+      "description": "handles duplicate payments and refunds"
+    },
+    {
+      "id": "cobranca",
+      "type": "system",
+      "name": "Billing system",
+      "description": "issues the boleto, registers it with CIP and settles it from the return file"
+    },
+    {
+      "id": "cip",
+      "type": "system",
+      "external": true,
+      "owner": "CIP",
+      "name": "New Billing Platform",
+      "description": "boleto registration"
+    },
+    {
+      "id": "liquidante",
+      "type": "system",
+      "external": true,
+      "owner": "partner",
+      "name": "Settlement bank",
+      "description": "generates the CNAB 240 return file"
+    },
+    {
+      "id": "webhook",
+      "type": "system",
+      "external": true,
+      "owner": "business customer",
+      "name": "Customer webhook",
+      "description": "receives the boleto payment notification"
+    },
+    {
+      "id": "erp",
+      "type": "system",
+      "owner": "another team",
+      "name": "Accounting ERP",
+      "description": "records the entry for each settlement"
+    },
+    {
+      "id": "portal",
+      "type": "container",
+      "parent": "cobranca",
+      "shape": "web",
+      "technology": "Next.js on Vercel",
+      "name": "Business portal",
+      "description": "batch issuance and receipts dashboard"
+    },
+    {
+      "id": "backoffice",
+      "type": "container",
+      "parent": "cobranca",
+      "shape": "web",
+      "technology": "React",
+      "name": "Backoffice",
+      "description": "boleto lookup and manual adjustments"
+    },
+    {
+      "id": "api",
+      "type": "container",
+      "parent": "cobranca",
+      "technology": "Node.js on Lambda",
+      "icon": "aws://compute/lambda.png",
+      "name": "Billing API",
+      "description": "behind API Gateway; validates the payer and stores the boleto"
+    },
+    {
+      "id": "banco",
+      "type": "container",
+      "parent": "cobranca",
+      "shape": "database",
+      "technology": "DynamoDB",
+      "icon": "aws://database/dynamodb.png",
+      "name": "Billing database",
+      "description": "boletos, status and event history"
+    },
+    {
+      "id": "processador",
+      "type": "container",
+      "parent": "cobranca",
+      "technology": "Lambda and SQS queue",
+      "icon": "aws://compute/lambda.png",
+      "name": "Return file processor",
+      "description": "reads the return file and settles the boleto"
+    },
+    {
+      "id": "rotas",
+      "type": "component",
+      "parent": "api",
+      "technology": "Fastify",
+      "name": "Boleto routes",
+      "description": "receives issuance, lookup and adjustment"
+    },
+    {
+      "id": "acesso",
+      "type": "component",
+      "parent": "api",
+      "technology": "Cognito JWT",
+      "name": "Access control",
+      "description": "checks whether the caller is a customer or an operator"
+    },
+    {
+      "id": "pagador",
+      "type": "component",
+      "parent": "api",
+      "technology": "TypeScript",
+      "name": "Payer validator",
+      "description": "checks CPF or CNPJ, due date and amount"
+    },
+    {
+      "id": "registro",
+      "type": "component",
+      "parent": "api",
+      "technology": "HTTPS client with certificate",
+      "name": "CIP registration",
+      "description": "registers the boleto and returns the payment code"
+    },
+    {
+      "id": "repositorio",
+      "type": "component",
+      "parent": "api",
+      "technology": "AWS SDK",
+      "name": "Boleto repository",
+      "description": "reads and writes boleto, status and event"
+    },
+    {
+      "id": "aws",
+      "type": "deploymentNode",
+      "environment": "producao",
+      "name": "AWS account billing-prod",
+      "technology": "sa-east-1"
+    },
+    {
+      "id": "gateway",
+      "type": "infrastructureNode",
+      "parent": "aws",
+      "technology": "Amazon API Gateway, with WAF",
+      "name": "Public API",
+      "description": "terminates TLS and checks the token"
+    },
+    {
+      "id": "lambda-api",
+      "type": "deploymentNode",
+      "parent": "aws",
+      "name": "AWS Lambda",
+      "technology": "Node.js 20"
+    },
+    {
+      "id": "api-1",
+      "type": "containerInstance",
+      "parent": "lambda-api",
+      "container": "api"
+    },
+    {
+      "id": "dynamo",
+      "type": "deploymentNode",
+      "parent": "aws",
+      "name": "Amazon DynamoDB",
+      "technology": "on demand"
+    },
+    {
+      "id": "banco-1",
+      "type": "containerInstance",
+      "parent": "dynamo",
+      "container": "banco"
+    },
+    {
+      "id": "bucket",
+      "type": "infrastructureNode",
+      "parent": "aws",
+      "technology": "Amazon S3, through Transfer Family",
+      "name": "Return inbox",
+      "description": "receives the CNAB 240 over SFTP"
+    },
+    {
+      "id": "fila",
+      "type": "infrastructureNode",
+      "parent": "aws",
+      "technology": "Amazon SQS",
+      "name": "Return queue",
+      "description": "one event per new file"
+    },
+    {
+      "id": "lambda-ret",
+      "type": "deploymentNode",
+      "parent": "aws",
+      "name": "AWS Lambda",
+      "technology": "Node.js 20"
+    },
+    {
+      "id": "processador-1",
+      "type": "containerInstance",
+      "parent": "lambda-ret",
+      "container": "processador"
+    },
+    {
+      "id": "vercel",
+      "type": "deploymentNode",
+      "environment": "producao",
+      "name": "Vercel",
+      "technology": "edge network"
+    },
+    {
+      "id": "portal-1",
+      "type": "containerInstance",
+      "parent": "vercel",
+      "container": "portal"
+    },
+    {
+      "id": "cdn",
+      "type": "deploymentNode",
+      "environment": "producao",
+      "name": "Amazon CloudFront",
+      "technology": "static site on S3"
+    },
+    {
+      "id": "backoffice-1",
+      "type": "containerInstance",
+      "parent": "cdn",
+      "container": "backoffice"
+    }
+  ],
+  "relationships": [
+    {
+      "from": "cliente",
+      "to": "cobranca",
+      "description": "Issues and tracks boletos",
+      "technology": "web portal or API"
+    },
+    {
+      "from": "cliente",
+      "to": "portal",
+      "description": "Issues boletos and tracks receipts",
+      "technology": "browser"
+    },
+    {
+      "from": "cliente",
+      "to": "rotas",
+      "description": "Connects its own system to issue and look up",
+      "technology": "HTTPS · JSON"
+    },
+    {
+      "from": "analista",
+      "to": "backoffice",
+      "description": "Handles duplicates and refunds",
+      "technology": "browser"
+    },
+    {
+      "from": "portal",
+      "to": "rotas",
+      "description": "Requests issuance and checks status",
+      "technology": "HTTPS · JSON"
+    },
+    {
+      "from": "backoffice",
+      "to": "rotas",
+      "description": "Adjusts boletos with the operator role",
+      "technology": "HTTPS · JSON"
+    },
+    {
+      "from": "rotas",
+      "to": "acesso",
+      "description": "Checks the caller's role",
+      "technology": "internal call"
+    },
+    {
+      "from": "rotas",
+      "to": "pagador",
+      "description": "Validates the issuance request",
+      "technology": "internal call"
+    },
+    {
+      "from": "rotas",
+      "to": "registro",
+      "description": "Requests the boleto registration",
+      "technology": "internal call"
+    },
+    {
+      "from": "rotas",
+      "to": "repositorio",
+      "description": "Stores and looks up boletos",
+      "technology": "internal call"
+    },
+    {
+      "from": "registro",
+      "to": "cip",
+      "description": "Registers the boleto before the payment code",
+      "technology": "HTTPS · certificate"
+    },
+    {
+      "from": "repositorio",
+      "to": "banco",
+      "description": "Stores boleto, status and event",
+      "technology": "DynamoDB API"
+    },
+    {
+      "from": "liquidante",
+      "to": "processador",
+      "description": "Delivers the CNAB 240 return file",
+      "technology": "SFTP → S3 → SQS"
+    },
+    {
+      "from": "processador",
+      "to": "banco",
+      "description": "Settles and stores the payment",
+      "technology": "DynamoDB API"
+    },
+    {
+      "from": "processador",
+      "to": "webhook",
+      "description": "Notifies each paid boleto",
+      "technology": "HTTPS · HMAC"
+    },
+    {
+      "from": "processador",
+      "to": "erp",
+      "description": "Publishes the settlement entry",
+      "technology": "EventBridge"
+    },
+    {
+      "from": "gateway",
+      "to": "api-1",
+      "description": "Forwards the authenticated call",
+      "technology": "Lambda integration"
+    },
+    {
+      "from": "bucket",
+      "to": "fila",
+      "description": "Signals a new file",
+      "technology": "S3 event"
+    },
+    {
+      "from": "fila",
+      "to": "processador-1",
+      "description": "Triggers with the file",
+      "technology": "SQS trigger"
+    }
+  ],
+  "views": [
+    {
+      "type": "landscape",
+      "key": "landscape",
+      "title": "Boleto billing: systems and people",
+      "description": "Who uses boleto billing and which systems, inside and outside the company, it talks to."
+    },
+    {
+      "type": "context",
+      "key": "context",
+      "scope": "cobranca",
+      "title": "Billing system: context",
+      "description": "The billing system as a single box: who uses it and which systems it depends on. Pix billing, debt protest and credit bureau reporting are left out."
+    },
+    {
+      "type": "container",
+      "key": "containers",
+      "scope": "cobranca",
+      "title": "Boleto billing system: containers and dependencies",
+      "description": "The containers the billing system splits into and the systems it depends on, from boleto issuance to settlement through the return file. Pix billing, debt protest and credit bureau reporting are outside the diagram."
+    },
+    {
+      "type": "component",
+      "key": "api",
+      "scope": "api",
+      "title": "Billing API: components",
+      "description": "The parts of the billing API and who calls each one, from the issuance request to the CIP registration and the database write."
+    },
+    {
+      "type": "dynamic",
+      "key": "emission",
+      "scope": "cobranca",
+      "label": "issuing a boleto",
+      "title": "Issuing a boleto through the portal",
+      "description": "The path of an issuance request made in the portal, until the customer gets the payment code.",
+      "steps": [
+        {
+          "from": "cliente",
+          "to": "portal",
+          "description": "Enters payer, amount and due date",
+          "technology": "browser"
+        },
+        {
+          "from": "portal",
+          "to": "api",
+          "description": "Sends the issuance request",
+          "technology": "HTTPS · JSON"
+        },
+        {
+          "from": "api",
+          "to": "cip",
+          "description": "Registers the boleto and gets the payment code",
+          "technology": "HTTPS · certificate"
+        },
+        {
+          "from": "api",
+          "to": "banco",
+          "description": "Stores the boleto as registered",
+          "technology": "DynamoDB API"
+        },
+        {
+          "from": "portal",
+          "to": "cliente",
+          "description": "Shows the payment code and the PDF",
+          "technology": "browser"
+        }
+      ]
+    },
+    {
+      "type": "deployment",
+      "key": "deployment",
+      "scope": "cobranca",
+      "environment": "producao",
+      "title": "Billing system: production deployment",
+      "description": "Where each container runs in production: the functions and the database in an AWS account, the portal on Vercel and the backoffice on CloudFront."
+    }
+  ]
+}

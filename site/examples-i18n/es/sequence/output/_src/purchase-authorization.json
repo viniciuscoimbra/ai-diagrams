@@ -1,0 +1,180 @@
+{
+  "page_title": "Autorización de compra con tarjeta de débito",
+  "header": [
+    "ai-diagrams · Autorización de compra",
+    "V1 · Secuencia"
+  ],
+  "kicker": "Diagrama de secuencia",
+  "h1": "Autorización de compra con tarjeta de débito",
+  "sub": "Recorrido desde el terminal de la tienda hasta la respuesta de aprobación o rechazo. La red de tarjetas enruta el mensaje ISO 8583; el autorizador valida, consulta la prevención de fraude y, según el score, reserva saldo en el ledger o rechaza por sospecha. Solo una compra aprobada genera una notificación.",
+  "participants": [
+    {
+      "id": "terminal",
+      "name": "Terminal",
+      "sub": "POS o e-commerce",
+      "type": "actor"
+    },
+    {
+      "id": "bandeira",
+      "name": "Red de tarjetas",
+      "sub": "Red de pagos",
+      "type": "external"
+    },
+    {
+      "id": "autorizador",
+      "name": "Autorizador",
+      "sub": "ECS Fargate",
+      "type": "service"
+    },
+    {
+      "id": "antifraude",
+      "name": "Prevención de fraude",
+      "sub": "SageMaker",
+      "type": "service"
+    },
+    {
+      "id": "ledger",
+      "name": "Ledger",
+      "sub": "Aurora PostgreSQL",
+      "type": "database"
+    },
+    {
+      "id": "notificacoes",
+      "name": "Notificaciones",
+      "sub": "Cola SQS",
+      "type": "queue"
+    }
+  ],
+  "messages": [
+    {
+      "from": "terminal",
+      "to": "bandeira",
+      "text": "compra",
+      "step": "El terminal envía la compra; la red enruta el mensaje ISO 8583 `0100` al autorizador"
+    },
+    {
+      "from": "bandeira",
+      "to": "autorizador",
+      "text": "`0100`"
+    },
+    {
+      "from": "autorizador",
+      "to": "autorizador",
+      "text": "valida tarjeta",
+      "step": "El autorizador valida el estado, la caducidad y el criptograma de la tarjeta sin llamar a otro servicio"
+    },
+    {
+      "from": "autorizador",
+      "to": "antifraude",
+      "text": "consulta score",
+      "step": "El autorizador llama a prevención de fraude y espera el score; tiempo máximo de 120 ms, sin respuesta continúa con score 0,5"
+    },
+    {
+      "from": "antifraude",
+      "to": "autorizador",
+      "text": "score (0 a 1)",
+      "type": "reply"
+    },
+    {
+      "fragment": "alt",
+      "branches": [
+        {
+          "guard": "score < 0,85",
+          "messages": [
+            {
+              "from": "autorizador",
+              "to": "ledger",
+              "text": "reserva del importe",
+              "step": "El autorizador solicita reservar el importe; el ledger comprueba el saldo y guarda la reserva y la fila de outbox en la misma transacción"
+            },
+            {
+              "fragment": "alt",
+              "branches": [
+                {
+                  "guard": "con saldo",
+                  "messages": [
+                    {
+                      "from": "ledger",
+                      "to": "autorizador",
+                      "text": "reserva confirmada",
+                      "type": "reply"
+                    },
+                    {
+                      "from": "autorizador",
+                      "to": "bandeira",
+                      "text": "`0110` código `00`",
+                      "type": "reply",
+                      "step": "Con saldo, respuesta `0110` con código `00` (aprobada)"
+                    }
+                  ]
+                },
+                {
+                  "guard": "sin saldo",
+                  "messages": [
+                    {
+                      "from": "ledger",
+                      "to": "autorizador",
+                      "text": "saldo insuficiente",
+                      "type": "reply"
+                    },
+                    {
+                      "from": "autorizador",
+                      "to": "bandeira",
+                      "text": "`0110` código `51`",
+                      "type": "reply",
+                      "step": "Sin saldo, respuesta `0110` con código `51` (saldo insuficiente); no se reserva nada"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "guard": "score ≥ 0,85",
+          "messages": [
+            {
+              "from": "autorizador",
+              "to": "bandeira",
+              "text": "`0110` código `59`",
+              "type": "reply",
+              "step": "Score desde 0,85: respuesta `0110` con código `59` (sospecha de fraude), sin consultar el ledger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "from": "bandeira",
+      "to": "terminal",
+      "text": "respuesta",
+      "type": "reply",
+      "step": "La red responde al terminal en todos los casos"
+    },
+    {
+      "fragment": "opt",
+      "branches": [
+        {
+          "guard": "compra aprobada",
+          "messages": [
+            {
+              "from": "autorizador",
+              "to": "notificacoes",
+              "text": "`compra.aprovada`",
+              "type": "async",
+              "step": "Solo en compras aprobadas, el autorizador publica un evento en la cola de notificaciones sin esperar respuesta; el cliente recibe un push"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "band": {
+    "f1": "La captura y liquidación (archivo del adquirente al día siguiente), las devoluciones y las compras a plazos quedan fuera del alcance"
+  },
+  "footer": [
+    "ai-diagrams",
+    "Diagrama de secuencia · 2026-11"
+  ],
+  "lang": "es"
+}

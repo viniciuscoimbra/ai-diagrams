@@ -1,0 +1,93 @@
+{
+  "lang": "es",
+  "header": [
+    "Tienda en línea",
+    "V1"
+  ],
+  "footer": [
+    "Importación",
+    "Tienda en línea"
+  ],
+  "elements": [
+    {
+      "id": "cliente",
+      "type": "person",
+      "name": "Cliente",
+      "description": "compra en la tienda web"
+    },
+    {
+      "id": "tienda",
+      "type": "system",
+      "name": "Tienda en línea",
+      "description": "vende y envía pedidos"
+    },
+    {
+      "id": "web",
+      "type": "container",
+      "name": "Tienda web",
+      "description": "catálogo y pago",
+      "technology": "Next.js",
+      "parent": "tienda",
+      "shape": "web"
+    },
+    {
+      "id": "api",
+      "type": "container",
+      "name": "API de pedidos",
+      "description": "recibe y sigue los pedidos",
+      "technology": "Node.js",
+      "parent": "tienda"
+    },
+    {
+      "id": "db",
+      "type": "container",
+      "name": "Base de pedidos",
+      "description": "pedidos y pagos",
+      "technology": "PostgreSQL",
+      "parent": "tienda",
+      "shape": "database"
+    },
+    {
+      "id": "pagos",
+      "type": "system",
+      "name": "Proveedor de pagos",
+      "description": "cobra la tarjeta",
+      "external": true
+    }
+  ],
+  "relationships": [
+    {
+      "from": "cliente",
+      "to": "web",
+      "description": "Hace pedidos",
+      "technology": "navegador"
+    },
+    {
+      "from": "web",
+      "to": "api",
+      "description": "Envía el pedido",
+      "technology": "HTTPS · JSON"
+    },
+    {
+      "from": "api",
+      "to": "db",
+      "description": "Guarda el pedido",
+      "technology": "SQL"
+    },
+    {
+      "from": "api",
+      "to": "pagos",
+      "description": "Cobra la tarjeta",
+      "technology": "HTTPS"
+    }
+  ],
+  "views": [
+    {
+      "type": "container",
+      "scope": "tienda",
+      "key": "contenedores",
+      "description": "Los contenedores de la tienda en línea."
+    }
+  ],
+  "main": "contenedores"
+}

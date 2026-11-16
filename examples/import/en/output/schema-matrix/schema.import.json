@@ -1,0 +1,9 @@
+{
+  "input": "../../schema.sql",
+  "type": "matrix",
+  "language": "en",
+  "sources": [
+    "_src/schema/schema.html"
+  ],
+  "gate": "passed"
+}

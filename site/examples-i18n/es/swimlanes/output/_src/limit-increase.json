@@ -1,0 +1,192 @@
+{
+  "page_title": "Aumento de límite entre equipos",
+  "header": [
+    "ai-diagrams · Ejemplos de diagramas · Fintech de ejemplo",
+    "Aumento de límite · Carriles"
+  ],
+  "kicker": "Flujo por carriles",
+  "h1": "Aumento de límite: de la solicitud al nuevo límite en la cuenta",
+  "sub": "Cinco actores y seis fases. El motor de crédito decide el 71% de las solicitudes por sí solo; el analista interviene cuando el importe supera el límite máximo o el score está en la zona gris.",
+  "lanes": [
+    {
+      "name": "Cliente",
+      "sub": "por la app"
+    },
+    {
+      "name": "App",
+      "sub": "canal digital"
+    },
+    {
+      "name": "Motor de crédito",
+      "sub": "política automática"
+    },
+    {
+      "name": "Analista de crédito",
+      "sub": "plazo de 1 día hábil"
+    },
+    {
+      "name": "Operaciones",
+      "sub": ""
+    }
+  ],
+  "phases": [
+    "Solicitar",
+    "Recibir",
+    "Evaluar",
+    "Analizar",
+    "Aplicar",
+    "Avisar"
+  ],
+  "elements": [
+    {
+      "lane": 0,
+      "phase": 0,
+      "text": "Indicar importe deseado e ingresos actuales y confirmar"
+    },
+    {
+      "lane": 1,
+      "phase": 1,
+      "text": "Validar sesión, revisar solicitudes abiertas y enviar al motor",
+      "chip": "recibido"
+    },
+    {
+      "lane": 2,
+      "phase": 2,
+      "text": "Calcular score (12 meses) y límite máximo de la política",
+      "chip": "en evaluación"
+    },
+    {
+      "lane": 1,
+      "phase": 3,
+      "text": "Avisar del rechazo y la fecha para volver a solicitar (90 días)",
+      "chip": "rechazado",
+      "style": "out"
+    },
+    {
+      "lane": 3,
+      "phase": 3,
+      "text": "Revisar, pedir justificante si hace falta y decidir el importe",
+      "chip": "en análisis",
+      "style": "focus"
+    },
+    {
+      "lane": 4,
+      "phase": 4,
+      "text": "Aplicar el nuevo límite en la cuenta y registrar la auditoría"
+    },
+    {
+      "lane": 1,
+      "phase": 5,
+      "text": "Avisar al cliente del límite aprobado",
+      "chip": "completado"
+    },
+    {
+      "lane": 0,
+      "phase": 5,
+      "text": "Ver el nuevo límite en la pantalla de la cuenta"
+    }
+  ],
+  "sequence": [
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      2,
+      2
+    ],
+    [
+      2,
+      2,
+      3,
+      3
+    ],
+    [
+      2,
+      2,
+      4,
+      4
+    ],
+    [
+      2,
+      2,
+      1,
+      3
+    ],
+    [
+      3,
+      3,
+      1,
+      3
+    ],
+    [
+      3,
+      3,
+      4,
+      4
+    ],
+    [
+      4,
+      4,
+      1,
+      5
+    ],
+    [
+      1,
+      5,
+      0,
+      5
+    ]
+  ],
+  "sections": [
+    {
+      "title": "Decisión del motor de crédito",
+      "type": "steps",
+      "items": [
+        [
+          "Aprobación automática",
+          "Importe dentro del límite máximo y score por encima del umbral. Pasa a operaciones; aviso en unos 3 minutos."
+        ],
+        [
+          "Pasa al analista",
+          "Importe por encima del límite máximo o score en la zona gris. Aprueba, aprueba un importe menor o rechaza; aviso en unas 9 horas."
+        ],
+        [
+          "Rechazado",
+          "Score por debajo del umbral. El cliente recibe el motivo y puede volver a solicitar en 90 días."
+        ]
+      ]
+    },
+    {
+      "title": "Quién recibe el resultado",
+      "type": "targets",
+      "items": [
+        [
+          "Cliente",
+          "El nuevo límite, o el motivo del rechazo y la fecha para volver a solicitar."
+        ],
+        [
+          "Analista de crédito",
+          "El resultado de cada caso vuelve a la calibración de la política."
+        ],
+        [
+          "Atención al cliente",
+          "El historial de la solicitud para responder consultas."
+        ]
+      ]
+    }
+  ],
+  "band": {
+    "f1": "42 mil solicitudes al mes; el motor decide el 71% sin analista, con aviso en 3 minutos frente a 9 horas cuando interviene el analista.",
+    "f2": "La solicitud de justificante de ingresos por la app forma parte del análisis y no aparece como etapa independiente."
+  },
+  "footer": [
+    "ai-diagrams",
+    "ejemplo de carriles · 2026-11"
+  ],
+  "lang": "es"
+}

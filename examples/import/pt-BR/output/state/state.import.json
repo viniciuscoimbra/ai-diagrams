@@ -1,0 +1,9 @@
+{
+  "input": "../../state.mmd",
+  "type": "states",
+  "language": "pt-BR",
+  "sources": [
+    "_src/state.html"
+  ],
+  "gate": "passed"
+}
