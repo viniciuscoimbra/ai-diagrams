@@ -15,6 +15,10 @@
   --c4-person-desc:#E5E7EB;
   --c4-external:#E9EBEF;
   --c4-boundary:#F9FAFB;
+  --c4-focus:#CCFBF1;
+  --c4-focus-border:#0F766E;
+  --c4-internal:#DBEAFE;
+  --c4-internal-border:#3B82F6;
   --er-border:#CBD5E1;
   --er-legend:#F9FAFB;
   --er-row-even:#F8FAFC;
@@ -140,8 +144,13 @@ table.comp td:first-child{font-weight:600}
 .c4leg .seta b{width:18px;height:18px;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center}
 .c4leg code{font-family:var(--font-mono);font-size:11px}
 /* C4 gerado pelo modelo (scripts/build_c4.py): formas por tipo, rótulo na seta, navegação entre visões */
-.bchip.c4.foco{border-width:2.4px}
-.bchip.c4.outro{background:var(--zone);border-color:var(--muted)}
+.bchip.c4.foco{border-width:2.4px;background:var(--c4-focus);border-color:var(--c4-focus-border)}
+.bchip.c4.parte{background:var(--c4-focus);border-color:var(--c4-focus-border)}
+.bchip.c4.parte.comp:before,.bchip.c4.parte.comp:after{border-color:var(--c4-focus-border)}
+.bchip.c4.outro{background:var(--c4-internal);border-color:var(--c4-internal-border)}
+.c4leg .sw.foco{border-width:2.4px;background:var(--c4-focus);border-color:var(--c4-focus-border)}
+.c4leg .sw.parte{background:var(--c4-focus);border-color:var(--c4-focus-border)}
+.c4leg .sw.outro{background:var(--c4-internal);border-color:var(--c4-internal-border)}
 .bchip.c4.web{border-top-width:9px;border-radius:6px 6px 4px 4px}
 .bchip.c4.movel{border-width:1.4px 7px;border-radius:14px}
 .bchip.c4.fila{border-radius:18px/50%;padding-left:24px;padding-right:24px}
@@ -169,8 +178,6 @@ table.comp td:first-child{font-weight:600}
 .c4steps .rn{margin-top:2px}
 .c4steps b{font-weight:600;color:var(--ink)}
 .c4steps code{font-family:var(--font-mono);font-size:11px}
-.c4leg .sw.foco{border-width:2.4px}
-.c4leg .sw.outro{background:var(--zone);border-color:var(--muted)}
 .c4leg .sw.web{border-top-width:6px}
 .c4leg .sw.movel{border-width:1.4px 5px;border-radius:8px;width:30px}
 .c4leg .sw.fila{border-radius:10px/50%}

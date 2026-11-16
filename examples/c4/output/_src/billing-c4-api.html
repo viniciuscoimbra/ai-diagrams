@@ -28,43 +28,43 @@ body{width:1651px}</style></head><body>
     <div class="bt">Nova Plataforma de Cobrança</div>
     <div class="bs">registro do boleto</div>
   </div>
-  <div class="bchip c4 web" style="left:422px;top:36px;width:260px;height:88px">
+  <div class="bchip c4 parte web" style="left:422px;top:36px;width:260px;height:88px">
     <div class="bn">contêiner · Next.js na Vercel</div>
     <div class="bt">Portal PJ</div>
     <div class="bs">emissão em lote e painel de recebimentos</div>
   </div>
-  <div class="bchip c4 web" style="left:98px;top:36px;width:260px;height:88px">
+  <div class="bchip c4 parte web" style="left:98px;top:36px;width:260px;height:88px">
     <div class="bn">contêiner · React</div>
     <div class="bt">Backoffice</div>
     <div class="bs">consulta e ajuste manual de boletos</div>
   </div>
-  <div class="bchip c4 banco" style="left:904px;top:841px;width:260px;height:86px">
+  <div class="bchip c4 parte banco" style="left:904px;top:841px;width:260px;height:86px">
     <img src="aws://database/dynamodb.png">
     <div class="bn">contêiner · DynamoDB</div>
     <div class="bt">Banco de cobrança</div>
     <div class="bs">boletos, situação e histórico de eventos</div>
   </div>
-  <div class="bchip c4 comp" style="left:422px;top:338px;width:260px;height:92px">
+  <div class="bchip c4 comp parte" style="left:422px;top:338px;width:260px;height:92px">
     <div class="bn">componente · Fastify</div>
     <div class="bt">Rotas de boleto</div>
     <div class="bs">recebe a emissão, a consulta e o ajuste</div>
   </div>
-  <div class="bchip c4 comp" style="left:624px;top:531px;width:260px;height:92px">
+  <div class="bchip c4 comp parte" style="left:624px;top:531px;width:260px;height:92px">
     <div class="bn">componente · JWT da Cognito</div>
     <div class="bt">Controle de acesso</div>
     <div class="bs">confere se quem chama é cliente ou operador</div>
   </div>
-  <div class="bchip c4 comp" style="left:344px;top:531px;width:260px;height:92px">
+  <div class="bchip c4 comp parte" style="left:344px;top:531px;width:260px;height:92px">
     <div class="bn">componente · TypeScript</div>
     <div class="bt">Validador de pagador</div>
     <div class="bs">confere CPF ou CNPJ, vencimento e valor</div>
   </div>
-  <div class="bchip c4 comp" style="left:1184px;top:531px;width:260px;height:92px">
+  <div class="bchip c4 comp parte" style="left:1184px;top:531px;width:260px;height:92px">
     <div class="bn">componente · cliente HTTPS com certificado</div>
     <div class="bt">Registro na CIP</div>
     <div class="bs">registra o boleto e devolve a linha digitável</div>
   </div>
-  <div class="bchip c4 comp" style="left:904px;top:531px;width:260px;height:92px">
+  <div class="bchip c4 comp parte" style="left:904px;top:531px;width:260px;height:92px">
     <div class="bn">componente · AWS SDK</div>
     <div class="bt">Repositório de boletos</div>
     <div class="bs">lê e grava boleto, situação e evento</div>
@@ -96,9 +96,9 @@ body{width:1651px}</style></head><body>
 <div class="c4leg">
 <div class="it"><div class="sw pessoa"></div>pessoa</div>
 <div class="it"><div class="sw limite"></div>limite do contêiner em foco</div>
-<div class="it"><div class="sw web"></div>contêiner de interface web</div>
-<div class="it"><div class="sw banco"></div>contêiner de dados</div>
-<div class="it"><div class="sw comp"></div>componente dentro do contêiner</div>
+<div class="it"><div class="sw web parte"></div>contêiner de interface web</div>
+<div class="it"><div class="sw banco parte"></div>contêiner de dados</div>
+<div class="it"><div class="sw comp parte"></div>componente dentro do contêiner</div>
 <div class="it"><div class="sw externo"></div>sistema externo</div>
 <div class="it"><span class="seta"><i></i></span>relação: o que faz <code>[tecnologia]</code></div>
 </div>

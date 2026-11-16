@@ -15,24 +15,30 @@
     {"id": "backoffice", "type": "container", "parent": "pix", "shape": "web", "technology": "React", "name": "Backoffice web", "description": "consulta, devolução e bloqueio"},
     {"id": "api", "type": "container", "parent": "pix", "technology": "Kotlin no Fargate", "icon": "aws://compute/fargate.png", "name": "API Pix", "description": "valida chave e limite, pede o score e grava o pedido com a outbox"},
     {"id": "banco", "type": "container", "parent": "pix", "shape": "database", "technology": "Aurora PostgreSQL", "icon": "aws://database/aurora.png", "name": "Banco Pix", "description": "pedidos, situação e outbox"},
-    {"id": "worker", "type": "container", "parent": "pix", "technology": "Kotlin no Fargate", "icon": "aws://compute/fargate.png", "name": "Worker de liquidação", "description": "lê a outbox, debita e envia ao SPI"}
+    {"id": "worker", "type": "container", "parent": "pix", "technology": "Kotlin no Fargate", "icon": "aws://compute/fargate.png", "name": "Worker de liquidação", "description": "lê a outbox, debita e envia ao SPI"},
+    {"id": "rotas", "type": "component", "parent": "api", "technology": "Ktor", "name": "Rotas de Pix", "description": "recebe o pedido, a consulta e a devolução"},
+    {"id": "chaves", "type": "component", "parent": "api", "technology": "cliente HTTPS · cache de 5 min", "name": "Resolvedor de chave", "description": "busca a chave no DICT e guarda por pouco tempo"},
+    {"id": "risco", "type": "component", "parent": "api", "technology": "Resilience4j", "name": "Cliente de risco", "description": "pede o score e assume 0,5 quando o tempo acaba"},
+    {"id": "pedidos", "type": "component", "parent": "api", "technology": "Exposed · JDBC", "name": "Repositório de pedidos", "description": "grava o pedido e a outbox na mesma transação"}
   ],
   "relationships": [
     {"from": "cliente", "to": "app", "description": "Informa chave e valor e confirma com a senha", "technology": "toque no app"},
-    {"from": "app", "to": "api", "description": "Envia o pedido com idempotency-key", "technology": "HTTPS · JSON"},
+    {"from": "app", "to": "rotas", "description": "Envia o pedido com idempotency-key", "technology": "HTTPS · JSON"},
     {"from": "analista", "to": "backoffice", "description": "Consulta transferências e pede devolução", "technology": "navegador"},
-    {"from": "backoffice", "to": "api", "description": "Usa a mesma API com papel de operador", "technology": "HTTPS · JSON"},
-    {"from": "api", "to": "dict", "description": "Resolve a chave do recebedor", "technology": "HTTPS · mTLS"},
-    {"from": "api", "to": "antifraude", "description": "Pede o score; sem resposta, segue como 0,5", "technology": "HTTPS · 150 ms"},
-    {"from": "api", "to": "banco", "description": "Grava o pedido e a outbox no mesmo commit", "technology": "SQL · uma transação"},
+    {"from": "backoffice", "to": "rotas", "description": "Usa a mesma API com papel de operador", "technology": "HTTPS · JSON"},
+    {"from": "rotas", "to": "chaves", "description": "Pede os dados da chave do recebedor", "technology": "chamada local"},
+    {"from": "rotas", "to": "risco", "description": "Pede o score da transferência", "technology": "chamada local"},
+    {"from": "rotas", "to": "pedidos", "description": "Grava o pedido aceito", "technology": "chamada local"},
+    {"from": "chaves", "to": "dict", "description": "Resolve a chave do recebedor", "technology": "HTTPS · mTLS"},
+    {"from": "risco", "to": "antifraude", "description": "Pede o score; sem resposta, segue como 0,5", "technology": "HTTPS · 150 ms"},
+    {"from": "pedidos", "to": "banco", "description": "Grava o pedido e a outbox no mesmo commit", "technology": "SQL · uma transação"},
     {"from": "worker", "to": "banco", "description": "Lê a outbox e atualiza a situação", "technology": "SQL"},
     {"from": "worker", "to": "spi", "description": "Envia o pacs.008 e recebe o pacs.002", "technology": "ICOM · mTLS"},
     {"from": "worker", "to": "core", "description": "Debita a conta; estorna se o SPI rejeitar", "technology": "gRPC"}
   ],
   "views": [
-    {"type": "context", "key": "context", "scope": "pix", "title": "Sistema Pix: contexto",
-     "description": "O sistema Pix como uma caixa só: quem o usa e de que sistemas ele depende."},
-    {"type": "container", "key": "containers", "scope": "pix", "title": "Sistema Pix: contêineres e dependências",
-     "description": "Quem usa o sistema Pix, em que contêineres ele se divide e de que sistemas ele depende. Cada seta diz o que a relação faz e a tecnologia."}
+    {"type": "context", "key": "context", "scope": "pix", "title": "Sistema Pix: contexto", "description": "O sistema Pix como uma caixa só: quem o usa e de que sistemas ele depende."},
+    {"type": "container", "key": "containers", "scope": "pix", "title": "Sistema Pix: contêineres e dependências", "description": "Quem usa o sistema Pix, em que contêineres ele se divide e de que sistemas ele depende. Cada seta diz o que a relação faz e a tecnologia."},
+    {"type": "component", "key": "api", "scope": "api", "title": "API Pix: componentes", "description": "As partes da API Pix e quem chama cada uma, do pedido no app à gravação com a outbox."}
   ]
 }

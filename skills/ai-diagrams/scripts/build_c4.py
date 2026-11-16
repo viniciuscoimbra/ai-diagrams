@@ -277,7 +277,7 @@ def classe(M, i, d):
         cls.append('pessoa')
     elif t == 'system':
         if d['tipo'] == 'landscape' and not e.get('external'):
-            pass  # na paisagem não há foco: todo sistema da empresa tem a mesma caixa
+            cls.append('outro')  # na paisagem não há foco: todo sistema da empresa tem a mesma caixa
         elif d['tipo'] in ('context', 'dynamic') and i == d['escopo']:
             cls.append('foco')
         elif e.get('external'):
@@ -285,7 +285,9 @@ def classe(M, i, d):
         else:
             cls.append('outro')
     elif t == 'component':
-        cls.append('comp')
+        cls += ['comp', 'parte']
+    elif t == 'container':
+        cls.append('parte')  # contêineres e componentes são partes do sistema em foco: a cor dele
     elif t == 'infrastructureNode':
         cls.append('infra')
     if e.get('shape') == 'database':
@@ -775,10 +777,10 @@ def legenda(usados, tr, tipo):
     itens = []
     def it(sw, chave):
         itens.append('<div class="it"><div class="sw %s"></div>%s</div>' % (sw, esc(tr[chave])))
-    ordem = [('pessoa', 'pessoa', 'c4.leg.pessoa'), ('foco', 'foco', 'c4.leg.foco'), ('sistema', '', 'c4.leg.sistema'), ('limite', 'limite', 'c4.leg.limite'),
+    ordem = [('pessoa', 'pessoa', 'c4.leg.pessoa'), ('foco', 'foco', 'c4.leg.foco'), ('sistema', 'outro', 'c4.leg.sistema'), ('limite', 'limite', 'c4.leg.limite'),
              ('limite_c', 'limite', 'c4.leg.limite_conteiner'), ('dnode', 'dnode', 'c4.leg.no'),
-             ('conteiner', '', 'c4.leg.conteiner'), ('web', 'web', 'c4.leg.web'), ('movel', 'movel', 'c4.leg.movel'),
-             ('banco', 'banco', 'c4.leg.banco'), ('fila', 'fila', 'c4.leg.fila'), ('comp', 'comp', 'c4.leg.componente'),
+             ('conteiner', 'parte', 'c4.leg.conteiner'), ('web', 'web parte', 'c4.leg.web'), ('movel', 'movel parte', 'c4.leg.movel'),
+             ('banco', 'banco parte', 'c4.leg.banco'), ('fila', 'fila parte', 'c4.leg.fila'), ('comp', 'comp parte', 'c4.leg.componente'),
              ('infra', 'infra', 'c4.leg.infra'), ('outro', 'outro', 'c4.leg.outro'), ('externo', 'externo', 'c4.leg.externo'),
              ('drill', 'drill', 'c4.leg.detalhe')]
     for chave, sw, rot in ordem:
@@ -848,8 +850,9 @@ def pagina(M, S, v, d, tr, tm_link, meta, base, principal):
         for k in ('pessoa', 'foco', 'web', 'movel', 'banco', 'fila', 'comp', 'infra', 'outro', 'externo'):
             if k in c:
                 usados.add(k)
-        if M.el[i]['type'] == 'system' and len(c) == 2:
-            usados.add('sistema')
+        if M.el[i]['type'] == 'system' and d['tipo'] == 'landscape' and 'outro' in c:
+            usados.add('sistema')  # sem foco, não há "outro": é o sistema da empresa
+            usados.discard('outro')
         if M.el[i]['type'] in ('container', 'containerInstance') and not ({'web', 'movel', 'banco', 'fila'} & set(c)):
             usados.add('conteiner')
         if i in drills:

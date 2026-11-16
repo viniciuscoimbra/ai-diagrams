@@ -8,6 +8,12 @@
 - New `orientation` on the model or on a view: `auto` (default), `horizontal` (left to right only, page up to 2560 px) or `vertical` (top to bottom only, the 0.2.0 behavior).
 - `ai-diagrams import` maps `autoLayout lr`/`rl` to `horizontal` and `tb`/`bt` to `vertical`.
 
+### C4 color by role
+
+- The system in focus, its containers and its components get the accent tint; another system of the company is blue; an external system stays dashed and gray; a person stays dark. The legend follows.
+- New optional theme keys in `derived`: `c4_focus`, `c4_focus_border`, `c4_internal`, `c4_internal_border`. A theme without them keeps the 0.2.0 gray.
+- The template `11-c4` draws the three C4 levels: context, containers and the components of the API Pix.
+
 ## 0.2.0
 
 Interface in English. Commands, flags, folder and file names, error codes, messages, theme and spec keys, markers and docs move from Portuguese to English. Diagram text does not change: a diagram generated in pt-BR stays in pt-BR, and the fixed labels in `pt-BR`, `en` and `es` are the same as in 0.1.0.

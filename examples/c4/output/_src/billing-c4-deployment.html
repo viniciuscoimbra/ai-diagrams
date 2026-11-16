@@ -37,30 +37,30 @@ body{width:1400px}</style></head><body>
     <div class="bt">Fila de retorno</div>
     <div class="bs">um evento por arquivo novo</div>
   </div>
-  <div class="bchip c4" style="left:660px;top:802px;width:260px;height:94px">
+  <div class="bchip c4 parte" style="left:660px;top:802px;width:260px;height:94px">
     <img src="aws://compute/lambda.png">
     <div class="bn">contêiner · Node.js em Lambda</div>
     <div class="bt">API de cobrança</div>
     <div class="bs">atrás do API Gateway; valida o pagador e grava o boleto</div>
   </div>
-  <div class="bchip c4 banco" style="left:307px;top:1075px;width:260px;height:86px">
+  <div class="bchip c4 parte banco" style="left:307px;top:1075px;width:260px;height:86px">
     <img src="aws://database/dynamodb.png">
     <div class="bn">contêiner · DynamoDB</div>
     <div class="bt">Banco de cobrança</div>
     <div class="bs">boletos, situação e histórico de eventos</div>
   </div>
-  <div class="bchip c4" style="left:264px;top:802px;width:260px;height:94px">
+  <div class="bchip c4 parte" style="left:264px;top:802px;width:260px;height:94px">
     <img src="aws://compute/lambda.png">
     <div class="bn">contêiner · Lambda e fila SQS</div>
     <div class="bt">Processador de retorno</div>
     <div class="bs">lê o arquivo de retorno e dá baixa no boleto</div>
   </div>
-  <div class="bchip c4 web" style="left:725px;top:60px;width:260px;height:88px">
+  <div class="bchip c4 parte web" style="left:725px;top:60px;width:260px;height:88px">
     <div class="bn">contêiner · Next.js na Vercel</div>
     <div class="bt">Portal PJ</div>
     <div class="bs">emissão em lote e painel de recebimentos</div>
   </div>
-  <div class="bchip c4 web" style="left:183px;top:60px;width:260px;height:88px">
+  <div class="bchip c4 parte web" style="left:183px;top:60px;width:260px;height:88px">
     <div class="bn">contêiner · React</div>
     <div class="bt">Backoffice</div>
     <div class="bs">consulta e ajuste manual de boletos</div>
@@ -87,9 +87,9 @@ body{width:1400px}</style></head><body>
 <div class="sec">Legenda C4</div>
 <div class="c4leg">
 <div class="it"><div class="sw dnode"></div>nó de implantação: conta, região, plataforma ou serviço gerenciado</div>
-<div class="it"><div class="sw "></div>contêiner: aplicação ou serviço</div>
-<div class="it"><div class="sw web"></div>contêiner de interface web</div>
-<div class="it"><div class="sw banco"></div>contêiner de dados</div>
+<div class="it"><div class="sw parte"></div>contêiner: aplicação ou serviço</div>
+<div class="it"><div class="sw web parte"></div>contêiner de interface web</div>
+<div class="it"><div class="sw banco parte"></div>contêiner de dados</div>
 <div class="it"><div class="sw infra"></div>nó de infraestrutura</div>
 <div class="it"><span class="seta"><i></i></span>relação: o que faz <code>[tecnologia]</code></div>
 </div>

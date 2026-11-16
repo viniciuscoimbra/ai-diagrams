@@ -13,10 +13,10 @@ body{width:1401px}</style></head><body>
 <div class="kicker"><span class="sq">■</span>&nbsp; C4 · nível 2, contêineres</div>
 <h1>Sistema Pix: contêineres e dependências</h1>
 <div class="sub">Quem usa o sistema Pix, em que contêineres ele se divide e de que sistemas ele depende. Cada seta diz o que a relação faz e a tecnologia.</div>
-<div class="c4nav"><span class="cn">Visões</span><a href="11-c4-pix-context.html">contexto</a><b>contêineres</b></div>
+<div class="c4nav"><span class="cn">Visões</span><a href="11-c4-pix-context.html">contexto</a><b>contêineres</b><a href="11-c4-pix-api.html">componentes de API Pix</a></div>
 
-<div class="wrap stack"><div class="canvas" style="width:1305px;height:1124px">
-  <div class="frame limite" style="left:120px;top:304px;width:879px;height:544px"><div class="flabel" style="top:auto;bottom:9px;left:292px">Sistema Pix · sistema em foco</div></div>
+<div class="wrap stack"><div class="canvas" style="width:1305px;height:1142px">
+  <div class="frame limite" style="left:120px;top:304px;width:879px;height:562px"><div class="flabel" style="top:auto;bottom:9px;left:292px">Sistema Pix · sistema em foco</div></div>
   <div class="bchip c4 pessoa" style="left:234px;top:44px;width:250px;height:80px">
     <div class="bn">pessoa</div>
     <div class="bt">Cliente</div>
@@ -29,89 +29,91 @@ body{width:1401px}</style></head><body>
     <div class="bs">acompanha e devolve transferências</div>
   </div>
   <div class="c4head" style="left:653px;top:16px"></div>
-  <div class="bchip c4 externo" style="left:57px;top:1028px;width:260px;height:80px">
+  <div class="bchip c4 externo" style="left:57px;top:1046px;width:260px;height:80px">
     <div class="bn">sistema externo · Banco Central</div>
     <div class="bt">DICT</div>
     <div class="bs">diretório de chaves Pix</div>
   </div>
-  <div class="bchip c4 outro" style="left:381px;top:1028px;width:260px;height:80px">
+  <div class="bchip c4 outro" style="left:381px;top:1046px;width:260px;height:80px">
     <div class="bn">sistema · outro time</div>
     <div class="bt">Antifraude</div>
     <div class="bs">devolve um score de 0 a 1</div>
   </div>
-  <div class="bchip c4 externo" style="left:705px;top:1028px;width:260px;height:80px">
+  <div class="bchip c4 externo" style="left:705px;top:1046px;width:260px;height:80px">
     <div class="bn">sistema externo · Banco Central</div>
     <div class="bt">SPI · ICOM</div>
     <div class="bs">liquida a transferência</div>
   </div>
-  <div class="bchip c4 outro" style="left:1029px;top:1028px;width:260px;height:80px">
+  <div class="bchip c4 outro" style="left:1029px;top:1046px;width:260px;height:80px">
     <div class="bn">sistema · outro time</div>
     <div class="bt">Core bancário</div>
     <div class="bs">saldo e lançamento na conta</div>
   </div>
-  <div class="bchip c4 movel" style="left:229px;top:342px;width:260px;height:80px">
+  <div class="bchip c4 parte movel" style="left:229px;top:342px;width:260px;height:80px">
     <div class="bn">contêiner · iOS e Android</div>
     <div class="bt">App do cliente</div>
     <div class="bs">tela de envio, comprovante e extrato</div>
   </div>
-  <div class="bchip c4 web" style="left:509px;top:338px;width:260px;height:88px">
+  <div class="bchip c4 parte web" style="left:509px;top:338px;width:260px;height:88px">
     <div class="bn">contêiner · React</div>
     <div class="bt">Backoffice web</div>
     <div class="bs">consulta, devolução e bloqueio</div>
   </div>
-  <div class="bchip c4" style="left:272px;top:521px;width:260px;height:94px">
+  <div class="bchip c4 parte" style="left:272px;top:521px;width:260px;height:112px">
     <img src="aws://compute/fargate.png">
     <div class="bn">contêiner · Kotlin no Fargate</div>
     <div class="bt">API Pix</div>
     <div class="bs">valida chave e limite, pede o score e grava o pedido com a outbox</div>
+    <a class="drill" href="11-c4-pix-api.html">abrir componentes →</a>
   </div>
-  <div class="bchip c4 banco" style="left:547px;top:710px;width:260px;height:86px">
+  <div class="bchip c4 parte banco" style="left:547px;top:728px;width:260px;height:86px">
     <img src="aws://database/aurora.png">
     <div class="bn">contêiner · Aurora PostgreSQL</div>
     <div class="bt">Banco Pix</div>
     <div class="bs">pedidos, situação e outbox</div>
   </div>
-  <div class="bchip c4" style="left:705px;top:521px;width:260px;height:94px">
+  <div class="bchip c4 parte" style="left:705px;top:553px;width:260px;height:80px">
     <img src="aws://compute/fargate.png">
     <div class="bn">contêiner · Kotlin no Fargate</div>
     <div class="bt">Worker de liquidação</div>
     <div class="bs">lê a outbox, debita e envia ao SPI</div>
   </div>
-  <svg class="edges" viewBox="0 0 1305 1124">
+  <svg class="edges" viewBox="0 0 1305 1142">
     <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--support)"/></marker></defs>
     <path d="M359,124 L359,342" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
     <path d="M359,422 L359,521" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
     <path d="M673,124 L673,156 L639,156 L639,338" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
     <path d="M639,426 L639,511 L446,511 L446,521" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
-    <path d="M337,615 L337,853 L337,885 L187,885 L187,1028" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
-    <path d="M402,615 L402,853 L402,885 L511,885 L511,1028" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
-    <path d="M467,615 L467,625 L633,625 L633,710" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
-    <path d="M770,615 L770,625 L824,625 L824,700 L720,700 L720,710" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
-    <path d="M835,615 L835,853 L835,1028" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
-    <path d="M900,615 L900,853 L900,885 L1159,885 L1159,1028" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M337,633 L337,871 L337,903 L187,903 L187,1046" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M402,633 L402,871 L402,903 L511,903 L511,1046" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M467,633 L467,643 L633,643 L633,728" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M770,633 L770,643 L824,643 L824,718 L720,718 L720,728" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M835,633 L835,871 L835,1046" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
+    <path d="M900,633 L900,871 L900,903 L1159,903 L1159,1046" stroke-width="1.6" fill="none" marker-end="url(#a)" style="stroke:var(--support)"/>
   </svg>
   <div class="rel" data-edge="0" style="left:254px;top:210px;width:210px"><span class="rd">Informa chave e valor e confirma com a senha</span><span class="rt">[toque no app]</span></div>
   <div class="rel" data-edge="1" style="left:262px;top:455px;width:195px"><span class="rd">Envia o pedido com idempotency-key</span><span class="rt">[HTTPS · JSON]</span></div>
   <div class="rel" data-edge="2" style="left:534px;top:224px;width:210px"><span class="rd">Consulta transferências e pede devolução</span><span class="rt">[navegador]</span></div>
   <div class="rel" data-edge="3" style="left:534px;top:445px;width:210px"><span class="rd">Usa a mesma API com papel de operador</span><span class="rt">[HTTPS · JSON]</span></div>
-  <div class="rel" data-edge="4" style="left:108px;top:940px;width:157px"><span class="rd">Resolve a chave do recebedor</span><span class="rt">[HTTPS · mTLS]</span></div>
-  <div class="rel" data-edge="5" style="left:406px;top:933px;width:210px"><span class="rd">Pede o score; sem resposta, segue como 0,5</span><span class="rt">[HTTPS · 150 ms]</span></div>
-  <div class="rel" data-edge="6" style="left:415px;top:634px;width:210px"><span class="rd">Grava o pedido e a outbox no mesmo commit</span><span class="rt">[SQL · uma transação]</span></div>
-  <div class="rel" data-edge="7" style="left:645px;top:658px;width:170px"><span class="rd">Lê a outbox e atualiza a situação</span><span class="rt">[SQL]</span></div>
-  <div class="rel" data-edge="8" style="left:736px;top:924px;width:197px"><span class="rd">Envia o pacs.008 e recebe o pacs.002</span><span class="rt">[ICOM · mTLS]</span></div>
-  <div class="rel" data-edge="9" style="left:927px;top:868px;width:205px"><span class="rd">Debita a conta; estorna se o SPI rejeitar</span><span class="rt">[gRPC]</span></div>
+  <div class="rel" data-edge="4" style="left:108px;top:958px;width:157px"><span class="rd">Resolve a chave do recebedor</span><span class="rt">[HTTPS · mTLS]</span></div>
+  <div class="rel" data-edge="5" style="left:406px;top:951px;width:210px"><span class="rd">Pede o score; sem resposta, segue como 0,5</span><span class="rt">[HTTPS · 150 ms]</span></div>
+  <div class="rel" data-edge="6" style="left:415px;top:652px;width:210px"><span class="rd">Grava o pedido e a outbox no mesmo commit</span><span class="rt">[SQL · uma transação]</span></div>
+  <div class="rel" data-edge="7" style="left:645px;top:676px;width:170px"><span class="rd">Lê a outbox e atualiza a situação</span><span class="rt">[SQL]</span></div>
+  <div class="rel" data-edge="8" style="left:736px;top:942px;width:197px"><span class="rd">Envia o pacs.008 e recebe o pacs.002</span><span class="rt">[ICOM · mTLS]</span></div>
+  <div class="rel" data-edge="9" style="left:927px;top:886px;width:205px"><span class="rd">Debita a conta; estorna se o SPI rejeitar</span><span class="rt">[gRPC]</span></div>
 </div></div>
 
 <div class="sec">Legenda C4</div>
 <div class="c4leg">
 <div class="it"><div class="sw pessoa"></div>pessoa</div>
 <div class="it"><div class="sw limite"></div>limite do sistema em foco</div>
-<div class="it"><div class="sw "></div>contêiner: aplicação ou serviço</div>
-<div class="it"><div class="sw web"></div>contêiner de interface web</div>
-<div class="it"><div class="sw movel"></div>aplicativo móvel</div>
-<div class="it"><div class="sw banco"></div>contêiner de dados</div>
+<div class="it"><div class="sw parte"></div>contêiner: aplicação ou serviço</div>
+<div class="it"><div class="sw web parte"></div>contêiner de interface web</div>
+<div class="it"><div class="sw movel parte"></div>aplicativo móvel</div>
+<div class="it"><div class="sw banco parte"></div>contêiner de dados</div>
 <div class="it"><div class="sw outro"></div>outro sistema da empresa</div>
 <div class="it"><div class="sw externo"></div>sistema externo</div>
+<div class="it"><span class="sw drill">abrir →</span>abre uma visão mais detalhada</div>
 <div class="it"><span class="seta"><i></i></span>relação: o que faz <code>[tecnologia]</code></div>
 </div>
 
