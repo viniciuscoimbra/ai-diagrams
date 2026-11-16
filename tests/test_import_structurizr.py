@@ -35,6 +35,40 @@ class StructurizrTests(unittest.TestCase):
         external = {e['id'] for e in dsl_model['elements'] if e.get('external')}
         self.assertEqual(external, {'cip', 'liquidante', 'webhook'})
 
+    def test_autolayout_direction_becomes_orientation(self):
+        text = '''workspace {
+    model {
+        u = person "User" "uses it"
+        s = softwareSystem "Shop" "sells"
+        u -> s "Buys" "browser"
+    }
+    views {
+        systemContext s "lr" {
+            include *
+            autoLayout lr
+        }
+        systemContext s "tb" {
+            include *
+            autoLayout tb 300 300
+        }
+        systemContext s "bare" {
+            include *
+            autoLayout
+        }
+    }
+}'''
+        vs = {v['key']: v for v in dsl.modelo_c4(text, BASE)['views']}
+        self.assertEqual(vs['lr'].get('orientation'), 'horizontal')
+        self.assertEqual(vs['tb'].get('orientation'), 'vertical')
+        self.assertNotIn('orientation', vs['bare'])
+
+    def test_orientation_is_checked(self):
+        self.assertEqual(c4.orientacao({}, {'key': 'a'}), 'auto')
+        self.assertEqual(c4.orientacao({'orientation': 'vertical'}, {'key': 'a'}), 'vertical')
+        self.assertEqual(c4.orientacao({'orientation': 'vertical'}, {'key': 'a', 'orientation': 'horizontal'}), 'horizontal')
+        with self.assertRaisesRegex(SystemExit, 'C4-VIEW'):
+            c4.orientacao({}, {'key': 'a', 'orientation': 'LR'})
+
     def test_hierarchical_identifiers_this_and_filtered_views(self):
         text = '''workspace {
     !identifiers hierarchical
