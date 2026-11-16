@@ -1,0 +1,64 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>12 · Afirmações sobre Ana em três áreas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/*ESTILO*/</style></head><body>
+<div class="page">
+
+  <div class="hdr"><span>ai-diagrams · Modelos de diagrama · Varejo de exemplo</span><span>12 · Grafo de afirmações</span></div>
+
+  <div class="kicker"><span class="sq">■</span> Grafo de afirmações</div>
+  <h1>Endereço de Ana: afirmações por área e elos de identidade</h1>
+  <div class="sub">Cada caixa é uma entidade de uma área; cada seta é uma afirmação com observador, tempo válido e tempo de gravação. A Rua A não é apagada em 5 jun.: o Cadastro fecha o tempo válido dela e abre o da Rua B. As linhas pontilhadas dizem que entidades de áreas diferentes são o mesmo ente, com a confiança do elo.</div>
+
+  <div class="canvas" style="width:1306px;height:1047px">
+      <div class="frame gframe area" style="left:418px;top:20px;width:276px;height:137px"><div class="flabel" style="left:14px">Área · Cadastro</div></div>
+      <div class="frame gframe area" style="left:893px;top:399px;width:362px;height:326px"><div class="flabel" style="left:14px">Área · Faturamento</div></div>
+      <div class="frame gframe area" style="left:121px;top:494px;width:276px;height:137px"><div class="flabel" style="left:14px">Área · CRM</div></div>
+      <div class="painel gno entidade" style="left:145px;top:534px;width:228px;height:73px"><div class="ptag">entidade</div><div class="pt"><code>crm:contato:ana</code></div></div>
+      <div class="painel gno valor" style="left:171px;top:954px;width:176px;height:73px"><div class="ptag">valor</div><div class="pt">Rua A</div></div>
+      <div class="painel gno entidade" style="left:442px;top:60px;width:228px;height:73px"><div class="ptag">entidade</div><div class="pt"><code>cliente:ana</code></div></div>
+      <div class="painel gno valor" style="left:445px;top:399px;width:176px;height:73px"><div class="ptag">valor</div><div class="pt">Rua A</div></div>
+      <div class="painel gno valor" style="left:669px;top:399px;width:176px;height:73px"><div class="ptag">valor</div><div class="pt">Rua B</div></div>
+      <div class="painel gno entidade" style="left:1003px;top:628px;width:228px;height:73px"><div class="ptag">entidade</div><div class="pt"><code>fat:cliente:4471</code></div></div>
+      <div class="painel gno entidade" style="left:965px;top:439px;width:228px;height:73px"><div class="ptag">entidade</div><div class="pt"><code>fat:conta:883</code></div></div>
+      <div class="painel gno valor" style="left:1029px;top:954px;width:176px;height:73px"><div class="ptag">valor</div><div class="pt">10%</div></div>
+      <div class="mlabel glabel" style="left:60px;top:254px;width:191px"><span class="gl ev">mesmo ente · 0,88</span><span class="gl carimbo">Resolução de identidade</span><span class="gl carimbo">gravado 2026-02-11</span></div>
+      <div class="mlabel glabel" style="left:20px;top:795px;width:231px"><span class="gl ev">endereço</span><span class="gl carimbo">CRM</span><span class="gl carimbo">válido 2022-03-10 →</span><span class="gl carimbo">gravado 2022-04-02</span><span class="gl alerta">sem autoridade: desconhecido</span></div>
+      <div class="mlabel glabel" style="left:365px;top:236px;width:160px"><span class="gl ev">endereço</span><span class="gl carimbo">Cadastro</span><span class="gl carimbo">válido 2022-03-10 →</span><span class="gl carimbo">2026-06-01</span><span class="gl carimbo">gravado 2026-06-05</span></div>
+      <div class="mlabel glabel" style="left:589px;top:245px;width:160px"><span class="gl ev">endereço</span><span class="gl carimbo">Cadastro</span><span class="gl carimbo">válido 2026-06-01 →</span><span class="gl carimbo">gravado 2026-06-05</span></div>
+      <div class="mlabel glabel" style="left:1004px;top:254px;width:191px"><span class="gl ev">mesmo ente · 0,97</span><span class="gl carimbo">Resolução de identidade</span><span class="gl carimbo">gravado 2026-02-11</span></div>
+      <div class="mlabel glabel" style="left:917px;top:532px;width:160px"><span class="gl ev">titular</span><span class="gl carimbo">Faturamento</span><span class="gl carimbo">válido 2024-01-15 →</span><span class="gl carimbo">gravado 2024-01-15</span></div>
+      <div class="mlabel glabel" style="left:1126px;top:794px;width:160px"><span class="gl ev">desconto</span><span class="gl gd">se <code>cliente_ativo</code></span><span class="gl carimbo">Faturamento</span><span class="gl carimbo">válido 2026-05-01 →</span><span class="gl carimbo">gravado 2026-04-28</span></div>
+      <svg class="edges" viewBox="0 0 1306 1047">
+        <defs><marker id="s" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--apoio)"/></marker></defs>
+        <path class="g-identidade" d="M488,133 L488,162 L488,188 L259,188 L259,534" fill="none"/>
+        <path class="g-fato g-alerta" d="M259,606 L259,954" fill="none" marker-end="url(#s)"/>
+        <path class="g-fato" d="M533,133 L533,162 L533,399" fill="none" marker-end="url(#s)"/>
+        <path class="g-fato" d="M579,133 L579,162 L579,210 L757,210 L757,399" fill="none" marker-end="url(#s)"/>
+        <path class="g-identidade" d="M624,133 L624,162 L624,188 L1203,188 L1203,618 L1155,618 L1155,628" fill="none"/>
+        <path class="g-relacao" d="M1079,512 L1079,628" fill="none" marker-end="url(#s)"/>
+        <path class="g-regra" d="M1117,701 L1117,954" fill="none" marker-end="url(#s)"/>
+      </svg>
+  </div>
+
+  <div class="sec">Nós</div>
+  <div class="passos-seq estados-leg">
+    <div class="ps-item"><div class="pd"><b><code>crm:contato:ana</code></b> o contato de Ana no CRM; o CRM guarda um endereço, mas não tem autoridade sobre ele.</div></div>
+    <div class="ps-item"><div class="pd"><b><code>cliente:ana</code></b> a cliente no Cadastro, que tem autoridade sobre endereço.</div></div>
+    <div class="ps-item"><div class="pd"><b><code>fat:cliente:4471</code></b> a mesma pessoa no Faturamento, com outro identificador.</div></div>
+    <div class="ps-item"><div class="pd"><b><code>fat:conta:883</code></b> a conta de cobrança da qual Ana é titular.</div></div>
+  </div>
+  <div class="sec">Notação</div>
+  <div class="notacao wrap"><div class="nt"><div class="no-mini"></div>entidade</div><div class="nt"><div class="no-mini valor"></div>valor</div><div class="nt"><div class="lin g-fato"></div>fato: atributo = valor</div><div class="nt"><div class="lin g-regra"></div>regra declarada: se condição, então valor</div><div class="nt"><div class="lin g-relacao"></div>relação entre entidades</div><div class="nt"><div class="lin g-identidade"></div>elo de identidade, com confiança</div><div class="nt"><span class="nt-rot"><span class="carimbo">observador</span></span>carimbo da afirmação: observador, tempo válido, tempo de gravação</div><div class="nt"><div class="lin g-alerta"></div>afirmação que não vale como contexto</div></div>
+  <div class="faixa">
+    <div class="f1">O endereço do CRM aparece em vermelho: o CRM não tem autoridade sobre endereço, então para o modelo esse valor é desconhecido.</div>
+    <div class="f2">As políticas que usam estas afirmações (confirmar entrega, limiar de confiança) ficam no harness e estão no modelo 13.</div>
+  </div>
+
+  <div class="foot"><span>ai-diagrams</span><span>Modelo de grafo de afirmações · 2026-11</span></div>
+
+</div>
+</body></html>

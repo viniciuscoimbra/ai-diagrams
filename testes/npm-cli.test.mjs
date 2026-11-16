@@ -25,7 +25,7 @@ assert.equal(manifest.license, 'MIT');
 assert.equal(manifest.author, 'Vinícius Coimbra <viniciuscoimbra@gmail.com>');
 assert.equal(Object.keys(manifest.dependencies || {}).length, 0);
 for (const relative of ['SKILL.md', 'scripts/importar.py', 'scripts/build.py', 'bpmn/vendor/LICENSE', 'estados/vendor/LICENSE.md', 'i18n/en.json', 'i18n/es.json', 'i18n/pt-BR.json']) assert.ok(fs.existsSync(path.join(skill, relative)), relative);
-assert.equal(fs.readdirSync(path.join(skill, 'modelos'), { withFileTypes: true }).filter(file => file.isDirectory()).length, 11);
+assert.equal(fs.readdirSync(path.join(skill, 'modelos'), { withFileTypes: true }).filter(file => file.isDirectory()).length, 13);
 function checkPackage(dir) {
   for (const file of fs.readdirSync(dir, { withFileTypes: true })) {
     assert.ok(!['node_modules', '__pycache__', 'site-pranchas', 'brand', '.git', 'testes', 'evals'].includes(file.name), file.name);

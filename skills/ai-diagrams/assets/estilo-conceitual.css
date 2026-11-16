@@ -326,3 +326,46 @@ svg.edges{position:absolute;inset:0;pointer-events:none;overflow:visible}
 .nt .nt-rot{color:var(--black);font-weight:500}
 .estados-leg .pd b{font-weight:600;color:var(--black);margin-right:4px}
 .sub code,.pd code,.painel.estado .ps code{font-family:var(--fonte-mono);font-size:.86em;color:var(--graphite)}
+
+/* ---------- grafo de contexto (gerar_grafo.py) ---------- */
+/* área ou zona: o frame dos raias; a zona do harness leva fundo de tinta clara */
+.gframe.har{border-style:solid;border-color:var(--tinta);background:rgba(var(--apoio-rgb),.07)}
+.gframe.ctx{border-style:solid}
+.painel.gno .ps{font-size:15px;line-height:20px;margin-top:0}
+.painel.gno .ps:first-of-type{margin-top:5px}
+.painel.gno .pt{line-height:21px}
+.painel.gno .ptag{line-height:14px}
+.painel.gno.entidade .pt code,.painel.gno.valor .pt code{font-family:var(--fonte-mono);font-size:.9em}
+.painel.gno.valor{border-radius:999px;border-style:solid;border-color:var(--cinza);padding:12px 17px}
+.painel.gno.valor .pt{font-weight:500}
+.painel.gno.harness{background:var(--tinta);border-color:var(--tinta)}
+.painel.gno.harness .pt{color:var(--papel)}
+.painel.gno.harness .ps{color:var(--cinza-claro)}
+.painel.gno.harness .ptag{color:var(--acento)}
+.painel.gno.consumidor{border-style:dashed}
+.painel.gno.traducao{border-width:1.5px 1.5px 1.5px 4px;border-left-color:var(--acento)}
+/* arestas: a forma do traço diz o tipo; a cor só marca alerta */
+.edges path.g-fato,.edges path.g-relacao,.edges path.g-compoe,.edges path.g-consulta,.edges path.g-decide{stroke:var(--apoio);stroke-width:1.6}
+.edges path.g-relacao{stroke-width:1.2}
+.edges path.g-regra,.edges path.g-evento,.edges path.g-revisa{stroke:var(--apoio);stroke-width:1.6;stroke-dasharray:7 5}
+.edges path.g-identidade,.edges path.g-traduz{stroke:var(--acento-forte);stroke-width:2;stroke-dasharray:2 4}
+.edges path.g-alerta{stroke:var(--risco)}
+/* rótulo da aresta: o que se afirma, depois o carimbo em mono */
+.glabel{background:var(--off-white);white-space:nowrap;padding:1px 0}
+.glabel .gl{display:block}
+.glabel .ev{font-weight:500}
+.glabel .gd{color:var(--graphite)}
+.glabel .carimbo,.glabel .alerta{font-family:var(--fonte-mono);font-size:12.5px;line-height:18px;color:var(--gray-mid)}
+.glabel .alerta{color:var(--risco);font-weight:600}
+.nt .no-mini{width:40px;height:24px;border:1.5px solid var(--graphite);background:var(--white)}
+.nt .no-mini.valor{border-radius:999px;border-color:var(--cinza)}
+.nt .no-mini.har{background:var(--tinta);border-color:var(--tinta)}
+.nt .lin.g-regra,.nt .lin.g-evento,.nt .lin.g-revisa{border-top-style:dashed}
+.nt .lin.g-relacao{border-top-width:1.2px}
+.nt .lin.g-identidade,.nt .lin.g-traduz{border-top:1.6px dotted var(--acento-forte)}
+.nt .lin.g-identidade::after{display:none}
+.nt .lin.g-alerta{border-top-color:var(--risco)}
+.nt .lin.g-alerta::after{border-left-color:var(--risco)}
+.nt .lin.g-traduz::after{border-left-color:var(--acento-forte)}
+.nt .carimbo{font-family:var(--fonte-mono);font-size:12.5px;color:var(--gray-mid)}
+.gframe>.flabel.baixo{top:auto;bottom:4px;background:transparent}

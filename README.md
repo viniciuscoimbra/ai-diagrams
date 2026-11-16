@@ -29,6 +29,8 @@ The source stays in your repository as text, so anyone can edit it and regenerat
 | Schema dependency matrix | "Dependency matrix between the schemas in this DDL." | [prompt and result](exemplos/matriz-dependencia/) |
 | State machine | "State machine of the debit card lifecycle: requested, issued, in transit, active, blocked, cancelled." | [prompt and result](exemplos/maquina-estados/) |
 | C4 container diagram | "C4 container diagram of the boleto billing system, with the bank and the ERP outside." | [prompt and result](exemplos/c4/) |
+| Assertion graph | "Graph of Ana's address in Registry, Billing and CRM, with observer, valid time and recorded time." | [model](skills/ai-diagrams/modelos/12-grafo-afirmacoes/) |
+| Context product map | "Map of the delivery context products, with versions, translation between areas and the harness." | [model](skills/ai-diagrams/modelos/13-mapa-produtos/) |
 
 ![AWS architecture poster](exemplos/arquitetura-aws/resultado/antifraude-transferencias.png)
 
@@ -151,5 +153,5 @@ MIT, see [LICENSE](LICENSE). Third-party parts keep their own terms:
 
 - AWS icons come from the `diagrams` package installed on your machine and follow the [AWS Architecture Icons](https://aws.amazon.com/architecture/icons/) terms.
 - The BPMN viewer in `skills/ai-diagrams/bpmn/vendor/` is [bpmn-js](https://github.com/bpmn-io/bpmn-js), under the bpmn.io license in that folder, which requires the bpmn.io watermark to stay visible.
-- The state machine layout in `skills/ai-diagrams/estados/vendor/` is [elkjs](https://github.com/kieler/elkjs) 0.12.0, unmodified, under EPL-2.0 or GPL-3.0-or-later (license in that folder).
+- The state machine and context graph layout in `skills/ai-diagrams/estados/vendor/` is [elkjs](https://github.com/kieler/elkjs) 0.12.0, unmodified, under EPL-2.0 or GPL-3.0-or-later (license in that folder).
 - Fonts: loaded from Google Fonts under the SIL Open Font License. The default theme uses IBM Plex Sans and IBM Plex Mono; the `papel` theme uses Public Sans and Source Code Pro. A theme of your own loads the families it names, under their own terms.

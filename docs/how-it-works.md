@@ -24,13 +24,14 @@ modelo.json + der-<schema>.layout.mjs → der-montar.mjs      → der-<schema>.h
 modelo.json                           → der-visao-geral.mjs → der-visao-geral.html  → build.py → PNG
 ```
 
-Swimlanes, cards, sequence diagrams and state machines use their own gate:
+Swimlanes, cards, sequence diagrams, state machines and context graphs use their own gate:
 
 ```
 spec.json → gerar_raias.py     → NN-flow.html → conceitual.py (lint measured in Chrome + capture) → PNG
 NN-catalog.html (by hand)                     → conceitual.py                                     → PNG
 spec.json → gerar_sequencia.py → NN-name.html → conceitual.py                                     → PNG
 spec.json → gerar_estados.py (elkjs) → NN-name.html → conceitual.py                               → PNG
+spec.json → gerar_grafo.py (elkjs)   → NN-name.html → conceitual.py                               → PNG
 ```
 
 The C4 container diagram uses the poster pipeline (`build.py`).
@@ -41,7 +42,7 @@ BPMN comes from a JSON model and is rendered by bpmn-js:
 modelo.json → gerar_bpmn.py → .bpmn (editable) + HTML viewer + PNG
 ```
 
-## 2. The eleven types and their gates
+## 2. The thirteen types and their gates
 
 | Type | Reference model | Source | Gate |
 |---|---|---|---|
@@ -56,8 +57,10 @@ modelo.json → gerar_bpmn.py → .bpmn (editable) + HTML viewer + PNG
 | Sequence diagram | `skills/ai-diagrams/modelos/09-sequencia/` | JSON spec | `gerar_sequencia.py`, then `conceitual.py` |
 | State machine | `skills/ai-diagrams/modelos/10-maquina-estados/` | JSON spec | `gerar_estados.py`, then `conceitual.py` |
 | C4 (context and containers) | `skills/ai-diagrams/modelos/11-c4/` | HTML by hand | `build.py` |
+| Assertion graph | `skills/ai-diagrams/modelos/12-grafo-afirmacoes/` | JSON spec (`vista: afirmacoes`) | `gerar_grafo.py`, then `conceitual.py` |
+| Context product map | `skills/ai-diagrams/modelos/13-mapa-produtos/` | JSON spec (`vista: produtos`) | `gerar_grafo.py`, then `conceitual.py` |
 
-Each model folder has the source in `_src/` and the generated PNG. `skills/ai-diagrams/modelos/gerar.sh` rebuilds all eleven through their gates.
+Each model folder has the source in `_src/` and the generated PNG. `skills/ai-diagrams/modelos/gerar.sh` rebuilds all thirteen through their gates.
 
 The router in `skills/ai-diagrams/SKILL.md` picks the type from the request.
 
@@ -148,6 +151,10 @@ Computes the coordinates of a sequence diagram from JSON (a participant is a col
 
 Before drawing, checks the state graph and rejects `SEM-INICIAL` (no initial state), `DESCONHECIDO` (transition to an unknown state), `SEM-EVENTO` (transition without an event), `SAI-DO-FINAL` (transition out of a final state), `INALCANCAVEL` (state not reachable) and `SEM-SAIDA` (non-final state without an exit). Then it sends states and transitions to elkjs 0.12.0 (`skills/ai-diagrams/estados/elk-layout.cjs`, vendored in `skills/ai-diagrams/estados/vendor/` with its license and sha256). elkjs only returns positions and orthogonal routes; the script draws the boxes, the double border of final states, loops and `event [guard] / action` labels. The gate is `conceitual.py`. The format is in `skills/ai-diagrams/references/estados.md`.
 
+### `skills/ai-diagrams/scripts/gerar_grafo.py`
+
+Draws context as a graph, in two views chosen by `vista`. `afirmacoes`: nodes are entities grouped by area and values; edges are assertions (fact, declared rule, relation, identity link), each labeled with its stamp: observer, valid time and recorded time. An assertion whose observer has no authority over that fact type is drawn in red as unknown. `produtos`: context products (owner, version, authority) and the harness in two fixed frames, with compose, translate, query, event, decide and review edges. Before drawing it rejects, among others, `SEM-CARIMBO` (assertion without observer or times), `TERMO-SEM-DEFINICAO` (declared rule using an undefined term), `IDENTIDADE-SEM-CONFIANCA`, `REFERENCIA-SEM-VERSAO` (compose or query without a version), `FRONTEIRA` (edge type between the wrong node types) and `AUTORIDADE-DUPLICADA`. Layout comes from the same vendored elkjs as the state machine, with areas as compound nodes; the frame name goes on the first stretch of border no edge crosses. The gate is `conceitual.py`. The format is in `skills/ai-diagrams/references/grafo.md`.
+
 ### `skills/ai-diagrams/bpmn/gerar_bpmn.py`
 
 ```bash
@@ -177,7 +184,7 @@ Every color and both font families are tokens. A theme is one JSON file: `skills
 3. the environment variable `AI_DIAGRAMS_TEMA`;
 4. the default, `ai-diagrams`.
 
-A name resolves to `skills/ai-diagrams/temas/<name>.json`. A value that ends in `.json` or contains a slash is a path to a JSON file in any folder. The commands are `build.py`, `poster_lint.py`, `conceitual.py`, `gerar_raias.py`, `gerar_sequencia.py`, `gerar_estados.py`, `bpmn/gerar_bpmn.py`, `der/der-montar.mjs` and `der/der-visao-geral.mjs`.
+A name resolves to `skills/ai-diagrams/temas/<name>.json`. A value that ends in `.json` or contains a slash is a path to a JSON file in any folder. The commands are `build.py`, `poster_lint.py`, `conceitual.py`, `gerar_raias.py`, `gerar_sequencia.py`, `gerar_estados.py`, `gerar_grafo.py`, `bpmn/gerar_bpmn.py`, `der/der-montar.mjs` and `der/der-visao-geral.mjs`.
 
 **One reader.** `skills/ai-diagrams/scripts/tema.py` is the only code that reads the JSON. It produces the `:root` with every color token, the `-rgb` channel tokens, `--fonte-texto` and `--fonte-mono`, and the Google Fonts link of the two families. The gates (`build.py`, `poster_lint.py`, `conceitual.py`) replace the token `:root` of the base CSS with it and swap the font link of the source, so the lint measures with the same fonts as the PNG. The BPMN generator writes the theme colors into `bioc:fill`/`bioc:stroke` and the viewer CSS. The Node generators call `tema.py` for the link and the meta. The `:root` in `estilo.css` and `estilo-conceitual.css` is only the fallback of the default theme.
 

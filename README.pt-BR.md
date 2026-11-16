@@ -36,6 +36,8 @@ O fonte fica no seu repositório, em texto, e qualquer pessoa edita e gera o PNG
 | Matriz de dependência entre schemas | "Matriz de dependência entre os schemas deste DDL." | [prompt e resultado](exemplos/matriz-dependencia/) |
 | Máquina de estados | "Máquina de estados do ciclo de vida do cartão de débito: solicitado, em emissão, em trânsito, ativo, bloqueado, cancelado." | [prompt e resultado](exemplos/maquina-estados/) |
 | C4 de contêineres | "C4 de contêineres do sistema de cobrança por boleto, com o banco e o ERP de fora." | [prompt e resultado](exemplos/c4/) |
+| Grafo de afirmações | "Grafo do endereço de Ana no Cadastro, Faturamento e CRM, com observador, tempo válido e tempo de gravação." | [modelo](skills/ai-diagrams/modelos/12-grafo-afirmacoes/) |
+| Mapa de produtos de contexto | "Mapa dos produtos de contexto da entrega, com versões, tradução entre áreas e o harness." | [modelo](skills/ai-diagrams/modelos/13-mapa-produtos/) |
 
 ![Poster de arquitetura AWS](exemplos/arquitetura-aws/resultado/antifraude-transferencias.png)
 

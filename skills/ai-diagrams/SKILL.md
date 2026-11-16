@@ -1,6 +1,6 @@
 ---
 name: ai-diagrams
-description: Cria diagramas técnicos com um padrão visual único e escolhe sozinha o tipo certo. Poster de arquitetura AWS e fluxo com passos numerados (ícones AWS, lint geométrico, PNG); C4 de contexto e contêineres; tabela de comparação ou comparativo de opções; diagrama de sequência entre serviços (chamada, resposta, alt e loop); máquina de estados (ciclo de vida e status); fluxo em raias (swimlane) entre times; conceitual em cards ou catálogo; BPMN 2.0 editável no Camunda ou bpmn.io; DER por schema em pé de galinha; matriz de dependência. Use sempre que o usuário pedir diagrama, poster, desenho de arquitetura, topologia AWS, C4, contêineres, fluxo, processo, BPMN, raias, swimlane, sequência, chamada entre serviços, máquina de estados, status, ciclo de vida, tabela comparativa, comparação entre A e B, catálogo, DER, modelo lógico, diagrama de tabelas ou matriz de dependência, ou quiser transformar documento em diagrama. Também use para editar, auditar ou regenerar diagramas existentes em diagramas/_src/.
+description: Cria diagramas técnicos com um padrão visual único e escolhe sozinha o tipo certo. Poster de arquitetura AWS e fluxo com passos numerados (ícones AWS, lint geométrico, PNG); C4 de contexto e contêineres; tabela de comparação ou comparativo de opções; diagrama de sequência entre serviços (chamada, resposta, alt e loop); máquina de estados (ciclo de vida e status); fluxo em raias (swimlane) entre times; conceitual em cards ou catálogo; BPMN 2.0 editável no Camunda ou bpmn.io; DER por schema em pé de galinha; matriz de dependência; grafo de contexto (afirmações com observador e dois tempos, ou mapa de produtos de contexto e harness). Use sempre que o usuário pedir diagrama, poster, desenho de arquitetura, topologia AWS, C4, contêineres, fluxo, processo, BPMN, raias, swimlane, sequência, chamada entre serviços, máquina de estados, status, ciclo de vida, tabela comparativa, comparação entre A e B, catálogo, DER, modelo lógico, diagrama de tabelas, matriz de dependência, grafo de contexto, grafo de conhecimento, afirmações, produtos de contexto ou harness, ou quiser transformar documento em diagrama. Também use para editar, auditar ou regenerar diagramas existentes em diagramas/_src/.
 ---
 
 # Diagramas padronizados
@@ -24,6 +24,8 @@ Leia o pedido e escolha a linha. Os modelos ficam em `modelos/`, dentro desta sk
 | BPMN 2.0 | BPMN, processo de negócio, gateway, evento, ou resultado editável no Camunda ou bpmn.io | `references/bpmn.md` | `08-bpmn` | `gerar_bpmn.py` |
 | DER por schema | DER, modelo lógico, tabelas e FKs, diagrama do banco, schema | `references/der.md` | `03-der-schema` | `poster_lint.py` via `build.py` |
 | Matriz de dependência | dependência entre schemas, módulos ou domínios em visão geral | `references/der.md` | `04-matriz-dependencia` | `poster_lint.py` via `build.py` |
+| Grafo de afirmações | contexto como grafo: o que cada área afirma sobre uma entidade, quem afirmou, tempo válido e de gravação, elo de identidade entre áreas | `references/grafo.md` | `12-grafo-afirmacoes` | `gerar_grafo.py` e `conceitual.py` |
+| Mapa de produtos de contexto | produtos de contexto (dono, versão, autoridade), composição, tradução entre áreas, fronteira com o harness e quem decide | `references/grafo.md` | `13-mapa-produtos` | `gerar_grafo.py` e `conceitual.py` |
 
 Variações que usam o pipeline do poster, sem modelo próprio: glossário ilustrado ou analogia (chips e frames sem ícone AWS), mapa as-built (frames com contagem por bloco).
 
@@ -164,6 +166,13 @@ python3 <skill>/scripts/gerar_estados.py diagramas/_src/NN-nome.json
 python3 <skill>/scripts/conceitual.py diagramas/_src/NN-nome.html
 ```
 O gerador usa `node` (elkjs em `estados/`) e reprova antes do desenho: `SEM-INICIAL`, `DESCONHECIDO`, `SEM-EVENTO`, `SAI-DO-FINAL`, `INALCANCAVEL` e `SEM-SAIDA`.
+
+**Grafo de contexto (afirmações e mapa de produtos)**
+```bash
+python3 <skill>/scripts/gerar_grafo.py diagramas/_src/NN-nome.json
+python3 <skill>/scripts/conceitual.py diagramas/_src/NN-nome.html
+```
+O campo `vista` escolhe `afirmacoes` ou `produtos`. O gerador usa `node` (elkjs em `estados/`) e reprova antes do desenho com `GRAFO REPROVOU <código>`: afirmação sem carimbo de quatro peças, termo sem definição numa regra declarada, elo de identidade sem confiança, referência entre produtos sem versão, aresta que cruza a fronteira contexto/harness no sentido errado (lista em `references/grafo.md`).
 
 **BPMN**
 ```bash

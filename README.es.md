@@ -36,6 +36,8 @@ La fuente queda en tu repositorio, en texto, y cualquiera puede editarla y volve
 | Matriz de dependencias entre schemas | "Matriz de dependencias entre los schemas de este DDL." | [prompt y resultado](exemplos/matriz-dependencia/) |
 | Máquina de estados | "Máquina de estados del ciclo de vida de la tarjeta de débito: solicitada, en emisión, en tránsito, activa, bloqueada, cancelada." | [prompt y resultado](exemplos/maquina-estados/) |
 | C4 de contenedores | "C4 de contenedores del sistema de cobro por boleto, con el banco y el ERP fuera." | [prompt y resultado](exemplos/c4/) |
+| Grafo de afirmaciones | "Grafo de la dirección de Ana en Registro, Facturación y CRM, con observador, tiempo válido y tiempo de grabación." | [modelo](skills/ai-diagrams/modelos/12-grafo-afirmacoes/) |
+| Mapa de productos de contexto | "Mapa de los productos de contexto de la entrega, con versiones, traducción entre áreas y el harness." | [modelo](skills/ai-diagrams/modelos/13-mapa-produtos/) |
 
 ![Póster de arquitectura AWS](exemplos/arquitetura-aws/resultado/antifraude-transferencias.png)
 
