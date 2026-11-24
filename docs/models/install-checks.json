@@ -1,9 +1,9 @@
 {
   "_doc": "Written by tests/npm-smoke.sh. \"pass\" only when the whole smoke test passed on this run.",
-  "date": "2026-11-07",
+  "date": "2026-11-16",
   "package": "0.2.0",
-  "node": "22.22.3",
-  "platform": "darwin",
+  "node": "22.23.4",
+  "platform": "linux",
   "checks": [
     {
       "cli": "claude",

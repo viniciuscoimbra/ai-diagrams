@@ -49,6 +49,12 @@ OBRIGATORIAS = {
                    'er_view', 'er_heat'],
     'fonts': ['text', 'mono'],
 }
+# Optional keys, added after 0.2.0: a theme without them keeps the 0.2.0 look.
+# Each one falls back to another key of the theme.
+OPCIONAIS = {
+    'derived': [('c4_focus', 'colors', 'paper'), ('c4_focus_border', 'colors', 'ink'),
+                ('c4_internal', 'colors', 'zone'), ('c4_internal_border', 'colors', 'muted')],
+}
 # schema_version 1 -> 2: group and key names
 V1_GRUPOS = {'cores': 'colors', 'cores_derivadas': 'derived', 'paleta_der': 'er_palette', 'fontes': 'fonts'}
 V1_CHAVES = {
@@ -149,6 +155,13 @@ def carregar(p):
                 falha('THEME-INCOMPLETE: missing %s.%s (%s)' % (grupo, k, p))
             if grupo != 'fonts' and not _HEX.match(str(v)):
                 falha('THEME-INVALID: %s.%s is "%s"; use #RRGGBB (%s)' % (grupo, k, v, p))
+    for grupo, itens in OPCIONAIS.items():
+        for k, g_fb, k_fb in itens:
+            v = t[grupo].get(k)
+            if v is None or v == '':
+                t[grupo][k] = t[g_fb][k_fb]
+            elif not _HEX.match(str(v)):
+                falha('THEME-INVALID: %s.%s is "%s"; use #RRGGBB (%s)' % (grupo, k, v, p))
     t['_caminho'] = p
     return t
 
@@ -177,7 +190,7 @@ def tokens(t):
     """Ordered list of (token name without --, value) that the :root declares."""
     out = []
     for grupo in ('colors', 'derived', 'er_palette'):
-        for k in OBRIGATORIAS[grupo]:
+        for k in OBRIGATORIAS[grupo] + [o[0] for o in OPCIONAIS.get(grupo, [])]:
             if k == 'er_heat':
                 continue
             out.append((k.replace('_', '-'), t[grupo][k].upper()))

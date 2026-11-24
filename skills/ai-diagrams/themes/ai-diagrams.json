@@ -19,7 +19,11 @@
     "c4_person_type": "#9CA3AF",
     "c4_person_desc": "#E5E7EB",
     "c4_external": "#E9EBEF",
-    "c4_boundary": "#F9FAFB"
+    "c4_boundary": "#F9FAFB",
+    "c4_focus": "#CCFBF1",
+    "c4_focus_border": "#0F766E",
+    "c4_internal": "#DBEAFE",
+    "c4_internal_border": "#3B82F6"
   },
   "er_palette": {
     "er_border": "#CBD5E1",
